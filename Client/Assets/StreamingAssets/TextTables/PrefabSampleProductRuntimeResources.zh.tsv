@@ -1,0 +1,35 @@
+﻿key	text
+AnimationElementOverlay1	LHAnimationClipPlayer是用于单独播放AnimationClip的功能。\n\n仅需AnimationClip和Animator的简单最小配置，无需多余的资源或组件。\n此外，可以在Awake之前执行直接反映开始值和结束值状态的处理，\n非常适合UI的进入/退出动画。
+AnimationElementOverlay2	public interface ILHAnimationClipPlayer\n{\n    public void PlayAnimation(bool isRestart, bool isEndEvaluate, Action onComplete);\n    public UniTask PlayAnimationAsync(bool isRestart, bool isEndEvaluate);\n    public void ResetAnimation();\n    public void Stop();\n    public void Skip();\n}
+DialogElementDialog1	对话框并不是一个独立的功能，而是利用ScreenStack功能实现的一种表现形式。\n\n如果需要实现复杂的依赖关系，可以在此对话框中定义独立的LifetimeScope。
+DialogSample1Dialog1	显示更多对话框\n（独占）
+DialogSample1Dialog2	显示更多对话框
+DialogSample1Dialog3	关闭
+DialogSample1Dialog4	确认后关闭
+DialogSample2Dialog1	显示更多对话框（独占）
+DialogSample2Dialog2	显示更多对话框
+DialogSample2Dialog3	确认后关闭
+OverlayElementOverlay1	叠加层并不是一个独立的功能，而是利用ScreenStack功能实现的一种表现形式。\n\n如果需要实现复杂的依赖关系，可以在此叠加层中定义独立的LifetimeScope。
+PopupElementPopup1	弹出窗口并不是一个独立的功能，而是利用ScreenStack功能实现的一种表现形式。\n便于聚焦基础画面的特定位置或显示小窗口。
+RequireToolsDialog	鸣谢
+RequireToolsDialog1	鸣谢
+RequireToolsDialog2	## Lighthouse Architecture Framework\nDeveloped by Lise (https://twitter.com/archeleeds)\n\nCopyright (c) 2026 Lise\nhttps://github.com/lisearcheleeds/LighthouseFramework\nMIT License\n\n\n## Third-Party Licenses\n### VContainer\nCopyright (c) 2020 hadashiA\nhttps://github.com/hadashiA/VContainer\nMIT License\n\n### R3\nCopyright (c) 2024 Cysharp, Inc.\nhttps://github.com/Cysharp/R3\nMIT License\n\n### UniRx\nCopyright (c) 2018 Yoshifumi Kawai / neuecc\nhttps://github.com/neuecc/UniRx\nMIT License
+SceneTransitionDialog1	在对话框打开的状态下使用TransitionScene时，使用BackScene返回该场景时对话框会自动恢复。\n当然，您也可以自行控制对话框的状态。
+SceneTransitionDialog2	Transition Scene
+SceneTransitionDialog3	关闭后Transition Scene
+TransitionAnimationElementOverlay1	LHTransitionAnimator 是一个扩展了 LHAnimationClipPlayer 的组件，用于实现场景过渡效果。\n\n通过将其与基类 Scene 和 ScreenStack 集成，它实现了开发人员和设计师之间编辑区域的完全分离，从而提高了工作效率。\n\n当然，这些组件的设计也考虑到了产品端的可扩展性。
+ButtonElementOverlay1	LHButton是继承Unity.UI.Button的功能。\n\n目前仅具备独占输入功能。
+TextViewElementOverlay1	LHTextMeshPro是具备本地化·词典功能的Text组件。\n通过此功能可以将本地化工作与开发工作完全分离，提升开发效率。\n此外，还提供了EditorTool，使非开发人员也能进行相关工作。
+TapToClose1	Tap to Close
+Close	关闭
+InputLayerElementOverlay1	InputLayer 是一项逐层管理按键输入的功能。\n每次打开场景或屏幕堆栈时，该 UI 的按键输入动作映射都会叠加显示，从而确保只接收必要的按键输入。\n例如，它可以用于在使用模拟摇杆控制角色时打开物品栏等操作。
+InputLayerElementOverlay2	[EscapeKey] to Close
+InputLayerElementOverlay3	Character\nLayer
+InputLayerElementOverlay4	WASD
+InputLayerElementOverlay5	Interact\n[E]
+InputLayerElementOverlay6	Inventory\nLayer
+InputLayerElementOverlay7	Close\nInventory\n[Esc]
+InputLayerElementOverlay8	Equip\n[E]
+InputLayerElementOverlay9	ToolTip\nLayer
+InputLayerElementOverlay10	Item\nDescription\n[E]
+DialogSampleConfirmDialog1	此弹出窗口将与下方的弹出窗口同时关闭。

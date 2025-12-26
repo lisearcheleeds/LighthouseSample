@@ -1,0 +1,6 @@
+﻿key	text
+SceneSample1ToggleHeader	Toggle
+SceneSample1Choice1	選択肢1
+SceneSample1Choice2	選択肢2
+SceneSample1Choice3	選択肢3
+SceneSample1Description	シーン遷移時に次の画面に対してパラメータを渡すことが出来ます。デッキの選択やチームの編成などに利用します。

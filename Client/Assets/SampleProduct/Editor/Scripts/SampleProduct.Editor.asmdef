@@ -1,0 +1,26 @@
+{
+    "name": "SampleProduct.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0a5f21b60d47d1946a63da9a8fa50f19",
+        "GUID:a8652bddab8664247bcdf0dbdf955fa2",
+        "GUID:5a310ce6c65d9c04282fece748bfb5a3",
+        "GUID:d8153b51f2dbbaf4c8b7d834ccdf650b",
+        "GUID:c5808a549c30bcb4eaa7a6435f4d72a2",
+        "GUID:453050a4a614a954bbc2f586b5a0c205",
+        "GUID:55a1ca089b0a4ca48aa79b5d0adfbfc8",
+        "GUID:2bafac87e7f4b9b418d9448d219b01ab",
+        "GUID:dbe903c26d471f14290636ebdca520fd"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

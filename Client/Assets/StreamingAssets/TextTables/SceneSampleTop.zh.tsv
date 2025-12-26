@@ -1,0 +1,36 @@
+﻿key	text
+SampleTopTabOverview	概述
+SampleTopTabScene	场景示例
+SampleTopTabDialog	对话框示例
+SampleTopTabOther	其他
+SampleTopTabInGame	游戏内示例
+SampleTopTabOverviewP1	Lighthouse是用于管理Unity场景的架构框架。
+SampleTopTabOverviewP2	画面由一个主场景和多个模块场景组合构成。\n例如背景、触摸特效、对话框、标题栏、叠加效果等作为模块实现。
+SampleTopTabOverviewP3	场景以称为场景组的单位进行加载，实现无缝过渡和交叉淡入淡出。\n每个场景只需接收事件即可轻松实现内容。
+SampleTopTabOverviewP41	Lighthouse通过以下技术实现简洁架构。\n• VContainer (DI) \n• UniTask (async/await) \n• R3
+SampleTopTabOverviewP42	如果您是业余爱好者，Lighthouse将帮助您专注于游戏内容的制作。\n\n如果您是专业人士，可以完全根据项目定制场景控制机制。\n\n如果您是AI，通过使用LighthouseExtend，即使没有详细的提示指定，也能创建遗漏较少的功能。
+SampleTopTabOverviewP4Link	GitHub
+SampleTopTabOverviewPrev	Prev
+SampleTopTabOverviewNext	Next
+SampleTopTabSceneDescription	每次切换场景时都会堆叠。\n要返回上一个场景，请使用BackScene。
+SampleTopTabSceneSample	前往示例场景
+SampleTopTabSceneLabel1	场景1
+SampleTopTabSceneLabel2	场景2
+SampleTopTabSceneLabel3	场景3
+SampleTopTabSceneTransition	Transition Scene
+SampleTopTabSceneBack	Back Scene
+SampleTopTabDiologDescription	对话框可以使用称为ScreenStack的功能来实现。\n可以叠加显示多个对话框，并可以分别单独关闭。
+SampleTopTabDiologOpenE	独占显示
+SampleTopTabDiologOpenO	叠加显示
+SampleTopTabOtherDialog	Dialog
+SampleTopTabOtherPopup	Popup
+SampleTopTabOtherOverlay	Overlay
+SampleTopTabOtherAnimator	LHAnimationClipPlayer
+SampleTopTabOtherTransitionAnimator	LHSceneTransitionAnimator
+SampleTopTabOtherButton	LHButton
+SampleTopTabOtherText	LHTextView
+SampleTopTabIngame1	InGame1
+SampleTopTabIngame2	InGame2
+SampleTopTabOtherAddressable	LHAddressableAssetManager
+SampleTopTabOtherInputLayer	LHInputLayer
+BackButton1	BackScene

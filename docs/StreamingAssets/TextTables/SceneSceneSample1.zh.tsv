@@ -1,0 +1,6 @@
+key	text
+SceneSample1Description1	场景切换由Stack管理。无需在BackScene中指定切换目标场景。
+SceneSample1Description2	也可以通过弹出窗口切换场景。
+SceneSample1TransitionHeader	Scene示例
+SceneSample1TransitionButton1	前往下一个画面
+SceneSample1TransitionButton2	使用Dialog前往下一个画面

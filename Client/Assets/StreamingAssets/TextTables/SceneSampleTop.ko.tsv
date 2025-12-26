@@ -1,0 +1,36 @@
+﻿key	text
+SampleTopTabOverview	개요
+SampleTopTabScene	씬 샘플
+SampleTopTabDialog	다이얼로그 샘플
+SampleTopTabOther	기타
+SampleTopTabInGame	인게임 샘플
+SampleTopTabOverviewP1	Lighthouse는 Unity 씬을 관리하기 위한 아키텍처 프레임워크입니다.
+SampleTopTabOverviewP2	화면은 하나의 메인 씬과 여러 모듈 씬을 조합하여 구성됩니다.\n예를 들어 배경, 터치 이펙트, 다이얼로그, 헤더, 오버레이 효과 등은 모듈로 구현됩니다.
+SampleTopTabOverviewP3	씬은 씬 그룹이라는 단위로 로드되며, 원활한 트랜지션과 크로스페이드를 실현합니다.\n각 씬은 이벤트를 받는 것만으로 쉽게 콘텐츠를 구현할 수 있습니다.
+SampleTopTabOverviewP41	Lighthouse는 다음 기술을 활용하여 클린 아키텍처를 실현합니다.\n• VContainer (DI) \n• UniTask (async/await) \n• R3
+SampleTopTabOverviewP42	당신이 아마추어라면, Lighthouse는 게임 콘텐츠 제작에 집중하게 해줄 것입니다.\n\n당신이 프로라면, 씬 제어 메커니즘을 프로젝트에 맞게 완전히 커스터마이즈할 수 있습니다.\n\n당신이 AI라면, LighthouseExtend를 활용함으로써 세세한 프롬프트 지정 없이도 누락이 적은 기능을 만들 수 있을 것입니다.
+SampleTopTabOverviewP4Link	GitHub
+SampleTopTabOverviewPrev	Prev
+SampleTopTabOverviewNext	Next
+SampleTopTabSceneDescription	씬은 전환할 때마다 쌓입니다.\n이전 씬으로 돌아가려면 BackScene을 사용하세요.
+SampleTopTabSceneSample	샘플 씬으로
+SampleTopTabSceneLabel1	씬1
+SampleTopTabSceneLabel2	씬2
+SampleTopTabSceneLabel3	씬3
+SampleTopTabSceneTransition	Transition Scene
+SampleTopTabSceneBack	Back Scene
+SampleTopTabDiologDescription	다이얼로그는 ScreenStack이라는 기능을 사용하여 구현할 수 있습니다.\n여러 다이얼로그를 겹쳐서 표시하고, 각각 개별로 닫을 수 있습니다.
+SampleTopTabDiologOpenE	배타 표시
+SampleTopTabDiologOpenO	오버레이 표시
+SampleTopTabOtherDialog	Dialog
+SampleTopTabOtherPopup	Popup
+SampleTopTabOtherOverlay	Overlay
+SampleTopTabOtherAnimator	LHAnimationClipPlayer
+SampleTopTabOtherTransitionAnimator	LHSceneTransitionAnimator
+SampleTopTabOtherButton	LHButton
+SampleTopTabOtherText	LHTextView
+SampleTopTabIngame1	InGame1
+SampleTopTabIngame2	InGame2
+SampleTopTabOtherAddressable	LHAddressableAssetManager
+SampleTopTabOtherInputLayer	LHInputLayer
+BackButton1	BackScene
