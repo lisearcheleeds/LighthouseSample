@@ -5,6 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using VContainer;
 
 namespace Lighthouse.Core.Scene
 {
@@ -20,9 +21,12 @@ namespace Lighthouse.Core.Scene
         MainSceneBase currentScene;
         List<MainSceneBase> loadedScenes;
 
-        public MainSceneGroup(params MainSceneKey[] groupMainSceneIds)
+        Func<IDisposable> enqueueParentLifetimeScope;
+
+        public MainSceneGroup(Func<IDisposable> enqueueParentLifetimeScope, params MainSceneKey[] groupMainSceneIds)
         {
             GroupMainSceneIds = groupMainSceneIds;
+            this.enqueueParentLifetimeScope = enqueueParentLifetimeScope;
         }
 
         public ISceneCamera[] GetSceneCameraList()
@@ -78,9 +82,12 @@ namespace Lighthouse.Core.Scene
         {
             Debug.Assert(!loadedScenes?.Any() ?? true, "[MainSceneGroup] Duplicate load");
 
-            foreach (var sceneId in GroupMainSceneIds)
+            using (enqueueParentLifetimeScope.Invoke())
             {
-                await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneId.Name, LoadSceneMode.Additive);
+                foreach (var sceneId in GroupMainSceneIds)
+                {
+                    await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneId.Name, LoadSceneMode.Additive);
+                }
             }
 
             await UniTask.DelayFrame(1);

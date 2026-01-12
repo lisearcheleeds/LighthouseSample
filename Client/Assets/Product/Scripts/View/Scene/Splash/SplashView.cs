@@ -36,7 +36,7 @@ namespace Product.View.Splash
 
             splashImage.sprite = splashImage2;
 
-            await UniTask.Delay(1000);
+            await UniTask.Delay(100);
 
             var tcs2 = new UniTaskCompletionSource();
             animatorTrigger.SetTrigger(AnimatorKey.In, AnimatorKey.EndState, onComplete: () => tcs2.TrySetResult());

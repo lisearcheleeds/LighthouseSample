@@ -1,8 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Lighthouse.Core.Scene;
-using Product.View.Home;
 using Product.View.Splash;
-using Product.View.Title;
 using UnityEngine;
 using VContainer;
 
@@ -44,16 +42,6 @@ namespace Product.Util
             TransitionNextScene();
         }
 
-        void TransitionNextScene()
-        {
-            sceneManager.TransitionScene(
-                new SplashScene.SplashTransitionData(),
-                onComplete: _ =>
-                {
-                    UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(LauncherSceneName);
-                });
-        }
-
         UniTask FirstLaunchProcess()
         {
             return UniTask.CompletedTask;
@@ -62,6 +50,19 @@ namespace Product.Util
         UniTask LaunchProcess()
         {
             return UniTask.CompletedTask;
+        }
+
+        void TransitionNextScene()
+        {
+            sceneManager.TransitionScene(
+                new SplashScene.SplashTransitionData(),
+                onComplete: _ =>
+                {
+                    if (!string.IsNullOrEmpty(UnityEngine.SceneManagement.SceneManager.GetSceneByName(LauncherSceneName).name))
+                    {
+                        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(LauncherSceneName);
+                    }
+                });
         }
     }
 }

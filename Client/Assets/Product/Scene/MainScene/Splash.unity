@@ -377,6 +377,7 @@ GameObject:
   - component: {fileID: 484276632}
   - component: {fileID: 484276631}
   - component: {fileID: 484276630}
+  - component: {fileID: 484276635}
   m_Layer: 0
   m_Name: SplashScene
   m_TagString: Untagged
@@ -396,6 +397,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47adc6d40c734f089f51ed9d3b95ca00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Product.View.Splash.SplashScene
+  sceneTransitionAnimatorManager: {fileID: 484276631}
+  canvasGroup: {fileID: 484276633}
+  canvasInitializer: {fileID: 484276632}
   splashView: {fileID: 1187984897}
 --- !u!114 &484276631
 MonoBehaviour:
@@ -451,6 +455,23 @@ Transform:
   - {fileID: 288863362}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &484276635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484276629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d717a5cbf8f94c2187c960d5b54e07ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProductNameSpace.SplashSceneLifetimeScope
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects: []
+  splashScene: {fileID: 484276630}
 --- !u!1 &1187984895
 GameObject:
   m_ObjectHideFlags: 0

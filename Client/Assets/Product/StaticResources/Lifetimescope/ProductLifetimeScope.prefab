@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6246237698010719654
+--- !u!1 &3092602237215617754
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7061740461871640015}
-  - component: {fileID: 2566317052615248387}
+  - component: {fileID: 884114840247349527}
+  - component: {fileID: 2452829661357216621}
   m_Layer: 0
-  m_Name: RootLifetimescope
+  m_Name: ProductLifetimeScope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7061740461871640015
+--- !u!4 &884114840247349527
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6246237698010719654}
+  m_GameObject: {fileID: 3092602237215617754}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,20 +32,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2566317052615248387
+--- !u!114 &2452829661357216621
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6246237698010719654}
+  m_GameObject: {fileID: 3092602237215617754}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a7bddd66014417aa5ce8d556f991d64, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f2eba1c8b9f4861919ac1e841b34d1c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Product.RootLifetimeScope
+  m_EditorClassIdentifier: Assembly-CSharp::Product.ProductLifetimeScope
   parentReference:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  productLifetimeScopeSettings: {fileID: 11400000, guid: c7d878432ceae684a888ea8f5f37538c, type: 2}
   canvasSceneObjectPrefab: {fileID: 5381610481928089858, guid: 29a592fb8503bc54d9d7e9dbc50479fe, type: 3}
