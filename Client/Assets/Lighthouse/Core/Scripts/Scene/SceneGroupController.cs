@@ -5,13 +5,13 @@ using VContainer;
 
 namespace Lighthouse.Core.Scene
 {
-    public class SceneGroupController : MonoBehaviour
+    public class SceneGroupController : ISceneGroupController
     {
         readonly IMainSceneGroupProvider mainSceneGroupProvider;
         readonly CommonSceneManager commonSceneManager;
         readonly ISceneCameraManager sceneCameraManager;
 
-        public MainSceneKey CurrentMainSceneKey => currentMainSceneGroup.CurrentScene.MainSceneId;
+        public MainSceneKey CurrentMainSceneKey => currentMainSceneGroup?.CurrentScene != null ? currentMainSceneGroup.CurrentScene.MainSceneId : null;
         public ISceneTransitionPhase CurrentTransitionPhase { get; private set; }
 
         protected virtual ISceneTransitionPhase[] CrossTransitionPhaseSet { get; } =
@@ -41,7 +41,7 @@ namespace Lighthouse.Core.Scene
 
         [Inject]
         public SceneGroupController(
-            MainSceneGroupProvider mainSceneGroupProvider,
+            IMainSceneGroupProvider mainSceneGroupProvider,
             CommonSceneManager commonSceneManager,
             ISceneCameraManager sceneCameraManager)
         {
@@ -50,7 +50,7 @@ namespace Lighthouse.Core.Scene
             this.sceneCameraManager = sceneCameraManager;
         }
 
-        public async UniTask<bool> StartCrossTransitionSequence(
+        async UniTask<bool> ISceneGroupController.StartCrossTransitionSequence(
             TransitionDataBase transitionData,
             TransitionType transitionType,
             CancellationToken cancellationToken)
@@ -62,7 +62,7 @@ namespace Lighthouse.Core.Scene
                 cancellationToken);
         }
 
-        public async UniTask<bool> StartExclusiveTransitionSequence(
+        async UniTask<bool> ISceneGroupController.StartExclusiveTransitionSequence(
             TransitionDataBase transitionData,
             TransitionType transitionType,
             CancellationToken cancellationToken)
@@ -72,6 +72,11 @@ namespace Lighthouse.Core.Scene
                 transitionData,
                 transitionType,
                 cancellationToken);
+        }
+
+        async UniTask ISceneGroupController.PreReboot()
+        {
+            await currentMainSceneGroup.Leave(null, TransitionType.Default, CancellationToken.None);
         }
 
         protected virtual async UniTask<bool> StartTransition(

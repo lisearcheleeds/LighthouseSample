@@ -12,7 +12,7 @@ namespace ProductNameSpace
     public sealed class MainSceneId : MainSceneKey
     {
         public static readonly MainSceneId None = new MainSceneId(1, string.Empty);
-        public static readonly MainSceneId Launcher = new MainSceneId(2, "Launcher");
+        public static readonly MainSceneId Splash = new MainSceneId(2, "Splash");
         public static readonly MainSceneId Title = new MainSceneId(3, "Title");
         public static readonly MainSceneId Home = new MainSceneId(4, "Home");
         public static readonly MainSceneId Edit = new MainSceneId(5, "Edit");
@@ -24,7 +24,7 @@ namespace ProductNameSpace
                 return new MainSceneId[]
                 {
                     None,
-                    Launcher,
+                    Splash,
                     Title,
                     Home,
                     Edit,

@@ -7,8 +7,6 @@ namespace Lighthouse.Core.Scene
 {
     public abstract class TransitionDataBase
     {
-        static readonly CommonSceneKey[] MustRequireCommonSceneIds = Array.Empty<CommonSceneKey>();
-
         public abstract MainSceneKey MainSceneKey { get; }
 
         public CommonSceneKey[] RequireCommonSceneIds
@@ -24,18 +22,14 @@ namespace Lighthouse.Core.Scene
             }
         }
 
-        protected abstract CommonSceneKey[] ExtendCommonSceneIds { get; }
+        protected virtual CommonSceneKey[] MustRequireCommonSceneIds { get; } = Array.Empty<CommonSceneKey>();
+        protected virtual CommonSceneKey[] ExtendCommonSceneIds { get; } = Array.Empty<CommonSceneKey>();
 
         CommonSceneKey[] requireCommonSceneIds;
 
         public virtual bool CanTransition()
         {
             return true;
-        }
-
-        public virtual UniTask SaveSceneState(TransitionType transitionType, CancellationToken cancelToken)
-        {
-            return UniTask.CompletedTask;
         }
 
         public virtual UniTask LoadSceneState(TransitionType transitionType, CancellationToken cancelToken)

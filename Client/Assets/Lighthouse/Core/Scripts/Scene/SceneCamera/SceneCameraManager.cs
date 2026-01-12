@@ -1,15 +1,26 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Product.Util;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using VContainer;
 
 namespace Lighthouse.Core.Scene
 {
-    public class SceneCameraManager : MonoBehaviour, ISceneCameraManager
+    public class SceneCameraManager : ISceneCameraManager
     {
+        readonly ICanvasSceneObject canvasSceneObject;
+
         public ISceneCamera BaseCamera { get; private set; }
-        public ISceneCamera UICamera { get; private set; }
+        public ISceneCamera UICamera => canvasSceneObject.UICamera;
 
         public ISceneCamera[] OverlayCameraList { get; private set; }
+
+        [Inject]
+        public SceneCameraManager(ICanvasSceneObject canvasSceneObject)
+        {
+            this.canvasSceneObject = canvasSceneObject;
+        }
 
         void ISceneCameraManager.UpdateCameraStack(
             MainSceneGroup afterMainSceneGroup,
@@ -18,7 +29,8 @@ namespace Lighthouse.Core.Scene
         {
             var sceneCameras = commonSceneManager
                 .GetSceneCameraList(targetCommonSceneIds)
-                .Concat(afterMainSceneGroup.GetSceneCameraList())
+                .Concat(afterMainSceneGroup.GetSceneCameraList() ?? Array.Empty<ISceneCamera>())
+                .Concat(new[] { UICamera })
                 .Distinct()
                 .OrderBy(x => (x.SceneCameraType, x.CameraDefaultDepth)).ToArray()
                 .ToArray();
@@ -31,14 +43,20 @@ namespace Lighthouse.Core.Scene
                 return;
             }
 
-            BaseCamera.ClearStackCamera();
-            foreach (var overlayCamera in OverlayCameraList)
+            if (BaseCamera != null)
             {
-                overlayCamera.ClearStackCamera();
+                BaseCamera.ClearStackCamera();
+            }
+
+            if (OverlayCameraList != null)
+            {
+                foreach (var overlayCamera in OverlayCameraList)
+                {
+                    overlayCamera.ClearStackCamera();
+                }
             }
 
             BaseCamera = baseCamera;
-            UICamera = sceneCameras.FirstOrDefault(x => x.SceneCameraType == SceneCameraType.CameraUI);
             OverlayCameraList = overlayCameraList;
 
             var depth = 0.0f;

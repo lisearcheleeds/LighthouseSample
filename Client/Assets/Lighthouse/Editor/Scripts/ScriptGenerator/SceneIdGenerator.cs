@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Text;
-using Lighthouse.Editor.Scripts.ScriptableObject;
+using Lighthouse.Editor.ScriptableObject;
 using UnityEditor;
 using UnityEngine;
 

@@ -17,7 +17,7 @@ namespace Lighthouse.Core.Scene
         {
             await UniTask.WhenAll(
                 commonSceneManager.InAnimation(transitionData.RequireCommonSceneIds, transitionType),
-                beforeMainSceneGroup.InAnimation(transitionData, transitionType));
+                afterMainSceneGroup.InAnimation(transitionData, transitionType));
         }
     }
 }

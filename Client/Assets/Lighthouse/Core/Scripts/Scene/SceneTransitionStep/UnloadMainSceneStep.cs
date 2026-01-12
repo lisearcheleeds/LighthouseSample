@@ -15,7 +15,7 @@ namespace Lighthouse.Core.Scene
             CommonSceneManager commonSceneManager,
             CancellationToken cancelToken)
         {
-            if (!ReferenceEquals(beforeMainSceneGroup, afterMainSceneGroup))
+            if (beforeMainSceneGroup != null && !ReferenceEquals(beforeMainSceneGroup, afterMainSceneGroup))
             {
                 await beforeMainSceneGroup.Unload();
             }

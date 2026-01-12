@@ -4,7 +4,7 @@
     {
         ISceneTransitionStep[] ISceneTransitionPhase.Steps { get; } =
         {
-            new CleanupStep(),
+            new CleanupStep(), new FinishedStep(),
         };
 
         bool ISceneTransitionPhase.CanTransitionIntercept => false;

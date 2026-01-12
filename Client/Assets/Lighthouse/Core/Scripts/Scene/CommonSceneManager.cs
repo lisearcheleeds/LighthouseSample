@@ -115,13 +115,24 @@ namespace Lighthouse.Core.Scene
                 .Select(x => x.Leave(transitionData, transitionType, cancellationToken)));
         }
 
-        public void InitializeCanvas(Camera camera, CommonSceneKey[] requestCommonSceneIds)
+        public void InitializeCanvas(ISceneCamera sceneCamera, CommonSceneKey[] requestCommonSceneIds)
         {
             foreach (var commonScene in loadedCommonScenes)
             {
                 if (requestCommonSceneIds.Contains(commonScene.CommonSceneId) && commonScene is ICanvasSceneBase canvasCommonScene)
                 {
-                    canvasCommonScene.InitializeCanvas(camera);
+                    canvasCommonScene.InitializeCanvas(sceneCamera);
+                }
+            }
+        }
+
+        public virtual void OnSceneTransitionFinished(CommonSceneKey[] requestCommonSceneIds)
+        {
+            foreach (var commonScene in loadedCommonScenes)
+            {
+                if (requestCommonSceneIds.Contains(commonScene.CommonSceneId))
+                {
+                    commonScene.OnSceneTransitionFinished();
                 }
             }
         }

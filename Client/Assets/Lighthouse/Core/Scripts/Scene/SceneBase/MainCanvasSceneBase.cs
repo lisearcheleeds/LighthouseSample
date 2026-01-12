@@ -7,8 +7,8 @@ namespace Lighthouse.Core.Scene
     [RequireComponent(typeof(SceneCanvasInitializer))]
     public abstract class MainCanvasSceneBase<TTransitionData> : MainSceneBase<TTransitionData>, ICanvasSceneBase where TTransitionData : TransitionDataBase, new()
     {
-        CanvasGroup canvasGroup;
-        SceneCanvasInitializer canvasInitializer;
+        [SerializeField] CanvasGroup canvasGroup;
+        [SerializeField] SceneCanvasInitializer canvasInitializer;
         ISceneCamera[] placeholderCameras;
 
         public override ISceneCamera[] GetSceneCameraList()
@@ -16,29 +16,24 @@ namespace Lighthouse.Core.Scene
             return placeholderCameras;
         }
 
-        public virtual void InitializeCanvas(Camera canvasCamera)
+        public virtual void InitializeCanvas(ISceneCamera canvasCamera)
         {
-            canvasInitializer = GetComponent<SceneCanvasInitializer>();
             canvasInitializer.Initialize(canvasCamera);
-
-            canvasGroup = GetComponent<CanvasGroup>();
         }
 
         protected override async UniTask OnBeginInAnimation(TransitionType transitionType)
         {
             await base.OnBeginInAnimation(transitionType);
-            canvasGroup.alpha = 0f;
+            canvasGroup.alpha = 1f;
         }
 
         protected override UniTask OnCompleteInAnimation(TransitionType transitionType)
         {
-            canvasGroup.alpha = 1f;
             return UniTask.CompletedTask;
         }
 
         protected override UniTask OnBeginOutAnimation(TransitionType transitionType)
         {
-            canvasGroup.alpha = 1f;
             return UniTask.CompletedTask;
         }
 
@@ -47,5 +42,15 @@ namespace Lighthouse.Core.Scene
             canvasGroup.alpha = 0f;
             await base.OnCompleteOutAnimation(transitionType);
         }
+
+#if UNITY_EDITOR
+        protected override void OnValidate()
+        {
+            base.OnValidate();
+
+            canvasInitializer ??= GetComponent<SceneCanvasInitializer>();
+            canvasGroup ??= GetComponent<CanvasGroup>();
+        }
+#endif
     }
 }

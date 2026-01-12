@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using VContainer;
 
 namespace Lighthouse.Core.Scene
 {
     public sealed class SceneManager
     {
-        readonly SceneGroupController sceneGroupController;
+        readonly ISceneGroupController sceneGroupController;
 
         public MainSceneKey CurrentMainSceneKey => sceneGroupController.CurrentMainSceneKey;
         public ISceneTransitionPhase CurrentTransitionPhase => sceneGroupController.CurrentTransitionPhase;
@@ -19,19 +18,18 @@ namespace Lighthouse.Core.Scene
         Stack<TransitionDataBase> transitionDataStack = new();
 
         [Inject]
-        public SceneManager(SceneGroupController sceneGroupController)
+        public SceneManager(ISceneGroupController sceneGroupController)
         {
             this.sceneGroupController = sceneGroupController;
         }
 
-        public void TransitionScene(TransitionDataBase nextTransitionData)
+        public void TransitionScene(TransitionDataBase nextTransitionData, MainSceneKey backMainSceneKey = null, Action<bool> onComplete = null)
         {
-            TransitionScene(nextTransitionData, null);
-        }
-
-        public void TransitionScene(TransitionDataBase nextTransitionData, MainSceneKey backMainSceneKey)
-        {
-            TransitionSceneAsync(nextTransitionData, TransitionType.Default, backMainSceneKey).Forget();
+            UniTask.Void(async () =>
+            {
+                var isSuccess = await TransitionSceneAsync(nextTransitionData, TransitionType.Default, backMainSceneKey);
+                onComplete?.Invoke(isSuccess);
+            });
         }
 
         public void BackScene()

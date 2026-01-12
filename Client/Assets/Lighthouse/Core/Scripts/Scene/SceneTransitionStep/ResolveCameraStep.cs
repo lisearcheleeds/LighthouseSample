@@ -25,10 +25,10 @@ namespace Lighthouse.Core.Scene
 
             if (afterMainSceneGroup.CurrentScene is ICanvasSceneBase mainSceneBase)
             {
-                mainSceneBase.InitializeCanvas(sceneCameraManager.UICamera.GetCamera());
+                mainSceneBase.InitializeCanvas(sceneCameraManager.UICamera);
             }
 
-            commonSceneManager.InitializeCanvas(sceneCameraManager.UICamera.GetCamera(), transitionData.RequireCommonSceneIds);
+            commonSceneManager.InitializeCanvas(sceneCameraManager.UICamera, transitionData.RequireCommonSceneIds);
 
             return UniTask.CompletedTask;
         }

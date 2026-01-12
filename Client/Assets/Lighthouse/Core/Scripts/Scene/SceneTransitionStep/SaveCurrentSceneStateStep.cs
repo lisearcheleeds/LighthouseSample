@@ -15,7 +15,10 @@ namespace Lighthouse.Core.Scene
             CommonSceneManager commonSceneManager,
             CancellationToken cancelToken)
         {
-            await beforeMainSceneGroup.SaveSceneState(cancelToken);
+            if (beforeMainSceneGroup != null)
+            {
+                await beforeMainSceneGroup.SaveSceneState(cancelToken);
+            }
         }
     }
 }

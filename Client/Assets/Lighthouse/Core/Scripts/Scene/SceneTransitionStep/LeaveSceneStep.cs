@@ -16,7 +16,7 @@ namespace Lighthouse.Core.Scene
             CancellationToken cancelToken)
         {
             await UniTask.WhenAll(
-                beforeMainSceneGroup.Leave(transitionData, transitionType, cancelToken),
+                beforeMainSceneGroup?.Leave(transitionData, transitionType, cancelToken) ?? UniTask.CompletedTask,
                 commonSceneManager.Leave(transitionData, transitionType, cancelToken));
         }
     }

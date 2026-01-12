@@ -1,26 +1,14 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
 namespace Lighthouse.Core.Scene
 {
-    [RequireComponent(typeof(SceneTransitionAnimator))]
+    [RequireComponent(typeof(SceneTransitionAnimatorManager))]
     public abstract class SceneBase : MonoBehaviour
     {
-        protected SceneTransitionAnimator SceneTransitionAnimator
-        {
-            get
-            {
-                if (sceneTransitionAnimator == null)
-                {
-                    sceneTransitionAnimator = GetComponent<SceneTransitionAnimator>();
-                }
-
-                return sceneTransitionAnimator;
-            }
-        }
-
-        SceneTransitionAnimator sceneTransitionAnimator;
+        [SerializeField] SceneTransitionAnimatorManager sceneTransitionAnimatorManager;
 
         public virtual ISceneCamera[] GetSceneCameraList()
         {
@@ -62,21 +50,25 @@ namespace Lighthouse.Core.Scene
 
         public async UniTask ResetAnimation(TransitionType transitionType)
         {
-            await sceneTransitionAnimator.ResetAnimation(transitionType);
+            await sceneTransitionAnimatorManager.ResetAnimation(transitionType);
         }
 
         public async UniTask InAnimation(TransitionType transitionType)
         {
             await OnBeginInAnimation(transitionType);
-            await sceneTransitionAnimator.In(transitionType);
+            await sceneTransitionAnimatorManager.In(transitionType);
             await OnCompleteInAnimation(transitionType);
         }
 
         public async UniTask OutAnimation(TransitionType transitionType)
         {
             await OnBeginOutAnimation(transitionType);
-            await sceneTransitionAnimator.Out(transitionType);
+            await sceneTransitionAnimatorManager.Out(transitionType);
             await OnCompleteOutAnimation(transitionType);
+        }
+
+        public virtual void OnSceneTransitionFinished()
+        {
         }
 
         protected virtual UniTask OnBeginInAnimation(TransitionType transitionType)
@@ -100,5 +92,12 @@ namespace Lighthouse.Core.Scene
             gameObject.SetActive(false);
             return UniTask.CompletedTask;
         }
+
+#if UNITY_EDITOR
+        protected virtual void OnValidate()
+        {
+            sceneTransitionAnimatorManager ??= GetComponent<SceneTransitionAnimatorManager>();
+        }
+#endif
     }
 }

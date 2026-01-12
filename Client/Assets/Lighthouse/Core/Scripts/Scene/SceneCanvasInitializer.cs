@@ -7,11 +7,11 @@ namespace Lighthouse.Core.Scene
     {
         [SerializeField] Canvas[] sceneCanvasList;
 
-        public void Initialize(Camera canvasCamera)
+        public void Initialize(ISceneCamera canvasCamera)
         {
             foreach (var canvas in sceneCanvasList.Where(c => c.worldCamera == null))
             {
-                canvas.worldCamera = canvasCamera;
+                canvas.worldCamera = canvasCamera.GetCamera();
             }
         }
     }

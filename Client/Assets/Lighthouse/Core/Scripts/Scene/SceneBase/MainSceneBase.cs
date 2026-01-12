@@ -38,10 +38,6 @@ namespace Lighthouse.Core.Scene
             return UniTask.CompletedTask;
         }
 
-        protected virtual void OnSceneTransitionFinished()
-        {
-        }
-
         protected virtual void OnBackKeyFallback()
         {
         }

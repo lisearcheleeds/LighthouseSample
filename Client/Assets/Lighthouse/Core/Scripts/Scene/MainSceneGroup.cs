@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -26,7 +27,12 @@ namespace Lighthouse.Core.Scene
 
         public ISceneCamera[] GetSceneCameraList()
         {
-            return currentScene.GetSceneCameraList();
+            if (currentScene != null)
+            {
+                return currentScene.GetSceneCameraList();
+            }
+
+            return null;
         }
 
         public async UniTask Enter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancellationToken)
@@ -42,7 +48,10 @@ namespace Lighthouse.Core.Scene
 
         public async UniTask ResetAnimation(TransitionType transitionType)
         {
-            await currentScene.ResetAnimation(transitionType);
+            if (currentScene != null)
+            {
+                await currentScene.ResetAnimation(transitionType);
+            }
         }
 
         public async UniTask InAnimation(TransitionDataBase transitionData, TransitionType transitionType)
@@ -67,7 +76,7 @@ namespace Lighthouse.Core.Scene
 
         public async UniTask Load()
         {
-            Debug.Assert(!loadedScenes.Any(), "[MainSceneGroup] Duplicate load");
+            Debug.Assert(!loadedScenes?.Any() ?? true, "[MainSceneGroup] Duplicate load");
 
             foreach (var sceneId in GroupMainSceneIds)
             {
@@ -76,6 +85,7 @@ namespace Lighthouse.Core.Scene
 
             await UniTask.DelayFrame(1);
 
+            loadedScenes = new List<MainSceneBase>();
             loadedScenes.AddRange(GroupMainSceneIds.Select(FindSceneBase));
 
             await UniTask.WhenAll(loadedScenes.Select(s => s.OnLoad()));
@@ -116,11 +126,20 @@ namespace Lighthouse.Core.Scene
 
         MainSceneBase FindSceneBase(MainSceneKey mainSceneKey)
         {
-            return UnityEngine.SceneManagement.SceneManager
-                .GetSceneByName(mainSceneKey.Name)
-                .GetRootGameObjects()
-                .Select(x => x.GetComponent<MainSceneBase>())
-                .First(x => x != null);
+            try
+            {
+                return UnityEngine.SceneManagement.SceneManager
+                    .GetSceneByName(mainSceneKey.Name)
+                    .GetRootGameObjects()
+                    .Select(x => x.GetComponent<MainSceneBase>())
+                    .First(x => x != null);
+            }
+            catch
+            {
+                Debug.LogError($"[MainSceneGroup] MainSceneBase NotFound\n" +
+                               $"To add a scene, you need to add the scene to UnityEditor and place a GameObject that inherits MainSceneBase at the root of the added scene.");
+                throw;
+            }
         }
     }
 }

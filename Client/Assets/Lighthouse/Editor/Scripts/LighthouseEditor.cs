@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Lighthouse.Editor.Scripts.ScriptableObject;
+using Lighthouse.Editor.ScriptableObject;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,6 +16,12 @@ namespace Lighthouse.Editor.Scripts
         public static void ShowGenerateSettings()
         {
             ShowSettings<GenerateSettings>();
+        }
+
+        [MenuItem("Lighthouse/Settings/SceneEditSettings")]
+        public static void ShowSceneEditSettings()
+        {
+            ShowSettings<SceneEditSettings>();
         }
 
         public static T GetSettings<T>() where T : UnityEngine.ScriptableObject

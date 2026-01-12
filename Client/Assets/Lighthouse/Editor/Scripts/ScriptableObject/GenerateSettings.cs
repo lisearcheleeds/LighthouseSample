@@ -1,7 +1,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace Lighthouse.Editor.Scripts.ScriptableObject
+namespace Lighthouse.Editor.ScriptableObject
 {
     public class GenerateSettings : UnityEngine.ScriptableObject
     {

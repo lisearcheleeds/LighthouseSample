@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-
-namespace Lighthouse.Core.Scene
+﻿namespace Lighthouse.Core.Scene
 {
     public interface ICanvasSceneBase
     {
         ISceneCamera[] GetSceneCameraList();
-        void InitializeCanvas(Camera canvasCamera);
+        void InitializeCanvas(ISceneCamera canvasCamera);
     }
 }
