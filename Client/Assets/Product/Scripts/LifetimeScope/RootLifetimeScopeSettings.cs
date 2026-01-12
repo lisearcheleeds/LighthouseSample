@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Product
+namespace Product.LifetimeScope
 {
     [CreateAssetMenu(fileName = "RootLifetimeScopeSettings", menuName = "Scriptable Objects/RootLifetimeScopeSettings")]
     public class RootLifetimeScopeSettings : ScriptableObject

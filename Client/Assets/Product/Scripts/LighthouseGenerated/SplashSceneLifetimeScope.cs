@@ -1,11 +1,11 @@
-﻿using Product.View.Splash;
+﻿using Product.View.Scene.Splash;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace ProductNameSpace
+namespace Product.LighthouseGenerated
 {
-    public class SplashSceneLifetimeScope : LifetimeScope
+    public class SplashSceneLifetimeScope : VContainer.Unity.LifetimeScope
     {
         [SerializeField] SplashScene splashScene;
 

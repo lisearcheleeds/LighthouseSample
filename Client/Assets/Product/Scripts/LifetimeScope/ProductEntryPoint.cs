@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Core.Scene;
-using UnityEngine;
+using Product.Util;
 using VContainer;
 using VContainer.Unity;
 
-namespace Product.Util
+namespace Product.LifetimeScope
 {
     public class ProductEntryPoint : IAsyncStartable
     {
@@ -25,7 +25,7 @@ namespace Product.Util
 
         public async UniTask StartAsync(CancellationToken cancellation)
         {
-            mainSceneGroupProvider.SetEnqueueParentLifetimeScope(() => LifetimeScope.EnqueueParent(productLifetimeScope));
+            mainSceneGroupProvider.SetEnqueueParentLifetimeScope(() => VContainer.Unity.LifetimeScope.EnqueueParent(productLifetimeScope));
 
             await launcher.Launch();
         }

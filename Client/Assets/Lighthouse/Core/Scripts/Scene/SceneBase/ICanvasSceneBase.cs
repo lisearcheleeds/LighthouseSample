@@ -1,4 +1,4 @@
-﻿namespace Lighthouse.Core.Scene
+﻿namespace Lighthouse.Core.Scene.SceneBase
 {
     public interface ICanvasSceneBase
     {

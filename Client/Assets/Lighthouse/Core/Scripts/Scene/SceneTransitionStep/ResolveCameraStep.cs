@@ -1,8 +1,9 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using Lighthouse.Core.Scene.SceneBase;
 using UnityEngine;
 
-namespace Lighthouse.Core.Scene
+namespace Lighthouse.Core.Scene.SceneTransitionStep
 {
     public sealed class ResolveCameraStep : ISceneTransitionStep
     {

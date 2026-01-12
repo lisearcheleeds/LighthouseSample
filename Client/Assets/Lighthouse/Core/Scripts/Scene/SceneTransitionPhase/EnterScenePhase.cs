@@ -1,4 +1,6 @@
-﻿namespace Lighthouse.Core.Scene
+﻿using Lighthouse.Core.Scene.SceneTransitionStep;
+
+namespace Lighthouse.Core.Scene.SceneTransitionPhase
 {
     public sealed class EnterScenePhase : ISceneTransitionPhase
     {

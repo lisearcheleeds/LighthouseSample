@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Product.Constant
+namespace Lighthouse.Core.Constant
 {
     public static class AnimatorKey
     {

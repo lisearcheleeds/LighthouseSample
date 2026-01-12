@@ -3,7 +3,7 @@ using Lighthouse.Editor.ScriptableObject;
 using UnityEditor;
 using UnityEngine;
 
-namespace Lighthouse.Editor.Scripts
+namespace Lighthouse.Editor
 {
     public class LighthouseEditor : UnityEditor.Editor
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Lighthouse.Core.Scene
+namespace Lighthouse.Core.Scene.SceneBase
 {
     public abstract class CommonSceneBase : SceneBase
     {

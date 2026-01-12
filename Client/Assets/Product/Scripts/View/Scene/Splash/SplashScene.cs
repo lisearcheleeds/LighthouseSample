@@ -1,11 +1,12 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Core.Scene;
-using Product.View.Title;
+using Lighthouse.Core.Scene.SceneBase;
+using Product.View.Scene.Title;
 using UnityEngine;
 using VContainer;
 
-namespace Product.View.Splash
+namespace Product.View.Scene.Splash
 {
     public class SplashScene : MainCanvasSceneBase<SplashScene.SplashTransitionData>
     {

@@ -1,8 +1,8 @@
-﻿using Lighthouse.Core.Scene;
+﻿using Lighthouse.Core.Scene.SceneBase;
 using Product.Util;
 using UnityEngine;
 
-namespace Lighthouse.Editor.PostProcess.SceneEditor
+namespace Lighthouse.Core.EditorTool.SceneEditor
 {
     public class DefaultCanvasSceneEditorOnlyObject : MonoBehaviour, IEditorOnlyObjectCanvasScene
     {

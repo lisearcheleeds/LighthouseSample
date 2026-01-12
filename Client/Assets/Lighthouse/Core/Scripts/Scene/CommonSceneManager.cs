@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
+using Lighthouse.Core.Scene.SceneBase;
 using UnityEngine.SceneManagement;
 
 namespace Lighthouse.Core.Scene

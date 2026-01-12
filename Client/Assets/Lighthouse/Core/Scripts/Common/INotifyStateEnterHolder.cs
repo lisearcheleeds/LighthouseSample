@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Product.Util
+namespace Lighthouse.Core.Common
 {
     internal interface INotifyStateEnterHolder
     {

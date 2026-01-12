@@ -1,6 +1,7 @@
 ﻿using Lighthouse.Core.Scene;
+using Lighthouse.Core.Scene.SceneBase;
 
-namespace Product.View.GlobalHeader
+namespace Product.View.Scene.GlobalHeader
 {
     public class GlobalHeaderScene : CommonCanvasSceneBase
     {

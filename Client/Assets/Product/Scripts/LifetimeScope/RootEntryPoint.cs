@@ -2,7 +2,7 @@
 using VContainer;
 using VContainer.Unity;
 
-namespace Product.Util
+namespace Product.LifetimeScope
 {
     public class RootEntryPoint : IStartable
     {
@@ -18,7 +18,7 @@ namespace Product.Util
 
         public void Start()
         {
-            using (LifetimeScope.EnqueueParent(rootLifetimeScope))
+            using (VContainer.Unity.LifetimeScope.EnqueueParent(rootLifetimeScope))
             {
                 var instance = Object.Instantiate(rootLifetimeScopeSettings.ProductLifetimeScopePrefab);
                 Object.DontDestroyOnLoad(instance.gameObject);

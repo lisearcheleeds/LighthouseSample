@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Lighthouse.Core.Scene;
-using Product.View.Splash;
+using Product.View.Scene.Splash;
 using UnityEngine;
 using VContainer;
 

@@ -3,7 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Lighthouse.Core.Scene
+namespace Lighthouse.Core.Scene.SceneTransitionStep
 {
     public sealed class CleanupStep : ISceneTransitionStep
     {

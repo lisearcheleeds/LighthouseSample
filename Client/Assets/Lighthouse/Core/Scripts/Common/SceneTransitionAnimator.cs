@@ -1,9 +1,9 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using Product.Constant;
+using Lighthouse.Core.Constant;
 using UnityEngine;
 
-namespace Product.Util
+namespace Lighthouse.Core.Common
 {
     public class SceneTransitionAnimator : MonoBehaviour, ISceneTransitionAnimator, INotifyStateEnterHolder
     {

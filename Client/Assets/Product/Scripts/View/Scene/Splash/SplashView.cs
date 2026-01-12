@@ -1,11 +1,11 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using Product.Constant;
-using Product.Util;
+using Lighthouse.Core.Constant;
+using Product.View.Common;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Product.View.Splash
+namespace Product.View.Scene.Splash
 {
     public class SplashView : MonoBehaviour
     {

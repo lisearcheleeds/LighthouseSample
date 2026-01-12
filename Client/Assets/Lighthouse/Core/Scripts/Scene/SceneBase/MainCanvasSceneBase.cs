@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Lighthouse.Core.Scene
+namespace Lighthouse.Core.Scene.SceneBase
 {
     [RequireComponent(typeof(CanvasGroup))]
     [RequireComponent(typeof(SceneCanvasInitializer))]

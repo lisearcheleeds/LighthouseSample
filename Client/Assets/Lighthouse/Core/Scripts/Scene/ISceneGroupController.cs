@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using Lighthouse.Core.Scene.SceneTransitionPhase;
 
 namespace Lighthouse.Core.Scene
 {

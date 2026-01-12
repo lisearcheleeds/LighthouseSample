@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-namespace Product.Util
+namespace Lighthouse.Core.Common
 {
     public class AnimatorStateHook : StateMachineBehaviour
     {

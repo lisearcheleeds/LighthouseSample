@@ -1,6 +1,7 @@
 ﻿using Lighthouse.Core.Scene;
+using Lighthouse.Core.Scene.SceneBase;
 
-namespace Product.View.Title
+namespace Product.View.Scene.Title
 {
     public class TitleScene : MainSceneBase<TitleScene.TitleTransitionData>
     {

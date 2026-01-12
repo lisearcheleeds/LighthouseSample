@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Lighthouse.Core.Scene.SceneBase;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using VContainer;
 
 namespace Lighthouse.Core.Scene
 {

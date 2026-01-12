@@ -5,7 +5,7 @@ using Lighthouse.Editor.ScriptableObject;
 using UnityEditor;
 using UnityEngine;
 
-namespace Lighthouse.Editor.Scripts.Generator
+namespace Lighthouse.Editor.ScriptGenerator
 {
     [InitializeOnLoad]
     public static class SceneIdGenerator

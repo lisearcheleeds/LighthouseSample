@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Cysharp.Threading.Tasks;
-using Product.Util;
+using Lighthouse.Core.Common;
 using UnityEngine;
 
 namespace Lighthouse.Core.Scene

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
 using Product.Util;
-using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using VContainer;
 
-namespace Lighthouse.Core.Scene
+namespace Lighthouse.Core.Scene.SceneCamera
 {
     public class SceneCameraManager : ISceneCameraManager
     {

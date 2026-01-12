@@ -1,11 +1,10 @@
-﻿using Product.Util;
-using UnityEngine;
+﻿using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Product
+namespace Product.LifetimeScope
 {
-    public class RootLifetimeScope : LifetimeScope
+    public class RootLifetimeScope : VContainer.Unity.LifetimeScope
     {
         [SerializeField] RootLifetimeScopeSettings rootLifetimeScopeSettings;
 

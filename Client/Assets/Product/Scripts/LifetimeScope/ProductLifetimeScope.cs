@@ -1,12 +1,13 @@
 ﻿using Lighthouse.Core.Scene;
+using Lighthouse.Core.Scene.SceneCamera;
 using Product.Util;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Product
+namespace Product.LifetimeScope
 {
-    public class ProductLifetimeScope : LifetimeScope
+    public class ProductLifetimeScope : VContainer.Unity.LifetimeScope
     {
         [SerializeField] ProductLifetimeScopeSettings productLifetimeScopeSettings;
         [SerializeField] CanvasSceneObject canvasSceneObjectPrefab;

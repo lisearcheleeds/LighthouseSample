@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-namespace Lighthouse.Core.Scene
+namespace Lighthouse.Core.Scene.SceneCamera
 {
     [RequireComponent(typeof(Camera))]
     public class SceneCamera : MonoBehaviour, ISceneCamera

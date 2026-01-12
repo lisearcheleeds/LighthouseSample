@@ -1,8 +1,7 @@
 ﻿using System.Linq;
-using Cysharp.Threading.Tasks;
-using Lighthouse.Core.Scene;
+using Lighthouse.Core.EditorTool.SceneEditor;
+using Lighthouse.Core.Scene.SceneBase;
 using Lighthouse.Editor.ScriptableObject;
-using Lighthouse.Editor.Scripts;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;

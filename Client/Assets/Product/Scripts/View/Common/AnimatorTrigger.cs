@@ -1,7 +1,8 @@
 using System;
+using Lighthouse.Core.Common;
 using UnityEngine;
 
-namespace Product.Util
+namespace Product.View.Common
 {
     public class AnimatorTrigger : MonoBehaviour, INotifyStateEnterHolder
     {

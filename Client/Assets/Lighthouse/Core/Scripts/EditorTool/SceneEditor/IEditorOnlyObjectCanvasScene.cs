@@ -1,6 +1,6 @@
-﻿using Lighthouse.Core.Scene;
+﻿using Lighthouse.Core.Scene.SceneBase;
 
-namespace Lighthouse.Editor.PostProcess.SceneEditor
+namespace Lighthouse.Core.EditorTool.SceneEditor
 {
     public interface IEditorOnlyObjectCanvasScene
     {
