@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Lighthouse.Core.Common
 {
-    public class SceneTransitionAnimator : MonoBehaviour, ISceneTransitionAnimator, INotifyStateEnterHolder
+    public class TransitionAnimator : MonoBehaviour, ITransitionAnimator, INotifyStateEnterHolder
     {
         [SerializeField] Animator resetAnimator;
         [SerializeField] Animator inAnimator;
@@ -32,7 +32,7 @@ namespace Lighthouse.Core.Common
             completionSource.TrySetResult();
         }
 
-        async UniTask ISceneTransitionAnimator.ResetAnimation()
+        async UniTask ITransitionAnimator.ResetAnimation()
         {
             if (resetAnimator == null)
             {
@@ -42,7 +42,7 @@ namespace Lighthouse.Core.Common
             await ExecuteAnimation(resetAnimator, AnimatorKey.Reset);
         }
 
-        async UniTask ISceneTransitionAnimator.InAnimation()
+        async UniTask ITransitionAnimator.InAnimation()
         {
             if (inAnimator == null)
             {
@@ -52,7 +52,7 @@ namespace Lighthouse.Core.Common
             await ExecuteAnimation(inAnimator, AnimatorKey.In);
         }
 
-        async UniTask ISceneTransitionAnimator.OutAnimation()
+        async UniTask ITransitionAnimator.OutAnimation()
         {
             if (outAnimator == null)
             {

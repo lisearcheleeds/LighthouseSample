@@ -11,6 +11,7 @@ namespace Lighthouse.Core.Scene
         {
             foreach (var canvas in sceneCanvasList.Where(c => c.worldCamera == null))
             {
+                canvas.renderMode = RenderMode.ScreenSpaceCamera;
                 canvas.worldCamera = canvasCamera.GetCamera();
             }
         }

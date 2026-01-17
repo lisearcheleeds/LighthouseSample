@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Lighthouse.Core.Scene.SceneBase
 {
@@ -21,28 +20,18 @@ namespace Lighthouse.Core.Scene.SceneBase
             canvasInitializer.Initialize(canvasCamera);
         }
 
-        protected override async UniTask OnBeginInAnimation(TransitionType transitionType)
+        protected override void OnBeginInAnimation(TransitionType transitionType, bool withStateChange)
         {
-            await base.OnBeginInAnimation(transitionType);
-            canvasGroup.alpha = 0f;
+            base.OnBeginInAnimation(transitionType, withStateChange);
+
+            canvasGroup.alpha = withStateChange ? 1.0f : canvasGroup.alpha;
         }
 
-        protected override UniTask OnCompleteInAnimation(TransitionType transitionType)
+        protected override void OnCompleteOutAnimation(TransitionType transitionType, bool withStateChange)
         {
-            canvasGroup.alpha = 1f;
-            return UniTask.CompletedTask;
-        }
+            base.OnCompleteOutAnimation(transitionType, withStateChange);
 
-        protected override UniTask OnBeginOutAnimation(TransitionType transitionType)
-        {
-            canvasGroup.alpha = 1f;
-            return UniTask.CompletedTask;
-        }
-
-        protected override async UniTask OnCompleteOutAnimation(TransitionType transitionType)
-        {
-            canvasGroup.alpha = 0f;
-            await base.OnCompleteOutAnimation(transitionType);
+            canvasGroup.alpha = withStateChange ? 0.0f : canvasGroup.alpha;
         }
 
 #if UNITY_EDITOR

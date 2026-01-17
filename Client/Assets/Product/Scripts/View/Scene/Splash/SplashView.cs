@@ -1,7 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Core.Constant;
-using Product.View.Common;
+using Lighthouse.Core.Scene;
+using Product.View.Scene.Overlay;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,10 +14,12 @@ namespace Product.View.Scene.Splash
         [SerializeField] Sprite splashImage1;
         [SerializeField] Sprite splashImage2;
 
-        [SerializeField] AnimatorTrigger animatorTrigger;
+        OverlayScene overlayScene;
 
-        public void SetupFirstSplashImage()
+        public void SetupFirstSplashImage(OverlayScene overlayScene)
         {
+            this.overlayScene = overlayScene;
+
             splashImage.sprite = splashImage1;
         }
 
@@ -28,21 +30,17 @@ namespace Product.View.Scene.Splash
 
         async UniTask PlaySplashAnimationAsync(Action onComplete)
         {
-            await UniTask.Delay(2000);
+            await UniTask.Delay(1500);
 
-            var tcs = new UniTaskCompletionSource();
-            animatorTrigger.SetTrigger(AnimatorKey.Out, AnimatorKey.EndState, onComplete: () => tcs.TrySetResult());
-            await tcs.Task;
+            await overlayScene.PlayOutAnimation(TransitionType.Default, false);
 
             splashImage.sprite = splashImage2;
 
             await UniTask.Delay(100);
 
-            var tcs2 = new UniTaskCompletionSource();
-            animatorTrigger.SetTrigger(AnimatorKey.In, AnimatorKey.EndState, onComplete: () => tcs2.TrySetResult());
-            await tcs2.Task;
+            await overlayScene.PlayInAnimation(TransitionType.Default, false);
 
-            await UniTask.Delay(2000);
+            await UniTask.Delay(1500);
             onComplete();
         }
     }

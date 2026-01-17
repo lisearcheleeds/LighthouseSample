@@ -5,21 +5,21 @@ using UnityEngine;
 
 namespace Lighthouse.Core.Scene
 {
-    public class SceneTransitionAnimatorManager : MonoBehaviour
+    public class TransitionAnimatorManager : MonoBehaviour
     {
-        ISceneTransitionAnimator[] sceneTransitionAnimatorList;
+        ITransitionAnimator[] sceneTransitionAnimatorList;
 
         public async UniTask ResetAnimation(TransitionType transitionType)
         {
             await UniTask.WhenAll(sceneTransitionAnimatorList.Select(x => x.ResetAnimation()));
         }
 
-        public async UniTask In(TransitionType transitionType)
+        public async UniTask InAnimation(TransitionType transitionType)
         {
             await UniTask.WhenAll(sceneTransitionAnimatorList.Select(x => x.InAnimation()));
         }
 
-        public async UniTask Out(TransitionType transitionType)
+        public async UniTask OutAnimation(TransitionType transitionType)
         {
             await UniTask.WhenAll(sceneTransitionAnimatorList.Select(x => x.OutAnimation()));
         }
@@ -27,11 +27,11 @@ namespace Lighthouse.Core.Scene
 #if UNITY_EDITOR
         void OnValidate()
         {
-            sceneTransitionAnimatorList = GetComponentsInChildren<MonoBehaviour>().OfType<ISceneTransitionAnimator>().ToArray();
+            sceneTransitionAnimatorList = GetComponentsInChildren<MonoBehaviour>().OfType<ITransitionAnimator>().ToArray();
 
             if (sceneTransitionAnimatorList.Length != 0)
             {
-                Debug.Log($"[SceneTransitionAnimatorManager] Collect ISceneTransitionAnimator {sceneTransitionAnimatorList.Length}");
+                Debug.Log($"[TransitionAnimatorManager] Collect ITransitionAnimator {sceneTransitionAnimatorList.Length}");
             }
         }
 #endif

@@ -84,7 +84,7 @@ namespace Lighthouse.Core.Scene
                 return false;
             }
 
-            var transitionSuccess = await sceneGroupController.StartCrossTransitionSequence(nextTransitionData, transitionType, CancellationToken.None);
+            var transitionSuccess = await sceneGroupController.StartExclusiveTransitionSequence(nextTransitionData, transitionType, CancellationToken.None);
             if (!transitionSuccess)
             {
                 return false;

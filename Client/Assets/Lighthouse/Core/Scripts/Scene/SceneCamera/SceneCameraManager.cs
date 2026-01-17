@@ -23,7 +23,7 @@ namespace Lighthouse.Core.Scene.SceneCamera
 
         void ISceneCameraManager.UpdateCameraStack(
             MainSceneGroup afterMainSceneGroup,
-            CommonSceneManager commonSceneManager,
+            ICommonSceneManager commonSceneManager,
             CommonSceneKey[] targetCommonSceneIds)
         {
             var sceneCameras = commonSceneManager

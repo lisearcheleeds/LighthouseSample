@@ -14,7 +14,7 @@ namespace Lighthouse.Core.Scene.SceneTransitionStep
             MainSceneGroup beforeMainSceneGroup,
             MainSceneGroup afterMainSceneGroup,
             ISceneCameraManager sceneCameraManager,
-            CommonSceneManager commonSceneManager,
+            ICommonSceneManager commonSceneManager,
             CancellationToken cancelToken)
         {
             // Before GC

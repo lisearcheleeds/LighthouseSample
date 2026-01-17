@@ -4,11 +4,8 @@ using UnityEngine;
 
 namespace Lighthouse.Core.Scene.SceneBase
 {
-    [RequireComponent(typeof(SceneTransitionAnimatorManager))]
     public abstract class SceneBase : MonoBehaviour
     {
-        [SerializeField] SceneTransitionAnimatorManager sceneTransitionAnimatorManager;
-
         public virtual ISceneCamera[] GetSceneCameraList()
         {
             return null;
@@ -47,56 +44,58 @@ namespace Lighthouse.Core.Scene.SceneBase
         {
         }
 
-        public async UniTask ResetAnimation(TransitionType transitionType)
+        public async UniTask PlayResetAnimation(TransitionType transitionType)
         {
-            await sceneTransitionAnimatorManager.ResetAnimation(transitionType);
+            await ResetAnimation(transitionType);
         }
 
-        public async UniTask InAnimation(TransitionType transitionType)
+        public async UniTask PlayInAnimation(TransitionType transitionType, bool withStateChange)
         {
-            await OnBeginInAnimation(transitionType);
-            await sceneTransitionAnimatorManager.In(transitionType);
-            await OnCompleteInAnimation(transitionType);
+            OnBeginInAnimation(transitionType, withStateChange);
+            await InAnimation(transitionType, withStateChange);
+            OnCompleteInAnimation(transitionType, withStateChange);
         }
 
-        public async UniTask OutAnimation(TransitionType transitionType)
+        public async UniTask PlayOutAnimation(TransitionType transitionType, bool withStateChange)
         {
-            await OnBeginOutAnimation(transitionType);
-            await sceneTransitionAnimatorManager.Out(transitionType);
-            await OnCompleteOutAnimation(transitionType);
+            OnBeginOutAnimation(transitionType, withStateChange);
+            await OutAnimation(transitionType, withStateChange);
+            OnCompleteOutAnimation(transitionType, withStateChange);
         }
 
         public virtual void OnSceneTransitionFinished()
         {
         }
 
-        protected virtual UniTask OnBeginInAnimation(TransitionType transitionType)
-        {
-            gameObject.SetActive(true);
-            return UniTask.CompletedTask;
-        }
-
-        protected virtual UniTask OnCompleteInAnimation(TransitionType transitionType)
+        protected virtual UniTask ResetAnimation(TransitionType transitionType)
         {
             return UniTask.CompletedTask;
         }
 
-        protected virtual UniTask OnBeginOutAnimation(TransitionType transitionType)
+        protected virtual void OnBeginInAnimation(TransitionType transitionType, bool withStateChange)
+        {
+        }
+
+        protected virtual UniTask InAnimation(TransitionType transitionType, bool withStateChange)
         {
             return UniTask.CompletedTask;
         }
 
-        protected virtual UniTask OnCompleteOutAnimation(TransitionType transitionType)
+        protected virtual void OnCompleteInAnimation(TransitionType transitionType, bool withStateChange)
         {
-            gameObject.SetActive(false);
+        }
+
+        protected virtual void OnBeginOutAnimation(TransitionType transitionType, bool withStateChange)
+        {
+        }
+
+        protected virtual UniTask OutAnimation(TransitionType transitionType, bool withStateChange)
+        {
             return UniTask.CompletedTask;
         }
 
-#if UNITY_EDITOR
-        protected virtual void OnValidate()
+        protected virtual void OnCompleteOutAnimation(TransitionType transitionType, bool withStateChange)
         {
-            sceneTransitionAnimatorManager ??= GetComponent<SceneTransitionAnimatorManager>();
         }
-#endif
     }
 }

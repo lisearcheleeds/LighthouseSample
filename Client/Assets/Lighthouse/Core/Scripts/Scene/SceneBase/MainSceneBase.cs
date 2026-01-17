@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Lighthouse.Core.Scene.SceneBase
 {
@@ -8,11 +9,20 @@ namespace Lighthouse.Core.Scene.SceneBase
         public abstract MainSceneKey MainSceneId { get; }
     }
 
+    [RequireComponent(typeof(TransitionAnimatorManager))]
     public abstract class MainSceneBase<TTransitionData> : MainSceneBase where TTransitionData : TransitionDataBase, new()
     {
+        [SerializeField] TransitionAnimatorManager transitionAnimatorManager;
+
         bool initialized;
 
         protected TTransitionData TransitionData { get; private set; }
+
+        public override UniTask OnLoad()
+        {
+            gameObject.SetActive(false);
+            return UniTask.CompletedTask;
+        }
 
         public override async UniTask Enter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
         {
@@ -33,6 +43,16 @@ namespace Lighthouse.Core.Scene.SceneBase
             return UniTask.CompletedTask;
         }
 
+        protected override async UniTask InAnimation(TransitionType transitionType, bool withStateChange)
+        {
+            await transitionAnimatorManager.InAnimation(transitionType);
+        }
+
+        protected override async UniTask OutAnimation(TransitionType transitionType, bool withStateChange)
+        {
+            await transitionAnimatorManager.OutAnimation(transitionType);
+        }
+
         protected virtual UniTask Setup()
         {
             return UniTask.CompletedTask;
@@ -41,5 +61,12 @@ namespace Lighthouse.Core.Scene.SceneBase
         protected virtual void OnBackKeyFallback()
         {
         }
+
+#if UNITY_EDITOR
+        protected virtual void OnValidate()
+        {
+            transitionAnimatorManager ??= GetComponent<TransitionAnimatorManager>();
+        }
+#endif
     }
 }

@@ -21,7 +21,7 @@ namespace Product.LifetimeScope
             builder.Register<SceneManager>(Lifetime.Singleton);
             builder.Register<SceneGroupController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<MainSceneGroupProvider>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<CommonSceneManager>(Lifetime.Singleton);
+            builder.Register<CommonSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<SceneCameraManager>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.RegisterComponentInNewPrefab(canvasSceneObjectPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -7,44 +8,69 @@ using UnityEngine.SceneManagement;
 
 namespace Lighthouse.Core.Scene
 {
-    public class CommonSceneManager
+    public sealed class CommonSceneManager : ICommonSceneManager
     {
         readonly List<CommonSceneBase> loadedCommonScenes = new();
         readonly List<ICanvasSceneBase> loadedCanvasSceneBases = new();
-
-        public IReadOnlyList<ICanvasSceneBase> LoadedCanvasSceneBases => loadedCanvasSceneBases;
 
         public ISceneCamera[] GetSceneCameraList(CommonSceneKey[] requestCommonSceneIds)
         {
             return loadedCommonScenes
                 .Where(s => requestCommonSceneIds.Contains(s.CommonSceneId))
-                .SelectMany(x => x.GetSceneCameraList())
+                .SelectMany(x => x.GetSceneCameraList() ?? Array.Empty<ISceneCamera>())
                 .ToArray();
         }
 
-        public async UniTask ResetAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType)
+        public async UniTask PlayResetAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType)
         {
-            await UniTask.WhenAll(loadedCommonScenes
-                .Where(s => requestCommonSceneIds.Contains(s.CommonSceneId))
-                .Select(x => x.ResetAnimation(transitionType)));
+            var targetAnimations = loadedCommonScenes
+                .Where(x => requestCommonSceneIds.Contains(x.CommonSceneId) && !x.IsAlwaysInAnimation)
+                .Select(x => x.PlayResetAnimation(transitionType))
+                .ToArray();
+
+            await UniTask.WhenAll(targetAnimations);
         }
 
-        public async UniTask InAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType)
+        public async UniTask PlayInAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType)
         {
-            await UniTask.WhenAll(
-                loadedCommonScenes
-                    .Where(x => (x.VisibleStateType == VisibleStateType.Hidden || x.VisibleStateType == VisibleStateType.Hiding)
-                                && requestCommonSceneIds.Contains(x.CommonSceneId))
-                    .Select(x => x.InAnimation(transitionType)));
+            var targetAnimations = loadedCommonScenes
+                .Where(x =>
+                {
+                    if (requestCommonSceneIds.Contains(x.CommonSceneId))
+                    {
+                        if (x.VisibleStateType == VisibleStateType.Hidden || x.VisibleStateType == VisibleStateType.Hiding || x.IsAlwaysInAnimation)
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                })
+                .Select(x => x.PlayInAnimation(transitionType, (x.VisibleStateType == VisibleStateType.Hidden || x.VisibleStateType == VisibleStateType.Hiding)))
+                .ToArray();
+
+            await UniTask.WhenAll(targetAnimations);
         }
 
-        public async UniTask OutAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType)
+        public async UniTask PlayOutAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType)
         {
-            await UniTask.WhenAll(
-                loadedCommonScenes
-                    .Where(x => (x.VisibleStateType == VisibleStateType.Showing || x.VisibleStateType == VisibleStateType.Visible)
-                                && !requestCommonSceneIds.Contains(x.CommonSceneId))
-                    .Select(x => x.OutAnimation(transitionType)));
+            var targetAnimations = loadedCommonScenes
+                .Where(x =>
+                {
+                    if (!requestCommonSceneIds.Contains(x.CommonSceneId) || x.IsAlwaysOutAnimation)
+                    {
+                        if (x.VisibleStateType == VisibleStateType.Showing || x.VisibleStateType == VisibleStateType.Visible)
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                })
+                .Select(x => x.PlayOutAnimation(transitionType, !requestCommonSceneIds.Contains(x.CommonSceneId)))
+                .ToArray();
+
+            await UniTask.WhenAll(targetAnimations);
         }
 
         public async UniTask LoadCommonScenes(CommonSceneKey[] requestCommonSceneIds)
@@ -103,16 +129,22 @@ namespace Lighthouse.Core.Scene
 
         public async UniTask Enter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancellationToken)
         {
-            await UniTask.WhenAll(loadedCommonScenes
+            var target = loadedCommonScenes
                 .Where(x => transitionData.RequireCommonSceneIds.Contains(x.CommonSceneId))
-                .Select(x => x.Enter(transitionData, transitionType, cancellationToken)));
+                .Select(x => x.Enter(transitionData, transitionType, cancellationToken))
+                .ToArray();
+
+            await UniTask.WhenAll(target);
         }
 
         public async UniTask Leave(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancellationToken)
         {
-            await UniTask.WhenAll(loadedCommonScenes
+            var target = loadedCommonScenes
                 .Where(x => !transitionData.RequireCommonSceneIds.Contains(x.CommonSceneId))
-                .Select(x => x.Leave(transitionData, transitionType, cancellationToken)));
+                .Select(x => x.Leave(transitionData, transitionType, cancellationToken))
+                .ToArray();
+
+            await UniTask.WhenAll(target);
         }
 
         public void InitializeCanvas(ISceneCamera sceneCamera, CommonSceneKey[] requestCommonSceneIds)
@@ -126,7 +158,7 @@ namespace Lighthouse.Core.Scene
             }
         }
 
-        public virtual void OnSceneTransitionFinished(CommonSceneKey[] requestCommonSceneIds)
+        public void OnSceneTransitionFinished(CommonSceneKey[] requestCommonSceneIds)
         {
             foreach (var commonScene in loadedCommonScenes)
             {
@@ -135,6 +167,11 @@ namespace Lighthouse.Core.Scene
                     commonScene.OnSceneTransitionFinished();
                 }
             }
+        }
+
+        public T GetCommonScene<T>() where T: CommonSceneBase
+        {
+            return loadedCommonScenes.OfType<T>().FirstOrDefault();
         }
     }
 }

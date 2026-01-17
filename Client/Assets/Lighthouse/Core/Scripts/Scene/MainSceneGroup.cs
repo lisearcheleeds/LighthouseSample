@@ -50,27 +50,27 @@ namespace Lighthouse.Core.Scene
             await currentScene.Leave(transitionData, transitionType, cancellationToken);
         }
 
-        public async UniTask ResetAnimation(TransitionType transitionType)
+        public async UniTask PlayResetAnimation(TransitionType transitionType)
         {
             if (currentScene != null)
             {
-                await currentScene.ResetAnimation(transitionType);
+                await currentScene.PlayResetAnimation(transitionType);
             }
         }
 
-        public async UniTask InAnimation(TransitionDataBase transitionData, TransitionType transitionType)
+        public async UniTask PlayInAnimation(TransitionDataBase transitionData, TransitionType transitionType)
         {
-            await currentScene.InAnimation(transitionType);
+            await currentScene.PlayInAnimation(transitionType, true);
         }
 
-        public async UniTask OutAnimation(TransitionDataBase transitionData, TransitionType transitionType)
+        public async UniTask PlayOutAnimation(TransitionDataBase transitionData, TransitionType transitionType)
         {
             if (currentScene == null)
             {
                 return;
             }
 
-            await currentScene.OutAnimation(transitionType);
+            await currentScene.PlayOutAnimation(transitionType, true);
         }
 
         public async UniTask SaveSceneState(CancellationToken cancelToken)
@@ -78,7 +78,7 @@ namespace Lighthouse.Core.Scene
             await currentScene.SaveSceneState(cancelToken);
         }
 
-        public async UniTask Load()
+        public async UniTask Load(TransitionDataBase transitionData)
         {
             Debug.Assert(!loadedScenes?.Any() ?? true, "[MainSceneGroup] Duplicate load");
 
@@ -90,12 +90,15 @@ namespace Lighthouse.Core.Scene
                 }
             }
 
-            await UniTask.DelayFrame(1);
+            // NOTE: If there is a problem with acquiring the scene, set DelayFrame(1) and set α to 0 in Awake of ICanvasSceneBase.
+            // await UniTask.DelayFrame(1);
 
             loadedScenes = new List<MainSceneBase>();
             loadedScenes.AddRange(GroupMainSceneIds.Select(FindSceneBase));
 
             await UniTask.WhenAll(loadedScenes.Select(s => s.OnLoad()));
+
+            currentScene = loadedScenes.First(x => x.MainSceneId == transitionData.MainSceneKey);
         }
 
         public async UniTask Unload()

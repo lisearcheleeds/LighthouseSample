@@ -167,6 +167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513f7e3e60254b39b85b6893b2cb18da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Product.View.GlobalHeader.EntryPoint
+  transitionAnimatorManager: {fileID: 1114308253}
+  canvasGroup: {fileID: 1114308255}
+  canvasInitializer: {fileID: 1114308254}
 --- !u!114 &1114308253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +248,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 500
   m_TargetDisplay: 0
 --- !u!114 &1480187602
 MonoBehaviour:

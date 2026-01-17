@@ -1,5 +1,6 @@
 ﻿using Lighthouse.Core.Scene;
 using Lighthouse.Core.Scene.SceneBase;
+using Product.View.Scene.Common;
 
 namespace Product.View.Scene.Edit
 {
@@ -7,7 +8,7 @@ namespace Product.View.Scene.Edit
     {
         public override MainSceneKey MainSceneId => ProductNameSpace.MainSceneId.Edit;
 
-        public class EditTransitionData : TransitionDataBase
+        public class EditTransitionData : ProductTransitionDataBase
         {
             public override MainSceneKey MainSceneKey => ProductNameSpace.MainSceneId.Edit;
         }

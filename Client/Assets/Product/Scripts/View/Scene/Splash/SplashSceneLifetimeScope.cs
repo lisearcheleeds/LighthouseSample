@@ -1,9 +1,8 @@
-﻿using Product.View.Scene.Splash;
-using UnityEngine;
+﻿using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Product.LighthouseGenerated
+namespace Product.View.Scene.Splash
 {
     public class SplashSceneLifetimeScope : VContainer.Unity.LifetimeScope
     {

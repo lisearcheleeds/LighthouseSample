@@ -12,11 +12,11 @@ namespace Lighthouse.Core.Scene.SceneTransitionStep
             MainSceneGroup beforeMainSceneGroup,
             MainSceneGroup afterMainSceneGroup,
             ISceneCameraManager sceneCameraManager,
-            CommonSceneManager commonSceneManager,
+            ICommonSceneManager commonSceneManager,
             CancellationToken cancelToken)
         {
             await commonSceneManager.LoadCommonScenes(transitionData.RequireCommonSceneIds);
-            await commonSceneManager.ResetAnimation(transitionData.RequireCommonSceneIds, transitionType);
+            await commonSceneManager.PlayResetAnimation(transitionData.RequireCommonSceneIds, transitionType);
         }
     }
 }

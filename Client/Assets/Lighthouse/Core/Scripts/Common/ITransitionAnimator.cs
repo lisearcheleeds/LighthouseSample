@@ -2,7 +2,7 @@
 
 namespace Lighthouse.Core.Common
 {
-    public interface ISceneTransitionAnimator
+    public interface ITransitionAnimator
     {
         UniTask ResetAnimation();
         UniTask InAnimation();

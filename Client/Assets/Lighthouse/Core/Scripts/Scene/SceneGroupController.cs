@@ -9,7 +9,7 @@ namespace Lighthouse.Core.Scene
     public class SceneGroupController : ISceneGroupController
     {
         readonly IMainSceneGroupProvider mainSceneGroupProvider;
-        readonly CommonSceneManager commonSceneManager;
+        readonly ICommonSceneManager commonSceneManager;
         readonly ISceneCameraManager sceneCameraManager;
 
         public MainSceneKey CurrentMainSceneKey => currentMainSceneGroup?.CurrentScene != null ? currentMainSceneGroup.CurrentScene.MainSceneId : null;
@@ -31,8 +31,8 @@ namespace Lighthouse.Core.Scene
             new StartTransitionPhase(),
             new OutAnimationPhase(),
             new LeaveScenePhase(),
-            new UnloadScenePhase(),
             new LoadScenePhase(),
+            new UnloadScenePhase(),
             new EnterScenePhase(),
             new InAnimationPhase(),
             new EndTransitionPhase(),
@@ -43,7 +43,7 @@ namespace Lighthouse.Core.Scene
         [Inject]
         public SceneGroupController(
             IMainSceneGroupProvider mainSceneGroupProvider,
-            CommonSceneManager commonSceneManager,
+            ICommonSceneManager commonSceneManager,
             ISceneCameraManager sceneCameraManager)
         {
             this.mainSceneGroupProvider = mainSceneGroupProvider;
@@ -107,6 +107,8 @@ namespace Lighthouse.Core.Scene
             foreach (var transitionPhase in transitionPhases)
             {
                 CurrentTransitionPhase = transitionPhase;
+
+                Debug.Log($"SceneTransition PhaseChanged: {CurrentTransitionPhase.GetType()}");
 
                 var tasks = transitionPhase.Steps.Select(step => step.Run(
                     transitionData,

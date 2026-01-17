@@ -12,12 +12,12 @@ namespace Lighthouse.Core.Scene.SceneTransitionStep
             MainSceneGroup beforeMainSceneGroup,
             MainSceneGroup afterMainSceneGroup,
             ISceneCameraManager sceneCameraManager,
-            CommonSceneManager commonSceneManager,
+            ICommonSceneManager commonSceneManager,
             CancellationToken cancelToken)
         {
             await UniTask.WhenAll(
-                commonSceneManager.OutAnimation(transitionData.RequireCommonSceneIds, transitionType),
-                beforeMainSceneGroup?.OutAnimation(transitionData, transitionType) ?? UniTask.CompletedTask);
+                commonSceneManager.PlayOutAnimation(transitionData.RequireCommonSceneIds, transitionType),
+                beforeMainSceneGroup?.PlayOutAnimation(transitionData, transitionType) ?? UniTask.CompletedTask);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Lighthouse.Core.Scene;
 using Lighthouse.Core.Scene.SceneBase;
+using Product.View.Scene.Common;
 
 namespace Product.View.Scene.Home
 {
@@ -7,7 +8,7 @@ namespace Product.View.Scene.Home
     {
         public override MainSceneKey MainSceneId => ProductNameSpace.MainSceneId.Home;
 
-        public class HomeTransitionData : TransitionDataBase
+        public class HomeTransitionData : ProductTransitionDataBase
         {
             public override MainSceneKey MainSceneKey => ProductNameSpace.MainSceneId.Home;
         }
