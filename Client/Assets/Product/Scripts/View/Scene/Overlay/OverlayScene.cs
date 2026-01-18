@@ -1,9 +1,9 @@
 ﻿using Lighthouse.Core.Scene;
-using Lighthouse.Core.Scene.SceneBase;
+using Product.LighthouseOverride;
 
 namespace Product.View.Scene.Overlay
 {
-    public class OverlayScene : CommonCanvasSceneBase
+    public class OverlayScene : ProductCommonCanvasSceneBase
     {
         public override CommonSceneKey CommonSceneId => ProductNameSpace.CommonSceneId.Overlay;
 

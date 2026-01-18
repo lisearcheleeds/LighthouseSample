@@ -1,7 +1,6 @@
-﻿using Lighthouse.Core.Scene;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
 
-namespace Product.Util
+namespace Lighthouse.Core.Scene.SceneCamera
 {
     public interface ICanvasSceneObject
     {

@@ -1,0 +1,33 @@
+﻿using Cysharp.Threading.Tasks;
+using Lighthouse.Core.Scene;
+using Lighthouse.Core.Scene.SceneBase;
+using Product.View.Animation;
+using UnityEngine;
+
+namespace Product.LighthouseOverride
+{
+    [RequireComponent(typeof(TransitionAnimatorManager))]
+    public abstract class ProductCommonCanvasSceneBase : CommonCanvasSceneBase
+    {
+        [SerializeField] TransitionAnimatorManager transitionAnimatorManager;
+
+        protected override async UniTask InAnimation(TransitionType transitionType, bool withStateChange)
+        {
+            await transitionAnimatorManager.InAnimation(transitionType);
+        }
+
+        protected override async UniTask OutAnimation(TransitionType transitionType, bool withStateChange)
+        {
+            await transitionAnimatorManager.OutAnimation(transitionType);
+        }
+
+#if UNITY_EDITOR
+        protected override void OnValidate()
+        {
+            base.OnValidate();
+
+            transitionAnimatorManager ??= GetComponent<TransitionAnimatorManager>();
+        }
+#endif
+    }
+}

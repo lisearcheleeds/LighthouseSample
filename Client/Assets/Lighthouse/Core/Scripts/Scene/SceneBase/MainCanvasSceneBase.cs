@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Lighthouse.Core.Scene.SceneCamera;
+using UnityEngine;
 
 namespace Lighthouse.Core.Scene.SceneBase
 {
@@ -21,10 +22,8 @@ namespace Lighthouse.Core.Scene.SceneBase
         }
 
 #if UNITY_EDITOR
-        protected override void OnValidate()
+        protected virtual void OnValidate()
         {
-            base.OnValidate();
-
             canvasInitializer ??= GetComponent<SceneCanvasInitializer>();
             canvasGroup ??= GetComponent<CanvasGroup>();
         }

@@ -1,6 +1,5 @@
 ﻿using System;
-using Lighthouse.Core.Constant;
-using Product.View.Common;
+using Product.View.Animation;
 using UnityEngine;
 using UnityEngine.UI;
 

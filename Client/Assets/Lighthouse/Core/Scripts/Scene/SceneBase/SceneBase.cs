@@ -1,11 +1,14 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using Lighthouse.Core.Scene.SceneCamera;
 using UnityEngine;
 
 namespace Lighthouse.Core.Scene.SceneBase
 {
     public abstract class SceneBase : MonoBehaviour
     {
+        bool initialized;
+
         public virtual ISceneCamera[] GetSceneCameraList()
         {
             return null;
@@ -21,14 +24,20 @@ namespace Lighthouse.Core.Scene.SceneBase
             return UniTask.CompletedTask;
         }
 
-        public virtual UniTask Enter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
+        public async UniTask Enter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
         {
-            return UniTask.CompletedTask;
+            if (!initialized)
+            {
+                initialized = true;
+                await OnSetup();
+            }
+
+            await OnEnter(transitionData, transitionType, cancelToken);
         }
 
-        public virtual UniTask Leave(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
+        public async UniTask Leave(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
         {
-            return UniTask.CompletedTask;
+            await OnLeave(transitionData, transitionType, cancelToken);
         }
 
         public virtual UniTask SaveSceneState(CancellationToken cancelToken)
@@ -65,6 +74,22 @@ namespace Lighthouse.Core.Scene.SceneBase
 
         public virtual void OnSceneTransitionFinished()
         {
+        }
+
+        protected virtual UniTask OnSetup()
+        {
+            // NOTE: If your setup requires TransitionData then that's not the right idea.
+            return UniTask.CompletedTask;
+        }
+
+        protected virtual UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
+        {
+            return UniTask.CompletedTask;
+        }
+
+        protected virtual UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
+        {
+            return UniTask.CompletedTask;
         }
 
         protected virtual UniTask ResetAnimation(TransitionType transitionType)

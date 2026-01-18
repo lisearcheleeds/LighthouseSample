@@ -1,10 +1,9 @@
 ﻿using Lighthouse.Core.Scene;
-using Lighthouse.Core.Scene.SceneBase;
-using Product.View.Scene.Common;
+using Product.LighthouseOverride;
 
 namespace Product.View.Scene.Home
 {
-    public class HomeScene : MainSceneBase<HomeScene.HomeTransitionData>
+    public class HomeScene : ProductMainCanvasSceneBase<HomeScene.HomeTransitionData>
     {
         public override MainSceneKey MainSceneId => ProductNameSpace.MainSceneId.Home;
 

@@ -1,10 +1,9 @@
 ﻿using Lighthouse.Core.Scene;
-using Lighthouse.Core.Scene.SceneBase;
-using Product.View.Scene.Common;
+using Product.LighthouseOverride;
 
 namespace Product.View.Scene.Edit
 {
-    public class EditScene : MainSceneBase<EditScene.EditTransitionData>
+    public class EditScene : ProductMainCanvasSceneBase<EditScene.EditTransitionData>
     {
         public override MainSceneKey MainSceneId => ProductNameSpace.MainSceneId.Edit;
 

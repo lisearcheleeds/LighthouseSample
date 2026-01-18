@@ -1,8 +1,7 @@
-﻿using Lighthouse.Core.Scene.SceneCamera;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-namespace Lighthouse.Core.Scene
+namespace Lighthouse.Core.Scene.SceneCamera
 {
     public interface ISceneCamera
     {

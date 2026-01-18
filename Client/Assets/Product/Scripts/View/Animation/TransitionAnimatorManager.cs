@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Core.Common;
+using Lighthouse.Core.Scene;
 using UnityEngine;
 
-namespace Lighthouse.Core.Scene
+namespace Product.View.Animation
 {
     public class TransitionAnimatorManager : MonoBehaviour
     {

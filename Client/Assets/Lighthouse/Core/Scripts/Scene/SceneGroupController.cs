@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using Lighthouse.Core.Scene.SceneCamera;
 using Lighthouse.Core.Scene.SceneTransitionPhase;
 using UnityEngine;
 using VContainer;
@@ -88,7 +89,7 @@ namespace Lighthouse.Core.Scene
         {
             if (!CurrentTransitionPhase?.CanTransitionIntercept ?? false)
             {
-                Debug.LogError("[SceneTransitionWorker] Currently unable to transition between scenes.");
+                Debug.LogError($"[SceneTransitionWorker] Scene transition is not possible in the current phase. {CurrentTransitionPhase}");
                 return false;
             }
 

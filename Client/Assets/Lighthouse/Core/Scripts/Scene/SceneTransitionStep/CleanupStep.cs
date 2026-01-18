@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Lighthouse.Core.Scene.SceneCamera;
 using UnityEngine;
 
 namespace Lighthouse.Core.Scene.SceneTransitionStep

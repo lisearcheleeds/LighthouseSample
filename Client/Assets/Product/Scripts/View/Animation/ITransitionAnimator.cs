@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace Lighthouse.Core.Common
+namespace Product.View.Animation
 {
     public interface ITransitionAnimator
     {

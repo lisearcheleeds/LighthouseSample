@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-namespace Lighthouse.Core.Scene
+namespace Lighthouse.Core.Scene.SceneCamera
 {
     public class SceneCanvasInitializer : MonoBehaviour
     {

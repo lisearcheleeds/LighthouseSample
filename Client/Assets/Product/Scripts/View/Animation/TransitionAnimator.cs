@@ -1,9 +1,8 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Core.Constant;
 using UnityEngine;
 
-namespace Lighthouse.Core.Common
+namespace Product.View.Animation
 {
     public class TransitionAnimator : MonoBehaviour, ITransitionAnimator, INotifyStateEnterHolder
     {

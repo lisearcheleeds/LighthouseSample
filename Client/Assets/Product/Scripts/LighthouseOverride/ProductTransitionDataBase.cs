@@ -1,7 +1,7 @@
 ﻿using Lighthouse.Core.Scene;
 using ProductNameSpace;
 
-namespace Product.View.Scene.Common
+namespace Product.LighthouseOverride
 {
     public abstract class ProductTransitionDataBase : TransitionDataBase
     {

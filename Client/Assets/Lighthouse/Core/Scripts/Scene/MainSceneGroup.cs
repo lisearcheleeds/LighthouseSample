@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Core.Scene.SceneBase;
+using Lighthouse.Core.Scene.SceneCamera;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

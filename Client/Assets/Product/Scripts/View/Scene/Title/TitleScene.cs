@@ -2,14 +2,14 @@
 using Cysharp.Threading.Tasks;
 using Lighthouse.Core.Scene;
 using Lighthouse.Core.Scene.SceneBase;
-using Product.View.Scene.Common;
+using Product.LighthouseOverride;
 using Product.View.Scene.Home;
 using UnityEngine;
 using VContainer;
 
 namespace Product.View.Scene.Title
 {
-    public class TitleScene : MainCanvasSceneBase<TitleScene.TitleTransitionData>
+    public class TitleScene : ProductMainCanvasSceneBase<TitleScene.TitleTransitionData>
     {
         SceneManager sceneManager;
 
@@ -28,14 +28,14 @@ namespace Product.View.Scene.Title
             this.sceneManager = sceneManager;
         }
 
-        public override UniTask Enter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
+        protected override UniTask OnSetup()
         {
             titleView.Setup(() =>
             {
                 sceneManager.TransitionScene(new HomeScene.HomeTransitionData());
             });
 
-            return base.Enter(transitionData, transitionType, cancelToken);
+            return UniTask.CompletedTask;
         }
     }
 }

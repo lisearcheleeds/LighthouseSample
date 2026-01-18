@@ -1,9 +1,9 @@
 ﻿using Lighthouse.Core.Scene;
-using Lighthouse.Core.Scene.SceneBase;
+using Product.LighthouseOverride;
 
 namespace Product.View.Scene.GlobalHeader
 {
-    public class GlobalHeaderScene : CommonCanvasSceneBase
+    public class GlobalHeaderScene : ProductCommonCanvasSceneBase
     {
         public override CommonSceneKey CommonSceneId => ProductNameSpace.CommonSceneId.GlobalHeader;
     }
