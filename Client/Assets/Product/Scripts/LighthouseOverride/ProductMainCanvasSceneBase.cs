@@ -11,6 +11,11 @@ namespace Product.LighthouseOverride
     {
         [SerializeField] TransitionAnimatorManager transitionAnimatorManager;
 
+        public override void ResetInAnimation(TransitionType transitionType)
+        {
+            transitionAnimatorManager.ResetInAnimation(transitionType);
+        }
+        
         protected override async UniTask InAnimation(TransitionType transitionType, bool withStateChange)
         {
             await transitionAnimatorManager.InAnimation(transitionType);

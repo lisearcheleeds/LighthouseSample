@@ -53,9 +53,8 @@ namespace Lighthouse.Core.Scene.SceneBase
         {
         }
 
-        public async UniTask PlayResetAnimation(TransitionType transitionType)
+        public virtual void ResetInAnimation(TransitionType transitionType)
         {
-            await ResetAnimation(transitionType);
         }
 
         public async UniTask PlayInAnimation(TransitionType transitionType, bool withStateChange)
@@ -88,11 +87,6 @@ namespace Lighthouse.Core.Scene.SceneBase
         }
 
         protected virtual UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
-        {
-            return UniTask.CompletedTask;
-        }
-
-        protected virtual UniTask ResetAnimation(TransitionType transitionType)
         {
             return UniTask.CompletedTask;
         }

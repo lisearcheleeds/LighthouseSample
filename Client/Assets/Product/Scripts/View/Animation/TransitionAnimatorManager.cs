@@ -9,9 +9,12 @@ namespace Product.View.Animation
     {
         ITransitionAnimator[] sceneTransitionAnimatorList;
 
-        public async UniTask ResetAnimation(TransitionType transitionType)
+        public void ResetInAnimation(TransitionType transitionType)
         {
-            await UniTask.WhenAll(sceneTransitionAnimatorList.Select(x => x.ResetAnimation()));
+            foreach (var sceneTransitionAnimator in sceneTransitionAnimatorList)
+            {
+                sceneTransitionAnimator.ResetInAnimation();
+            }
         }
 
         public async UniTask InAnimation(TransitionType transitionType)

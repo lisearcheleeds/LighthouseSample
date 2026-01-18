@@ -51,11 +51,11 @@ namespace Lighthouse.Core.Scene
             await currentScene.Leave(transitionData, transitionType, cancellationToken);
         }
 
-        public async UniTask PlayResetAnimation(TransitionType transitionType)
+        public void ResetInAnimation(TransitionType transitionType)
         {
             if (currentScene != null)
             {
-                await currentScene.PlayResetAnimation(transitionType);
+                currentScene.ResetInAnimation(transitionType);
             }
         }
 

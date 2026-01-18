@@ -21,7 +21,7 @@ namespace Lighthouse.Core.Scene.SceneTransitionStep
                 await afterMainSceneGroup.Load(transitionData);
             }
 
-            await afterMainSceneGroup.PlayResetAnimation(transitionType);
+            afterMainSceneGroup.ResetInAnimation(transitionType);
         }
     }
 }

@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 464900214}
   - component: {fileID: 464900213}
   - component: {fileID: 464900212}
-  - component: {fileID: 464900211}
   - component: {fileID: 464900210}
   m_Layer: 5
   m_Name: Fade
@@ -182,19 +181,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &464900211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464900208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb19386f54f7295448194691af927877, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Product.Util.AnimatorTrigger
-  animator: {fileID: 464900210}
 --- !u!114 &464900212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,9 +193,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c4a0cb4f5143f0a91f51d9c4bcfc61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Product.Util.SceneTransitionAnimator
-  resetAnimator: {fileID: 464900210}
-  inAnimator: {fileID: 464900210}
-  outAnimator: {fileID: 464900210}
+  animator: {fileID: 464900210}
+  inAnimationClips:
+  - {fileID: 7400000, guid: 733e6693db13b5f47801af4827a3b07e, type: 2}
+  outAnimationClips:
+  - {fileID: 7400000, guid: fe982ae1c3b69694ba6c14700c045b7d, type: 2}
 --- !u!225 &464900213
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -308,9 +296,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e4e8c149054b35a9ef627f19fad356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Product.View.Scene.Overlay.OverlayScene
-  transitionAnimatorManager: {fileID: 575811837}
   canvasGroup: {fileID: 575811839}
   canvasInitializer: {fileID: 575811838}
+  transitionAnimatorManager: {fileID: 575811837}
 --- !u!114 &575811837
 MonoBehaviour:
   m_ObjectHideFlags: 0

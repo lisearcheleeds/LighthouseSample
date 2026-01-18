@@ -169,9 +169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c4a0cb4f5143f0a91f51d9c4bcfc61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Product.Util.SceneTransitionAnimator
-  resetAnimator: {fileID: 30586184}
-  inAnimator: {fileID: 30586184}
-  outAnimator: {fileID: 30586184}
+  animator: {fileID: 30586184}
+  inAnimationClips:
+  - {fileID: 7400000, guid: 607019cdbd5641345a7d38d37f4ed30d, type: 2}
+  outAnimationClips:
+  - {fileID: 7400000, guid: 4bb251078df7c6d4e860efbf640ea036, type: 2}
 --- !u!95 &30586184
 Animator:
   serializedVersion: 7
@@ -347,9 +349,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d105b892372c4c99b4b80383fcf79d01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Product.Scripts.View.Title.TitleScene
-  transitionAnimatorManager: {fileID: 726240414}
   canvasGroup: {fileID: 726240417}
   canvasInitializer: {fileID: 726240416}
+  transitionAnimatorManager: {fileID: 726240414}
   titleView: {fileID: 1894392035}
 --- !u!114 &726240414
 MonoBehaviour:
@@ -727,7 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Product.View.Scene.Title.TitleView
   screenButton: {fileID: 435704339}
-  animatorTrigger: {fileID: 2104531638}
+  animationClipPlayer: {fileID: 2104531640}
 --- !u!1 &2104531632
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,8 +742,8 @@ GameObject:
   - component: {fileID: 2104531635}
   - component: {fileID: 2104531634}
   - component: {fileID: 2104531636}
-  - component: {fileID: 2104531638}
   - component: {fileID: 2104531639}
+  - component: {fileID: 2104531640}
   m_Layer: 5
   m_Name: TouchToStart
   m_TagString: Untagged
@@ -828,19 +830,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2104531638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2104531632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb19386f54f7295448194691af927877, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Product.View.Common.AnimatorTrigger
-  animator: {fileID: 2104531636}
 --- !u!114 &2104531639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -853,9 +842,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c4a0cb4f5143f0a91f51d9c4bcfc61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Product.Util.SceneTransitionAnimator
-  resetAnimator: {fileID: 2104531636}
-  inAnimator: {fileID: 2104531636}
-  outAnimator: {fileID: 0}
+  animator: {fileID: 2104531636}
+  inAnimationClips:
+  - {fileID: 7400000, guid: 323a3969032f36c4598a5539906462a5, type: 2}
+  outAnimationClips: []
+--- !u!114 &2104531640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104531632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb153a9ba28c4d81ba6ad23cee68aab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Product.View.Animation.AnimationClipPlayerComponent
+  animator: {fileID: 2104531636}
+  animationClips:
+  - {fileID: 7400000, guid: 4def8af9b150a874ebf1c68c63953966, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

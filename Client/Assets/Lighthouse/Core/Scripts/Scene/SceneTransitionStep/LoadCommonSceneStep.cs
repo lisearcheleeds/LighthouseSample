@@ -17,7 +17,7 @@ namespace Lighthouse.Core.Scene.SceneTransitionStep
             CancellationToken cancelToken)
         {
             await commonSceneManager.LoadCommonScenes(transitionData.RequireCommonSceneIds);
-            await commonSceneManager.PlayResetAnimation(transitionData.RequireCommonSceneIds, transitionType);
+            commonSceneManager.ResetAnimation(transitionData.RequireCommonSceneIds, transitionType);
         }
     }
 }

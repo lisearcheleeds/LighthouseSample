@@ -22,14 +22,16 @@ namespace Lighthouse.Core.Scene
                 .ToArray();
         }
 
-        public async UniTask PlayResetAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType)
+        public void ResetAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType)
         {
             var targetAnimations = loadedCommonScenes
                 .Where(x => requestCommonSceneIds.Contains(x.CommonSceneId) && !x.IsAlwaysInAnimation)
-                .Select(x => x.PlayResetAnimation(transitionType))
                 .ToArray();
 
-            await UniTask.WhenAll(targetAnimations);
+            foreach (var targetAnimation in targetAnimations)
+            {
+                targetAnimation.ResetInAnimation(transitionType);
+            }
         }
 
         public async UniTask PlayInAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType)

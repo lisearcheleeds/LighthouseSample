@@ -39,7 +39,7 @@ namespace Product.View.Scene.Splash
             await UniTask.Delay(100);
 
             await overlayScene.PlayInAnimation(TransitionType.Default, false);
-
+            
             await UniTask.Delay(1500);
             onComplete();
         }

@@ -1,97 +1,130 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Product.View.Animation
 {
-    public class TransitionAnimator : MonoBehaviour, ITransitionAnimator, INotifyStateEnterHolder
+    public class TransitionAnimator : MonoBehaviour, ITransitionAnimator
     {
-        [SerializeField] Animator resetAnimator;
-        [SerializeField] Animator inAnimator;
-        [SerializeField] Animator outAnimator;
+        [SerializeField] Animator animator;
+        [SerializeField] AnimationClip[] inAnimationClips;
+        [SerializeField] AnimationClip[] outAnimationClips;
 
-        Animator currentAnimator;
-        int currentLayer;
-        int endStateHash;
+        AnimationClipPlayer inAnimationClipPlayer;
+        AnimationClipPlayer outAnimationClipPlayer;
 
-        UniTaskCompletionSource completionSource;
-
-        void INotifyStateEnterHolder.NotifyStateEnter(Animator animator, int layer, int stateShortNameHash, AnimatorStateInfo info)
+        void InitializeIfNeeded()
         {
-            if (completionSource == null)
+            if (inAnimationClipPlayer == null && inAnimationClips != null)
             {
-                return;
+                inAnimationClipPlayer = new AnimationClipPlayer(animator, inAnimationClips);
             }
 
-            if (animator != currentAnimator || layer != currentLayer || stateShortNameHash != endStateHash)
+            if (outAnimationClipPlayer == null && outAnimationClips != null)
             {
-                return;
+                outAnimationClipPlayer = new AnimationClipPlayer(animator, outAnimationClips);
             }
-
-            completionSource.TrySetResult();
         }
 
-        async UniTask ITransitionAnimator.ResetAnimation()
+        void ITransitionAnimator.ResetInAnimation()
         {
-            if (resetAnimator == null)
+            InitializeIfNeeded();
+
+            if (inAnimationClipPlayer == null)
             {
                 return;
             }
 
-            await ExecuteAnimation(resetAnimator, AnimatorKey.Reset);
+            if (outAnimationClipPlayer != null)
+            {
+                outAnimationClipPlayer.Stop();
+            }
+
+            inAnimationClipPlayer.ResetAnimation();
         }
 
         async UniTask ITransitionAnimator.InAnimation()
         {
-            if (inAnimator == null)
+            InitializeIfNeeded();
+
+            if (inAnimationClipPlayer == null)
             {
                 return;
             }
 
-            await ExecuteAnimation(inAnimator, AnimatorKey.In);
+            if (outAnimationClipPlayer != null)
+            {
+                outAnimationClipPlayer.Stop();
+            }
+
+            await inAnimationClipPlayer.PlayAnimationAsync(true, true);
+        }
+
+        void ITransitionAnimator.EndInAnimation()
+        {
+            InitializeIfNeeded();
+
+            if (inAnimationClipPlayer == null)
+            {
+                return;
+            }
+
+            if (outAnimationClipPlayer != null)
+            {
+                outAnimationClipPlayer.Stop();
+            }
+
+            inAnimationClipPlayer.Skip();
+        }
+
+        void ITransitionAnimator.ResetOutAnimation()
+        {
+            InitializeIfNeeded();
+
+            if (outAnimationClipPlayer == null)
+            {
+                return;
+            }
+
+            if (inAnimationClipPlayer != null)
+            {
+                inAnimationClipPlayer.Stop();
+            }
+
+            outAnimationClipPlayer.ResetAnimation();
         }
 
         async UniTask ITransitionAnimator.OutAnimation()
         {
-            if (outAnimator == null)
+            InitializeIfNeeded();
+
+            if (outAnimationClipPlayer == null)
             {
                 return;
             }
 
-            await ExecuteAnimation(outAnimator, AnimatorKey.Out);
+            if (inAnimationClipPlayer != null)
+            {
+                inAnimationClipPlayer.Stop();
+            }
+
+            await outAnimationClipPlayer.PlayAnimationAsync(true, true);
         }
 
-        async UniTask ExecuteAnimation(Animator targetAnimator, int animatorKey)
+        void ITransitionAnimator.EndOutAnimation()
         {
-            completionSource?.TrySetCanceled();
+            InitializeIfNeeded();
 
-            var tcs = new UniTaskCompletionSource();
-            completionSource = tcs;
-
-            currentAnimator = targetAnimator;
-            currentLayer = 0;
-            endStateHash = AnimatorKey.EndState;
-
-            targetAnimator.SetTrigger(animatorKey);
-
-            try
+            if (outAnimationClipPlayer == null)
             {
-                await tcs.Task;
+                return;
             }
-            catch (OperationCanceledException)
+
+            if (inAnimationClipPlayer != null)
             {
-                // Nothing
+                inAnimationClipPlayer.Stop();
             }
-            finally
-            {
-                if (completionSource == tcs)
-                {
-                    completionSource = null;
-                    currentAnimator = null;
-                    currentLayer = 0;
-                    endStateHash = 0;
-                }
-            }
+
+            outAnimationClipPlayer.Skip();
         }
     }
 }

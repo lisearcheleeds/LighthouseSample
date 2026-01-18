@@ -4,8 +4,12 @@ namespace Product.View.Animation
 {
     public interface ITransitionAnimator
     {
-        UniTask ResetAnimation();
+        void ResetInAnimation();
         UniTask InAnimation();
+        void EndInAnimation();
+
+        void ResetOutAnimation();
         UniTask OutAnimation();
+        void EndOutAnimation();
     }
 }

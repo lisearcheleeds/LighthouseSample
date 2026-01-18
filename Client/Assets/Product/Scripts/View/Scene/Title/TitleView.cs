@@ -8,7 +8,7 @@ namespace Product.View.Scene.Title
     public class TitleView : MonoBehaviour
     {
         [SerializeField] Button screenButton;
-        [SerializeField] AnimatorTrigger animatorTrigger;
+        [SerializeField] AnimationClipPlayerComponent animationClipPlayer;
 
         Action onClickScreenButtonAction;
 
@@ -24,7 +24,7 @@ namespace Product.View.Scene.Title
 
         void OnClickScreenButton()
         {
-            animatorTrigger.SetTrigger(AnimatorKey.Play, AnimatorKey.EndState, onComplete: onClickScreenButtonAction);
+            animationClipPlayer.PlayAnimation(true, true, onClickScreenButtonAction);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Lighthouse.Core.Scene
     {
         public ISceneCamera[] GetSceneCameraList(CommonSceneKey[] requestCommonSceneIds);
 
-        public UniTask PlayResetAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType);
+        public void ResetAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType);
         public UniTask PlayInAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType);
         public UniTask PlayOutAnimation(CommonSceneKey[] requestCommonSceneIds, TransitionType transitionType);
 
