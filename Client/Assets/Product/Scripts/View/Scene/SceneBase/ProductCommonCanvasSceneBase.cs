@@ -1,15 +1,15 @@
 ﻿using Cysharp.Threading.Tasks;
 using Lighthouse.Core.Scene;
 using Lighthouse.Core.Scene.SceneBase;
-using Product.View.Animation;
+using Lighthouse.Extends.Animation;
 using UnityEngine;
 
 namespace Product.View.Scene.SceneBase
 {
-    [RequireComponent(typeof(TransitionAnimatorManager))]
+    [RequireComponent(typeof(LHTransitionAnimatorManager))]
     public abstract class ProductCommonCanvasSceneBase : CommonCanvasSceneBase
     {
-        [SerializeField] TransitionAnimatorManager transitionAnimatorManager;
+        [SerializeField] LHTransitionAnimatorManager transitionAnimatorManager;
 
         public override void ResetInAnimation(TransitionType transitionType)
         {
@@ -31,7 +31,7 @@ namespace Product.View.Scene.SceneBase
         {
             base.OnValidate();
 
-            transitionAnimatorManager ??= GetComponent<TransitionAnimatorManager>();
+            transitionAnimatorManager ??= GetComponent<LHTransitionAnimatorManager>();
         }
 #endif
     }

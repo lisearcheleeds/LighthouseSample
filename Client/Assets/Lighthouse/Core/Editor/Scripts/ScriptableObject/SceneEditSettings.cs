@@ -1,0 +1,19 @@
+﻿using UnityEngine;
+
+namespace Lighthouse.Core.ScriptableObject
+{
+    public class SceneEditSettings : UnityEngine.ScriptableObject
+    {
+        [SerializeField] bool enableSceneEditProcess = true;
+
+        [SerializeField] GameObject canvasSceneEditorOnlyObject;
+
+        [SerializeField] string editorOnlyObjectName = "__EditorOnly__";
+
+        public bool EnableSceneEditProcess => enableSceneEditProcess;
+
+        public GameObject CanvasSceneEditorOnlyObject => canvasSceneEditorOnlyObject;
+
+        public string EditorOnlyObjectName => editorOnlyObjectName;
+    }
+}

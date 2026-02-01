@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lighthouse.Core
+namespace Lighthouse.Core.Input
 {
     public interface IInputBlocker
     {

@@ -1,14 +1,14 @@
 ﻿using System;
-using Product.View.Animation;
+using Lighthouse.Extends.Animation;
+using Lighthouse.Extends.UI;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Product.View.Scene.MainScene.Title
 {
     public class TitleView : MonoBehaviour
     {
-        [SerializeField] Button screenButton;
-        [SerializeField] AnimationClipPlayerComponent animationClipPlayer;
+        [SerializeField] LHButton screenButton;
+        [SerializeField] LHAnimationClipPlayerComponent animationClipPlayer;
 
         Action onClickScreenButtonAction;
 
