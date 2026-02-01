@@ -110,9 +110,13 @@ namespace Lighthouse.Extends.Animation
 
             if (playableGraph.IsValid())
             {
+                animator.enabled = true;
+
                 SetTime(ref playableGraph, float.MaxValue);
                 playableGraph.Evaluate();
                 playableGraph.Stop();
+
+                animator.enabled = false;
             }
         }
 
@@ -143,8 +147,12 @@ namespace Lighthouse.Extends.Animation
                 return;
             }
 
+            animator.enabled = true;
+
             SetTime(ref playableGraph, 0);
             playableGraph.Evaluate();
+
+            animator.enabled = false;
         }
 
         void OnDestroy()
