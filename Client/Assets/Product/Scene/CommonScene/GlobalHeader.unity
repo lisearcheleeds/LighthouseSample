@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 1114308253}
   - component: {fileID: 1114308252}
   m_Layer: 0
-  m_Name: EntryPoint
+  m_Name: GlobalHeaderScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,9 +167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513f7e3e60254b39b85b6893b2cb18da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Product.View.GlobalHeader.EntryPoint
-  transitionAnimatorManager: {fileID: 1114308253}
   canvasGroup: {fileID: 1114308255}
   canvasInitializer: {fileID: 1114308254}
+  transitionAnimatorManager: {fileID: 1114308253}
 --- !u!114 &1114308253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 0.36078432}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

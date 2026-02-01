@@ -12,6 +12,7 @@ namespace Lighthouse.Core.Scene
         readonly IMainSceneGroupProvider mainSceneGroupProvider;
         readonly ICommonSceneManager commonSceneManager;
         readonly ISceneCameraManager sceneCameraManager;
+        readonly IInputBlocker inputBlocker;
 
         public MainSceneKey CurrentMainSceneKey => currentMainSceneGroup?.CurrentScene != null ? currentMainSceneGroup.CurrentScene.MainSceneId : null;
         public ISceneTransitionPhase CurrentTransitionPhase { get; private set; }
@@ -24,7 +25,7 @@ namespace Lighthouse.Core.Scene
             new CrossAnimationPhase(),
             new LeaveScenePhase(),
             new UnloadScenePhase(),
-            new EndTransitionPhase(),
+            new FinishTransitionPhase(),
         };
 
         protected virtual ISceneTransitionPhase[] ExclusiveTransitionPhaseSet { get; } =
@@ -36,7 +37,7 @@ namespace Lighthouse.Core.Scene
             new UnloadScenePhase(),
             new EnterScenePhase(),
             new InAnimationPhase(),
-            new EndTransitionPhase(),
+            new FinishTransitionPhase(),
         };
 
         MainSceneGroup currentMainSceneGroup;
@@ -45,11 +46,13 @@ namespace Lighthouse.Core.Scene
         public SceneGroupController(
             IMainSceneGroupProvider mainSceneGroupProvider,
             ICommonSceneManager commonSceneManager,
-            ISceneCameraManager sceneCameraManager)
+            ISceneCameraManager sceneCameraManager,
+            IInputBlocker inputBlocker)
         {
             this.mainSceneGroupProvider = mainSceneGroupProvider;
             this.commonSceneManager = commonSceneManager;
             this.sceneCameraManager = sceneCameraManager;
+            this.inputBlocker = inputBlocker;
         }
 
         async UniTask<bool> ISceneGroupController.StartCrossTransitionSequence(
@@ -105,6 +108,8 @@ namespace Lighthouse.Core.Scene
             var beforeMainSceneKey = CurrentMainSceneKey;
             var afterMainSceneGroup = mainSceneGroupProvider.GetMainSceneGroup(transitionData.MainSceneKey);
 
+            inputBlocker.Block<SceneGroupController>();
+
             foreach (var transitionPhase in transitionPhases)
             {
                 CurrentTransitionPhase = transitionPhase;
@@ -124,6 +129,8 @@ namespace Lighthouse.Core.Scene
 
                 await UniTask.WhenAll(tasks);
             }
+
+            inputBlocker.UnBlock<SceneGroupController>();
 
             currentMainSceneGroup = afterMainSceneGroup;
 

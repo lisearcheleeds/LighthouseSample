@@ -14,6 +14,7 @@ namespace ProductNameSpace
         public static readonly CommonSceneId None = new CommonSceneId(1, string.Empty);
         public static readonly CommonSceneId GlobalHeader = new CommonSceneId(2, "GlobalHeader");
         public static readonly CommonSceneId Overlay = new CommonSceneId(3, "Overlay");
+        public static readonly CommonSceneId Background = new CommonSceneId(4, "Background");
 
         public static ReadOnlySpan<CommonSceneId> All
         {
@@ -24,6 +25,7 @@ namespace ProductNameSpace
                     None,
                     GlobalHeader,
                     Overlay,
+                    Background,
                 };
             }
         }

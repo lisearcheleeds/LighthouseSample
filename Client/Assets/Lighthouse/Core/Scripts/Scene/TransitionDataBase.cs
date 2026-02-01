@@ -15,7 +15,7 @@ namespace Lighthouse.Core.Scene
             {
                 if (requireCommonSceneIds == null)
                 {
-                    requireCommonSceneIds = MustRequireCommonSceneIds.Concat(ExtendCommonSceneIds).ToArray();
+                    requireCommonSceneIds = MustRequireCommonSceneIds.Concat(ExtendCommonSceneIds).Distinct().ToArray();
                 }
 
                 return requireCommonSceneIds;
