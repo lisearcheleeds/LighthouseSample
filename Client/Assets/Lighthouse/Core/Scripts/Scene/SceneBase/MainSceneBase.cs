@@ -12,22 +12,9 @@ namespace Lighthouse.Core.Scene.SceneBase
     {
         protected TTransitionData TransitionData { get; private set; }
 
-        public override UniTask OnLoad()
-        {
-            gameObject.SetActive(false);
-            return UniTask.CompletedTask;
-        }
-
         protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
         {
             TransitionData = (TTransitionData)transitionData;
-            gameObject.SetActive(true);
-            return UniTask.CompletedTask;
-        }
-
-        protected override UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
-        {
-            gameObject.SetActive(false);
             return UniTask.CompletedTask;
         }
 

@@ -1,4 +1,6 @@
-﻿using Lighthouse.Core.Scene.SceneCamera;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using Lighthouse.Core.Scene.SceneCamera;
 using UnityEngine;
 
 namespace Lighthouse.Core.Scene.SceneBase
@@ -14,6 +16,18 @@ namespace Lighthouse.Core.Scene.SceneBase
         public override ISceneCamera[] GetSceneCameraList()
         {
             return placeholderCameras;
+        }
+
+        public override UniTask OnLoad()
+        {
+            canvasGroup.alpha = 0;
+            return UniTask.CompletedTask;
+        }
+
+        protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
+        {
+            canvasGroup.alpha = 1;
+            return base.OnEnter(transitionData, transitionType, cancelToken);
         }
 
         public virtual void InitializeCanvas(ISceneCamera canvasCamera)

@@ -83,21 +83,42 @@ namespace Lighthouse.Core.Scene
         {
             Debug.Assert(!loadedScenes?.Any() ?? true, "[MainSceneGroup] Duplicate load");
 
+            loadedScenes = new List<MainSceneBase>();
+
             using (enqueueParentLifetimeScope.Invoke())
             {
-                foreach (var sceneId in GroupMainSceneIds)
+                // The scene loading progress is not linear, and the loading itself is completed in 0.9f.
+                // Call OnLoad before the scene's Active state to initialize the display.
+                var loadOperations = GroupMainSceneIds
+                    .Select(sceneId => (sceneId: sceneId, ops: UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneId.Name, LoadSceneMode.Additive)))
+                    .ToArray();
+
+                await UniTask.WhenAll(loadOperations.Select(x => UniTask.WaitUntil(() => x.ops.progress >= 0.9f)));
+
+                foreach (var loadOperation in loadOperations)
                 {
-                    await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneId.Name, LoadSceneMode.Additive);
+                    loadOperation.ops.allowSceneActivation = true;
                 }
+
+                await UniTask.WhenAll(
+                    loadOperations.Select(async x =>
+                    {
+                        await UniTask.WaitUntil(() =>
+                        {
+                            var s = UnityEngine.SceneManagement.SceneManager.GetSceneByName(x.sceneId.Name);
+                            return s.IsValid() && s.isLoaded;
+                        });
+
+                        var scene = FindSceneBase(x.sceneId);
+                        await scene.OnLoad();
+                        await x.ops;
+                        return scene;
+                    }))
+                    .ContinueWith(scenes =>
+                    {
+                        loadedScenes.AddRange(scenes);
+                    });
             }
-
-            // NOTE: If there is a problem with acquiring the scene, set DelayFrame(1) and set α to 0 in Awake of ICanvasSceneBase.
-            // await UniTask.DelayFrame(1);
-
-            loadedScenes = new List<MainSceneBase>();
-            loadedScenes.AddRange(GroupMainSceneIds.Select(FindSceneBase));
-
-            await UniTask.WhenAll(loadedScenes.Select(s => s.OnLoad()));
 
             currentScene = loadedScenes.First(x => x.MainSceneId == transitionData.MainSceneKey);
         }

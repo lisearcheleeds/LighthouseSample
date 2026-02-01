@@ -5,6 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Core.Scene.SceneBase;
 using Lighthouse.Core.Scene.SceneCamera;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Lighthouse.Core.Scene
@@ -86,22 +87,38 @@ namespace Lighthouse.Core.Scene
                 return;
             }
 
-            await UniTask.WhenAll(needLoadSceneIds.Select(x => UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(x.Name, LoadSceneMode.Additive).ToUniTask()));
-
-            await UniTask.DelayFrame(1);
-
-            var loadedScenes = needLoadSceneIds
-                .Select(needLoadSceneId => UnityEngine.SceneManagement.SceneManager
-                    .GetSceneByName(needLoadSceneId.Name)
-                    .GetRootGameObjects()
-                    .Select(x => x.GetComponent<CommonSceneBase>())
-                    .First(x => x != null))
+            // The scene loading progress is not linear, and the loading itself is completed in 0.9f.
+            // Call OnLoad before the scene's Active state to initialize the display.
+            var loadOperations = needLoadSceneIds
+                .Select(sceneId => (sceneId: sceneId, ops: UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneId.Name, LoadSceneMode.Additive)))
                 .ToArray();
 
-            loadedCommonScenes.AddRange(loadedScenes);
-            loadedCanvasSceneBases.AddRange(loadedScenes.OfType<ICanvasSceneBase>());
+            await UniTask.WhenAll(loadOperations.Select(x => UniTask.WaitUntil(() => x.ops.progress >= 0.9f)));
 
-            await UniTask.WhenAll(loadedScenes.Select(s => s.OnLoad()));
+            foreach (var loadOperation in loadOperations)
+            {
+                loadOperation.ops.allowSceneActivation = true;
+            }
+
+            await UniTask.WhenAll(
+                    loadOperations.Select(async x =>
+                    {
+                        await UniTask.WaitUntil(() =>
+                        {
+                            var s = UnityEngine.SceneManagement.SceneManager.GetSceneByName(x.sceneId.Name);
+                            return s.IsValid() && s.isLoaded;
+                        });
+
+                        var scene = FindSceneBase(x.sceneId);
+                        await scene.OnLoad();
+                        await x.ops;
+                        return scene;
+                    }))
+                .ContinueWith(scenes =>
+                {
+                    loadedCommonScenes.AddRange(scenes);
+                    loadedCanvasSceneBases.AddRange(scenes.OfType<ICanvasSceneBase>());
+                });
         }
 
         public async UniTask UnloadUnusedCommonScenes(CommonSceneKey[] requireCommonSceneIds)
@@ -175,6 +192,23 @@ namespace Lighthouse.Core.Scene
         public T GetCommonScene<T>() where T: CommonSceneBase
         {
             return loadedCommonScenes.OfType<T>().FirstOrDefault();
+        }
+
+        CommonSceneBase FindSceneBase(CommonSceneKey commonSceneKey)
+        {
+            try
+            {
+                return UnityEngine.SceneManagement.SceneManager
+                    .GetSceneByName(commonSceneKey.Name)
+                    .GetRootGameObjects()
+                    .Select(x => x.GetComponent<CommonSceneBase>())
+                    .First(x => x != null);
+            }
+            catch
+            {
+                Debug.LogError($"[CommonSceneManager] CommonScene NotFound {commonSceneKey}");
+                throw;
+            }
         }
     }
 }
