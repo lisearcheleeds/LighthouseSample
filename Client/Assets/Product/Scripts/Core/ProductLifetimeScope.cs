@@ -3,7 +3,6 @@ using Lighthouse.Core.Scene.SceneCamera;
 using Lighthouse.Extends.CanvasSceneObject;
 using Lighthouse.Extends.InputBlocker;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -12,8 +11,8 @@ namespace Product.Core
     public class ProductLifetimeScope : LifetimeScope
     {
         [SerializeField] ProductLifetimeScopeSettings productLifetimeScopeSettings;
-        [FormerlySerializedAs("canvasSceneObjectPrefab")] [SerializeField] LHCanvasSceneObject lhCanvasSceneObjectPrefab;
-        [FormerlySerializedAs("inputBlockerPrefab")] [SerializeField] LHInputBlocker lhInputBlockerPrefab;
+        [SerializeField] LHCanvasSceneObject canvasSceneObjectPrefab;
+        [SerializeField] LHInputBlocker inputBlockerPrefab;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -27,8 +26,8 @@ namespace Product.Core
             builder.Register<CommonSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<SceneCameraManager>(Lifetime.Singleton).AsImplementedInterfaces();
 
-            builder.RegisterComponentInNewPrefab(lhCanvasSceneObjectPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
-            builder.RegisterComponentInNewPrefab(lhInputBlockerPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
+            builder.RegisterComponentInNewPrefab(canvasSceneObjectPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
+            builder.RegisterComponentInNewPrefab(inputBlockerPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
         }
     }
 }
