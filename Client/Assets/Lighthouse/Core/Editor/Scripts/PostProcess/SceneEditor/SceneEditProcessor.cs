@@ -1,13 +1,13 @@
 ﻿using System.Linq;
+using Lighthouse.Core.Editor.ScriptableObject;
 using Lighthouse.Core.EditorTool.SceneEditor;
 using Lighthouse.Core.Scene.SceneBase;
-using Lighthouse.Core.ScriptableObject;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
-namespace Lighthouse.Core.PostProcess.SceneEditor
+namespace Lighthouse.Core.Editor.PostProcess.SceneEditor
 {
     [InitializeOnLoad]
     public static class SceneEditProcessor

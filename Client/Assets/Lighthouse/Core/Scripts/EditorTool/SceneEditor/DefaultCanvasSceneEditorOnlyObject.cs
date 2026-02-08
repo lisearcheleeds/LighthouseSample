@@ -1,13 +1,12 @@
 ﻿using Lighthouse.Core.Scene.SceneBase;
 using Lighthouse.Extends.CanvasSceneObject;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Lighthouse.Core.EditorTool.SceneEditor
 {
     public class DefaultCanvasSceneEditorOnlyObject : MonoBehaviour, IEditorOnlyObjectCanvasScene
     {
-        [FormerlySerializedAs("canvasSceneObject")] [SerializeField] LHCanvasSceneObject lhCanvasSceneObject;
+        [SerializeField] LHCanvasSceneObject lhCanvasSceneObject;
 
 #if UNITY_EDITOR
         public void Apply(ICanvasSceneBase[] canvasSceneBaseList)

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Lighthouse.Core.ScriptableObject
+namespace Lighthouse.Core.Editor.ScriptableObject
 {
     public class SceneEditSettings : UnityEngine.ScriptableObject
     {

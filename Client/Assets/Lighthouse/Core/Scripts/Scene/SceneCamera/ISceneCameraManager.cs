@@ -7,6 +7,6 @@
 
         ISceneCamera[] OverlayCameraList { get; }
 
-        void UpdateCameraStack(MainSceneGroup afterMainSceneGroup, ICommonSceneManager commonSceneManager, CommonSceneKey[] targetCommonSceneIds);
+        void UpdateCameraStack(IMainSceneManager mainSceneManager, SceneTransitionDiff sceneTransitionDiff);
     }
 }

@@ -21,13 +21,13 @@ EditorBuildSettings:
     path: Assets/Product/Scene/MainScene/Edit.unity
     guid: e7a6057572eb16048b759b6051afb236
   - enabled: 1
-    path: Assets/Product/Scene/CommonScene/GlobalHeader.unity
+    path: Assets/Product/Scene/SceneModule/GlobalHeader.unity
     guid: 20cabdf8b0bd8214f89e682c85b67de5
   - enabled: 1
-    path: Assets/Product/Scene/CommonScene/Overlay.unity
+    path: Assets/Product/Scene/SceneModule/Overlay.unity
     guid: bbed21e4c9f086f40ae4afc792e2c80c
   - enabled: 1
-    path: Assets/Product/Scene/CommonScene/Background.unity
+    path: Assets/Product/Scene/SceneModule/Background.unity
     guid: 471e9b0e844ef2a4ab548aca584a22d3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

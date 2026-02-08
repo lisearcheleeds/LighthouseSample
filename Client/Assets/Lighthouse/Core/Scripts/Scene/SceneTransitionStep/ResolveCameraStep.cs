@@ -1,8 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Core.Scene.SceneBase;
 using Lighthouse.Core.Scene.SceneCamera;
-using UnityEngine;
 
 namespace Lighthouse.Core.Scene.SceneTransitionStep
 {
@@ -11,27 +9,17 @@ namespace Lighthouse.Core.Scene.SceneTransitionStep
         UniTask ISceneTransitionStep.Run(
             TransitionDataBase transitionData,
             TransitionType transitionType,
-            MainSceneKey beforeMainSceneKey,
-            MainSceneGroup beforeMainSceneGroup,
-            MainSceneGroup afterMainSceneGroup,
+            SceneTransitionDiff sceneTransitionDiff,
+            IMainSceneManager mainSceneManager,
+            ISceneModuleManager sceneModuleManager,
             ISceneCameraManager sceneCameraManager,
-            ICommonSceneManager commonSceneManager,
             CancellationToken cancelToken)
         {
-            sceneCameraManager.UpdateCameraStack(afterMainSceneGroup, commonSceneManager, transitionData.RequireCommonSceneIds);
+            sceneCameraManager.UpdateCameraStack(mainSceneManager, sceneTransitionDiff);
 
-            if (!afterMainSceneGroup.IsLoaded)
-            {
-                Debug.LogError("[ResolveCameraStep] Can not resolve the camera before loading.");
-            }
-
-            if (afterMainSceneGroup.CurrentScene is ICanvasSceneBase mainSceneBase)
-            {
-                mainSceneBase.InitializeCanvas(sceneCameraManager.UICamera);
-            }
-
-            commonSceneManager.InitializeCanvas(sceneCameraManager.UICamera, transitionData.RequireCommonSceneIds);
-
+            mainSceneManager.InitializeCanvas(sceneCameraManager, sceneTransitionDiff);
+            sceneModuleManager.InitializeCanvas(sceneCameraManager, sceneTransitionDiff);
+            
             return UniTask.CompletedTask;
         }
     }

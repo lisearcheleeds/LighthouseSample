@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using VContainer;
 
@@ -21,13 +22,11 @@ namespace Lighthouse.Core.Scene.SceneCamera
         }
 
         void ISceneCameraManager.UpdateCameraStack(
-            MainSceneGroup afterMainSceneGroup,
-            ICommonSceneManager commonSceneManager,
-            CommonSceneKey[] targetCommonSceneIds)
+            IMainSceneManager mainSceneManager,
+            SceneTransitionDiff sceneTransitionDiff)
         {
-            var sceneCameras = commonSceneManager
-                .GetSceneCameraList(targetCommonSceneIds)
-                .Concat(afterMainSceneGroup.GetSceneCameraList() ?? Array.Empty<ISceneCamera>())
+            var sceneCameras = mainSceneManager
+                .GetSceneCameraList(sceneTransitionDiff)
                 .Concat(new[] { UICamera })
                 .Distinct()
                 .OrderBy(x => (x.SceneCameraType, x.CameraDefaultDepth)).ToArray()

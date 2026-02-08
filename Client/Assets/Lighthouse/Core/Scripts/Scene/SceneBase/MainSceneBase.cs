@@ -5,7 +5,7 @@ namespace Lighthouse.Core.Scene.SceneBase
 {
     public abstract class MainSceneBase : SceneBase
     {
-        public abstract MainSceneKey MainSceneId { get; }
+        public abstract MainSceneId MainSceneId { get; }
     }
 
     public abstract class MainSceneBase<TTransitionData> : MainSceneBase where TTransitionData : TransitionDataBase, new()

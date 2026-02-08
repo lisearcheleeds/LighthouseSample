@@ -9,16 +9,15 @@ namespace Lighthouse.Core.Scene.SceneTransitionStep
         async UniTask ISceneTransitionStep.Run(
             TransitionDataBase transitionData,
             TransitionType transitionType,
-            MainSceneKey beforeMainSceneKey,
-            MainSceneGroup beforeMainSceneGroup,
-            MainSceneGroup afterMainSceneGroup,
+            SceneTransitionDiff sceneTransitionDiff,
+            IMainSceneManager mainSceneManager,
+            ISceneModuleManager sceneModuleManager,
             ISceneCameraManager sceneCameraManager,
-            ICommonSceneManager commonSceneManager,
             CancellationToken cancelToken)
         {
             await UniTask.WhenAll(
-                commonSceneManager.PlayOutAnimation(transitionData.RequireCommonSceneIds, transitionType),
-                beforeMainSceneGroup?.PlayOutAnimation(transitionData, transitionType) ?? UniTask.CompletedTask);
+                mainSceneManager.PlayOutAnimation(transitionData, transitionType, sceneTransitionDiff),
+                sceneModuleManager.PlayOutAnimation(transitionType, sceneTransitionDiff));
         }
     }
 }

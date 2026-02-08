@@ -6,7 +6,6 @@ namespace Lighthouse.Core.Scene
 {
     public interface ISceneGroupController
     {
-        public MainSceneKey CurrentMainSceneKey { get; }
         public ISceneTransitionPhase CurrentTransitionPhase { get; }
 
         UniTask<bool> StartCrossTransitionSequence(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancellationToken);

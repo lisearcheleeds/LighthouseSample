@@ -9,11 +9,10 @@ namespace Lighthouse.Core.Scene.SceneTransitionStep
         async UniTask ISceneTransitionStep.Run(
             TransitionDataBase transitionData,
             TransitionType transitionType,
-            MainSceneKey beforeMainSceneKey,
-            MainSceneGroup beforeMainSceneGroup,
-            MainSceneGroup afterMainSceneGroup,
+            SceneTransitionDiff sceneTransitionDiff,
+            IMainSceneManager mainSceneManager,
+            ISceneModuleManager sceneModuleManager,
             ISceneCameraManager sceneCameraManager,
-            ICommonSceneManager commonSceneManager,
             CancellationToken cancelToken)
         {
             await transitionData.LoadSceneState(transitionType, cancelToken);

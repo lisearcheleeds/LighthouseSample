@@ -1,31 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 
 namespace Lighthouse.Core.Scene
 {
     public abstract class TransitionDataBase
     {
-        public abstract MainSceneKey MainSceneKey { get; }
-
-        public CommonSceneKey[] RequireCommonSceneIds
-        {
-            get
-            {
-                if (requireCommonSceneIds == null)
-                {
-                    requireCommonSceneIds = MustRequireCommonSceneIds.Concat(ExtendCommonSceneIds).Distinct().ToArray();
-                }
-
-                return requireCommonSceneIds;
-            }
-        }
-
-        protected virtual CommonSceneKey[] MustRequireCommonSceneIds { get; } = Array.Empty<CommonSceneKey>();
-        protected virtual CommonSceneKey[] ExtendCommonSceneIds { get; } = Array.Empty<CommonSceneKey>();
-
-        CommonSceneKey[] requireCommonSceneIds;
+        public abstract MainSceneId MainSceneId { get; }
 
         public virtual bool CanTransition()
         {

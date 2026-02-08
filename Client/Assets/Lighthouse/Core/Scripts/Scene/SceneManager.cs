@@ -12,7 +12,6 @@ namespace Lighthouse.Core.Scene
     {
         readonly ISceneGroupController sceneGroupController;
 
-        public MainSceneKey CurrentMainSceneKey => sceneGroupController.CurrentMainSceneKey;
         public ISceneTransitionPhase CurrentTransitionPhase => sceneGroupController.CurrentTransitionPhase;
         public bool IsTransition => CurrentTransitionPhase != null;
 
@@ -24,11 +23,11 @@ namespace Lighthouse.Core.Scene
             this.sceneGroupController = sceneGroupController;
         }
 
-        public void TransitionScene(TransitionDataBase nextTransitionData, MainSceneKey backMainSceneKey = null, Action<bool> onComplete = null)
+        public void TransitionScene(TransitionDataBase nextTransitionData, MainSceneId backMainSceneId = null, Action<bool> onComplete = null)
         {
             UniTask.Void(async () =>
             {
-                var isSuccess = await TransitionSceneAsync(nextTransitionData, TransitionType.Default, backMainSceneKey);
+                var isSuccess = await TransitionSceneAsync(nextTransitionData, TransitionType.Default, backMainSceneId);
                 onComplete?.Invoke(isSuccess);
             });
         }
@@ -65,7 +64,7 @@ namespace Lighthouse.Core.Scene
                     break;
                 }
 
-                if (!backTargetSceneTransitionData.CanTransition() && currentSceneTransitionData.MainSceneKey != backTargetSceneTransitionData.MainSceneKey)
+                if (!backTargetSceneTransitionData.CanTransition() && currentSceneTransitionData.MainSceneId != backTargetSceneTransitionData.MainSceneId)
                 {
                     break;
                 }
@@ -76,7 +75,7 @@ namespace Lighthouse.Core.Scene
             return await TransitionSceneAsync(backTargetSceneTransitionData, TransitionType.Back, null);
         }
 
-        async UniTask<bool> TransitionSceneAsync(TransitionDataBase nextTransitionData, TransitionType transitionType, MainSceneKey backMainSceneKey)
+        async UniTask<bool> TransitionSceneAsync(TransitionDataBase nextTransitionData, TransitionType transitionType, MainSceneId backMainSceneId)
         {
             var canTransition = nextTransitionData.CanTransition();
             if (!canTransition)
@@ -92,15 +91,15 @@ namespace Lighthouse.Core.Scene
 
             transitionDataStack.Push(nextTransitionData);
 
-            if (backMainSceneKey != null)
+            if (backMainSceneId != null)
             {
-                while (transitionDataStack.Count > 0 && transitionDataStack.Peek().MainSceneKey != backMainSceneKey)
+                while (transitionDataStack.Count > 0 && transitionDataStack.Peek().MainSceneId != backMainSceneId)
                 {
                     transitionDataStack.Pop();
                 }
             }
 
-            // await new WaitWhile(() => PopupManager.Instance.IsOpen(CurrentMainSceneKey) || LoadingManager.Instance.IsShowGuard);
+            // await new WaitWhile(() => PopupManager.Instance.IsOpen(CurrentMainSceneId) || LoadingManager.Instance.IsShowGuard);
 
             return true;
         }

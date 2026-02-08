@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Text;
-using Lighthouse.Core.ScriptableObject;
+using Lighthouse.Core.Editor.ScriptableObject;
 using UnityEditor;
 using UnityEngine;
 
-namespace Lighthouse.Core.ScriptGenerator
+namespace Lighthouse.Core.Editor.ScriptGenerator
 {
     [InitializeOnLoad]
     public static class SceneIdGenerator
@@ -18,33 +18,33 @@ namespace Lighthouse.Core.ScriptGenerator
         static void OnSceneListChanged()
         {
             GenerateMainSceneId();
-            GenerateCommonSceneId();
+            GenerateSceneModuleId();
         }
 
-        [MenuItem("Lighthouse/Auto Generate/Generate Main SceneId")]
+        [MenuItem("Lighthouse/Auto Generate/Generate Main Scene Id")]
         static void GenerateMainSceneId()
         {
             var generateSettings = LighthouseEditor.GetSettings<GenerateSettings>();
-            GenerateSceneId("Main", generateSettings.MainSceneIdFilePath, generateSettings.ProductNameSpace);
+            GenerateSceneId("MainScene", generateSettings.MainSceneIdPrefix, generateSettings.MainSceneIdFilePath, generateSettings.ProductNameSpace);
         }
 
-        [MenuItem("Lighthouse/Auto Generate/Generate Common SceneId")]
-        static void GenerateCommonSceneId()
+        [MenuItem("Lighthouse/Auto Generate/Generate Scene Module Id")]
+        static void GenerateSceneModuleId()
         {
             var generateSettings = LighthouseEditor.GetSettings<GenerateSettings>();
-            GenerateSceneId("Common", generateSettings.CommonSceneIdFilePath, generateSettings.ProductNameSpace);
+            GenerateSceneId("SceneModule", generateSettings.SceneModuleIdPrefix, generateSettings.SceneModuleIdIdFilePath, generateSettings.ProductNameSpace);
         }
 
-        static void GenerateSceneId(string sceneIdType, string outputPath, string nameSpace)
+        static void GenerateSceneId(string sceneIdType, string prefix, string outputPath, string nameSpace)
         {
             var scenes = EditorBuildSettings.scenes
                 .Where(s => s.enabled)
                 .Select(s => s.path)
-                .Where(p => !string.IsNullOrWhiteSpace(p) && p.Contains($"{sceneIdType}Scene"))
+                .Where(p => !string.IsNullOrWhiteSpace(p) && p.Contains($"{sceneIdType}"))
                 .Distinct()
                 .ToArray();
 
-            var content = BuildContent(sceneIdType, scenes, nameSpace);
+            var content = BuildContent(sceneIdType, prefix, scenes, nameSpace);
             var result = WriteContent(content, outputPath);
             if (!result)
             {
@@ -57,7 +57,7 @@ namespace Lighthouse.Core.ScriptGenerator
             Debug.Log("[SceneIdGenerator] Generated.");
         }
 
-        static string BuildContent(string sceneIdType, string[] sceneNames, string nameSpace)
+        static string BuildContent(string sceneIdType, string prefix, string[] sceneNames, string nameSpace)
         {
             if (sceneNames.Length == 0)
             {
@@ -77,13 +77,13 @@ namespace Lighthouse.Core.ScriptGenerator
             sb.AppendLine();
             sb.AppendLine($"namespace {nameSpace}");
             sb.AppendLine("{");
-            sb.AppendLine($"    public sealed class {sceneIdType}SceneId : {sceneIdType}SceneKey");
+            sb.AppendLine($"    public static class {prefix}{sceneIdType}Id");
             sb.AppendLine("    {");
 
             byte id = 1;
 
             // None
-            sb.AppendLine($"        public static readonly {sceneIdType}SceneId None = new {sceneIdType}SceneId({id}, string.Empty);");
+            sb.AppendLine($"        public static readonly {sceneIdType}Id None = new {sceneIdType}Id({id}, string.Empty);");
 
             id++;
 
@@ -92,17 +92,17 @@ namespace Lighthouse.Core.ScriptGenerator
                 var validSceneName = Path.GetFileNameWithoutExtension(sceneName);
                 var identifier = SanitizeIdentifier(validSceneName);
 
-                sb.AppendLine($"        public static readonly {sceneIdType}SceneId {identifier} = new {sceneIdType}SceneId({id}, \"{validSceneName}\");");
+                sb.AppendLine($"        public static readonly {sceneIdType}Id {identifier} = new {sceneIdType}Id({id}, \"{validSceneName}\");");
 
                 id++;
             }
 
             sb.AppendLine();
-            sb.AppendLine($"        public static ReadOnlySpan<{sceneIdType}SceneId> All");
+            sb.AppendLine($"        public static ReadOnlySpan<{sceneIdType}Id> All");
             sb.AppendLine("        {");
             sb.AppendLine("            get");
             sb.AppendLine("            {");
-            sb.AppendLine($"                return new {sceneIdType}SceneId[]");
+            sb.AppendLine($"                return new {sceneIdType}Id[]");
             sb.AppendLine("                {");
             sb.AppendLine("                    None,");
 
@@ -116,10 +116,6 @@ namespace Lighthouse.Core.ScriptGenerator
 
             sb.AppendLine("                };");
             sb.AppendLine("            }");
-            sb.AppendLine("        }");
-            sb.AppendLine();
-            sb.AppendLine($"        {sceneIdType}SceneId(byte id, string name) : base(id, name)");
-            sb.AppendLine("        {");
             sb.AppendLine("        }");
             sb.AppendLine("    }");
             sb.AppendLine("}");

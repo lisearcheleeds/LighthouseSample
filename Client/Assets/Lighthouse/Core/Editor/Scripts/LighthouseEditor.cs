@@ -1,9 +1,9 @@
 ﻿using System.IO;
-using Lighthouse.Core.ScriptableObject;
+using Lighthouse.Core.Editor.ScriptableObject;
 using UnityEditor;
 using UnityEngine;
 
-namespace Lighthouse.Core
+namespace Lighthouse.Core.Editor
 {
     public class LighthouseEditor : UnityEditor.Editor
     {

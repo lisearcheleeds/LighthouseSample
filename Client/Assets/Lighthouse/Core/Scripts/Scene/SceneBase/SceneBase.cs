@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Core.Scene.SceneCamera;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Lighthouse.Core.Scene.SceneBase
 
         public virtual ISceneCamera[] GetSceneCameraList()
         {
-            return null;
+            return Array.Empty<ISceneCamera>();
         }
 
         public virtual UniTask OnLoad()
@@ -71,7 +72,7 @@ namespace Lighthouse.Core.Scene.SceneBase
             OnCompleteOutAnimation(transitionType, withStateChange);
         }
 
-        public virtual void OnSceneTransitionFinished()
+        public virtual void OnSceneTransitionFinished(SceneTransitionDiff sceneTransitionDiff)
         {
         }
 

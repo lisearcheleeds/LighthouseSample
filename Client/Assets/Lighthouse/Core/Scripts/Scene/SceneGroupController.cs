@@ -8,50 +8,52 @@ using VContainer;
 
 namespace Lighthouse.Core.Scene
 {
-    public class SceneGroupController : ISceneGroupController
+    public sealed class SceneGroupController : ISceneGroupController
     {
-        readonly IMainSceneGroupProvider mainSceneGroupProvider;
-        readonly ICommonSceneManager commonSceneManager;
+        readonly ISceneGroupProvider sceneGroupProvider;
+        readonly IMainSceneManager mainSceneManager;
+        readonly ISceneModuleManager sceneModuleManager;
         readonly ISceneCameraManager sceneCameraManager;
         readonly IInputBlocker inputBlocker;
 
-        public MainSceneKey CurrentMainSceneKey => currentMainSceneGroup?.CurrentScene != null ? currentMainSceneGroup.CurrentScene.MainSceneId : null;
         public ISceneTransitionPhase CurrentTransitionPhase { get; private set; }
 
-        protected virtual ISceneTransitionPhase[] CrossTransitionPhaseSet { get; } =
+        ISceneTransitionPhase[] CrossTransitionPhaseSet { get; } =
         {
             new StartTransitionPhase(),
-            new LoadScenePhase(),
+            new LoadSceneGroupPhase(),
             new EnterScenePhase(),
             new CrossAnimationPhase(),
             new LeaveScenePhase(),
-            new UnloadScenePhase(),
+            new UnloadSceneGroupPhase(),
             new FinishTransitionPhase(),
         };
 
-        protected virtual ISceneTransitionPhase[] ExclusiveTransitionPhaseSet { get; } =
+        ISceneTransitionPhase[] ExclusiveTransitionPhaseSet { get; } =
         {
             new StartTransitionPhase(),
             new OutAnimationPhase(),
             new LeaveScenePhase(),
-            new LoadScenePhase(),
-            new UnloadScenePhase(),
+            new LoadSceneGroupPhase(),
+            new UnloadSceneGroupPhase(),
             new EnterScenePhase(),
             new InAnimationPhase(),
             new FinishTransitionPhase(),
         };
 
-        MainSceneGroup currentMainSceneGroup;
+        SceneGroup currentSceneGroup;
 
         [Inject]
         public SceneGroupController(
-            IMainSceneGroupProvider mainSceneGroupProvider,
-            ICommonSceneManager commonSceneManager,
+            ISceneGroupProvider sceneGroupProvider,
+            IMainSceneManager mainSceneManager,
+            ISceneModuleManager sceneModuleManager,
             ISceneCameraManager sceneCameraManager,
             IInputBlocker inputBlocker)
         {
-            this.mainSceneGroupProvider = mainSceneGroupProvider;
-            this.commonSceneManager = commonSceneManager;
+            this.sceneGroupProvider = sceneGroupProvider;
+            this.mainSceneManager = mainSceneManager;
+            this.sceneModuleManager = sceneModuleManager;
             this.sceneCameraManager = sceneCameraManager;
             this.inputBlocker = inputBlocker;
         }
@@ -82,10 +84,10 @@ namespace Lighthouse.Core.Scene
 
         async UniTask ISceneGroupController.PreReboot()
         {
-            await currentMainSceneGroup.Leave(null, TransitionType.Default, CancellationToken.None);
+            await mainSceneManager.Leave(null, TransitionType.Default, null, CancellationToken.None);
         }
 
-        protected virtual async UniTask<bool> StartTransition(
+        async UniTask<bool> StartTransition(
             ISceneTransitionPhase[] transitionPhases,
             TransitionDataBase transitionData,
             TransitionType transitionType,
@@ -106,8 +108,8 @@ namespace Lighthouse.Core.Scene
             var prevPriority = Application.backgroundLoadingPriority;
             Application.backgroundLoadingPriority = UnityEngine.ThreadPriority.High;
 
-            var beforeMainSceneKey = CurrentMainSceneKey;
-            var afterMainSceneGroup = mainSceneGroupProvider.GetMainSceneGroup(transitionData.MainSceneKey);
+            var afterSceneGroup = sceneGroupProvider.GetSceneGroup(transitionData.MainSceneId);
+            var sceneTransitionDiff = new SceneTransitionDiff(currentSceneGroup, mainSceneManager.CurrentMainSceneId, afterSceneGroup, transitionData.MainSceneId);
 
             inputBlocker.Block<SceneGroupController>();
 
@@ -120,11 +122,10 @@ namespace Lighthouse.Core.Scene
                 var tasks = transitionPhase.Steps.Select(step => step.Run(
                     transitionData,
                     transitionType,
-                    beforeMainSceneKey,
-                    currentMainSceneGroup,
-                    afterMainSceneGroup,
+                    sceneTransitionDiff,
+                    mainSceneManager,
+                    sceneModuleManager,
                     sceneCameraManager,
-                    commonSceneManager,
                     cancellationToken
                 ));
 
@@ -133,12 +134,12 @@ namespace Lighthouse.Core.Scene
 
             inputBlocker.UnBlock<SceneGroupController>();
 
-            currentMainSceneGroup = afterMainSceneGroup;
+            currentSceneGroup = afterSceneGroup;
 
             Application.backgroundLoadingPriority = prevPriority;
 
             // sw.Stop();
-            // MessageBroker.NotifySceneTransitionFinished(prevMainSceneGroup.CurrentMainSceneKey, transitionData.CurrentMainSceneKey, (int)sw.ElapsedMilliseconds)
+            // MessageBroker.NotifySceneTransitionFinished(prevMainSceneGroup.CurrentMainSceneId, transitionData.CurrentMainSceneId, (int)sw.ElapsedMilliseconds)
 
             CurrentTransitionPhase = null;
             return true;
