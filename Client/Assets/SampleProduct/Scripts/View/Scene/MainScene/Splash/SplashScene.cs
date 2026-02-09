@@ -9,7 +9,7 @@ using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Splash
 {
-    public class SplashScene : ProductMainCanvasSceneBase<SplashScene.SplashTransitionData>
+    public class SplashScene : ProductCanvasMainSceneBase<SplashScene.SplashTransitionData>
     {
         SceneManager sceneManager;
         ISceneModuleManager sceneModuleManager;

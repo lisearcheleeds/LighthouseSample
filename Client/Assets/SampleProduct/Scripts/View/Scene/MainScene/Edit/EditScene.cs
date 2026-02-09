@@ -4,7 +4,7 @@ using SampleProduct.View.Scene.SceneBase;
 
 namespace SampleProduct.View.Scene.MainScene.Edit
 {
-    public class EditScene : ProductMainCanvasSceneBase<EditScene.EditTransitionData>
+    public class EditScene : ProductCanvasMainSceneBase<EditScene.EditTransitionData>
     {
         public override MainSceneId MainSceneId => SampleProductMainSceneId.Edit;
 

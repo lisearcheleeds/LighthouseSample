@@ -11,12 +11,6 @@ namespace Lighthouse.Core.Scene.SceneBase
     {
         [SerializeField] CanvasGroup canvasGroup;
         [SerializeField] SceneCanvasInitializer canvasInitializer;
-        ISceneCamera[] placeholderCameras;
-
-        public override ISceneCamera[] GetSceneCameraList()
-        {
-            return placeholderCameras;aaa
-        }
 
         public override UniTask OnLoad()
         {

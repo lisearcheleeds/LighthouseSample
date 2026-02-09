@@ -8,7 +8,7 @@ using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Home
 {
-    public class HomeScene : ProductMainCanvasSceneBase<HomeScene.HomeTransitionData>
+    public class HomeScene : ProductCanvasMainSceneBase<HomeScene.HomeTransitionData>
     {
         [SerializeField] HomeView homeView;
 

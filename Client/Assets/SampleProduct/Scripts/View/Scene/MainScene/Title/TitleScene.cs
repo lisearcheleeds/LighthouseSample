@@ -8,7 +8,7 @@ using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Title
 {
-    public class TitleScene : ProductMainCanvasSceneBase<TitleScene.TitleTransitionData>
+    public class TitleScene : ProductCanvasMainSceneBase<TitleScene.TitleTransitionData>
     {
         SceneManager sceneManager;
 

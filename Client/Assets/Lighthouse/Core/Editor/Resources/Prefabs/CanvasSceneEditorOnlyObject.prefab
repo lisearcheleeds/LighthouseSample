@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5183002c2ee4683b49175afc5902a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lighthouse.Editor.PostProcess.SceneEditor.DefaultEditorOnlyObjectCanvasScene
-  canvasSceneObject: {fileID: 6794106062543447347}
+  lhCanvasSceneObject: {fileID: 6794106062543447347}
 --- !u!1001 &1506121266911597617
 PrefabInstance:
   m_ObjectHideFlags: 0
