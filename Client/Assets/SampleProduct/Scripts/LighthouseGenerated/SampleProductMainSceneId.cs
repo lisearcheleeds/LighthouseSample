@@ -7,7 +7,7 @@ using System;
 using Lighthouse.Core;
 using Lighthouse.Core.Scene;
 
-namespace ProductNameSpace
+namespace SampleProduct
 {
     public static class SampleProductMainSceneId
     {

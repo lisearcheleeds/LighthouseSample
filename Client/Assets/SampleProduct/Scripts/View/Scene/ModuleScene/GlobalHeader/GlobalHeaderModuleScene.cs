@@ -1,5 +1,4 @@
 ﻿using Lighthouse.Core.Scene;
-using ProductNameSpace;
 using SampleProduct.View.Scene.SceneBase;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
     {
         [SerializeField] GlobalHeaderView globalHeaderView;
 
-        public override ModuleSceneId ModuleSceneId => SampleProductSceneModuleId.GlobalHeader;
+        public override ModuleSceneId ModuleSceneId => SampleProductModuleSceneId.GlobalHeader;
 
         public void SetText(string text)
         {

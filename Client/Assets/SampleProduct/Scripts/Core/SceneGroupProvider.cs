@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Lighthouse.Core.Scene;
-using ProductNameSpace;
 using VContainer;
 
 namespace SampleProduct.Core
@@ -10,13 +9,13 @@ namespace SampleProduct.Core
     {
         List<SceneGroup> sceneGroupList = new ();
 
-        public ModuleSceneId[] RequireSceneModuleIds = new[] { SampleProductSceneModuleId.Overlay };
+        public ModuleSceneId[] RequireSceneModuleIds = new[] { SampleProductModuleSceneId.Overlay };
 
         public Dictionary<MainSceneId, ModuleSceneId[]> SceneModuleMap = new Dictionary<MainSceneId, ModuleSceneId[]>()
             {
                 { SampleProductMainSceneId.Splash, null },
                 { SampleProductMainSceneId.Title, null },
-                { SampleProductMainSceneId.Home, new[] { SampleProductSceneModuleId.Background, SampleProductSceneModuleId.GlobalHeader }},
+                { SampleProductMainSceneId.Home, new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }},
                 { SampleProductMainSceneId.Edit, null },
             };
 

@@ -1,5 +1,4 @@
 ﻿using Lighthouse.Core.Scene;
-using ProductNameSpace;
 using SampleProduct.View.Scene.SceneBase;
 
 namespace SampleProduct.View.Scene.MainScene.Edit
