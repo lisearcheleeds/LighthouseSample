@@ -2,16 +2,16 @@
 using VContainer;
 using VContainer.Unity;
 
-namespace SampleProduct.View.Scene.SceneModule.Overlay
+namespace SampleProduct.View.Scene.ModuleScene.Overlay
 {
     public class OverlayLifetimeScope : LifetimeScope
     {
-        [SerializeField] OverlaySceneModule overlaySceneModule;
+        [SerializeField] OverlayModuleScene overlayModuleScene;
 
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<OverlayEntryPoint>();
-            builder.RegisterComponent(overlaySceneModule);
+            builder.RegisterComponent(overlayModuleScene);
         }
     }
 }

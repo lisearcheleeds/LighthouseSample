@@ -7,11 +7,11 @@ namespace Lighthouse.Core.Scene
     public sealed class SceneGroup
     {
         public MainSceneId[] MainSceneIds { get; }
-        public SceneModuleId[] SceneModuleIds { get; }
+        public ModuleSceneId[] SceneModuleIds { get; }
 
-        public IReadOnlyDictionary<MainSceneId, SceneModuleId[]> SceneModuleMap { get; }
+        public IReadOnlyDictionary<MainSceneId, ModuleSceneId[]> SceneModuleMap { get; }
 
-        public SceneGroup(SceneModuleId[] requireSceneModuleIds, Dictionary<MainSceneId, SceneModuleId[]> sceneModuleMap)
+        public SceneGroup(ModuleSceneId[] requireSceneModuleIds, Dictionary<MainSceneId, ModuleSceneId[]> sceneModuleMap)
         {
             SceneModuleMap = sceneModuleMap;
 
@@ -20,7 +20,7 @@ namespace Lighthouse.Core.Scene
                 .ToArray();
 
             SceneModuleIds = requireSceneModuleIds
-                .Concat(sceneModuleMap.Values.SelectMany(x => x ?? Array.Empty<SceneModuleId>()))
+                .Concat(sceneModuleMap.Values.SelectMany(x => x ?? Array.Empty<ModuleSceneId>()))
                 .Distinct()
                 .ToArray();
         }

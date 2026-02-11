@@ -1,7 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Core.Scene;
-using SampleProduct.View.Scene.SceneModule.Overlay;
+using SampleProduct.View.Scene.ModuleScene.Overlay;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,11 +14,11 @@ namespace SampleProduct.View.Scene.MainScene.Splash
         [SerializeField] Sprite splashImage1;
         [SerializeField] Sprite splashImage2;
 
-        OverlaySceneModule overlaySceneModule;
+        OverlayModuleScene overlayModuleScene;
 
-        public void SetupFirstSplashImage(OverlaySceneModule overlaySceneModule)
+        public void SetupFirstSplashImage(OverlayModuleScene overlayModuleScene)
         {
-            this.overlaySceneModule = overlaySceneModule;
+            this.overlayModuleScene = overlayModuleScene;
 
             splashImage.sprite = splashImage1;
         }
@@ -32,13 +32,13 @@ namespace SampleProduct.View.Scene.MainScene.Splash
         {
             await UniTask.Delay(1500);
 
-            await overlaySceneModule.PlayOutAnimation(TransitionType.Default, false);
+            await overlayModuleScene.PlayOutAnimation(TransitionType.Default, false);
 
             splashImage.sprite = splashImage2;
 
             await UniTask.Delay(100);
 
-            await overlaySceneModule.PlayInAnimation(TransitionType.Default, false);
+            await overlayModuleScene.PlayInAnimation(TransitionType.Default, false);
 
             await UniTask.Delay(1500);
             onComplete();

@@ -2,11 +2,11 @@
 using ProductNameSpace;
 using SampleProduct.View.Scene.SceneBase;
 
-namespace SampleProduct.View.Scene.SceneModule.Overlay
+namespace SampleProduct.View.Scene.ModuleScene.Overlay
 {
-    public class OverlaySceneModule : ProductCanvasSceneModuleBase
+    public class OverlayModuleScene : ProductCanvasModuleSceneBase
     {
-        public override SceneModuleId SceneModuleId => SampleProductSceneModuleId.Overlay;
+        public override ModuleSceneId ModuleSceneId => SampleProductSceneModuleId.Overlay;
 
         public override bool IsAlwaysInAnimation => true;
         public override bool IsAlwaysOutAnimation => true;

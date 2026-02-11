@@ -12,7 +12,7 @@ namespace SampleProduct.View.Scene.MainScene.Splash
     public class SplashScene : ProductCanvasMainSceneBase<SplashScene.SplashTransitionData>
     {
         SceneManager sceneManager;
-        ISceneModuleManager sceneModuleManager;
+        IModuleSceneManager moduleSceneManager;
 
         [SerializeField] SplashView splashView;
 
@@ -24,17 +24,17 @@ namespace SampleProduct.View.Scene.MainScene.Splash
         }
 
         [Inject]
-        public void Constructor(SceneManager sceneManager, ISceneModuleManager sceneModuleManager)
+        public void Constructor(SceneManager sceneManager, IModuleSceneManager moduleSceneManager)
         {
             this.sceneManager = sceneManager;
-            this.sceneModuleManager = sceneModuleManager;
+            this.moduleSceneManager = moduleSceneManager;
         }
 
         protected override async UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
         {
             await base.OnEnter(transitionData, transitionType, cancelToken);
 
-            // splashView.SetupFirstSplashImage(sceneModuleManager.GetCommonScene<OverlaySceneModule>());
+            // splashView.SetupFirstSplashImage(moduleSceneManager.GetCommonScene<OverlayModuleScene>());
         }
 
         public override void OnSceneTransitionFinished(SceneTransitionDiff sceneTransitionDiff)

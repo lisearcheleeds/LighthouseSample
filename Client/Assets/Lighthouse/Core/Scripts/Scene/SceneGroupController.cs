@@ -12,7 +12,7 @@ namespace Lighthouse.Core.Scene
     {
         readonly ISceneGroupProvider sceneGroupProvider;
         readonly IMainSceneManager mainSceneManager;
-        readonly ISceneModuleManager sceneModuleManager;
+        readonly IModuleSceneManager moduleSceneManager;
         readonly ISceneCameraManager sceneCameraManager;
         readonly IInputBlocker inputBlocker;
 
@@ -47,13 +47,13 @@ namespace Lighthouse.Core.Scene
         public SceneGroupController(
             ISceneGroupProvider sceneGroupProvider,
             IMainSceneManager mainSceneManager,
-            ISceneModuleManager sceneModuleManager,
+            IModuleSceneManager moduleSceneManager,
             ISceneCameraManager sceneCameraManager,
             IInputBlocker inputBlocker)
         {
             this.sceneGroupProvider = sceneGroupProvider;
             this.mainSceneManager = mainSceneManager;
-            this.sceneModuleManager = sceneModuleManager;
+            this.moduleSceneManager = moduleSceneManager;
             this.sceneCameraManager = sceneCameraManager;
             this.inputBlocker = inputBlocker;
         }
@@ -124,7 +124,7 @@ namespace Lighthouse.Core.Scene
                     transitionType,
                     sceneTransitionDiff,
                     mainSceneManager,
-                    sceneModuleManager,
+                    moduleSceneManager,
                     sceneCameraManager,
                     cancellationToken
                 ));

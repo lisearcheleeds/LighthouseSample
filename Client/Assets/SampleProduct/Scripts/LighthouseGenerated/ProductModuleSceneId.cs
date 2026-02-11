@@ -11,16 +11,16 @@ namespace ProductNameSpace
 {
     public static class SampleProductSceneModuleId
     {
-        public static readonly SceneModuleId None = new SceneModuleId(1, string.Empty);
-        public static readonly SceneModuleId GlobalHeader = new SceneModuleId(2, "GlobalHeader");
-        public static readonly SceneModuleId Overlay = new SceneModuleId(3, "Overlay");
-        public static readonly SceneModuleId Background = new SceneModuleId(4, "Background");
+        public static readonly ModuleSceneId None = new ModuleSceneId(1, string.Empty);
+        public static readonly ModuleSceneId GlobalHeader = new ModuleSceneId(2, "GlobalHeader");
+        public static readonly ModuleSceneId Overlay = new ModuleSceneId(3, "Overlay");
+        public static readonly ModuleSceneId Background = new ModuleSceneId(4, "Background");
 
-        public static ReadOnlySpan<SceneModuleId> All
+        public static ReadOnlySpan<ModuleSceneId> All
         {
             get
             {
-                return new SceneModuleId[]
+                return new ModuleSceneId[]
                 {
                     None,
                     GlobalHeader,

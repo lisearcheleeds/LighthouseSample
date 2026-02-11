@@ -22,7 +22,7 @@ namespace SampleProduct.View.Scene.MainScene.Title
         }
 
         [Inject]
-        public void Constructor(SceneManager sceneManager, ISceneModuleManager sceneModuleManager)
+        public void Constructor(SceneManager sceneManager, IModuleSceneManager moduleSceneManager)
         {
             this.sceneManager = sceneManager;
         }

@@ -6,28 +6,28 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Product/Scene/Launcher.unity
+    path: Assets/SampleProduct/Scene/Launcher.unity
     guid: 54370f34dae6d2b41a27fb229c33dee8
   - enabled: 1
-    path: Assets/Product/Scene/MainScene/Splash.unity
+    path: Assets/SampleProduct/Scene/MainScene/Splash.unity
     guid: c768faaeb63e59a4292680f5abc2c7d2
   - enabled: 1
-    path: Assets/Product/Scene/MainScene/Title.unity
+    path: Assets/SampleProduct/Scene/MainScene/Title.unity
     guid: 922ae6add424f164ca1f1b7faa067733
   - enabled: 1
-    path: Assets/Product/Scene/MainScene/Home.unity
+    path: Assets/SampleProduct/Scene/MainScene/Home.unity
     guid: e0f30e91f52c2f2419a3904b86d1019b
   - enabled: 1
-    path: Assets/Product/Scene/MainScene/Edit.unity
+    path: Assets/SampleProduct/Scene/MainScene/Edit.unity
     guid: e7a6057572eb16048b759b6051afb236
   - enabled: 1
-    path: Assets/Product/Scene/SceneModule/GlobalHeader.unity
+    path: Assets/SampleProduct/Scene/ModuleScene/GlobalHeader.unity
     guid: 20cabdf8b0bd8214f89e682c85b67de5
   - enabled: 1
-    path: Assets/Product/Scene/SceneModule/Overlay.unity
+    path: Assets/SampleProduct/Scene/ModuleScene/Overlay.unity
     guid: bbed21e4c9f086f40ae4afc792e2c80c
   - enabled: 1
-    path: Assets/Product/Scene/SceneModule/Background.unity
+    path: Assets/SampleProduct/Scene/ModuleScene/Background.unity
     guid: 471e9b0e844ef2a4ab548aca584a22d3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

@@ -2,16 +2,16 @@
 using VContainer;
 using VContainer.Unity;
 
-namespace SampleProduct.View.Scene.SceneModule.GlobalHeader
+namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
 {
     public class GlobalHeaderLifetimeScope : LifetimeScope
     {
-        [SerializeField] GlobalHeaderSceneModule globalHeaderSceneModule;
+        [SerializeField] GlobalHeaderModuleScene globalHeaderModuleScene;
 
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<GlobalHeaderEntryPoint>();
-            builder.RegisterComponent(globalHeaderSceneModule);
+            builder.RegisterComponent(globalHeaderModuleScene);
         }
     }
 }

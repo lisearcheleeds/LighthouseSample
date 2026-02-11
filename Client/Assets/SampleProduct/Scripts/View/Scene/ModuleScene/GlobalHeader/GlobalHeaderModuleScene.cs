@@ -3,13 +3,13 @@ using ProductNameSpace;
 using SampleProduct.View.Scene.SceneBase;
 using UnityEngine;
 
-namespace SampleProduct.View.Scene.SceneModule.GlobalHeader
+namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
 {
-    public class GlobalHeaderSceneModule : ProductCanvasSceneModuleBase
+    public class GlobalHeaderModuleScene : ProductCanvasModuleSceneBase
     {
         [SerializeField] GlobalHeaderView globalHeaderView;
 
-        public override SceneModuleId SceneModuleId => SampleProductSceneModuleId.GlobalHeader;
+        public override ModuleSceneId ModuleSceneId => SampleProductSceneModuleId.GlobalHeader;
 
         public void SetText(string text)
         {

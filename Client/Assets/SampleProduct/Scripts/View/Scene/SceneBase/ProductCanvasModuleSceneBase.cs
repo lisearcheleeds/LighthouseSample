@@ -7,7 +7,7 @@ using UnityEngine;
 namespace SampleProduct.View.Scene.SceneBase
 {
     [RequireComponent(typeof(LHTransitionAnimatorManager))]
-    public abstract class ProductCanvasSceneModuleBase : CanvasSceneModuleBase
+    public abstract class ProductCanvasModuleSceneBase : CanvasModuleSceneBase
     {
         [SerializeField] LHTransitionAnimatorManager transitionAnimatorManager;
 

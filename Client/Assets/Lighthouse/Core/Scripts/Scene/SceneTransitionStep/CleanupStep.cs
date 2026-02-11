@@ -13,7 +13,7 @@ namespace Lighthouse.Core.Scene.SceneTransitionStep
             TransitionType transitionType,
             SceneTransitionDiff sceneTransitionDiff,
             IMainSceneManager mainSceneManager,
-            ISceneModuleManager sceneModuleManager,
+            IModuleSceneManager moduleSceneManager,
             ISceneCameraManager sceneCameraManager,
             CancellationToken cancelToken)
         {

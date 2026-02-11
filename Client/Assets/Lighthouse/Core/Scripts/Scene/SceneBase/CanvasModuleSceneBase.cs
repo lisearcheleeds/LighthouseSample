@@ -7,7 +7,7 @@ namespace Lighthouse.Core.Scene.SceneBase
 {
     [RequireComponent(typeof(CanvasGroup))]
     [RequireComponent(typeof(SceneCanvasInitializer))]
-    public abstract class CanvasSceneModuleBase : SceneModuleBase, ICanvasSceneBase
+    public abstract class CanvasModuleSceneBase : ModuleSceneBase, ICanvasSceneBase
     {
         [SerializeField] CanvasGroup canvasGroup;
         [SerializeField] SceneCanvasInitializer canvasInitializer;

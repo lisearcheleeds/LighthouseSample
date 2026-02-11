@@ -4,9 +4,9 @@ using Lighthouse.Core.Scene.SceneCamera;
 
 namespace Lighthouse.Core.Scene
 {
-    public interface ISceneModuleManager
+    public interface IModuleSceneManager
     {
-        public ISceneCamera[] GetSceneCameraList(SceneModuleId[] requestSceneModuleIds);
+        public ISceneCamera[] GetSceneCameraList(ModuleSceneId[] requestSceneModuleIds);
 
         public void ResetAnimation(TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff);
         public UniTask PlayInAnimation(TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff);

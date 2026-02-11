@@ -1,9 +1,9 @@
 ﻿using System;
 using VContainer.Unity;
 
-namespace SampleProduct.View.Scene.SceneModule.Overlay
+namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
 {
-    public sealed class OverlayEntryPoint : IStartable, IDisposable
+    public sealed class GlobalHeaderEntryPoint : IStartable, IDisposable
     {
         void IStartable.Start()
         {

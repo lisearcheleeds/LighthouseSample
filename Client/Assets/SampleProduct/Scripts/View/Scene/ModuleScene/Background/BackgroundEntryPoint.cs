@@ -1,9 +1,9 @@
 ﻿using System;
 using VContainer.Unity;
 
-namespace SampleProduct.View.Scene.SceneModule.GlobalHeader
+namespace SampleProduct.View.Scene.ModuleScene.Background
 {
-    public sealed class GlobalHeaderEntryPoint : IStartable, IDisposable
+    public sealed class BackgroundEntryPoint : IStartable, IDisposable
     {
         void IStartable.Start()
         {

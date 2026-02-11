@@ -2,16 +2,16 @@
 using VContainer;
 using VContainer.Unity;
 
-namespace SampleProduct.View.Scene.SceneModule.Background
+namespace SampleProduct.View.Scene.ModuleScene.Background
 {
     public class BackgroundLifetimeScope : LifetimeScope
     {
-        [SerializeField] BackgroundSceneModule backgroundSceneModule;
+        [SerializeField] BackgroundModuleScene backgroundModuleScene;
 
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<BackgroundEntryPoint>();
-            builder.RegisterComponent(backgroundSceneModule);
+            builder.RegisterComponent(backgroundModuleScene);
         }
     }
 }

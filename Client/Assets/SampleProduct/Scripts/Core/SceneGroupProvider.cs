@@ -10,9 +10,9 @@ namespace SampleProduct.Core
     {
         List<SceneGroup> sceneGroupList = new ();
 
-        public SceneModuleId[] RequireSceneModuleIds = new[] { SampleProductSceneModuleId.Overlay };
+        public ModuleSceneId[] RequireSceneModuleIds = new[] { SampleProductSceneModuleId.Overlay };
 
-        public Dictionary<MainSceneId, SceneModuleId[]> SceneModuleMap = new Dictionary<MainSceneId, SceneModuleId[]>()
+        public Dictionary<MainSceneId, ModuleSceneId[]> SceneModuleMap = new Dictionary<MainSceneId, ModuleSceneId[]>()
             {
                 { SampleProductMainSceneId.Splash, null },
                 { SampleProductMainSceneId.Title, null },

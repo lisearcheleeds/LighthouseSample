@@ -11,15 +11,15 @@ namespace Lighthouse.Core.Scene.SceneTransitionStep
             TransitionType transitionType,
             SceneTransitionDiff sceneTransitionDiff,
             IMainSceneManager mainSceneManager,
-            ISceneModuleManager sceneModuleManager,
+            IModuleSceneManager moduleSceneManager,
             ISceneCameraManager sceneCameraManager,
             CancellationToken cancelToken)
         {
             await mainSceneManager.Load(sceneTransitionDiff);
             mainSceneManager.ResetInAnimation(transitionData, transitionType, sceneTransitionDiff);
 
-            await sceneModuleManager.Load(sceneTransitionDiff);
-            sceneModuleManager.ResetAnimation(transitionType, sceneTransitionDiff);
+            await moduleSceneManager.Load(sceneTransitionDiff);
+            moduleSceneManager.ResetAnimation(transitionType, sceneTransitionDiff);
         }
     }
 }

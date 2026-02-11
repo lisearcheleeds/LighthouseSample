@@ -15,8 +15,8 @@ namespace Lighthouse.Core.Scene
 
         public MainSceneId[] LoadMainSceneIds { get; }
         public MainSceneId[] UnloadMainSceneIds { get; }
-        public SceneModuleId[] LoadSceneModuleIds { get; }
-        public SceneModuleId[] UnloadSceneModuleIds { get; }
+        public ModuleSceneId[] LoadSceneModuleIds { get; }
+        public ModuleSceneId[] UnloadSceneModuleIds { get; }
 
         public SceneTransitionDiff(SceneGroup currentSceneGroup, MainSceneId currentMainSceneId, SceneGroup nextSceneGroup, MainSceneId nextMainSceneId)
         {
@@ -59,22 +59,22 @@ namespace Lighthouse.Core.Scene
                 .ToArray();
         }
 
-        static SceneModuleId[] GetSceneModuleIdsOnlyInNext(SceneGroup currentSceneGroup, MainSceneId currentSceneId, SceneGroup nextSceneGroup, MainSceneId nextSceneId)
+        static ModuleSceneId[] GetSceneModuleIdsOnlyInNext(SceneGroup currentSceneGroup, MainSceneId currentSceneId, SceneGroup nextSceneGroup, MainSceneId nextSceneId)
         {
-            var currentSceneModuleIds = currentSceneGroup?.SceneModuleMap[currentSceneId] ?? Array.Empty<SceneModuleId>();
+            var currentSceneModuleIds = currentSceneGroup?.SceneModuleMap[currentSceneId] ?? Array.Empty<ModuleSceneId>();
             var nextSceneModuleIds = nextSceneGroup.SceneModuleMap[nextSceneId];
 
-            var currentSet = new HashSet<SceneModuleId>(currentSceneModuleIds);
+            var currentSet = new HashSet<ModuleSceneId>(currentSceneModuleIds);
 
-            return nextSceneModuleIds?.Where(m => !currentSet.Contains(m)).Distinct().ToArray() ?? Array.Empty<SceneModuleId>();
+            return nextSceneModuleIds?.Where(m => !currentSet.Contains(m)).Distinct().ToArray() ?? Array.Empty<ModuleSceneId>();
         }
 
-        static SceneModuleId[] GetSceneModuleIdsOnlyInCurrent(SceneGroup currentSceneGroup, MainSceneId currentSceneId, SceneGroup nextSceneGroup, MainSceneId nextSceneId)
+        static ModuleSceneId[] GetSceneModuleIdsOnlyInCurrent(SceneGroup currentSceneGroup, MainSceneId currentSceneId, SceneGroup nextSceneGroup, MainSceneId nextSceneId)
         {
-            var currentSceneModuleIds = currentSceneGroup?.SceneModuleMap[currentSceneId] ?? Array.Empty<SceneModuleId>();
-            var nextSceneModuleIds = nextSceneGroup.SceneModuleMap[nextSceneId] ?? Array.Empty<SceneModuleId>();
+            var currentSceneModuleIds = currentSceneGroup?.SceneModuleMap[currentSceneId] ?? Array.Empty<ModuleSceneId>();
+            var nextSceneModuleIds = nextSceneGroup.SceneModuleMap[nextSceneId] ?? Array.Empty<ModuleSceneId>();
 
-            var nextSet = new HashSet<SceneModuleId>(nextSceneModuleIds);
+            var nextSet = new HashSet<ModuleSceneId>(nextSceneModuleIds);
 
             return currentSceneModuleIds.Where(m => !nextSet.Contains(m)).Distinct().ToArray();
         }

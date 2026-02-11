@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace SampleProduct.View.Scene.SceneModule.GlobalHeader
+namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
 {
     public class GlobalHeaderView : MonoBehaviour
     {

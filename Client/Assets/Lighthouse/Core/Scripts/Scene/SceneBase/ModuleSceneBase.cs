@@ -1,8 +1,8 @@
 ﻿namespace Lighthouse.Core.Scene.SceneBase
 {
-    public abstract class SceneModuleBase : SceneBase
+    public abstract class ModuleSceneBase : SceneBase
     {
-        public abstract SceneModuleId SceneModuleId { get; }
+        public abstract ModuleSceneId ModuleSceneId { get; }
 
         public VisibleStateType VisibleStateType { get; protected set; }
 

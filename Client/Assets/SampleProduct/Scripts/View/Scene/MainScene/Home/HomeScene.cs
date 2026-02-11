@@ -12,7 +12,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
     {
         [SerializeField] HomeView homeView;
 
-        ISceneModuleManager sceneModuleManager;
+        IModuleSceneManager moduleSceneManager;
 
         public override MainSceneId MainSceneId => SampleProductMainSceneId.Home;
 
@@ -22,16 +22,16 @@ namespace SampleProduct.View.Scene.MainScene.Home
         }
 
         [Inject]
-        public void Constructor(ISceneModuleManager sceneModuleManager)
+        public void Constructor(IModuleSceneManager moduleSceneManager)
         {
-            this.sceneModuleManager = sceneModuleManager;
+            this.moduleSceneManager = moduleSceneManager;
         }
 
         protected override async UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
         {
             await base.OnEnter(transitionData, transitionType, cancelToken);
 
-            // var globalHeaderScene = sceneModuleManager.GetCommonScene<GlobalHeaderSceneModule>();
+            // var globalHeaderScene = moduleSceneManager.GetCommonScene<GlobalHeaderModuleScene>();
             // globalHeaderScene.SetText("Home");
         }
     }

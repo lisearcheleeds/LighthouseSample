@@ -11,13 +11,13 @@ namespace Lighthouse.Core.Scene.SceneTransitionStep
             TransitionType transitionType,
             SceneTransitionDiff sceneTransitionDiff,
             IMainSceneManager mainSceneManager,
-            ISceneModuleManager sceneModuleManager,
+            IModuleSceneManager moduleSceneManager,
             ISceneCameraManager sceneCameraManager,
             CancellationToken cancelToken)
         {
             await UniTask.WhenAll(
                 mainSceneManager.PlayOutAnimation(transitionData, transitionType, sceneTransitionDiff),
-                sceneModuleManager.PlayOutAnimation(transitionType, sceneTransitionDiff));
+                moduleSceneManager.PlayOutAnimation(transitionType, sceneTransitionDiff));
         }
     }
 }

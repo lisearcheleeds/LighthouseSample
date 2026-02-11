@@ -4,7 +4,7 @@ using VContainer.Unity;
 
 namespace SampleProduct.View.Scene.MainScene.Splash
 {
-    public class SplashLifetimeScope : VContainer.Unity.LifetimeScope
+    public class SplashLifetimeScope : LifetimeScope
     {
         [SerializeField] SplashScene splashScene;
 
