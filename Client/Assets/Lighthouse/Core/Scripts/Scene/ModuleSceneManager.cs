@@ -12,7 +12,14 @@ namespace Lighthouse.Core.Scene
 {
     public sealed class ModuleSceneManager : IModuleSceneManager
     {
+        Func<IDisposable> enqueueParentLifetimeScope;
+
         readonly List<ModuleSceneBase> loadedSceneModules = new();
+
+        void IModuleSceneManager.SetEnqueueParentLifetimeScope(Func<IDisposable> enqueueParentLifetimeScope)
+        {
+            this.enqueueParentLifetimeScope = enqueueParentLifetimeScope;
+        }
 
         ISceneCamera[] IModuleSceneManager.GetSceneCameraList(ModuleSceneId[] requestSceneModuleIds)
         {
@@ -25,7 +32,7 @@ namespace Lighthouse.Core.Scene
         void IModuleSceneManager.ResetAnimation(TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff)
         {
             var targetAnimations = loadedSceneModules
-                .Where(x => sceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId) && !x.IsAlwaysInAnimation)
+                .Where(x => sceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
                 .ToArray();
 
             foreach (var targetAnimation in targetAnimations)
@@ -83,37 +90,40 @@ namespace Lighthouse.Core.Scene
                 return;
             }
 
-            // The scene loading progress is not linear, and the loading itself is completed in 0.9f.
-            // Call OnLoad before the scene's Active state to initialize the display.
-            var loadOperations = sceneTransitionDiff.LoadSceneModuleIds
-                .Select(sceneId => (sceneId: sceneId, ops: UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneId.Name, LoadSceneMode.Additive)))
-                .ToArray();
-
-            await UniTask.WhenAll(loadOperations.Select(x => UniTask.WaitUntil(() => x.ops.progress >= 0.9f)));
-
-            foreach (var loadOperation in loadOperations)
+            using (enqueueParentLifetimeScope.Invoke())
             {
-                loadOperation.ops.allowSceneActivation = true;
-            }
+                // The scene loading progress is not linear, and the loading itself is completed in 0.9f.
+                // Call OnLoad before the scene's Active state to initialize the display.
+                var loadOperations = sceneTransitionDiff.LoadSceneModuleIds
+                    .Select(sceneId => (sceneId: sceneId, ops: UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneId.Name, LoadSceneMode.Additive)))
+                    .ToArray();
 
-            await UniTask.WhenAll(
-                    loadOperations.Select(async x =>
-                    {
-                        await UniTask.WaitUntil(() =>
-                        {
-                            var s = UnityEngine.SceneManagement.SceneManager.GetSceneByName(x.sceneId.Name);
-                            return s.IsValid() && s.isLoaded;
-                        });
+                await UniTask.WhenAll(loadOperations.Select(x => UniTask.WaitUntil(() => x.ops.progress >= 0.9f)));
 
-                        var scene = FindSceneBase(x.sceneId);
-                        await scene.OnLoad();
-                        await x.ops;
-                        return scene;
-                    }))
-                .ContinueWith(scenes =>
+                foreach (var loadOperation in loadOperations)
                 {
-                    loadedSceneModules.AddRange(scenes);
-                });
+                    loadOperation.ops.allowSceneActivation = true;
+                }
+
+                await UniTask.WhenAll(
+                        loadOperations.Select(async x =>
+                        {
+                            await UniTask.WaitUntil(() =>
+                            {
+                                var s = UnityEngine.SceneManagement.SceneManager.GetSceneByName(x.sceneId.Name);
+                                return s.IsValid() && s.isLoaded;
+                            });
+
+                            var scene = FindSceneBase(x.sceneId);
+                            await scene.OnLoad();
+                            await x.ops;
+                            return scene;
+                        }))
+                    .ContinueWith(scenes =>
+                    {
+                        loadedSceneModules.AddRange(scenes);
+                    });
+            }
         }
 
         async UniTask IModuleSceneManager.Unload(SceneTransitionDiff sceneTransitionDiff)
@@ -138,7 +148,7 @@ namespace Lighthouse.Core.Scene
         async UniTask IModuleSceneManager.Enter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancellationToken)
         {
             var target = loadedSceneModules
-                .Where(x => sceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
+                .Where(x => sceneTransitionDiff.ActivateSceneModuleIds.Contains(x.ModuleSceneId))
                 .Select(x => x.Enter(transitionData, transitionType, cancellationToken))
                 .ToArray();
 
@@ -147,13 +157,8 @@ namespace Lighthouse.Core.Scene
 
         async UniTask IModuleSceneManager.Leave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancellationToken)
         {
-            if (sceneTransitionDiff?.CurrentSceneGroup == null)
-            {
-                return;
-            }
-
             var target = loadedSceneModules
-                .Where(x => sceneTransitionDiff.CurrentSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
+                .Where(x => sceneTransitionDiff.DeactivateSceneModuleIds.Contains(x.ModuleSceneId))
                 .Select(x => x.Leave(transitionData, transitionType, cancellationToken))
                 .ToArray();
 

@@ -6,7 +6,7 @@ namespace Lighthouse.Core.Scene
 {
     public sealed class SceneTransitionDiff
     {
-        public bool InSceneGroup { get; }
+        public bool IsInnerGroupTransition { get; }
 
         public SceneGroup CurrentSceneGroup { get; }
         public MainSceneId CurrentMainSceneId { get; }
@@ -18,9 +18,12 @@ namespace Lighthouse.Core.Scene
         public ModuleSceneId[] LoadSceneModuleIds { get; }
         public ModuleSceneId[] UnloadSceneModuleIds { get; }
 
+        public ModuleSceneId[] ActivateSceneModuleIds { get; }
+        public ModuleSceneId[] DeactivateSceneModuleIds { get; }
+
         public SceneTransitionDiff(SceneGroup currentSceneGroup, MainSceneId currentMainSceneId, SceneGroup nextSceneGroup, MainSceneId nextMainSceneId)
         {
-            InSceneGroup = ReferenceEquals(currentSceneGroup, nextSceneGroup);
+            IsInnerGroupTransition = ReferenceEquals(currentSceneGroup, nextSceneGroup);
 
             CurrentSceneGroup = currentSceneGroup;
             CurrentMainSceneId = currentMainSceneId;
@@ -31,6 +34,11 @@ namespace Lighthouse.Core.Scene
             UnloadMainSceneIds = GetMainSceneIdsOnlyInCurrent(currentSceneGroup, nextSceneGroup);
             LoadSceneModuleIds = GetSceneModuleIdsOnlyInNext(currentSceneGroup, currentMainSceneId, nextSceneGroup, nextMainSceneId);
             UnloadSceneModuleIds = GetSceneModuleIdsOnlyInCurrent(currentSceneGroup, currentMainSceneId, nextSceneGroup, nextMainSceneId);
+
+            var currentSceneModuleIds = currentSceneGroup?.SceneModuleMap[currentMainSceneId] ?? Array.Empty<ModuleSceneId>();
+            var nextSceneModuleIds = nextSceneGroup.SceneModuleMap[nextMainSceneId];
+            ActivateSceneModuleIds = nextSceneModuleIds.Except(currentSceneModuleIds).ToArray();
+            DeactivateSceneModuleIds = currentSceneModuleIds.Except(nextSceneModuleIds).ToArray();
         }
 
         static MainSceneId[] GetMainSceneIdsOnlyInNext(SceneGroup currentSceneGroup, SceneGroup nextSceneGroup)

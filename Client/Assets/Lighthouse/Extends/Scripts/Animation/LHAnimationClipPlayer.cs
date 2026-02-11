@@ -7,7 +7,7 @@ using UnityEngine.Playables;
 
 namespace Lighthouse.Extends.Animation
 {
-    public sealed class LHAnimationClipPlayer : IAnimationClipPlayer
+    public sealed class LHAnimationClipPlayer : IAnimationClipPlayer, IDisposable
     {
         readonly Animator animator;
         readonly AnimationClip[] animationClips;
@@ -120,6 +120,15 @@ namespace Lighthouse.Extends.Animation
             }
         }
 
+        public void Dispose()
+        {
+            CancelCurrentPlay();
+            if (playableGraph.IsValid())
+            {
+                playableGraph.Destroy();
+            }
+        }
+
         void CancelCurrentPlay()
         {
             if (playCts == null)
@@ -153,15 +162,6 @@ namespace Lighthouse.Extends.Animation
             playableGraph.Evaluate();
 
             animator.enabled = false;
-        }
-
-        void OnDestroy()
-        {
-            CancelCurrentPlay();
-            if (playableGraph.IsValid())
-            {
-                playableGraph.Destroy();
-            }
         }
 
         static void CreatePlayableGraph(ref PlayableGraph playableGraph ,Animator animator, AnimationClip[] clips)

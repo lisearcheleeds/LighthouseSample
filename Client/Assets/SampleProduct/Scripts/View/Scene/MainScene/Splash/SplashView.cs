@@ -14,11 +14,11 @@ namespace SampleProduct.View.Scene.MainScene.Splash
         [SerializeField] Sprite splashImage1;
         [SerializeField] Sprite splashImage2;
 
-        OverlayModuleScene overlayModuleScene;
+        IOverlayModule overlayModule;
 
-        public void SetupFirstSplashImage(OverlayModuleScene overlayModuleScene)
+        public void Setup(IOverlayModule overlayModule)
         {
-            this.overlayModuleScene = overlayModuleScene;
+            this.overlayModule = overlayModule;
 
             splashImage.sprite = splashImage1;
         }
@@ -32,13 +32,13 @@ namespace SampleProduct.View.Scene.MainScene.Splash
         {
             await UniTask.Delay(1500);
 
-            await overlayModuleScene.PlayOutAnimation(TransitionType.Default, false);
+            await overlayModule.PlayOutAnimation(false);
 
             splashImage.sprite = splashImage2;
 
             await UniTask.Delay(100);
 
-            await overlayModuleScene.PlayInAnimation(TransitionType.Default, false);
+            await overlayModule.PlayInAnimation(false);
 
             await UniTask.Delay(1500);
             onComplete();

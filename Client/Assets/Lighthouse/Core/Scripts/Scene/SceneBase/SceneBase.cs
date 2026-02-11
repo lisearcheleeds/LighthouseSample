@@ -17,6 +17,7 @@ namespace Lighthouse.Core.Scene.SceneBase
 
         public virtual UniTask OnLoad()
         {
+            gameObject.SetActive(false);
             return UniTask.CompletedTask;
         }
 
@@ -84,11 +85,13 @@ namespace Lighthouse.Core.Scene.SceneBase
 
         protected virtual UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
         {
+            gameObject.SetActive(true);
             return UniTask.CompletedTask;
         }
 
         protected virtual UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
         {
+            gameObject.SetActive(false);
             return UniTask.CompletedTask;
         }
 

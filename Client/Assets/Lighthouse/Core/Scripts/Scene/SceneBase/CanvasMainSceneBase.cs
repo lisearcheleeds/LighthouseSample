@@ -15,7 +15,7 @@ namespace Lighthouse.Core.Scene.SceneBase
         public override UniTask OnLoad()
         {
             canvasGroup.alpha = 0;
-            return UniTask.CompletedTask;
+            return base.OnLoad();
         }
 
         protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)

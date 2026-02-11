@@ -4,10 +4,10 @@ using Lighthouse.Core.Scene.SceneBase;
 using Lighthouse.Extends.Animation;
 using UnityEngine;
 
-namespace SampleProduct.View.Scene.SceneBase
+namespace SampleProduct.View.Scene.Common
 {
     [RequireComponent(typeof(LHTransitionAnimatorManager))]
-    public abstract class ProductCanvasModuleSceneBase : CanvasModuleSceneBase
+    public abstract class ProductCanvasMainSceneBase<TTransitionData> : CanvasMainSceneBase<TTransitionData> where TTransitionData : ProductTransitionDataBase, new()
     {
         [SerializeField] LHTransitionAnimatorManager transitionAnimatorManager;
 

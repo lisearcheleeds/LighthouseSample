@@ -138,5 +138,11 @@ namespace Lighthouse.Extends.Animation
 
             outAnimationClipPlayer.Skip();
         }
+
+        void OnDestroy()
+        {
+            inAnimationClipPlayer?.Dispose();
+            outAnimationClipPlayer?.Dispose();
+        }
     }
 }

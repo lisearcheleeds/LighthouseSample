@@ -12,6 +12,8 @@ namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
         {
             builder.RegisterEntryPoint<GlobalHeaderEntryPoint>();
             builder.RegisterComponent(globalHeaderModuleScene);
+
+            builder.Register<GlobalHeaderModule>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

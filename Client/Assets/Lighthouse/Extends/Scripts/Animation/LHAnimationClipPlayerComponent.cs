@@ -48,5 +48,10 @@ namespace Lighthouse.Extends.Animation
                 animationClipPlayer = new LHAnimationClipPlayer(animator, animationClips);
             }
         }
+
+        void OnDestroy()
+        {
+            animationClipPlayer?.Dispose();
+        }
     }
 }

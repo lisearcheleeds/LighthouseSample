@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Core.Scene;
-using SampleProduct.View.Scene.SceneBase;
+using SampleProduct.View.Scene.Common;
 using UnityEngine;
 using VContainer;
 

@@ -12,6 +12,8 @@ namespace SampleProduct.View.Scene.ModuleScene.Overlay
         {
             builder.RegisterEntryPoint<OverlayEntryPoint>();
             builder.RegisterComponent(overlayModuleScene);
+
+            builder.Register<OverlayModule>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

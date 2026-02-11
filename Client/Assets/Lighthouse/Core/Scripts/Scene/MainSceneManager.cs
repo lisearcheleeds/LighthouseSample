@@ -92,7 +92,7 @@ namespace Lighthouse.Core.Scene
 
         async UniTask IMainSceneManager.Load(SceneTransitionDiff sceneTransitionDiff)
         {
-            if (sceneTransitionDiff.InSceneGroup)
+            if (sceneTransitionDiff.IsInnerGroupTransition)
             {
                 return;
             }
@@ -137,7 +137,7 @@ namespace Lighthouse.Core.Scene
 
         async UniTask IMainSceneManager.Unload(SceneTransitionDiff sceneTransitionDiff)
         {
-            if (sceneTransitionDiff.InSceneGroup)
+            if (sceneTransitionDiff.IsInnerGroupTransition)
             {
                 return;
             }

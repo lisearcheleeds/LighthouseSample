@@ -15,7 +15,7 @@ namespace Lighthouse.Core.Scene.SceneBase
         protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
         {
             TransitionData = (TTransitionData)transitionData;
-            return UniTask.CompletedTask;
+            return base.OnEnter(transitionData, transitionType, cancelToken);
         }
 
         protected virtual void OnBackKeyFallback()

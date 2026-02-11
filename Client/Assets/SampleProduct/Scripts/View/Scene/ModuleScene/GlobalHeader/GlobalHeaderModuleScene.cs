@@ -1,5 +1,5 @@
 ﻿using Lighthouse.Core.Scene;
-using SampleProduct.View.Scene.SceneBase;
+using SampleProduct.View.Scene.Common;
 using UnityEngine;
 
 namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
@@ -10,7 +10,10 @@ namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
 
         public override ModuleSceneId ModuleSceneId => SampleProductModuleSceneId.GlobalHeader;
 
-        public void SetText(string text)
+        public override bool IsAlwaysInAnimation => true;
+        public override bool IsAlwaysOutAnimation => true;
+
+        public void SetHeaderText(string text)
         {
             globalHeaderView.SetText(text);
         }

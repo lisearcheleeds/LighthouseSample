@@ -11,7 +11,7 @@ namespace Lighthouse.Core.Scene
 
         public IReadOnlyDictionary<MainSceneId, ModuleSceneId[]> SceneModuleMap { get; }
 
-        public SceneGroup(ModuleSceneId[] requireSceneModuleIds, Dictionary<MainSceneId, ModuleSceneId[]> sceneModuleMap)
+        public SceneGroup(Dictionary<MainSceneId, ModuleSceneId[]> sceneModuleMap)
         {
             SceneModuleMap = sceneModuleMap;
 
@@ -19,8 +19,8 @@ namespace Lighthouse.Core.Scene
                 .Distinct()
                 .ToArray();
 
-            SceneModuleIds = requireSceneModuleIds
-                .Concat(sceneModuleMap.Values.SelectMany(x => x ?? Array.Empty<ModuleSceneId>()))
+            SceneModuleIds =
+                sceneModuleMap.Values.SelectMany(x => x)
                 .Distinct()
                 .ToArray();
         }

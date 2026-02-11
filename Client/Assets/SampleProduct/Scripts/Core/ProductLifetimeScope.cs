@@ -2,6 +2,8 @@
 using Lighthouse.Core.Scene.SceneCamera;
 using Lighthouse.Extends.CanvasSceneObject;
 using Lighthouse.Extends.InputBlocker;
+using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
+using SampleProduct.View.Scene.ModuleScene.Overlay;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -30,6 +32,9 @@ namespace SampleProduct.Core
 
             builder.RegisterComponentInNewPrefab(canvasSceneObjectPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
             builder.RegisterComponentInNewPrefab(inputBlockerPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
+
+            builder.Register<OverlayModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<GlobalHeaderModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }
