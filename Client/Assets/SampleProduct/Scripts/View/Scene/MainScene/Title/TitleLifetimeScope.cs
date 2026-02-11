@@ -4,7 +4,7 @@ using VContainer.Unity;
 
 namespace SampleProduct.View.Scene.MainScene.Title
 {
-    public class TitleSceneLifetimeScope : VContainer.Unity.LifetimeScope
+    public class TitleLifetimeScope : LifetimeScope
     {
         [SerializeField] TitleScene titleScene;
 

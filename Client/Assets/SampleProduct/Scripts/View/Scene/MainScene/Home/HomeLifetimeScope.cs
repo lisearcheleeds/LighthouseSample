@@ -4,7 +4,7 @@ using VContainer.Unity;
 
 namespace SampleProduct.View.Scene.MainScene.Home
 {
-    public class HomeSceneLifetimeScope : LifetimeScope
+    public class HomeLifetimeScope : LifetimeScope
     {
         [SerializeField] HomeScene homeScene;
 
