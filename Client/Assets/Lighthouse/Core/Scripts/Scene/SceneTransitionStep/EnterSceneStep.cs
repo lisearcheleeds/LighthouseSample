@@ -16,7 +16,10 @@ namespace Lighthouse.Core.Scene.SceneTransitionStep
             CancellationToken cancelToken)
         {
             await mainSceneManager.Enter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            mainSceneManager.ResetInAnimation(transitionData, transitionType, sceneTransitionDiff);
+
             await moduleSceneManager.Enter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            moduleSceneManager.ResetAnimation(transitionType, sceneTransitionDiff);
         }
     }
 }

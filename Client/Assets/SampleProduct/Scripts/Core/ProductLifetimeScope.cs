@@ -2,6 +2,7 @@
 using Lighthouse.Core.Scene.SceneCamera;
 using Lighthouse.Extends.CanvasSceneObject;
 using Lighthouse.Extends.InputBlocker;
+using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using SampleProduct.View.Scene.ModuleScene.Overlay;
 using UnityEngine;
@@ -35,6 +36,7 @@ namespace SampleProduct.Core
 
             builder.Register<OverlayModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<GlobalHeaderModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<BackgroundModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

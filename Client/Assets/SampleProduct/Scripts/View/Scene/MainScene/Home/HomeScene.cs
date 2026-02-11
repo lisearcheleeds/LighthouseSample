@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using Lighthouse.Core.Scene;
 using SampleProduct.View.Scene.Common;
+using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using UnityEngine;
 using VContainer;
 
@@ -11,7 +12,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
     {
         [SerializeField] HomeView homeView;
 
-        IModuleSceneManager moduleSceneManager;
+        IGlobalHeaderModule globalHeaderModule;
 
         public override MainSceneId MainSceneId => SampleProductMainSceneId.Home;
 
@@ -21,17 +22,16 @@ namespace SampleProduct.View.Scene.MainScene.Home
         }
 
         [Inject]
-        public void Constructor(IModuleSceneManager moduleSceneManager)
+        public void Constructor(IGlobalHeaderModule globalHeaderModule)
         {
-            this.moduleSceneManager = moduleSceneManager;
+            this.globalHeaderModule = globalHeaderModule;
         }
 
         protected override async UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
         {
             await base.OnEnter(transitionData, transitionType, cancelToken);
 
-            // var globalHeaderScene = moduleSceneManager.GetCommonScene<GlobalHeaderModuleScene>();
-            // globalHeaderScene.SetText("Home");
+            globalHeaderModule.SetHeaderText("Home");
         }
     }
 }

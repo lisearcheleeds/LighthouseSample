@@ -12,6 +12,8 @@ namespace SampleProduct.View.Scene.ModuleScene.Background
         {
             builder.RegisterEntryPoint<BackgroundEntryPoint>();
             builder.RegisterComponent(backgroundModuleScene);
+
+            builder.Register<BackgroundModule>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }
