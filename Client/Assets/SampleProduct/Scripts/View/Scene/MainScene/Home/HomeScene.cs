@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Core.Scene;
+using Lighthouse.Scene;
 using SampleProduct.View.Scene.Common;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using UnityEngine;
@@ -27,9 +27,9 @@ namespace SampleProduct.View.Scene.MainScene.Home
             this.globalHeaderModule = globalHeaderModule;
         }
 
-        protected override async UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
+        protected override async UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, bool isActivateScene, CancellationToken cancelToken)
         {
-            await base.OnEnter(transitionData, transitionType, cancelToken);
+            await base.OnEnter(transitionData, transitionType, isActivateScene, cancelToken);
 
             globalHeaderModule.SetHeaderText("Home");
         }

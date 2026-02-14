@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using Lighthouse.Core.Scene;
+using Lighthouse.Scene;
 using SampleProduct.View.Scene.Common;
 using SampleProduct.View.Scene.MainScene.Home;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace SampleProduct.View.Scene.MainScene.Title
 {
     public class TitleScene : ProductCanvasMainSceneBase<TitleScene.TitleTransitionData>
     {
-        SceneManager sceneManager;
+        ISceneManager sceneManager;
 
         [SerializeField] TitleView titleView;
 
@@ -21,7 +21,7 @@ namespace SampleProduct.View.Scene.MainScene.Title
         }
 
         [Inject]
-        public void Constructor(SceneManager sceneManager, IModuleSceneManager moduleSceneManager)
+        public void Constructor(ISceneManager sceneManager)
         {
             this.sceneManager = sceneManager;
         }

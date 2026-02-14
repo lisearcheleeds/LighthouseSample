@@ -1,6 +1,6 @@
 ﻿using System;
-using Lighthouse.Extends.Animation;
-using Lighthouse.Extends.UI;
+using LighthouseExtends.Animation;
+using LighthouseExtends.UI;
 using UnityEngine;
 
 namespace SampleProduct.View.Scene.MainScene.Title

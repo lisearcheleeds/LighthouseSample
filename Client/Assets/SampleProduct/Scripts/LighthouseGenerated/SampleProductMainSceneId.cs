@@ -4,8 +4,7 @@
 // </auto-generated>
 
 using System;
-using Lighthouse.Core;
-using Lighthouse.Core.Scene;
+using Lighthouse.Scene;
 
 namespace SampleProduct
 {

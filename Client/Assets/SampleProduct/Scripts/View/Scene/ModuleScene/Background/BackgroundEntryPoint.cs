@@ -10,7 +10,7 @@ namespace SampleProduct.View.Scene.ModuleScene.Background
         readonly IBackgroundModuleImpl backgroundModuleImpl;
 
         [Inject]
-        public BackgroundEntryPoint(IBackgroundModuleProxy backgroundModuleProxy, IBackgroundModuleImpl globalHeaderModule)
+        public BackgroundEntryPoint(IBackgroundModuleProxy backgroundModuleProxy, IBackgroundModuleImpl backgroundModuleImpl)
         {
             this.backgroundModuleProxy = backgroundModuleProxy;
             this.backgroundModuleImpl = backgroundModuleImpl;

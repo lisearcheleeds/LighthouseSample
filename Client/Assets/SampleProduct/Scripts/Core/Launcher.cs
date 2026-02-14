@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using Lighthouse.Core.Scene;
+using Lighthouse.Scene;
 using SampleProduct.View.Scene.MainScene.Splash;
 using UnityEngine;
 using VContainer;
@@ -10,11 +10,11 @@ namespace SampleProduct.Core
     {
         static readonly string LauncherSceneName = "Launcher";
 
-        SceneManager sceneManager;
+        ISceneManager sceneManager;
         ISceneGroupController sceneGroupController;
 
         [Inject]
-        public Launcher(SceneManager sceneManager, ISceneGroupController sceneGroupController)
+        public Launcher(ISceneManager sceneManager, ISceneGroupController sceneGroupController)
         {
             this.sceneManager = sceneManager;
             this.sceneGroupController = sceneGroupController;

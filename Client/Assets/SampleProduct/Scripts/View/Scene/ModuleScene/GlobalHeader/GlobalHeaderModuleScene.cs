@@ -1,4 +1,4 @@
-﻿using Lighthouse.Core.Scene;
+﻿using Lighthouse.Scene;
 using SampleProduct.View.Scene.Common;
 using UnityEngine;
 

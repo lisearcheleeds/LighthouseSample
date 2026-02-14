@@ -1,7 +1,7 @@
-﻿using Lighthouse.Core.Scene;
-using Lighthouse.Core.Scene.SceneCamera;
-using Lighthouse.Extends.CanvasSceneObject;
-using Lighthouse.Extends.InputBlocker;
+﻿using Lighthouse.Scene;
+using Lighthouse.Scene.SceneCamera;
+using LighthouseExtends.CanvasSceneObject;
+using LighthouseExtends.InputBlocker;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using SampleProduct.View.Scene.ModuleScene.Overlay;
@@ -24,7 +24,7 @@ namespace SampleProduct.Core
 
             builder.Register<Launcher>(Lifetime.Singleton).AsImplementedInterfaces();
 
-            builder.Register<SceneManager>(Lifetime.Singleton);
+            builder.Register<SceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<SceneGroupController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<SceneGroupProvider>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<MainSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();

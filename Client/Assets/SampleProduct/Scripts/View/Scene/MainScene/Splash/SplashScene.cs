@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Core.Scene;
+using Lighthouse.Scene;
 using SampleProduct.View.Scene.Common;
 using SampleProduct.View.Scene.MainScene.Title;
 using SampleProduct.View.Scene.ModuleScene.Overlay;
@@ -11,7 +11,7 @@ namespace SampleProduct.View.Scene.MainScene.Splash
 {
     public class SplashScene : ProductCanvasMainSceneBase<SplashScene.SplashTransitionData>
     {
-        SceneManager sceneManager;
+        ISceneManager sceneManager;
         IOverlayModule overlayModule;
 
         [SerializeField] SplashView splashView;
@@ -24,15 +24,15 @@ namespace SampleProduct.View.Scene.MainScene.Splash
         }
 
         [Inject]
-        public void Constructor(SceneManager sceneManager, IOverlayModule overlayModule)
+        public void Constructor(ISceneManager sceneManager, IOverlayModule overlayModule)
         {
             this.sceneManager = sceneManager;
             this.overlayModule = overlayModule;
         }
 
-        protected override async UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancelToken)
+        protected override async UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, bool isActivateScene, CancellationToken cancelToken)
         {
-            await base.OnEnter(transitionData, transitionType, cancelToken);
+            await base.OnEnter(transitionData, transitionType, isActivateScene, cancelToken);
 
             splashView.Setup(overlayModule);
         }

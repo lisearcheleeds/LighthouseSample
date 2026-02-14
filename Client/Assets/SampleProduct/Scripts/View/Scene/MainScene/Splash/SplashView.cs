@@ -1,6 +1,5 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Core.Scene;
 using SampleProduct.View.Scene.ModuleScene.Overlay;
 using UnityEngine;
 using UnityEngine.UI;

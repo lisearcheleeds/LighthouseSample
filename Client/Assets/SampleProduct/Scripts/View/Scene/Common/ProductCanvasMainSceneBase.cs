@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
-using Lighthouse.Core.Scene;
-using Lighthouse.Core.Scene.SceneBase;
-using Lighthouse.Extends.Animation;
+using Lighthouse.Scene;
+using Lighthouse.Scene.SceneBase;
+using LighthouseExtends.Animation;
 using UnityEngine;
 
 namespace SampleProduct.View.Scene.Common
@@ -16,12 +16,12 @@ namespace SampleProduct.View.Scene.Common
             transitionAnimatorManager.ResetInAnimation(transitionType);
         }
 
-        protected override async UniTask InAnimation(TransitionType transitionType, bool withStateChange)
+        protected override async UniTask InAnimation(TransitionType transitionType, bool isActivateScene)
         {
             await transitionAnimatorManager.InAnimation(transitionType);
         }
 
-        protected override async UniTask OutAnimation(TransitionType transitionType, bool withStateChange)
+        protected override async UniTask OutAnimation(TransitionType transitionType, bool isDeactivateScene)
         {
             await transitionAnimatorManager.OutAnimation(transitionType);
         }

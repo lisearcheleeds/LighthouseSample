@@ -8,9 +8,10 @@ namespace SampleProduct.View.Scene.ModuleScene.Background
     {
         [SerializeField] Image background;
 
-        public async UniTask SetBackground(string backgroundAsset)
+        public UniTask SetBackground(string backgroundAsset)
         {
             // background.SetBackground(backgroundAsset);
+            return UniTask.CompletedTask;
         }
     }
 }
