@@ -14,6 +14,7 @@ namespace LighthouseExtends.Popup
             builder.RegisterComponent(popupModuleScene);
 
             builder.Register<PopupModule>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<PopupManager>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

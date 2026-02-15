@@ -1,15 +1,53 @@
-﻿using VContainer;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using Lighthouse.Scene;
+using VContainer;
 
 namespace LighthouseExtends.Popup
 {
-    public class PopupModule : IPopupModuleImpl
+    public sealed class PopupModule : IPopupModuleImpl
     {
-        readonly PopupModuleScene popupModuleScene;
+        readonly IPopupManager popupManager;
 
         [Inject]
-        public PopupModule(PopupModuleScene popupModuleScene)
+        public PopupModule(IPopupManager popupManager)
         {
-            this.popupModuleScene = popupModuleScene;
+            this.popupManager = popupManager;
+        }
+
+        UniTask IPopupModule.EnqueuePopup(IPopupData popupData, CancellationToken token)
+        {
+            return popupManager.EnqueuePopup(popupData, token);
+        }
+
+        UniTask IPopupModule.OpenPopup(CancellationToken token)
+        {
+            return popupManager.OpenPopup(token);
+        }
+
+        UniTask IPopupModule.OpenPopup(IPopupData popupData, CancellationToken token)
+        {
+            return popupManager.OpenPopup(popupData, token);
+        }
+
+        UniTask IPopupModule.ClosePopup(CancellationToken token)
+        {
+            return popupManager.ClosePopup(token);
+        }
+
+        UniTask IPopupModule.ClosePopup(IPopupData popupData, CancellationToken token)
+        {
+            return popupManager.ClosePopup(popupData, token);
+        }
+
+        UniTask IPopupModule.ClearAllPopup(CancellationToken token)
+        {
+            return popupManager.ClearAllPopup(token);
+        }
+
+        UniTask IPopupModule.ClearCurrentAllPopup(CancellationToken token)
+        {
+            return popupManager.ClearCurrentAllPopup(token);
         }
     }
 }

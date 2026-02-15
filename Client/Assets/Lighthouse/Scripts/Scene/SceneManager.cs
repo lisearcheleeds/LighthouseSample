@@ -64,7 +64,7 @@ namespace Lighthouse.Scene
                     break;
                 }
 
-                if (!backTargetSceneTransitionData.CanTransition() && currentSceneTransitionData.MainSceneId != backTargetSceneTransitionData.MainSceneId)
+                if (!backTargetSceneTransitionData.CanTransition && currentSceneTransitionData.MainSceneId != backTargetSceneTransitionData.MainSceneId)
                 {
                     break;
                 }
@@ -77,7 +77,7 @@ namespace Lighthouse.Scene
 
         async UniTask<bool> TransitionSceneAsync(TransitionDataBase nextTransitionData, TransitionType transitionType, MainSceneId backMainSceneId)
         {
-            var canTransition = nextTransitionData.CanTransition();
+            var canTransition = nextTransitionData.CanTransition;
             if (!canTransition)
             {
                 return false;

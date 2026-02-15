@@ -7,10 +7,7 @@ namespace Lighthouse.Scene
     {
         public abstract MainSceneId MainSceneId { get; }
 
-        public virtual bool CanTransition()
-        {
-            return true;
-        }
+        public bool CanTransition { get; protected set; } = true;
 
         public virtual UniTask LoadSceneState(TransitionType transitionType, CancellationToken cancelToken)
         {
