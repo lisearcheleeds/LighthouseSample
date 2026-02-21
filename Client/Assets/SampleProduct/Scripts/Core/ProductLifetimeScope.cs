@@ -2,6 +2,7 @@
 using Lighthouse.Scene.SceneCamera;
 using LighthouseExtends.CanvasSceneObject;
 using LighthouseExtends.InputBlocker;
+using LighthouseExtends.Popup;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using SampleProduct.View.Scene.ModuleScene.Overlay;
@@ -30,6 +31,8 @@ namespace SampleProduct.Core
             builder.Register<MainSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<ModuleSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<SceneCameraManager>(Lifetime.Singleton).AsImplementedInterfaces();
+
+            builder.Register<PopupModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.RegisterComponentInNewPrefab(canvasSceneObjectPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
             builder.RegisterComponentInNewPrefab(inputBlockerPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();

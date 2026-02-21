@@ -27,11 +27,30 @@ namespace SampleProduct.View.Scene.MainScene.Home
             this.globalHeaderModule = globalHeaderModule;
         }
 
+        protected override UniTask OnSetup()
+        {
+            homeView.SubscribeEditButtonClick(OnClickEditButton);
+            homeView.SubscribeOptionButtonClick(OnClickOptionButton);
+            homeView.SubscribeDialogTestButtonClick(OnClickDialogTestButton);
+            return base.OnSetup();
+        }
+
         protected override async UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, bool isActivateScene, CancellationToken cancelToken)
         {
             await base.OnEnter(transitionData, transitionType, isActivateScene, cancelToken);
-
             globalHeaderModule.SetHeaderText("Home");
+        }
+
+        void OnClickEditButton()
+        {
+        }
+
+        void OnClickOptionButton()
+        {
+        }
+
+        void OnClickDialogTestButton()
+        {
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using LighthouseExtends.UI;
+﻿using LighthouseExtends.Button;
 using UnityEditor;
 using UnityEditor.UI;
 

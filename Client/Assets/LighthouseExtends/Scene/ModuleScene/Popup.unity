@@ -356,6 +356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Lighthouse.Core.Scene.SceneCamera.SceneCanvasInitializer
   sceneCanvasList:
   - {fileID: 1160184125}
+  - {fileID: 1164696736}
 --- !u!225 &2028091549
 CanvasGroup:
   m_ObjectHideFlags: 0
