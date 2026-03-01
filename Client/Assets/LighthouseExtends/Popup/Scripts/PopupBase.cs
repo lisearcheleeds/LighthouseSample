@@ -30,7 +30,7 @@ namespace LighthouseExtends.Popup
         }
 
         public virtual void EndOutAnimation()
-        {a
+        {
         }
 
         public virtual void Dispose()

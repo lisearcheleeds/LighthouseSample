@@ -20,9 +20,9 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         void IHomeViewController.Setup()
         {
-            homeView.SubscribeEditButtonButtonClick(OnClickEditButton);
-            homeView.SubscribeGame1ButtonButtonClick(OnClickGame1Button);
-            homeView.SubscribeGame2ButtonButtonClick(OnClickGame2Button);
+            homeView.SubscribeEditButtonClick(OnClickEditButton);
+            homeView.SubscribeGame1ButtonClick(OnClickGame1Button);
+            homeView.SubscribeGame2ButtonClick(OnClickGame2Button);
             homeView.SubscribeOptionButtonClick(OnClickOption);
             homeView.SubscribePopupTest1ButtonClick(OnClickPopupTest1);
             homeView.SubscribePopupTest2ButtonClick(OnClickPopupTest2);
@@ -57,6 +57,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
         void OnClickPopupTest2()
         {
             Debug.Log("OnClickPopupTest2");
+            popupModule.OpenPopup(new PopupSample2PopupData(), CancellationToken.None);
         }
     }
 }

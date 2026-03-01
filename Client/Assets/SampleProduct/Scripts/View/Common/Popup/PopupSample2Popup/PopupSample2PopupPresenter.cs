@@ -6,7 +6,7 @@ using VContainer;
 
 namespace SampleProduct.View.Common.Popup.PopupTest
 {
-    public sealed class PopupSample1PopupPresenter : IPopupPresenter
+    public sealed class PopupSample2PopupPresenter : IPopupPresenter
     {
         IPopupModule popupModule;
 
@@ -16,7 +16,7 @@ namespace SampleProduct.View.Common.Popup.PopupTest
             this.popupModule = popupModule;
         }
 
-        public void Bind(PopupSample1PopupView view, PopupSample1PopupData popupData)
+        public void Bind(PopupSample2PopupView view, PopupSample2PopupData popupData)
         {
             view.SubscribeCloseButtonClick(OnClickCloseButton);
             view.SubscribeShowCodeButtonClick(OnClickShowCodeButton);

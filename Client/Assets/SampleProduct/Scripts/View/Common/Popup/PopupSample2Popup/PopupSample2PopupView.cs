@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SampleProduct.View.Common.Popup.PopupTest
 {
-    public class PopupSample1PopupView : MonoBehaviour
+    public class PopupSample2PopupView : MonoBehaviour
     {
         [SerializeField] LHButton closeButton;
         [SerializeField] LHButton showCodeButton;

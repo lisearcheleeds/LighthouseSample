@@ -24,6 +24,7 @@ namespace SampleProduct.View.Scene.ModuleScene.Popup
             return data switch
             {
                 PopupSample1PopupData d => CreatePopupEntityAsync<PopupSample1Popup, PopupSample1PopupPresenter, PopupSample1PopupData>("PopupSample1Popup", d, ct),
+                PopupSample2PopupData d => CreatePopupEntityAsync<PopupSample2Popup, PopupSample2PopupPresenter, PopupSample2PopupData>("PopupSample2Popup", d, ct),
                 _ => throw new ArgumentOutOfRangeException(nameof(data), data.GetType().FullName, "Unknown popup data type")
             };
         }
