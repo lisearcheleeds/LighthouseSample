@@ -9,7 +9,10 @@ namespace LighthouseExtends.Popup
         void SetParent(Transform parentTransform);
 
         UniTask OnInitialize();
-        UniTask InAnimation();
-        UniTask OutAnimation();
+
+        void ResetInAnimation();
+        UniTask PlayInAnimation();
+        UniTask PlayOutAnimation();
+        void EndOutAnimation();
     }
 }

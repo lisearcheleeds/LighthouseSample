@@ -9,14 +9,24 @@ namespace SampleProduct.View.Common.Popup
     {
         [SerializeField] LHTransitionAnimator transitionAnimator;
 
-        public override async UniTask InAnimation()
+        public override void ResetInAnimation()
+        {
+            transitionAnimator.ResetInAnimation();
+        }
+
+        public override async UniTask PlayInAnimation()
         {
             await transitionAnimator.InAnimation();
         }
 
-        public override async UniTask OutAnimation()
+        public override async UniTask PlayOutAnimation()
         {
             await transitionAnimator.OutAnimation();
+        }
+
+        public override void EndOutAnimation()
+        {
+            transitionAnimator.EndOutAnimation();
         }
     }
 }

@@ -51,7 +51,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
         void OnClickPopupTest1()
         {
             Debug.Log("OnClickPopupTest1");
-            popupModule.OpenPopup(new PopupTest1Data(), CancellationToken.None);
+            popupModule.OpenPopup(new PopupSample1PopupData(), CancellationToken.None);
         }
 
         void OnClickPopupTest2()

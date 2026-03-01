@@ -9,8 +9,7 @@ namespace SampleProduct.View.Scene.ModuleScene.Popup
         {
             base.Configure(builder);
 
-            builder.Register<PopupPresenterFactory>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<PopupFactory>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<PopupEntityFactory>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

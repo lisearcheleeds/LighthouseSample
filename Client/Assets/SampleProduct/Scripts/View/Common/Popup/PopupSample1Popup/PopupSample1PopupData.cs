@@ -2,7 +2,7 @@
 
 namespace SampleProduct.View.Common.Popup.PopupTest
 {
-    public sealed class PopupTest1Data : IPopupData
+    public sealed class PopupSample1PopupData : IPopupData
     {
         public bool IsSystem => false;
         public bool IsKeepView => false;

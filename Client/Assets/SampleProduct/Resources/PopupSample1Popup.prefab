@@ -239,8 +239,9 @@ GameObject:
   - component: {fileID: 5737388246702377772}
   - component: {fileID: 8117432943992582533}
   - component: {fileID: 2265370092811744753}
+  - component: {fileID: 524625991281420606}
   m_Layer: 0
-  m_Name: PopupTest1
+  m_Name: PopupSample1Popup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,6 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleProduct.View.Popup.PopupTest.PopupTest1
   transitionAnimator: {fileID: 5737388246702377772}
+  popupSample1PopupView: {fileID: 524625991281420606}
 --- !u!114 &5737388246702377772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +335,18 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &524625991281420606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2594994403573761210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1ee994928e40bbbdd97ecef9ccbd56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleProduct.View.Common.Popup.PopupTest.PopupSample1PopupView
 --- !u!1 &2843146977583069903
 GameObject:
   m_ObjectHideFlags: 0

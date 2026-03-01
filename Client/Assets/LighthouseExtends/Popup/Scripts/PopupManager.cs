@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
+using UnityEngine;
 using VContainer;
 
 namespace LighthouseExtends.Popup
@@ -11,8 +12,7 @@ namespace LighthouseExtends.Popup
     public sealed class PopupManager : IPopupManager
     {
         readonly IPopupCanvasController popupCanvasController;
-        readonly IPopupFactory popupFactory;
-        readonly IPopupPresenterFactory popupPresenterFactory;
+        readonly IPopupEntityFactory popupEntityFactory;
 
         readonly List<(MainSceneId, List<IPopupData>)> popupDataSceneList = new();
         readonly List<PopupEntity> popupEntityList = new();
@@ -38,11 +38,10 @@ namespace LighthouseExtends.Popup
         }
 
         [Inject]
-        public PopupManager(IPopupCanvasController popupCanvasController, IPopupFactory popupFactory, IPopupPresenterFactory popupPresenterFactory)
+        public PopupManager(IPopupCanvasController popupCanvasController, IPopupEntityFactory popupEntityFactory)
         {
             this.popupCanvasController = popupCanvasController;
-            this.popupFactory = popupFactory;
-            this.popupPresenterFactory = popupPresenterFactory;
+            this.popupEntityFactory = popupEntityFactory;
         }
 
         UniTask IPopupManager.EnqueuePopup(IPopupData popupData, CancellationToken token)
@@ -174,14 +173,13 @@ namespace LighthouseExtends.Popup
             }
 
             var prevPopupEntity = popupEntityList.LastOrDefault();
-            if (prevPopupEntity?.PopupPresenter.PopupData == popupData)
+            if (prevPopupEntity?.PopupData == popupData)
             {
                 throw new InvalidOperationException($"Duplicate open");
             }
 
-            var popupEntity = new PopupEntity(
-                await popupFactory.CreatePopup(popupData),
-                popupPresenterFactory.CreatePopupPresenter(popupData));
+            var popupEntity = await popupEntityFactory.CreateAsync(popupData, token);
+            popupEntity.Popup.ResetInAnimation();
             popupEntityList.Add(popupEntity);
 
             popupCanvasController.AddChild(popupEntity.Popup, popupData.IsSystem);
@@ -190,16 +188,16 @@ namespace LighthouseExtends.Popup
 
             if (prevPopupEntity != null)
             {
-                if (!prevPopupEntity.PopupPresenter.PopupData.IsKeepView)
+                if (!prevPopupEntity.PopupData.IsKeepView)
                 {
-                    await prevPopupEntity.Popup.OutAnimation();
+                    await prevPopupEntity.Popup.PlayOutAnimation();
                 }
 
                 await prevPopupEntity.PopupPresenter.OnLeave();
             }
 
-            await popupEntity.PopupPresenter.OnEnter(popupData, popupEntity.Popup, false);
-            await popupEntity.Popup.InAnimation();
+            await popupEntity.PopupPresenter.OnEnter(false);
+            await popupEntity.Popup.PlayInAnimation();
         }
 
         async UniTask ClosePopupCore(IPopupData popupData, CancellationToken token)
@@ -223,7 +221,7 @@ namespace LighthouseExtends.Popup
             }
 
             // If there is a popup view, remove it too.
-            var target = popupEntityList.FirstOrDefault(x => ReferenceEquals(x.PopupPresenter.PopupData, popupData));
+            var target = popupEntityList.FirstOrDefault(x => ReferenceEquals(x.PopupData, popupData));
             if (target == null)
             {
                 return;
@@ -232,7 +230,7 @@ namespace LighthouseExtends.Popup
             var isLast = ReferenceEquals(target, popupEntityList[^1]);
             popupEntityList.Remove(target);
 
-            await target.Popup.OutAnimation();
+            await target.Popup.PlayOutAnimation();
             await target.PopupPresenter.OnLeave();
             target.Popup.Dispose();
 
@@ -247,11 +245,11 @@ namespace LighthouseExtends.Popup
                 return;
             }
 
-            await prevPopup.PopupPresenter.OnEnter(prevPopup.PopupPresenter.PopupData, prevPopup.Popup, true);
+            await prevPopup.PopupPresenter.OnEnter(true);
 
-            if (!prevPopup.PopupPresenter.PopupData.IsKeepView)
+            if (!prevPopup.PopupData.IsKeepView)
             {
-                await prevPopup.Popup.InAnimation();
+                await prevPopup.Popup.PlayInAnimation();
             }
         }
 
@@ -271,7 +269,7 @@ namespace LighthouseExtends.Popup
 
             popupEntityList.Remove(currentPopup);
 
-            await currentPopup.Popup.OutAnimation();
+            await currentPopup.Popup.PlayOutAnimation();
             await currentPopup.PopupPresenter.OnLeave();
             currentPopup.Popup.Dispose();
 
@@ -281,11 +279,11 @@ namespace LighthouseExtends.Popup
                 return;
             }
 
-            await prevPopup.PopupPresenter.OnEnter(prevPopup.PopupPresenter.PopupData, prevPopup.Popup, true);
+            await prevPopup.PopupPresenter.OnEnter(true);
 
-            if (!prevPopup.PopupPresenter.PopupData.IsKeepView)
+            if (!prevPopup.PopupData.IsKeepView)
             {
-                await prevPopup.Popup.InAnimation();
+                await prevPopup.Popup.PlayInAnimation();
             }
         }
 
@@ -306,9 +304,9 @@ namespace LighthouseExtends.Popup
                 var isLast = ReferenceEquals(target, lastTarget);
                 popupEntityList.RemoveAt(popupEntityList.Count - 1);
 
-                if (isLast || target.PopupPresenter.PopupData.IsKeepView)
+                if (isLast || target.PopupData.IsKeepView)
                 {
-                    await target.Popup.OutAnimation();
+                    await target.Popup.PlayOutAnimation();
                 }
 
                 await target.PopupPresenter.OnLeave();

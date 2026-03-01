@@ -15,14 +15,22 @@ namespace LighthouseExtends.Popup
             transform.SetParent(parentTransform, false);
         }
 
-        public virtual UniTask InAnimation()
+        public virtual void ResetInAnimation()
+        {
+        }
+
+        public virtual UniTask PlayInAnimation()
         {
             return UniTask.CompletedTask;
         }
 
-        public virtual UniTask OutAnimation()
+        public virtual UniTask PlayOutAnimation()
         {
             return UniTask.CompletedTask;
+        }
+
+        public virtual void EndOutAnimation()
+        {a
         }
 
         public virtual void Dispose()
