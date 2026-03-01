@@ -1,8 +1,9 @@
 ﻿using Lighthouse.Scene;
 using Lighthouse.Scene.SceneCamera;
-using LighthouseExtends.CanvasSceneObject;
-using LighthouseExtends.InputBlocker;
 using LighthouseExtends.Popup;
+using LighthouseExtends.UI.CanvasSceneObject;
+using LighthouseExtends.UI.ExclusiveInput;
+using LighthouseExtends.UI.InputBlocker;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using SampleProduct.View.Scene.ModuleScene.Overlay;
@@ -20,26 +21,43 @@ namespace SampleProduct.Core
 
         protected override void Configure(IContainerBuilder builder)
         {
+            // Product
             builder.RegisterEntryPoint<ProductEntryPoint>();
             builder.RegisterInstance(productLifetimeScopeSettings);
 
-            builder.Register<Launcher>(Lifetime.Singleton).AsImplementedInterfaces();
+            {
+                // LightHouse
+                builder.Register<SceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<SceneGroupController>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<SceneGroupProvider>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<MainSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<ModuleSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<SceneCameraManager>(Lifetime.Singleton).AsImplementedInterfaces();
+            }
 
-            builder.Register<SceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<SceneGroupController>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<SceneGroupProvider>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<MainSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<ModuleSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<SceneCameraManager>(Lifetime.Singleton).AsImplementedInterfaces();
+            {
+                // LightHouse.Extends
+                builder.Register<ExclusiveInputService>(Lifetime.Singleton).AsImplementedInterfaces();
 
-            builder.Register<PopupModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
+                // Modules
+                builder.Register<PopupModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
+            }
 
-            builder.RegisterComponentInNewPrefab(canvasSceneObjectPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
-            builder.RegisterComponentInNewPrefab(inputBlockerPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
+            {
+                // SampleProduct
+                builder.Register<Launcher>(Lifetime.Singleton).AsImplementedInterfaces();
 
-            builder.Register<OverlayModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<GlobalHeaderModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<BackgroundModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
+                {
+                    // LightHouse Require
+                    builder.RegisterComponentInNewPrefab(canvasSceneObjectPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
+                    builder.RegisterComponentInNewPrefab(inputBlockerPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
+                }
+
+                // Module
+                builder.Register<OverlayModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<GlobalHeaderModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<BackgroundModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
+            }
         }
     }
 }

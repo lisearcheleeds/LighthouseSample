@@ -172,8 +172,10 @@ MonoBehaviour:
   animator: {fileID: 30586184}
   inAnimationClips:
   - {fileID: 7400000, guid: 607019cdbd5641345a7d38d37f4ed30d, type: 2}
+  inDelayMilliSec: 0
   outAnimationClips:
   - {fileID: 7400000, guid: 4bb251078df7c6d4e860efbf640ea036, type: 2}
+  outDelayMilliSec: 0
 --- !u!95 &30586184
 Animator:
   serializedVersion: 7
@@ -267,7 +269,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 435704337}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bdb5022d92948e3a2ca4e6943cb4820, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fcb441afbfb4b89937ee33ad5e9a0d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lighthouse.Extends.UI.LHButton
   m_Navigation:
@@ -277,7 +279,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -831,7 +833,9 @@ MonoBehaviour:
   animator: {fileID: 2104531636}
   inAnimationClips:
   - {fileID: 7400000, guid: 323a3969032f36c4598a5539906462a5, type: 2}
+  inDelayMilliSec: 0
   outAnimationClips: []
+  outDelayMilliSec: 0
 --- !u!114 &2104531640
 MonoBehaviour:
   m_ObjectHideFlags: 0

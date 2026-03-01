@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using LighthouseExtends.UI.Button;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -11,6 +12,7 @@ namespace SampleProduct.View.Scene.MainScene.Title
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponent(titleScene);
+            builder.RegisterComponentInHierarchy<LHButton>();
         }
     }
 }

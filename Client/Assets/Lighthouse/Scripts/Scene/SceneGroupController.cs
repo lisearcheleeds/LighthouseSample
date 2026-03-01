@@ -117,8 +117,6 @@ namespace Lighthouse.Scene
             {
                 CurrentTransitionPhase = transitionPhase;
 
-                Debug.Log($"SceneTransition PhaseChanged: {CurrentTransitionPhase.GetType()}");
-
                 var tasks = transitionPhase.Steps.Select(step => step.Run(
                     transitionData,
                     transitionType,

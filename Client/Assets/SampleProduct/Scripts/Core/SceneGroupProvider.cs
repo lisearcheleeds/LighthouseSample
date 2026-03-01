@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Lighthouse.Scene;
-using UnityEngine;
 
 namespace SampleProduct.Core
 {
     public sealed class SceneGroupProvider : ISceneGroupProvider
     {
-        static readonly ModuleSceneId[] RequireSceneModuleIds = { SampleProductModuleSceneId.Overlay };
+        static readonly ModuleSceneId[] RequireSceneModuleIds =
+        {
+            SampleProductModuleSceneId.Overlay,
+            SampleProductModuleSceneId.Popup
+        };
 
         static readonly IReadOnlyDictionary<MainSceneId, ModuleSceneId[]> SceneModuleMap = new Dictionary<MainSceneId, ModuleSceneId[]>()
             {
@@ -58,6 +61,7 @@ namespace SampleProduct.Core
             var sceneModuleDic = mainSceneKeyList.ToDictionary(
                 mainSceneKey => mainSceneKey,
                 mainSceneKey => RequireSceneModuleIds.Concat(SceneModuleMap[mainSceneKey] ?? Array.Empty<ModuleSceneId>()).ToArray());
+
             return new SceneGroup(sceneModuleDic);
         }
     }
