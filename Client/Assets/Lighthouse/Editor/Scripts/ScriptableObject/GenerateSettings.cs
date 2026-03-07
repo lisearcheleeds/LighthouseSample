@@ -10,8 +10,8 @@ namespace Lighthouse.Editor.ScriptableObject
         [SerializeField] string mainSceneIdPrefix = "SampleProduct";
         [SerializeField] string moduleSceneIdPrefix = "SampleProduct";
 
-        string MainSceneIdFileName => $"{mainSceneIdPrefix}MainSceneId.cs";
-        string ModuleSceneIdFileName => $"{mainSceneIdPrefix}ModuleSceneId.cs";
+        string MainSceneIdFileName => $"{mainSceneIdPrefix}MainSceneId.g.cs";
+        string ModuleSceneIdFileName => $"{mainSceneIdPrefix}ModuleSceneId.g.cs";
 
         public string ProductNameSpace => productNameSpace;
 

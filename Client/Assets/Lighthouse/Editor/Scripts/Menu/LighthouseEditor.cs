@@ -7,9 +7,7 @@ namespace Lighthouse.Editor.Menu
 {
     public class LighthouseEditor : UnityEditor.Editor
     {
-        static readonly string ApplicationRootDirectoryName = "Assets";
-        static readonly string SettingsDirectoryParentPath = "Lighthouse/Editor";
-        static readonly string SettingsDirectoryName = "Settings";
+        const string SettingsDefaultDirectory = "Assets/Settings";
         const string SettingsFileExtension = ".asset";
 
         [MenuItem("Lighthouse/Settings/GenerateSettings")]
@@ -47,23 +45,21 @@ namespace Lighthouse.Editor.Menu
 
         static T CreateSettings<T>() where T : UnityEngine.ScriptableObject
         {
-            var settings = (T) CreateInstance(typeof(T));
+            var settings = (T)CreateInstance(typeof(T));
             if (settings == null)
             {
                 return null;
             }
 
-            if (!Directory.Exists(Path.Combine(Application.dataPath, Path.Combine(SettingsDirectoryParentPath, SettingsDirectoryName))))
+            var fsDirPath = Path.Combine(Application.dataPath, "..", SettingsDefaultDirectory);
+            if (!Directory.Exists(fsDirPath))
             {
-                AssetDatabase.CreateFolder(Path.Combine(ApplicationRootDirectoryName, SettingsDirectoryParentPath), SettingsDirectoryName);
+                Directory.CreateDirectory(fsDirPath);
+                AssetDatabase.Refresh();
             }
 
-            var settingsFilePath = Path.Combine(
-                ApplicationRootDirectoryName,
-                SettingsDirectoryParentPath,
-                SettingsDirectoryName,
-                $"{typeof(T).Name}{SettingsFileExtension}");
-            AssetDatabase.CreateAsset(settings, settingsFilePath);
+            var assetPath = $"{SettingsDefaultDirectory}/{typeof(T).Name}{SettingsFileExtension}";
+            AssetDatabase.CreateAsset(settings, assetPath);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             return settings;
@@ -71,12 +67,19 @@ namespace Lighthouse.Editor.Menu
 
         static T LoadSettings<T>() where T : UnityEngine.ScriptableObject
         {
-            var settingsFilePath = Path.Combine(
-                ApplicationRootDirectoryName,
-                SettingsDirectoryParentPath,
-                SettingsDirectoryName,
-                $"{typeof(T).Name}{SettingsFileExtension}");
-            return (T) AssetDatabase.LoadAssetAtPath(Path.Combine(settingsFilePath), typeof(T));
+            var guids = AssetDatabase.FindAssets($"t:{typeof(T).Name}");
+            if (guids.Length == 0)
+            {
+                return null;
+            }
+
+            if (guids.Length > 1)
+            {
+                Debug.LogWarning($"[LighthouseEditor] Multiple {typeof(T).Name} found. Using the first one.");
+            }
+
+            var path = AssetDatabase.GUIDToAssetPath(guids[0]);
+            return (T)AssetDatabase.LoadAssetAtPath(path, typeof(T));
         }
     }
 }
