@@ -10,23 +10,31 @@ namespace SampleProduct.View.Common.Popup
     {
         IPopupModule popupModule;
 
+        PopupSample1PopupView popupView;
+        PopupSample1PopupData popupData;
+
         [Inject]
         public void Construct(IPopupModule popupModule)
         {
             this.popupModule = popupModule;
         }
 
-        public void Bind(PopupSample1PopupView view, PopupSample1PopupData popupData)
+        public void Bind(PopupSample1PopupView popupView, PopupSample1PopupData popupData)
         {
-            view.SubscribeCloseButtonClick(OnClickCloseButton);
-            view.SubscribeShowCodeButtonClick(OnClickShowCodeButton);
-            view.SubscribeOpenPopup1ButtonClick(OnClickOpenPopup1Button);
-            view.SubscribeOpenPopup2ButtonClick(OnClickOpenPopup2Button);
-            view.SubscribeConfirmOpenPopupButtonClick(OnClickOpenConfirmPopupButton);
+            popupView.SubscribeCloseButtonClick(OnClickCloseButton);
+            popupView.SubscribeShowCodeButtonClick(OnClickShowCodeButton);
+            popupView.SubscribeOpenPopup1ButtonClick(OnClickOpenPopup1Button);
+            popupView.SubscribeOpenPopup2ButtonClick(OnClickOpenPopup2Button);
+            popupView.SubscribeConfirmOpenPopupButtonClick(OnClickOpenConfirmPopupButton);
+
+            this.popupView = popupView;
+            this.popupData = popupData;
         }
 
         UniTask IPopupPresenter.OnEnter(bool isResume)
         {
+            popupView.SetText($"Popup: {popupData.StackCount}");
+
             return UniTask.CompletedTask;
         }
 
@@ -47,12 +55,12 @@ namespace SampleProduct.View.Common.Popup
 
         void OnClickOpenPopup1Button()
         {
-            popupModule.OpenPopup(new PopupSample1PopupData(), CancellationToken.None);
+            popupModule.OpenPopup(new PopupSample1PopupData(popupData.StackCount + 1), CancellationToken.None);
         }
 
         void OnClickOpenPopup2Button()
         {
-            popupModule.OpenPopup(new PopupSample2PopupData(), CancellationToken.None);
+            popupModule.OpenPopup(new PopupSample2PopupData(popupData.StackCount + 1), CancellationToken.None);
         }
 
         void OnClickOpenConfirmPopupButton()

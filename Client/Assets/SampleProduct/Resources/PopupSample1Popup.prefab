@@ -625,6 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1ee994928e40bbbdd97ecef9ccbd56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleProduct.View.Common.Popup.PopupTest.PopupSample1PopupView
+  subtitleText: {fileID: 7096185275304435924}
   closeButton: {fileID: 5397355421042271551}
   showCodeButton: {fileID: 3849373860129016153}
   openPopup1Button: {fileID: 6224518358570747099}

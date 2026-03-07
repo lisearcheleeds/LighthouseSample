@@ -6,5 +6,12 @@ namespace SampleProduct.View.Common.Popup
     {
         public bool IsSystem => false;
         public bool IsOverlayOpen => false;
+
+        public int StackCount { get; }
+
+        public PopupSample1PopupData(int stackCount)
+        {
+            StackCount = stackCount;
+        }
     }
 }

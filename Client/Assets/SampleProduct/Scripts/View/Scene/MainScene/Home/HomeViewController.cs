@@ -50,14 +50,12 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         void OnClickPopupTest1()
         {
-            Debug.Log("OnClickPopupTest1");
-            popupModule.OpenPopup(new PopupSample1PopupData(), CancellationToken.None);
+            popupModule.OpenPopup(new PopupSample1PopupData(1), CancellationToken.None);
         }
 
         void OnClickPopupTest2()
         {
-            Debug.Log("OnClickPopupTest2");
-            popupModule.OpenPopup(new PopupSample2PopupData(), CancellationToken.None);
+            popupModule.OpenPopup(new PopupSample2PopupData(1), CancellationToken.None);
         }
     }
 }
