@@ -6,7 +6,7 @@ using Lighthouse.Scene.SceneCamera;
 using UnityEngine;
 using VContainer;
 
-namespace LighthouseExtends.UI.InputBlocker
+namespace LighthouseExtends.UIComponent.Scripts.InputBlocker
 {
     public class LHInputBlocker : MonoBehaviour, IInputBlocker
     {

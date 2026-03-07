@@ -4,7 +4,7 @@ using LighthouseExtends.Popup;
 using UnityEngine;
 using VContainer;
 
-namespace SampleProduct.View.Common.Popup.PopupTest
+namespace SampleProduct.View.Common.Popup
 {
     public sealed class PopupSample1PopupPresenter : IPopupPresenter
     {
@@ -22,6 +22,7 @@ namespace SampleProduct.View.Common.Popup.PopupTest
             view.SubscribeShowCodeButtonClick(OnClickShowCodeButton);
             view.SubscribeOpenPopup1ButtonClick(OnClickOpenPopup1Button);
             view.SubscribeOpenPopup2ButtonClick(OnClickOpenPopup2Button);
+            view.SubscribeConfirmOpenPopupButtonClick(OnClickOpenConfirmPopupButton);
         }
 
         UniTask IPopupPresenter.OnEnter(bool isResume)
@@ -52,6 +53,11 @@ namespace SampleProduct.View.Common.Popup.PopupTest
         void OnClickOpenPopup2Button()
         {
             popupModule.OpenPopup(new PopupSample2PopupData(), CancellationToken.None);
+        }
+
+        void OnClickOpenConfirmPopupButton()
+        {
+            popupModule.OpenPopup(new PopupSampleConfirmPopupData(() => popupModule.ClosePopup(CancellationToken.None).Forget()), CancellationToken.None);
         }
     }
 }

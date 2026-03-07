@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -13,7 +12,7 @@ namespace LighthouseExtends.Popup
     public abstract class PopupLifetimeScopeBase : LifetimeScope
     {
         [SerializeField] PopupModuleSceneBase popupModuleSceneBase;
-        [FormerlySerializedAs("popupParentProvider")] [SerializeField] PopupCanvasController popupCanvasController;
+        [SerializeField] PopupCanvasController popupCanvasController;
 
         protected override void Configure(IContainerBuilder builder)
         {

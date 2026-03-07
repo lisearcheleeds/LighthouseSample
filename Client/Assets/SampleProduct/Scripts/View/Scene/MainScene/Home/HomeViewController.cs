@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using LighthouseExtends.Popup;
-using SampleProduct.View.Common.Popup.PopupTest;
+using SampleProduct.View.Common.Popup;
 using UnityEngine;
 using VContainer;
 

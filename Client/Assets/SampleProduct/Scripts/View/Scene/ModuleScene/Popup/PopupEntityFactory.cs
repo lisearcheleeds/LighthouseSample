@@ -2,7 +2,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Popup;
-using SampleProduct.View.Common.Popup.PopupTest;
+using SampleProduct.View.Common.Popup;
 using VContainer;
 
 namespace SampleProduct.View.Scene.ModuleScene.Popup
@@ -24,6 +24,7 @@ namespace SampleProduct.View.Scene.ModuleScene.Popup
             {
                 PopupSample1PopupData d => CreatePopupEntityAsync<PopupSample1Popup, PopupSample1PopupPresenter, PopupSample1PopupData>("PopupSample1Popup", d, ct),
                 PopupSample2PopupData d => CreatePopupEntityAsync<PopupSample2Popup, PopupSample2PopupPresenter, PopupSample2PopupData>("PopupSample2Popup", d, ct),
+                PopupSampleConfirmPopupData d => CreatePopupEntityAsync<PopupSampleConfirmPopup, PopupSampleConfirmPopupPresenter, PopupSampleConfirmPopupData>("PopupSampleConfirmPopup", d, ct),
                 _ => throw new ArgumentOutOfRangeException(nameof(data), data.GetType().FullName, "Unknown popup data type")
             };
         }

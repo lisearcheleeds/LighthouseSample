@@ -430,7 +430,8 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   popupModuleSceneBase: {fileID: 2028091556}
-  popupParentProvider: {fileID: 2028091554}
+  popupCanvasController: {fileID: 2028091554}
+  popupBackgroundInputBlockerPrefab: {fileID: -9010357780472267736, guid: a6ae2533bb2d05a4e84591f1bba427f0, type: 3}
 --- !u!114 &2028091556
 MonoBehaviour:
   m_ObjectHideFlags: 0

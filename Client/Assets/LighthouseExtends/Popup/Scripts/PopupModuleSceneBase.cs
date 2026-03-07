@@ -16,6 +16,12 @@ namespace LighthouseExtends.Popup
             this.popupManager = popupManager;
         }
 
+        protected override UniTask OnSetup()
+        {
+            popupManager.Setup();
+            return UniTask.CompletedTask;
+        }
+
         protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, bool isActivateScene, CancellationToken cancelToken)
         {
             if (transitionType == TransitionType.Back)

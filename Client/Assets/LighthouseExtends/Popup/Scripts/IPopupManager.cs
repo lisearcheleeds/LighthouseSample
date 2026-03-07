@@ -6,6 +6,8 @@ namespace LighthouseExtends.Popup
 {
     public interface IPopupManager
     {
+        void Setup();
+
         UniTask EnqueuePopup(IPopupData popupData, CancellationToken token);
         UniTask OpenPopup(CancellationToken token);
         UniTask OpenPopup(IPopupData popupData, CancellationToken token);

@@ -1,9 +1,9 @@
-﻿using LighthouseExtends.UI.RaycastTargetObject;
+﻿using LighthouseExtends.UIComponent.Scripts.RaycastTargetObject;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-namespace LighthouseExtends.UI.Editor.RaycastTargetObject
+namespace LighthouseExtends.UIComponent.Editor.RaycastTargetObject
 {
     [CustomEditor(typeof(LHRaycastTargetObject))]
     [CanEditMultipleObjects]

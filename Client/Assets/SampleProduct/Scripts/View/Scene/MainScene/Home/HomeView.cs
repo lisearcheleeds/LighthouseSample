@@ -1,5 +1,5 @@
 ﻿using System;
-using LighthouseExtends.UI.Button;
+using LighthouseExtends.UIComponent.Scripts.Button;
 using SampleProduct.Extensions;
 using UnityEngine;
 

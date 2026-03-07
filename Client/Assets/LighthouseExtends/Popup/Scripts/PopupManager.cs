@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Lighthouse.Input;
 using Lighthouse.Scene;
-using UnityEngine;
 using VContainer;
 
 namespace LighthouseExtends.Popup
@@ -13,6 +13,8 @@ namespace LighthouseExtends.Popup
     {
         readonly IPopupCanvasController popupCanvasController;
         readonly IPopupEntityFactory popupEntityFactory;
+        readonly IPopupBackgroundInputBlocker popupBackgroundInputBlocker;
+        readonly IInputBlocker inputBlocker;
 
         readonly List<(MainSceneId, List<IPopupData>)> popupDataSceneList = new();
         readonly List<PopupEntity> popupEntityList = new();
@@ -38,10 +40,21 @@ namespace LighthouseExtends.Popup
         }
 
         [Inject]
-        public PopupManager(IPopupCanvasController popupCanvasController, IPopupEntityFactory popupEntityFactory)
+        public PopupManager(
+            IPopupCanvasController popupCanvasController,
+            IPopupEntityFactory popupEntityFactory,
+            IPopupBackgroundInputBlocker popupBackgroundInputBlocker,
+            IInputBlocker inputBlocker)
         {
             this.popupCanvasController = popupCanvasController;
             this.popupEntityFactory = popupEntityFactory;
+            this.popupBackgroundInputBlocker = popupBackgroundInputBlocker;
+            this.inputBlocker = inputBlocker;
+        }
+
+        void IPopupManager.Setup()
+        {
+            popupBackgroundInputBlocker.Setup();
         }
 
         UniTask IPopupManager.EnqueuePopup(IPopupData popupData, CancellationToken token)
@@ -126,32 +139,40 @@ namespace LighthouseExtends.Popup
 
         async UniTaskVoid CommandProcessLoop()
         {
-            while (commandQueue.Count > 0)
+            try
             {
-                var command = commandQueue.Dequeue();
+                inputBlocker.Block<PopupManager>();
 
-                if (command.Token.IsCancellationRequested)
+                while (commandQueue.Count > 0)
                 {
-                    command.Tcs.TrySetCanceled(command.Token);
-                    continue;
-                }
+                    var command = commandQueue.Dequeue();
 
-                try
-                {
-                    await command.Action();
-                    command.Tcs.TrySetResult();
-                }
-                catch (OperationCanceledException oce)
-                {
-                    command.Tcs.TrySetCanceled(oce.CancellationToken);
-                }
-                catch (Exception ex)
-                {
-                    command.Tcs.TrySetException(ex);
+                    if (command.Token.IsCancellationRequested)
+                    {
+                        command.Tcs.TrySetCanceled(command.Token);
+                        continue;
+                    }
+
+                    try
+                    {
+                        await command.Action();
+                        command.Tcs.TrySetResult();
+                    }
+                    catch (OperationCanceledException oce)
+                    {
+                        command.Tcs.TrySetCanceled(oce.CancellationToken);
+                    }
+                    catch (Exception ex)
+                    {
+                        command.Tcs.TrySetException(ex);
+                    }
                 }
             }
-
-            isProcessing = false;
+            finally
+            {
+                inputBlocker.UnBlock<PopupManager>();
+                isProcessing = false;
+            }
         }
 
         void EnqueuePopupCore(IPopupData popupData)
@@ -198,6 +219,8 @@ namespace LighthouseExtends.Popup
 
             await popupEntity.PopupPresenter.OnEnter(false);
             await popupEntity.Popup.PlayInAnimation();
+
+            popupBackgroundInputBlocker.BlockPopupBackground(popupData.IsSystem);
         }
 
         async UniTask ClosePopupCore(IPopupData popupData, CancellationToken token)
@@ -234,6 +257,8 @@ namespace LighthouseExtends.Popup
             await target.PopupPresenter.OnLeave();
             target.Popup.Dispose();
 
+            await UniTask.DelayFrame(1, cancellationToken: token);
+
             if (!isLast)
             {
                 return;
@@ -242,6 +267,7 @@ namespace LighthouseExtends.Popup
             var prevPopup = popupEntityList.LastOrDefault();
             if (prevPopup == null)
             {
+                popupBackgroundInputBlocker.UnBlock();
                 return;
             }
 
@@ -251,6 +277,8 @@ namespace LighthouseExtends.Popup
             {
                 await prevPopup.Popup.PlayInAnimation();
             }
+
+            popupBackgroundInputBlocker.BlockPopupBackground(prevPopup.PopupData.IsSystem);
         }
 
         async UniTask ClosePopupCore(CancellationToken token)
@@ -273,9 +301,12 @@ namespace LighthouseExtends.Popup
             await currentPopup.PopupPresenter.OnLeave();
             currentPopup.Popup.Dispose();
 
+            await UniTask.DelayFrame(1, cancellationToken: token);
+
             var prevPopup = popupEntityList.LastOrDefault();
             if (prevPopup == null)
             {
+                popupBackgroundInputBlocker.UnBlock();
                 return;
             }
 
@@ -285,6 +316,8 @@ namespace LighthouseExtends.Popup
             {
                 await prevPopup.Popup.PlayInAnimation();
             }
+
+            popupBackgroundInputBlocker.BlockPopupBackground(prevPopup.PopupData.IsSystem);
         }
 
         UniTask ClearAllPopupCore(CancellationToken token)

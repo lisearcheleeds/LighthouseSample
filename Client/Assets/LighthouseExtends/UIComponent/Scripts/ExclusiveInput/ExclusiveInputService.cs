@@ -1,4 +1,4 @@
-﻿namespace LighthouseExtends.UI.ExclusiveInput
+﻿namespace LighthouseExtends.UIComponent.Scripts.ExclusiveInput
 {
     public sealed class ExclusiveInputService : IExclusiveInputService
     {

@@ -1,8 +1,8 @@
-﻿using LighthouseExtends.UI.Button;
+﻿using LighthouseExtends.UIComponent.Scripts.Button;
 using UnityEditor;
 using UnityEditor.UI;
 
-namespace LighthouseExtends.UI.Editor.Button
+namespace LighthouseExtends.UIComponent.Editor.Button
 {
     [CustomEditor(typeof(LHButton))]
     [CanEditMultipleObjects]

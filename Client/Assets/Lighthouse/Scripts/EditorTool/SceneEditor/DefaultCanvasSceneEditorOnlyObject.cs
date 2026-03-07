@@ -1,5 +1,5 @@
 ﻿using Lighthouse.Scene.SceneBase;
-using LighthouseExtends.UI.CanvasSceneObject;
+using LighthouseExtends.UIComponent.Scripts.CanvasSceneObject;
 using UnityEngine;
 
 namespace Lighthouse.EditorTool.SceneEditor

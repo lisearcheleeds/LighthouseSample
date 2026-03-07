@@ -14,5 +14,13 @@ namespace LighthouseExtends.Popup
                     ? systemLayerCanvas.transform
                     : defaultLayerCanvas.transform);
         }
+
+        void IPopupCanvasController.AddChild(IPopupBackgroundInputBlocker popupBackgroundInputBlocker, bool isSystemLayer)
+        {
+            popupBackgroundInputBlocker.SetParent(
+                isSystemLayer
+                    ? systemLayerCanvas.transform
+                    : defaultLayerCanvas.transform);
+        }
     }
 }
