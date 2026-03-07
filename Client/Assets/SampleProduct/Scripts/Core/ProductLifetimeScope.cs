@@ -33,6 +33,8 @@ namespace SampleProduct.Core
                 builder.Register<MainSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<ModuleSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<SceneCameraManager>(Lifetime.Singleton).AsImplementedInterfaces();
+
+                builder.Register<DefaultSceneTransitionSequenceProvider>(Lifetime.Singleton).AsImplementedInterfaces();
             }
 
             {

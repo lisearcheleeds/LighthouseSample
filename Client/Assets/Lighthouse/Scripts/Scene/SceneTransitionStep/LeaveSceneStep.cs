@@ -7,16 +7,11 @@ namespace Lighthouse.Scene.SceneTransitionStep
     public sealed class LeaveSceneStep : ISceneTransitionStep
     {
         async UniTask ISceneTransitionStep.Run(
-            TransitionDataBase transitionData,
-            TransitionType transitionType,
-            SceneTransitionDiff sceneTransitionDiff,
-            IMainSceneManager mainSceneManager,
-            IModuleSceneManager moduleSceneManager,
-            ISceneCameraManager sceneCameraManager,
+            SceneTransitionContext context,
             CancellationToken cancelToken)
         {
-            await mainSceneManager.Leave(transitionData, transitionType, sceneTransitionDiff, cancelToken);
-            await moduleSceneManager.Leave(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            await context.MainSceneManager.Leave(context.TransitionData, context.TransitionType, context.SceneTransitionDiff, cancelToken);
+            await context.ModuleSceneManager.Leave(context.TransitionData, context.TransitionType, context.SceneTransitionDiff, cancelToken);
         }
     }
 }

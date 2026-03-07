@@ -1,21 +1,15 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Scene.SceneCamera;
 
 namespace Lighthouse.Scene.SceneTransitionStep
 {
     public sealed class SaveCurrentSceneStateStep : ISceneTransitionStep
     {
         async UniTask ISceneTransitionStep.Run(
-            TransitionDataBase transitionData,
-            TransitionType transitionType,
-            SceneTransitionDiff sceneTransitionDiff,
-            IMainSceneManager mainSceneManager,
-            IModuleSceneManager moduleSceneManager,
-            ISceneCameraManager sceneCameraManager,
+            SceneTransitionContext context,
             CancellationToken cancelToken)
         {
-            await mainSceneManager.SaveSceneState(cancelToken);
+            await context.MainSceneManager.SaveSceneState(cancelToken);
         }
     }
 }

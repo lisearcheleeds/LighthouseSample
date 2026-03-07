@@ -87,6 +87,7 @@ namespace Lighthouse.Scene.SceneBase
         {
             if (isActivateScene)
             {
+                // If necessary, you can override OnEnter to control the gameObject.
                 gameObject.SetActive(true);
             }
 

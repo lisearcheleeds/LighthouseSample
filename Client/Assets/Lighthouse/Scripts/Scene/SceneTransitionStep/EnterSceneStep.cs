@@ -1,25 +1,19 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Scene.SceneCamera;
 
 namespace Lighthouse.Scene.SceneTransitionStep
 {
     public sealed class EnterSceneStep : ISceneTransitionStep
     {
         async UniTask ISceneTransitionStep.Run(
-            TransitionDataBase transitionData,
-            TransitionType transitionType,
-            SceneTransitionDiff sceneTransitionDiff,
-            IMainSceneManager mainSceneManager,
-            IModuleSceneManager moduleSceneManager,
-            ISceneCameraManager sceneCameraManager,
+            SceneTransitionContext context,
             CancellationToken cancelToken)
         {
-            await mainSceneManager.Enter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
-            mainSceneManager.ResetInAnimation(transitionData, transitionType, sceneTransitionDiff);
+            await context.MainSceneManager.Enter(context.TransitionData, context.TransitionType, context.SceneTransitionDiff, cancelToken);
+            context.MainSceneManager.ResetInAnimation(context.TransitionData, context.TransitionType, context.SceneTransitionDiff);
 
-            await moduleSceneManager.Enter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
-            moduleSceneManager.ResetAnimation(transitionType, sceneTransitionDiff);
+            await context.ModuleSceneManager.Enter(context.TransitionData, context.TransitionType, context.SceneTransitionDiff, cancelToken);
+            context.ModuleSceneManager.ResetAnimation(context.TransitionType, context.SceneTransitionDiff);
         }
     }
 }

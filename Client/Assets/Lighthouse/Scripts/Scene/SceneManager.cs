@@ -25,6 +25,11 @@ namespace Lighthouse.Scene
 
         void ISceneManager.TransitionScene(TransitionDataBase nextTransitionData, MainSceneId backMainSceneId, Action<bool> onComplete)
         {
+            if (IsTransition)
+            {
+                return;
+            }
+
             UniTask.Void(async () =>
             {
                 var isSuccess = await TransitionSceneAsync(nextTransitionData, TransitionType.Default, backMainSceneId);

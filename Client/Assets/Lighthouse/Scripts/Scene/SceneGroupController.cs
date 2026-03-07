@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Input;
 using Lighthouse.Scene.SceneCamera;
@@ -14,32 +15,10 @@ namespace Lighthouse.Scene
         readonly IMainSceneManager mainSceneManager;
         readonly IModuleSceneManager moduleSceneManager;
         readonly ISceneCameraManager sceneCameraManager;
+        readonly ISceneTransitionSequenceProvider sceneTransitionSequenceProvider;
         readonly IInputBlocker inputBlocker;
 
         public ISceneTransitionPhase CurrentTransitionPhase { get; private set; }
-
-        ISceneTransitionPhase[] CrossTransitionPhaseSet { get; } =
-        {
-            new StartTransitionPhase(),
-            new LoadSceneGroupPhase(),
-            new EnterScenePhase(),
-            new CrossAnimationPhase(),
-            new LeaveScenePhase(),
-            new UnloadSceneGroupPhase(),
-            new FinishTransitionPhase(),
-        };
-
-        ISceneTransitionPhase[] ExclusiveTransitionPhaseSet { get; } =
-        {
-            new StartTransitionPhase(),
-            new OutAnimationPhase(),
-            new LeaveScenePhase(),
-            new LoadSceneGroupPhase(),
-            new UnloadSceneGroupPhase(),
-            new EnterScenePhase(),
-            new InAnimationPhase(),
-            new FinishTransitionPhase(),
-        };
 
         SceneGroup currentSceneGroup;
 
@@ -49,12 +28,14 @@ namespace Lighthouse.Scene
             IMainSceneManager mainSceneManager,
             IModuleSceneManager moduleSceneManager,
             ISceneCameraManager sceneCameraManager,
+            ISceneTransitionSequenceProvider sceneTransitionSequenceProvider,
             IInputBlocker inputBlocker)
         {
             this.sceneGroupProvider = sceneGroupProvider;
             this.mainSceneManager = mainSceneManager;
             this.moduleSceneManager = moduleSceneManager;
             this.sceneCameraManager = sceneCameraManager;
+            this.sceneTransitionSequenceProvider = sceneTransitionSequenceProvider;
             this.inputBlocker = inputBlocker;
         }
 
@@ -64,7 +45,7 @@ namespace Lighthouse.Scene
             CancellationToken cancellationToken)
         {
             return await StartTransition(
-                CrossTransitionPhaseSet,
+                sceneTransitionSequenceProvider.CrossSequence,
                 transitionData,
                 transitionType,
                 cancellationToken);
@@ -76,7 +57,7 @@ namespace Lighthouse.Scene
             CancellationToken cancellationToken)
         {
             return await StartTransition(
-                ExclusiveTransitionPhaseSet,
+                sceneTransitionSequenceProvider.ExclusiveSequence,
                 transitionData,
                 transitionType,
                 cancellationToken);
@@ -110,27 +91,25 @@ namespace Lighthouse.Scene
 
             var afterSceneGroup = sceneGroupProvider.GetSceneGroup(transitionData.MainSceneId);
             var sceneTransitionDiff = new SceneTransitionDiff(currentSceneGroup, mainSceneManager.CurrentMainSceneId, afterSceneGroup, transitionData.MainSceneId);
+            var context = new SceneTransitionContext(transitionData, transitionType, sceneTransitionDiff, mainSceneManager, moduleSceneManager, sceneCameraManager);
 
             inputBlocker.Block<SceneGroupController>();
 
-            foreach (var transitionPhase in transitionPhases)
+            try
             {
-                CurrentTransitionPhase = transitionPhase;
+                foreach (var transitionPhase in transitionPhases)
+                {
+                    CurrentTransitionPhase = transitionPhase;
 
-                var tasks = transitionPhase.Steps.Select(step => step.Run(
-                    transitionData,
-                    transitionType,
-                    sceneTransitionDiff,
-                    mainSceneManager,
-                    moduleSceneManager,
-                    sceneCameraManager,
-                    cancellationToken
-                ));
+                    var tasks = transitionPhase.Steps.Select(step => step.Run(context, cancellationToken));
 
-                await UniTask.WhenAll(tasks);
+                    await UniTask.WhenAll(tasks);
+                }
             }
-
-            inputBlocker.UnBlock<SceneGroupController>();
+            finally
+            {
+                inputBlocker.UnBlock<SceneGroupController>();
+            }
 
             currentSceneGroup = afterSceneGroup;
 

@@ -143,12 +143,12 @@ namespace Lighthouse.Scene
             }
 
             var unloadTargetMainScenes = loadedScenes.Where(loadedScene => sceneTransitionDiff.UnloadMainSceneIds.Contains(loadedScene.MainSceneId)).ToArray();
+            await UniTask.WhenAll(unloadTargetMainScenes.Select(s => s.OnUnload()));
 
-            await UniTask.WhenAll(Enumerable.Select(unloadTargetMainScenes, s => s.OnUnload()));
+            await UniTask.WhenAll(unloadTargetMainScenes.Select(s => UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(s.MainSceneId.Name).ToUniTask()));
 
             foreach (var unloadTargetMainScene in unloadTargetMainScenes)
             {
-                await UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(unloadTargetMainScene.MainSceneId.Name);
                 loadedScenes.Remove(unloadTargetMainScene);
             }
         }

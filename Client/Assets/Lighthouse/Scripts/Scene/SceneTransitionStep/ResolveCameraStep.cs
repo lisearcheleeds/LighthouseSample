@@ -7,19 +7,14 @@ namespace Lighthouse.Scene.SceneTransitionStep
     public sealed class ResolveCameraStep : ISceneTransitionStep
     {
         UniTask ISceneTransitionStep.Run(
-            TransitionDataBase transitionData,
-            TransitionType transitionType,
-            SceneTransitionDiff sceneTransitionDiff,
-            IMainSceneManager mainSceneManager,
-            IModuleSceneManager moduleSceneManager,
-            ISceneCameraManager sceneCameraManager,
+            SceneTransitionContext context,
             CancellationToken cancelToken)
         {
-            sceneCameraManager.UpdateCameraStack(mainSceneManager, sceneTransitionDiff);
+            context.SceneCameraManager.UpdateCameraStack(context.MainSceneManager, context.SceneTransitionDiff);
 
-            mainSceneManager.InitializeCanvas(sceneCameraManager, sceneTransitionDiff);
-            moduleSceneManager.InitializeCanvas(sceneCameraManager, sceneTransitionDiff);
-            
+            context.MainSceneManager.InitializeCanvas(context.SceneCameraManager, context.SceneTransitionDiff);
+            context.ModuleSceneManager.InitializeCanvas(context.SceneCameraManager, context.SceneTransitionDiff);
+
             return UniTask.CompletedTask;
         }
     }

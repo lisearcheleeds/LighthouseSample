@@ -27,7 +27,7 @@ namespace Lighthouse.Scene.SceneCamera
                 .GetSceneCameraList(sceneTransitionDiff)
                 .Concat(new[] { UICamera })
                 .Distinct()
-                .OrderBy(x => (x.SceneCameraType, x.CameraDefaultDepth)).ToArray()
+                .OrderBy(x => (x.SceneCameraType, x.CameraDefaultDepth))
                 .ToArray();
 
             var baseCamera = sceneCameras.First();

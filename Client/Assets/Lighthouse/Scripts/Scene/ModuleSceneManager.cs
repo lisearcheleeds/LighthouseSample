@@ -116,10 +116,9 @@ namespace Lighthouse.Scene
 
             await UniTask.WhenAll(unloadSceneModules.Select(s => UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(s.ModuleSceneId.Name).ToUniTask()));
 
-            foreach (var unloadSceneModuleId in sceneTransitionDiff.UnloadSceneModuleIds)
+            foreach (var unloadSceneModule in unloadSceneModules)
             {
-                var sceneModule = loadedSceneModules.First(x => x.ModuleSceneId == unloadSceneModuleId);
-                loadedSceneModules.Remove(sceneModule);
+                loadedSceneModules.Remove(unloadSceneModule);
             }
         }
 

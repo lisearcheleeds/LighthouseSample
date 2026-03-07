@@ -7,17 +7,12 @@ namespace Lighthouse.Scene.SceneTransitionStep
     public sealed class OutAnimationStep : ISceneTransitionStep
     {
         async UniTask ISceneTransitionStep.Run(
-            TransitionDataBase transitionData,
-            TransitionType transitionType,
-            SceneTransitionDiff sceneTransitionDiff,
-            IMainSceneManager mainSceneManager,
-            IModuleSceneManager moduleSceneManager,
-            ISceneCameraManager sceneCameraManager,
+            SceneTransitionContext context,
             CancellationToken cancelToken)
         {
             await UniTask.WhenAll(
-                mainSceneManager.PlayOutAnimation(transitionData, transitionType, sceneTransitionDiff),
-                moduleSceneManager.PlayOutAnimation(transitionType, sceneTransitionDiff));
+                context.MainSceneManager.PlayOutAnimation(context.TransitionData, context.TransitionType, context.SceneTransitionDiff),
+                context.ModuleSceneManager.PlayOutAnimation(context.TransitionType, context.SceneTransitionDiff));
         }
     }
 }

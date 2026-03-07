@@ -7,19 +7,14 @@ namespace Lighthouse.Scene.SceneTransitionStep
     public sealed class LoadSceneGroupStep : ISceneTransitionStep
     {
         async UniTask ISceneTransitionStep.Run(
-            TransitionDataBase transitionData,
-            TransitionType transitionType,
-            SceneTransitionDiff sceneTransitionDiff,
-            IMainSceneManager mainSceneManager,
-            IModuleSceneManager moduleSceneManager,
-            ISceneCameraManager sceneCameraManager,
+            SceneTransitionContext context,
             CancellationToken cancelToken)
         {
-            await mainSceneManager.Load(sceneTransitionDiff);
-            mainSceneManager.ResetInAnimation(transitionData, transitionType, sceneTransitionDiff);
+            await context.MainSceneManager.Load(context.SceneTransitionDiff);
+            context.MainSceneManager.ResetInAnimation(context.TransitionData, context.TransitionType, context.SceneTransitionDiff);
 
-            await moduleSceneManager.Load(sceneTransitionDiff);
-            moduleSceneManager.ResetAnimation(transitionType, sceneTransitionDiff);
+            await context.ModuleSceneManager.Load(context.SceneTransitionDiff);
+            context.ModuleSceneManager.ResetAnimation(context.TransitionType, context.SceneTransitionDiff);
         }
     }
 }
