@@ -10,6 +10,7 @@ namespace SampleProduct.View.Scene.ModuleScene.Popup
             base.Configure(builder);
 
             builder.Register<PopupEntityFactory>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<AssetLoader.AssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

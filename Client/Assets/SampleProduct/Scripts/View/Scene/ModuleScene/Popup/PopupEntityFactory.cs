@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Popup;
 using SampleProduct.View.Common.Popup.PopupTest;
-using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace SampleProduct.View.Scene.ModuleScene.Popup
 {
     public sealed class PopupEntityFactory : IPopupEntityFactory
     {
         readonly IObjectResolver objectResolver;
+        readonly IPopupInstanceFactory popupInstanceFactory;
 
-        public PopupEntityFactory(IObjectResolver objectResolver)
+        public PopupEntityFactory(IObjectResolver objectResolver, IPopupInstanceFactory popupInstanceFactory)
         {
             this.objectResolver = objectResolver;
+            this.popupInstanceFactory = popupInstanceFactory;
         }
 
         public UniTask<PopupEntity> CreateAsync(IPopupData data, CancellationToken ct)
@@ -37,23 +36,11 @@ namespace SampleProduct.View.Scene.ModuleScene.Popup
             where TPopupPresenter : IPopupPresenter, new()
             where TPopupData : IPopupData
         {
-            var popup = await LoadPopupAsset<TPopup>(popupAddress, ct);
+            var popupInstance = await popupInstanceFactory.CreatePopupInstance<TPopup>(popupAddress, ct);
             var popupPresenter = new TPopupPresenter();
             objectResolver.Inject(popupPresenter);
-
-            popup.Setup(popupPresenter, data);
-
-            return new PopupEntity(popup, popupPresenter, data);
-        }
-
-        // TODO: I should do it properly. Inject dependencies.
-        async UniTask<TPopup> LoadPopupAsset<TPopup>(string popupAddress, CancellationToken ct)
-        {
-            var request = Resources.LoadAsync<GameObject>(popupAddress);
-            await request.ToUniTask();
-            var prefab = request.asset as GameObject;
-            var gameObject = objectResolver.Instantiate(prefab);
-            return gameObject.GetComponents<MonoBehaviour>().OfType<TPopup>().First();
+            popupInstance.Setup(popupPresenter, data);
+            return new PopupEntity(popupInstance, popupPresenter, data);
         }
     }
 }

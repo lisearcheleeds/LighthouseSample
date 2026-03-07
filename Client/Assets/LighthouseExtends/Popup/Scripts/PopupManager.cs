@@ -188,7 +188,7 @@ namespace LighthouseExtends.Popup
 
             if (prevPopupEntity != null)
             {
-                if (!prevPopupEntity.PopupData.IsKeepView)
+                if (!popupData.IsOverlayOpen)
                 {
                     await prevPopupEntity.Popup.PlayOutAnimation();
                 }
@@ -247,7 +247,7 @@ namespace LighthouseExtends.Popup
 
             await prevPopup.PopupPresenter.OnEnter(true);
 
-            if (!prevPopup.PopupData.IsKeepView)
+            if (!popupData.IsOverlayOpen)
             {
                 await prevPopup.Popup.PlayInAnimation();
             }
@@ -281,7 +281,7 @@ namespace LighthouseExtends.Popup
 
             await prevPopup.PopupPresenter.OnEnter(true);
 
-            if (!prevPopup.PopupData.IsKeepView)
+            if (!lastPopupData.IsOverlayOpen)
             {
                 await prevPopup.Popup.PlayInAnimation();
             }
@@ -304,7 +304,7 @@ namespace LighthouseExtends.Popup
                 var isLast = ReferenceEquals(target, lastTarget);
                 popupEntityList.RemoveAt(popupEntityList.Count - 1);
 
-                if (isLast || target.PopupData.IsKeepView)
+                if (isLast || target.PopupData.IsOverlayOpen)
                 {
                     await target.Popup.PlayOutAnimation();
                 }

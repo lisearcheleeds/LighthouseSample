@@ -3,6 +3,6 @@
     public interface IPopupData
     {
         public bool IsSystem { get; }
-        public bool IsKeepView { get; }
+        public bool IsOverlayOpen { get; }
     }
 }
