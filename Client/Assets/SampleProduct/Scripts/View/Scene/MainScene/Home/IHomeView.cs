@@ -8,9 +8,10 @@ namespace SampleProduct.View.Scene.MainScene.Home
         public IDisposable SubscribeGame1ButtonClick(Action action);
         public IDisposable SubscribeGame2ButtonClick(Action action);
 
-        public IDisposable SubscribeOptionButtonClick(Action action);
+        public IDisposable SubscribeSceneSample1ButtonClick(Action action);
+        public IDisposable SubscribeSceneSample2ButtonClick(Action action);
 
-        public IDisposable SubscribePopupTest1ButtonClick(Action action);
-        public IDisposable SubscribePopupTest2ButtonClick(Action action);
+        public IDisposable SubscribePopupSample1ButtonClick(Action action);
+        public IDisposable SubscribePopupSample2ButtonClick(Action action);
     }
 }

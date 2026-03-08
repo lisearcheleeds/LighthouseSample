@@ -1,15 +1,12 @@
-﻿using System.Threading;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using SampleProduct.View.Base;
-using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Home
 {
     public class HomeScene : ProductCanvasMainSceneBase<HomeScene.HomeTransitionData>
     {
-        IGlobalHeaderModule globalHeaderModule;
         IHomePresenter homePresenter;
 
         public override MainSceneId MainSceneId => SampleProductMainSceneId.Home;
@@ -20,11 +17,8 @@ namespace SampleProduct.View.Scene.MainScene.Home
         }
 
         [Inject]
-        public void Constructor(
-            IGlobalHeaderModule globalHeaderModule,
-            IHomePresenter homePresenter)
+        public void Constructor(IHomePresenter homePresenter)
         {
-            this.globalHeaderModule = globalHeaderModule;
             this.homePresenter = homePresenter;
         }
 
@@ -32,12 +26,6 @@ namespace SampleProduct.View.Scene.MainScene.Home
         {
             homePresenter.Setup();
             return UniTask.CompletedTask;
-        }
-
-        protected override async UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, bool isActivateScene, CancellationToken cancelToken)
-        {
-            await base.OnEnter(transitionData, transitionType, isActivateScene, cancelToken);
-            globalHeaderModule.SetHeaderText("Home");
         }
     }
 }

@@ -19,13 +19,15 @@ namespace SampleProduct.Core
                 { SampleProductMainSceneId.Splash, null },
                 { SampleProductMainSceneId.Title, null },
                 { SampleProductMainSceneId.Home, new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }},
+                { SampleProductMainSceneId.SceneSample1, new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }},
+                { SampleProductMainSceneId.SceneSample2, new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }},
                 { SampleProductMainSceneId.Edit, null },
             };
 
         static readonly MainSceneId[][] MainSceneGroupList =
         {
             new[] { SampleProductMainSceneId.Splash, SampleProductMainSceneId.Title },
-            new[] { SampleProductMainSceneId.Home, SampleProductMainSceneId.Edit },
+            new[] { SampleProductMainSceneId.Home, SampleProductMainSceneId.SceneSample1, SampleProductMainSceneId.SceneSample2, SampleProductMainSceneId.Edit },
         };
 
         static readonly SceneGroup[] SceneGroupList = CreateSceneGroups();

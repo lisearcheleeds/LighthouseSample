@@ -2,6 +2,6 @@
 {
     public interface ISceneSample2Presenter
     {
-
+        void Setup();
     }
 }
