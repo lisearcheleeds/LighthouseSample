@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
-using SampleProduct.View.Scene.Common;
+using SampleProduct.View.Base;
 using UnityEngine;
 
 namespace SampleProduct.View.Scene.ModuleScene.Background

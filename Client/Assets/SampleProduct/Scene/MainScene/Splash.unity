@@ -255,10 +255,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47adc6d40c734f089f51ed9d3b95ca00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Product.View.Splash.SplashScene
-  transitionAnimatorManager: {fileID: 484276631}
   canvasGroup: {fileID: 484276633}
   canvasInitializer: {fileID: 484276632}
-  splashView: {fileID: 1187984897}
+  transitionAnimatorManager: {fileID: 484276631}
 --- !u!114 &484276631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,6 +329,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   splashScene: {fileID: 484276630}
+  splashView: {fileID: 1187984897}
 --- !u!1 &1187984895
 GameObject:
   m_ObjectHideFlags: 0

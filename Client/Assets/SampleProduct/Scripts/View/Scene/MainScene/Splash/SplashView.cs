@@ -3,10 +3,11 @@ using Cysharp.Threading.Tasks;
 using SampleProduct.View.Scene.ModuleScene.Overlay;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Splash
 {
-    public class SplashView : MonoBehaviour
+    public class SplashView : MonoBehaviour, ISplashView
     {
         [SerializeField] Image splashImage;
 
@@ -15,19 +16,14 @@ namespace SampleProduct.View.Scene.MainScene.Splash
 
         IOverlayModule overlayModule;
 
-        public void Setup(IOverlayModule overlayModule)
+        [Inject]
+        public void Construct(IOverlayModule overlayModule)
         {
             this.overlayModule = overlayModule;
-
             splashImage.sprite = splashImage1;
         }
 
-        public void PlaySplashAnimation(Action onComplete)
-        {
-            PlaySplashAnimationAsync(onComplete).Forget();
-        }
-
-        async UniTask PlaySplashAnimationAsync(Action onComplete)
+        async UniTask ISplashView.PlaySplashAnimationAsync()
         {
             await UniTask.Delay(1500);
 
@@ -40,7 +36,6 @@ namespace SampleProduct.View.Scene.MainScene.Splash
             await overlayModule.PlayInAnimation(false);
 
             await UniTask.Delay(1500);
-            onComplete();
         }
     }
 }

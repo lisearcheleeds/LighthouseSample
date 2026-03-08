@@ -15,7 +15,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
             builder.RegisterComponent(homeScene);
             builder.RegisterComponentInHierarchy<LHButton>();
 
-            builder.Register<HomeViewController>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<HomePresenter>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.RegisterComponent(homeView).AsImplementedInterfaces();
         }
     }

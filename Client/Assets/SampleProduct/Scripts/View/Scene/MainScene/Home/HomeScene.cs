@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
-using SampleProduct.View.Scene.Common;
+using SampleProduct.View.Base;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using VContainer;
 
@@ -10,7 +10,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
     public class HomeScene : ProductCanvasMainSceneBase<HomeScene.HomeTransitionData>
     {
         IGlobalHeaderModule globalHeaderModule;
-        IHomeViewController homeViewController;
+        IHomePresenter homePresenter;
 
         public override MainSceneId MainSceneId => SampleProductMainSceneId.Home;
 
@@ -22,15 +22,15 @@ namespace SampleProduct.View.Scene.MainScene.Home
         [Inject]
         public void Constructor(
             IGlobalHeaderModule globalHeaderModule,
-            IHomeViewController homeViewController)
+            IHomePresenter homePresenter)
         {
             this.globalHeaderModule = globalHeaderModule;
-            this.homeViewController = homeViewController;
+            this.homePresenter = homePresenter;
         }
 
         protected override UniTask OnSetup()
         {
-            homeViewController.Setup();
+            homePresenter.Setup();
             return UniTask.CompletedTask;
         }
 

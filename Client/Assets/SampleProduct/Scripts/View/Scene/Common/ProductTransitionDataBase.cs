@@ -1,8 +1,0 @@
-﻿using Lighthouse.Scene;
-
-namespace SampleProduct.View.Scene.Common
-{
-    public abstract class ProductTransitionDataBase : TransitionDataBase
-    {
-    }
-}

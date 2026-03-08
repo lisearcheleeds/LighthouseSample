@@ -1,30 +1,21 @@
 ﻿using System;
 using LighthouseExtends.Animation;
 using LighthouseExtends.UIComponent.Scripts.Button;
+using SampleProduct.Extensions;
 using UnityEngine;
 
 namespace SampleProduct.View.Scene.MainScene.Title
 {
-    public class TitleView : MonoBehaviour
+    public class TitleView : MonoBehaviour, ITitleView
     {
         [SerializeField] LHButton screenButton;
         [SerializeField] LHAnimationClipPlayerComponent animationClipPlayer;
 
-        Action onClickScreenButtonAction;
+        IDisposable ITitleView.SubscribeScreenButtonClick(Action action) => screenButton.SubscribeOnClick(action);
 
-        void Awake()
+        void ITitleView.PlayGoToHomeAnimation(Action action)
         {
-            screenButton.onClick.AddListener(OnClickScreenButton);
-        }
-
-        public void Setup(Action onClickScreenButtonAction)
-        {
-            this.onClickScreenButtonAction = onClickScreenButtonAction;
-        }
-
-        void OnClickScreenButton()
-        {
-            animationClipPlayer.PlayAnimation(true, true, onClickScreenButtonAction);
+            animationClipPlayer.PlayAnimation(true, true, action);
         }
     }
 }

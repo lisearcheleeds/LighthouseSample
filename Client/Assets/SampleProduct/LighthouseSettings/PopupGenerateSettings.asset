@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96dcc159cf8892e4586ae70d3e740fb8, type: 3}
   m_Name: PopupGenerateSettings
   m_EditorClassIdentifier: Assembly-CSharp-Editor::LighthouseExtends.Popup.Editor.ScriptableObject.PopupGenerateSettings
-  popupEntityFactoryDirectory: 
+  popupEntityFactoryDirectory: SampleProduct/Scripts/LighthouseGenerated
   popupEntityFactoryClassName: PopupEntityFactory
-  popupEntityFactoryNamespace: 
+  popupEntityFactoryNamespace: SampleProduct

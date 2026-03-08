@@ -340,7 +340,6 @@ MonoBehaviour:
   canvasGroup: {fileID: 726240417}
   canvasInitializer: {fileID: 726240416}
   transitionAnimatorManager: {fileID: 726240414}
-  titleView: {fileID: 1894392035}
 --- !u!114 &726240414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,6 +411,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   titleScene: {fileID: 726240413}
+  titleView: {fileID: 1894392035}
 --- !u!1 &933260802
 GameObject:
   m_ObjectHideFlags: 0

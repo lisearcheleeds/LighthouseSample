@@ -1,5 +1,5 @@
 ﻿using Lighthouse.Scene;
-using SampleProduct.View.Scene.Common;
+using SampleProduct.View.Base;
 
 namespace SampleProduct.View.Scene.ModuleScene.Overlay
 {

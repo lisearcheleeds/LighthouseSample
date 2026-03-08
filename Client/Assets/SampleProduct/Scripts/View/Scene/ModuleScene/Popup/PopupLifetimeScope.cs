@@ -1,4 +1,5 @@
 ﻿using LighthouseExtends.Popup;
+using SampleProduct.Infrastructure.AssetLoader;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -14,7 +15,7 @@ namespace SampleProduct.View.Scene.ModuleScene.Popup
             base.Configure(builder);
 
             builder.Register<PopupEntityFactory>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<AssetLoader.AssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<AssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.RegisterComponentInNewPrefab(popupBackgroundInputBlockerPrefab, Lifetime.Singleton).AsImplementedInterfaces();
         }

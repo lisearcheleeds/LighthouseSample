@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
-using SampleProduct.View.Scene.Common;
+using SampleProduct.View.Base;
 using SampleProduct.View.Scene.MainScene.Home;
 using UnityEngine;
 using VContainer;
@@ -9,9 +9,7 @@ namespace SampleProduct.View.Scene.MainScene.Title
 {
     public class TitleScene : ProductCanvasMainSceneBase<TitleScene.TitleTransitionData>
     {
-        ISceneManager sceneManager;
-
-        [SerializeField] TitleView titleView;
+        ITitlePresenter titlePresenter;
 
         public override MainSceneId MainSceneId => SampleProductMainSceneId.Title;
 
@@ -21,18 +19,14 @@ namespace SampleProduct.View.Scene.MainScene.Title
         }
 
         [Inject]
-        public void Constructor(ISceneManager sceneManager)
+        public void Constructor(ITitlePresenter titlePresenter)
         {
-            this.sceneManager = sceneManager;
+            this.titlePresenter = titlePresenter;
         }
 
         protected override UniTask OnSetup()
         {
-            titleView.Setup(() =>
-            {
-                sceneManager.TransitionScene(new HomeScene.HomeTransitionData());
-            });
-
+            titlePresenter.Setup();
             return UniTask.CompletedTask;
         }
     }
