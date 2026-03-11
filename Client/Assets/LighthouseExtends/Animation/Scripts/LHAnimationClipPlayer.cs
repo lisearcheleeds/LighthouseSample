@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.Playables;
 
 namespace LighthouseExtends.Animation
 {
-    public sealed class LHAnimationClipPlayer : ILHAnimationClipPlayer, IDisposable
+    public sealed class LHAnimationClipPlayer : ILHAnimationClipPlayer, IAnimationClipSource, IDisposable
     {
         readonly Animator animator;
         readonly AnimationClip[] animationClips;
@@ -127,6 +128,11 @@ namespace LighthouseExtends.Animation
             {
                 playableGraph.Destroy();
             }
+        }
+
+        void IAnimationClipSource.GetAnimationClips(List<AnimationClip> results)
+        {
+            results.AddRange(animationClips);
         }
 
         void CancelCurrentPlay()

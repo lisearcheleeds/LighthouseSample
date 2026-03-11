@@ -1,9 +1,10 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace LighthouseExtends.Animation
 {
-    public class LHTransitionAnimator : MonoBehaviour, ILHTransitionAnimator
+    public class LHTransitionAnimator : MonoBehaviour, ILHTransitionAnimator, IAnimationClipSource
     {
         [SerializeField] Animator animator;
         [SerializeField] AnimationClip[] inAnimationClips;
@@ -137,6 +138,12 @@ namespace LighthouseExtends.Animation
             }
 
             outAnimationClipPlayer.Skip();
+        }
+
+        void IAnimationClipSource.GetAnimationClips(List<AnimationClip> results)
+        {
+            results.AddRange(inAnimationClips);
+            results.AddRange(outAnimationClips);
         }
 
         void OnDestroy()
