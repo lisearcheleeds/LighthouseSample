@@ -349,6 +349,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 1626883314}
   canvasInitializer: {fileID: 1626883313}
   transitionAnimatorManager: {fileID: 1626883315}
+  backgroundView: {fileID: 1963713813}
 --- !u!114 &1626883313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,6 +416,7 @@ GameObject:
   - component: {fileID: 1963713810}
   - component: {fileID: 1963713812}
   - component: {fileID: 1963713811}
+  - component: {fileID: 1963713813}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -479,6 +481,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963713809}
   m_CullTransparentMesh: 1
+--- !u!114 &1963713813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963713809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0498773085b4a51886b723cf89482b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleProduct.View.Scene.ModuleScene.Background.BackgroundView
+  background: {fileID: 1963713811}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
