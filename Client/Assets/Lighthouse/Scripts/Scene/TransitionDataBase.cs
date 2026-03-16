@@ -9,6 +9,8 @@ namespace Lighthouse.Scene
 
         public bool CanTransition { get; protected set; } = true;
 
+        public bool CanBackTransition { get; protected set; } = true;
+
         public virtual UniTask LoadSceneState(TransitionType transitionType, CancellationToken cancelToken)
         {
             return UniTask.CompletedTask;
