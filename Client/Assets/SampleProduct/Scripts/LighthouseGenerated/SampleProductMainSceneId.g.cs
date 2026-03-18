@@ -17,6 +17,7 @@ namespace SampleProduct
         public static readonly MainSceneId Edit = new MainSceneId(5, "Edit");
         public static readonly MainSceneId SceneSample1 = new MainSceneId(6, "SceneSample1");
         public static readonly MainSceneId SceneSample2 = new MainSceneId(7, "SceneSample2");
+        public static readonly MainSceneId SceneSample3 = new MainSceneId(8, "SceneSample3");
 
         public static ReadOnlySpan<MainSceneId> All
         {
@@ -31,6 +32,7 @@ namespace SampleProduct
                     Edit,
                     SceneSample1,
                     SceneSample2,
+                    SceneSample3,
                 };
             }
         }

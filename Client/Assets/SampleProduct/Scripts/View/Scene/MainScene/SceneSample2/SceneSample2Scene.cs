@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using SampleProduct.View.Base;
 using VContainer;
@@ -26,6 +27,16 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample2
         {
             sceneSample2Presenter.Setup();
             return UniTask.CompletedTask;
+        }
+
+        protected override UniTask OnEnter(
+            TransitionDataBase transitionData,
+            TransitionType transitionType,
+            SceneTransitionDiff sceneTransitionDiff,
+            CancellationToken cancelToken)
+        {
+            sceneSample2Presenter.OnEnter();
+            return base.OnEnter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
         }
     }
 }

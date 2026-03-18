@@ -1,19 +1,19 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Popup;
-using SampleProduct.View.Popup.PopupSample1Popup;
-using SampleProduct.View.Popup.PopupSampleConfirmPopup;
+using SampleProduct.View.Scene.MainScene.Home.PopupSample2Popup;
+using SampleProduct.View.Scene.MainScene.Home.PopupSampleConfirmPopup;
 using UnityEngine;
 using VContainer;
 
-namespace SampleProduct.View.Popup.PopupSample2Popup
+namespace SampleProduct.View.Scene.MainScene.Home.PopupSample1Popup
 {
-    public sealed class PopupSample2PopupPresenter : IPopupPresenter
+    public sealed class PopupSample1PopupPresenter : IPopupPresenter
     {
         IPopupModule popupModule;
 
-        PopupSample2PopupView popupView;
-        PopupSample2PopupData popupData;
+        PopupSample1PopupView popupView;
+        PopupSample1PopupData popupData;
 
         [Inject]
         public void Construct(IPopupModule popupModule)
@@ -21,7 +21,7 @@ namespace SampleProduct.View.Popup.PopupSample2Popup
             this.popupModule = popupModule;
         }
 
-        public void Bind(PopupSample2PopupView popupView, PopupSample2PopupData popupData)
+        public void Bind(PopupSample1PopupView popupView, PopupSample1PopupData popupData)
         {
             popupView.SubscribeCloseButtonClick(OnClickCloseButton);
             popupView.SubscribeShowCodeButtonClick(OnClickShowCodeButton);
@@ -35,7 +35,7 @@ namespace SampleProduct.View.Popup.PopupSample2Popup
 
         UniTask IPopupPresenter.OnEnter(bool isResume)
         {
-            popupView.SetText($"Popup: {popupData.StackCount}");
+            popupView.SetText($"StackCount: {popupData.StackCount}");
 
             return UniTask.CompletedTask;
         }
@@ -47,7 +47,7 @@ namespace SampleProduct.View.Popup.PopupSample2Popup
 
         void OnClickCloseButton()
         {
-            popupModule.ClosePopup(CancellationToken.None);
+            popupModule.ClosePopup(CancellationToken.None).Forget();
         }
 
         void OnClickShowCodeButton()
@@ -57,17 +57,17 @@ namespace SampleProduct.View.Popup.PopupSample2Popup
 
         void OnClickOpenPopup1Button()
         {
-            popupModule.OpenPopup(new PopupSample1PopupData(popupData.StackCount + 1), CancellationToken.None);
+            popupModule.OpenPopup(new PopupSample1PopupData(popupData.StackCount + 1), CancellationToken.None).Forget();
         }
 
         void OnClickOpenPopup2Button()
         {
-            popupModule.OpenPopup(new PopupSample2PopupData(popupData.StackCount + 1), CancellationToken.None);
+            popupModule.OpenPopup(new PopupSample2PopupData(popupData.StackCount + 1), CancellationToken.None).Forget();
         }
 
         void OnClickOpenConfirmPopupButton()
         {
-            popupModule.OpenPopup(new PopupSampleConfirmPopupData(() => popupModule.ClosePopup(CancellationToken.None).Forget()), CancellationToken.None);
+            popupModule.OpenPopup(new PopupSampleConfirmPopupData(() => popupModule.ClosePopup(CancellationToken.None).Forget()), CancellationToken.None).Forget();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene.SceneCamera;
 using UnityEngine;
@@ -18,24 +19,24 @@ namespace Lighthouse.Scene.SceneBase
             return base.OnLoad();
         }
 
-        protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, bool isActivateScene, CancellationToken cancelToken)
+        protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
         {
-            if (isActivateScene)
+            if (sceneTransitionDiff.ActivateSceneModuleIds.Contains(ModuleSceneId))
             {
                 canvasGroup.alpha = 1;
             }
 
-            return base.OnEnter(transitionData, transitionType, isActivateScene, cancelToken);
+            return base.OnEnter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
         }
 
-        protected override UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, bool isDeactivateScene, CancellationToken cancelToken)
+        protected override UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
         {
-            if (isDeactivateScene)
+            if (sceneTransitionDiff.DeactivateSceneModuleIds.Contains(ModuleSceneId))
             {
                 canvasGroup.alpha = 0;
             }
 
-            return base.OnLeave(transitionData, transitionType, isDeactivateScene, cancelToken);
+            return base.OnLeave(transitionData, transitionType, sceneTransitionDiff, cancelToken);
         }
 
         public virtual void InitializeCanvas(ISceneCamera canvasCamera)

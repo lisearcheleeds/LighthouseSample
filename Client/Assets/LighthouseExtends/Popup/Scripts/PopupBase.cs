@@ -24,6 +24,14 @@ namespace LighthouseExtends.Popup
             return UniTask.CompletedTask;
         }
 
+        public virtual void EndInAnimation()
+        {
+        }
+
+        public virtual void ResetOutAnimation()
+        {
+        }
+
         public virtual UniTask PlayOutAnimation()
         {
             return UniTask.CompletedTask;

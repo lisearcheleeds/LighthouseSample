@@ -3,5 +3,6 @@
     public interface ISceneSample1Presenter
     {
         void Setup();
+        void OnEnter();
     }
 }

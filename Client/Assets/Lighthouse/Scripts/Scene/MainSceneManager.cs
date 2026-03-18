@@ -45,14 +45,14 @@ namespace Lighthouse.Scene
         async UniTask IMainSceneManager.Enter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancellationToken)
         {
             currentScene = loadedScenes.First(x => x.MainSceneId == transitionData.MainSceneId);
-            await currentScene.Enter(transitionData, transitionType, true, cancellationToken);
+            await currentScene.Enter(transitionData, transitionType, sceneTransitionDiff, cancellationToken);
         }
 
         async UniTask IMainSceneManager.Leave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancellationToken)
         {
             if (currentScene != null)
             {
-                await currentScene.Leave(transitionData, transitionType, true, cancellationToken);
+                await currentScene.Leave(transitionData, transitionType, sceneTransitionDiff, cancellationToken);
             }
         }
 

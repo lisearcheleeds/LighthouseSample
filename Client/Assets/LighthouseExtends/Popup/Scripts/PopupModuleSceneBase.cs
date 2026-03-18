@@ -22,24 +22,24 @@ namespace LighthouseExtends.Popup
             return UniTask.CompletedTask;
         }
 
-        protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, bool isActivateScene, CancellationToken cancelToken)
+        protected override async UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
         {
             if (transitionType == TransitionType.Back)
             {
-                popupManager.ResumePopupFromSceneId(transitionData.MainSceneId, cancelToken);
+                await popupManager.ResumePopupFromSceneId(sceneTransitionDiff.NextMainSceneId, cancelToken);
             }
 
-            return base.OnEnter(transitionData, transitionType, isActivateScene, cancelToken);
+            await base.OnEnter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
         }
 
-        protected override UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, bool isDeactivateScene, CancellationToken cancelToken)
+        protected override async UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
         {
             if (transitionType == TransitionType.Default)
             {
-                popupManager.SuspendPopupFromSceneId(transitionData.MainSceneId, cancelToken);
+                await popupManager.SuspendPopupFromSceneId(sceneTransitionDiff.CurrentMainSceneId, cancelToken);
             }
 
-            return base.OnLeave(transitionData, transitionType, isDeactivateScene, cancelToken);
+            await base.OnLeave(transitionData, transitionType, sceneTransitionDiff, cancelToken);
         }
     }
 }

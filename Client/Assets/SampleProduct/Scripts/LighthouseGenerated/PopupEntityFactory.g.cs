@@ -8,9 +8,10 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Popup;
 using VContainer;
-using SampleProduct.View.Popup.PopupSample1Popup;
-using SampleProduct.View.Popup.PopupSample2Popup;
-using SampleProduct.View.Popup.PopupSampleConfirmPopup;
+using SampleProduct.View.Scene.MainScene.Home.PopupSample1Popup;
+using SampleProduct.View.Scene.MainScene.Home.PopupSample2Popup;
+using SampleProduct.View.Scene.MainScene.Home.PopupSampleConfirmPopup;
+using SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionPopup;
 
 namespace SampleProduct
 {
@@ -29,6 +30,7 @@ namespace SampleProduct
         {
             return data switch
             {
+                SceneTransitionPopupData d => CreatePopupEntityAsync<SceneTransitionPopup, SceneTransitionPopupPresenter, SceneTransitionPopupData>("SceneTransitionPopup", d, ct),
                 PopupSampleConfirmPopupData d => CreatePopupEntityAsync<PopupSampleConfirmPopup, PopupSampleConfirmPopupPresenter, PopupSampleConfirmPopupData>("PopupSampleConfirmPopup", d, ct),
                 PopupSample2PopupData d => CreatePopupEntityAsync<PopupSample2Popup, PopupSample2PopupPresenter, PopupSample2PopupData>("PopupSample2Popup", d, ct),
                 PopupSample1PopupData d => CreatePopupEntityAsync<PopupSample1Popup, PopupSample1PopupPresenter, PopupSample1PopupData>("PopupSample1Popup", d, ct),

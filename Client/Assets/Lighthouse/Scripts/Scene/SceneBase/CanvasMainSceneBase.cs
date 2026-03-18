@@ -7,7 +7,7 @@ namespace Lighthouse.Scene.SceneBase
 {
     [RequireComponent(typeof(CanvasGroup))]
     [RequireComponent(typeof(SceneCanvasInitializer))]
-    public abstract class CanvasMainSceneBase<TTransitionData> : MainSceneBase<TTransitionData>, ICanvasSceneBase where TTransitionData : TransitionDataBase, new()
+    public abstract class CanvasMainSceneBase<TTransitionData> : MainSceneBase<TTransitionData>, ICanvasSceneBase where TTransitionData : TransitionDataBase
     {
         [SerializeField] CanvasGroup canvasGroup;
         [SerializeField] SceneCanvasInitializer canvasInitializer;
@@ -18,24 +18,16 @@ namespace Lighthouse.Scene.SceneBase
             return base.OnLoad();
         }
 
-        protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, bool isActivateScene, CancellationToken cancelToken)
+        protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
         {
-            if (isActivateScene)
-            {
-                canvasGroup.alpha = 1;
-            }
-
-            return base.OnEnter(transitionData, transitionType, isActivateScene, cancelToken);
+            canvasGroup.alpha = 1;
+            return base.OnEnter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
         }
 
-        protected override UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, bool isDeactivateScene, CancellationToken cancelToken)
+        protected override UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
         {
-            if (isDeactivateScene)
-            {
-                canvasGroup.alpha = 0;
-            }
-
-            return base.OnLeave(transitionData, transitionType, isDeactivateScene, cancelToken);
+            canvasGroup.alpha = 0;
+            return base.OnLeave(transitionData, transitionType, sceneTransitionDiff, cancelToken);
         }
 
         public virtual void InitializeCanvas(ISceneCamera canvasCamera)

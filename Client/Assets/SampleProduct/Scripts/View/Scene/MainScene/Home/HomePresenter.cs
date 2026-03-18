@@ -1,8 +1,9 @@
 ﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using LighthouseExtends.Popup;
-using SampleProduct.View.Popup.PopupSample1Popup;
-using SampleProduct.View.Popup.PopupSample2Popup;
+using SampleProduct.View.Scene.MainScene.Home.PopupSample1Popup;
+using SampleProduct.View.Scene.MainScene.Home.PopupSample2Popup;
 using SampleProduct.View.Scene.MainScene.SceneSample1;
 using SampleProduct.View.Scene.MainScene.SceneSample2;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
@@ -40,7 +41,10 @@ namespace SampleProduct.View.Scene.MainScene.Home
             homeView.SubscribeSceneSample2ButtonClick(OnClickSceneSample2);
             homeView.SubscribePopupSample1ButtonClick(OnClickPopupSample1);
             homeView.SubscribePopupSample2ButtonClick(OnClickPopupSample2);
+        }
 
+        void IHomePresenter.OnEnter()
+        {
             globalHeaderModule.SetHeaderText("Home");
         }
 
@@ -71,12 +75,12 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         void OnClickPopupSample1()
         {
-            popupModule.OpenPopup(new PopupSample1PopupData(1), CancellationToken.None);
+            popupModule.OpenPopup(new PopupSample1PopupData(1), CancellationToken.None).Forget();
         }
 
         void OnClickPopupSample2()
         {
-            popupModule.OpenPopup(new PopupSample2PopupData(1), CancellationToken.None);
+            popupModule.OpenPopup(new PopupSample2PopupData(1), CancellationToken.None).Forget();
         }
     }
 }

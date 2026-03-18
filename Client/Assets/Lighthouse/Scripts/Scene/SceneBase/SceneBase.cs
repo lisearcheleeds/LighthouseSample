@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene.SceneCamera;
@@ -26,7 +27,7 @@ namespace Lighthouse.Scene.SceneBase
             return UniTask.CompletedTask;
         }
 
-        public async UniTask Enter(TransitionDataBase transitionData, TransitionType transitionType, bool isActivateScene, CancellationToken cancelToken)
+        public async UniTask Enter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
         {
             if (!initialized)
             {
@@ -34,12 +35,12 @@ namespace Lighthouse.Scene.SceneBase
                 await OnSetup();
             }
 
-            await OnEnter(transitionData, transitionType, isActivateScene, cancelToken);
+            await OnEnter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
         }
 
-        public async UniTask Leave(TransitionDataBase transitionData, TransitionType transitionType, bool isDeactivateScene, CancellationToken cancelToken)
+        public async UniTask Leave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
         {
-            await OnLeave(transitionData, transitionType, isDeactivateScene, cancelToken);
+            await OnLeave(transitionData, transitionType, sceneTransitionDiff, cancelToken);
         }
 
         public virtual UniTask SaveSceneState(CancellationToken cancelToken)
@@ -83,24 +84,13 @@ namespace Lighthouse.Scene.SceneBase
             return UniTask.CompletedTask;
         }
 
-        protected virtual UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, bool isActivateScene, CancellationToken cancelToken)
+        protected virtual UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
         {
-            if (isActivateScene)
-            {
-                // If necessary, you can override OnEnter to control the gameObject.
-                gameObject.SetActive(true);
-            }
-
             return UniTask.CompletedTask;
         }
 
-        protected virtual UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, bool isDeactivateScene, CancellationToken cancelToken)
+        protected virtual UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
         {
-            if (isDeactivateScene)
-            {
-                gameObject.SetActive(false);
-            }
-
             return UniTask.CompletedTask;
         }
 

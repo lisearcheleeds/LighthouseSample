@@ -1,6 +1,6 @@
 ﻿using LighthouseExtends.Popup;
 
-namespace SampleProduct.View.Popup.PopupSample1Popup
+namespace SampleProduct.View.Scene.MainScene.Home.PopupSample1Popup
 {
     public sealed class PopupSample1PopupData : IPopupData
     {

@@ -303,7 +303,7 @@ MonoBehaviour:
   animator: {fileID: 1094060326}
   inAnimationClips:
   - {fileID: 7400000, guid: 977544ec2d7f88141833b56e122d3e47, type: 2}
-  inDelayMilliSec: 1000
+  inDelayMilliSec: 0
   outAnimationClips:
   - {fileID: 7400000, guid: 7006aff7fa0fa0f49bdb9432e5daafa2, type: 2}
   outDelayMilliSec: 0

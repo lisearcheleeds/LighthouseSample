@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using LighthouseExtends.Popup;
 using VContainer;
 
-namespace SampleProduct.View.Popup.PopupSampleConfirmPopup
+namespace SampleProduct.View.Scene.MainScene.Home.PopupSampleConfirmPopup
 {
     public sealed class PopupSampleConfirmPopupPresenter : IPopupPresenter
     {

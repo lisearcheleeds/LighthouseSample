@@ -1,7 +1,7 @@
 ﻿using System;
 using LighthouseExtends.Popup;
 
-namespace SampleProduct.View.Popup.PopupSampleConfirmPopup
+namespace SampleProduct.View.Scene.MainScene.Home.PopupSampleConfirmPopup
 {
     public sealed class PopupSampleConfirmPopupData : IPopupData
     {

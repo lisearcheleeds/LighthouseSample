@@ -19,6 +19,16 @@ namespace SampleProduct.View.Popup
             await transitionAnimator.InAnimation();
         }
 
+        public override void EndInAnimation()
+        {
+            transitionAnimator.EndInAnimation();
+        }
+
+        public override void ResetOutAnimation()
+        {
+            transitionAnimator.ResetOutAnimation();
+        }
+
         public override async UniTask PlayOutAnimation()
         {
             await transitionAnimator.OutAnimation();

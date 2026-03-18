@@ -126,7 +126,7 @@ namespace Lighthouse.Scene
         {
             var target = loadedSceneModules
                 .Where(x => sceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
-                .Select(x => x.Enter(transitionData, transitionType, sceneTransitionDiff.ActivateSceneModuleIds.Contains(x.ModuleSceneId), cancellationToken))
+                .Select(x => x.Enter(transitionData, transitionType, sceneTransitionDiff, cancellationToken))
                 .ToArray();
 
             await UniTask.WhenAll(target);
@@ -136,7 +136,7 @@ namespace Lighthouse.Scene
         {
             var target = loadedSceneModules
                 .Where(x => sceneTransitionDiff.CurrentSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
-                .Select(x => x.Leave(transitionData, transitionType, sceneTransitionDiff.DeactivateSceneModuleIds.Contains(x.ModuleSceneId), cancellationToken))
+                .Select(x => x.Leave(transitionData, transitionType, sceneTransitionDiff, cancellationToken))
                 .ToArray();
 
             await UniTask.WhenAll(target);

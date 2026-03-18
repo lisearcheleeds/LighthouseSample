@@ -1,7 +1,8 @@
 ﻿using LighthouseExtends.Popup;
+using SampleProduct.View.Popup;
 using UnityEngine;
 
-namespace SampleProduct.View.Popup.PopupSampleConfirmPopup
+namespace SampleProduct.View.Scene.MainScene.Home.PopupSampleConfirmPopup
 {
     public sealed class PopupSampleConfirmPopup : StandardPopupBase, IPopupSetup<PopupSampleConfirmPopupPresenter, PopupSampleConfirmPopupData>
     {

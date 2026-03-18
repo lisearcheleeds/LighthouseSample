@@ -1,7 +1,8 @@
 ﻿using LighthouseExtends.Popup;
+using SampleProduct.View.Popup;
 using UnityEngine;
 
-namespace SampleProduct.View.Popup.PopupSample2Popup
+namespace SampleProduct.View.Scene.MainScene.Home.PopupSample2Popup
 {
     public sealed class PopupSample2Popup : StandardPopupBase, IPopupSetup<PopupSample2PopupPresenter, PopupSample2PopupData>
     {

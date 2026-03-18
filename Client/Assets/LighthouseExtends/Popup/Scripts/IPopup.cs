@@ -12,6 +12,8 @@ namespace LighthouseExtends.Popup
 
         void ResetInAnimation();
         UniTask PlayInAnimation();
+        void EndInAnimation();
+        void ResetOutAnimation();
         UniTask PlayOutAnimation();
         void EndOutAnimation();
     }

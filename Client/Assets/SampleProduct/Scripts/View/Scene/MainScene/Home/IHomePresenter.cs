@@ -3,5 +3,6 @@
     public interface IHomePresenter
     {
         void Setup();
+        void OnEnter();
     }
 }
