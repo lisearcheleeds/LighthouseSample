@@ -109,7 +109,7 @@ namespace LighthouseExtends.Popup
 
                 if (popupDataList?.Any() ?? false)
                 {
-                    await OpenPopupCore(false, token);
+                    await ResumeOpenPopupsCore(token);
                 }
             }, token);
         }
@@ -184,6 +184,42 @@ namespace LighthouseExtends.Popup
             }
 
             popupDataList.Add(popupData);
+        }
+
+        async UniTask ResumeOpenPopupsCore(CancellationToken token)
+        {
+            for (var i = 0; i < popupDataList.Count; i++)
+            {
+                var popupData = popupDataList[i];
+
+                var prevPopupEntity = popupEntityList.LastOrDefault();
+                if (prevPopupEntity?.PopupData == popupData)
+                {
+                    throw new InvalidOperationException($"Duplicate open");
+                }
+
+                var popupEntity = await popupEntityFactory.CreateAsync(popupData, token);
+                popupEntity.Popup.EndInAnimation();
+
+                popupEntityList.Add(popupEntity);
+                popupCanvasController.AddChild(popupEntity.Popup, popupData.IsSystem);
+
+                await popupEntity.Popup.OnInitialize();
+
+                if (prevPopupEntity != null)
+                {
+                    if (!popupData.IsOverlayOpen)
+                    {
+                        prevPopupEntity.Popup.EndOutAnimation();
+                    }
+
+                    await prevPopupEntity.PopupPresenter.OnLeave();
+                }
+
+                await popupEntity.PopupPresenter.OnEnter(false);
+            }
+
+            popupBackgroundInputBlocker.BlockPopupBackground(popupDataList[^1].IsSystem);
         }
 
         async UniTask OpenPopupCore(bool playInAnimation, CancellationToken token)
