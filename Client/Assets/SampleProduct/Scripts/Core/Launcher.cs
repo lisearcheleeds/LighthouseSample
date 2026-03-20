@@ -58,7 +58,7 @@ namespace SampleProduct.Core
 
                 if (!string.IsNullOrEmpty(UnityEngine.SceneManagement.SceneManager.GetSceneByName(LauncherSceneName).name))
                 {
-                    UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(LauncherSceneName);
+                    await UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(LauncherSceneName);
                 }
             });
         }

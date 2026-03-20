@@ -59,7 +59,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionPopup
             async UniTask CloseAfterTransition()
             {
                 await popupModule.ClosePopup(CancellationToken.None);
-                sceneManager.TransitionScene(new SceneSample2Scene.SceneSample2TransitionData());
+                await sceneManager.TransitionScene(new SceneSample2Scene.SceneSample2TransitionData());
             }
         }
     }

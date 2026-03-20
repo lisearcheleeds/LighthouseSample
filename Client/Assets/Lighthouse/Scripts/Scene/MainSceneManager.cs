@@ -56,7 +56,7 @@ namespace Lighthouse.Scene
 
         async UniTask IMainSceneManager.Leave(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            if (context?.SceneTransitionDiff.CurrentMainSceneId == null
+            if (context.SceneTransitionDiff.CurrentMainSceneId == null
                 || !loadedScenes.TryGetValue(context.SceneTransitionDiff.CurrentMainSceneId, out var scene))
             {
                 return;
@@ -182,6 +182,17 @@ namespace Lighthouse.Scene
             }
 
             scene.OnSceneTransitionFinished(context.SceneTransitionDiff);
+        }
+
+        async UniTask IMainSceneManager.PreReboot()
+        {
+            foreach (var loadedScene in loadedScenes)
+            {
+                if (loadedScene.Value.isActiveAndEnabled)
+                {
+                    await loadedScene.Value.SaveSceneState(CancellationToken.None);
+                }
+            }
         }
 
         MainSceneBase FindSceneBase(MainSceneId mainSceneId)

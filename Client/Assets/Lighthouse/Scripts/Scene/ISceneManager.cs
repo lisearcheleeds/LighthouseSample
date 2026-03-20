@@ -11,7 +11,8 @@ namespace Lighthouse.Scene
             TransitionType transitionType = TransitionType.Auto,
             MainSceneId backMainSceneId = null);
 
-        void BackScene(TransitionType transitionType = TransitionType.Auto);
+        UniTask BackScene(TransitionType transitionType = TransitionType.Auto);
+
         UniTask PreReboot();
     }
 }

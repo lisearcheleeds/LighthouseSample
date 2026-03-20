@@ -10,6 +10,6 @@ namespace Lighthouse.Scene
             SceneTransitionDiff sceneTransitionDiff,
             TransitionDirectionType transitionDirectionType,
             TransitionType transitionType,
-            CancellationToken cancellationToken);
+            CancellationToken cancelToken);
     }
 }

@@ -47,29 +47,20 @@ namespace Lighthouse.Scene
                 nextTransitionData,
                 TransitionDirectionType.Forward,
                 transitionType,
-                backMainSceneId);
+                backMainSceneId,
+                CancellationToken.None);
         }
 
-        void ISceneManager.BackScene(TransitionType transitionType)
+        async UniTask ISceneManager.BackScene(TransitionType transitionType)
         {
             if (IsTransition)
             {
                 return;
             }
 
-            if (!transitionDataStack.Any())
-            {
-                return;
-            }
-
-            BackSceneAsync(transitionType).Forget();
-        }
-
-        async UniTask<bool> BackSceneAsync(TransitionType transitionType)
-        {
             if (transitionDataStack.Count < 2)
             {
-                return false;
+                return;
             }
 
             var currentSceneTransitionData = transitionDataStack.Pop();
@@ -94,27 +85,32 @@ namespace Lighthouse.Scene
 
             if (!backTargetSceneTransitionData.CanTransition || !backTargetSceneTransitionData.CanBackTransition)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException(
+                    $"Back transition target '{backTargetSceneTransitionData.MainSceneId}' " +
+                    "has CanTransition=false or CanBackTransition=false. " +
+                    "This indicates an invalid state in the transition stack.");
             }
 
-            return await TransitionSceneCore(
+            await TransitionSceneCore(
                 currentSceneTransitionData,
                 backTargetSceneTransitionData,
                 TransitionDirectionType.Back,
                 transitionType,
-                null);
+                null,
+                CancellationToken.None);
         }
 
-        async UniTask<bool> TransitionSceneCore(
+        async UniTask TransitionSceneCore(
             TransitionDataBase currentTransitionData,
             TransitionDataBase nextTransitionData,
             TransitionDirectionType transitionDirectionType,
             TransitionType transitionType,
-            MainSceneId backMainSceneId)
+            MainSceneId backMainSceneId,
+            CancellationToken cancelToken)
         {
             if (!nextTransitionData.CanTransition)
             {
-                return false;
+                return;
             }
 
             var nextSceneGroup = sceneGroupProvider.GetSceneGroup(nextTransitionData.MainSceneId);
@@ -129,7 +125,7 @@ namespace Lighthouse.Scene
                     sceneTransitionDiff,
                     transitionDirectionType,
                     transitionType,
-                    CancellationToken.None);
+                    cancelToken);
             }
             finally
             {
@@ -147,13 +143,11 @@ namespace Lighthouse.Scene
                     transitionDataStack.Pop();
                 }
             }
-
-            return true;
         }
 
         async UniTask ISceneManager.PreReboot()
         {
-            await mainSceneManager.Leave(null, CancellationToken.None);
+            await mainSceneManager.PreReboot();
         }
     }
 }

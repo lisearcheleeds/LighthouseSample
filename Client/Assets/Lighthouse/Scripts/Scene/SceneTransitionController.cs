@@ -40,9 +40,9 @@ namespace Lighthouse.Scene
             SceneTransitionDiff sceneTransitionDiff,
             TransitionDirectionType transitionDirectionType,
             TransitionType transitionType,
-            CancellationToken cancellationToken)
+            CancellationToken cancelToken)
         {
-            if (!CurrentTransitionPhase?.CanTransitionIntercept ?? false)
+            if (!(CurrentTransitionPhase?.CanTransitionIntercept ?? true))
             {
                 throw new InvalidOperationException($"[SceneTransitionWorker] Scene transition is not possible in the current phase. {CurrentTransitionPhase}");
             }
@@ -80,7 +80,7 @@ namespace Lighthouse.Scene
                 {
                     CurrentTransitionPhase = transitionPhase;
 
-                    var tasks = transitionPhase.Steps.Select(step => step.Run(context, cancellationToken));
+                    var tasks = transitionPhase.Steps.Select(step => step.Run(context, cancelToken));
 
                     await UniTask.WhenAll(tasks);
                 }

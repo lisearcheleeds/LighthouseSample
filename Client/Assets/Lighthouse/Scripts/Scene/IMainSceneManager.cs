@@ -25,5 +25,7 @@ namespace Lighthouse.Scene
         void InitializeCanvas(SceneTransitionContext context);
 
         void OnSceneTransitionFinished(SceneTransitionContext context);
+
+        UniTask PreReboot();
     }
 }
