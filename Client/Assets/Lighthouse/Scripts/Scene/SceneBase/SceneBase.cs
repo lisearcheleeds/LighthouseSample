@@ -53,7 +53,7 @@ namespace Lighthouse.Scene.SceneBase
 
         public async UniTask PlayInAnimation(SceneTransitionContext context)
         {
-            // InAnimation events are independent because they are expected to wait in WhenAll().
+            // NOTE: InAnimation events are independent because they are expected to wait in WhenAll().
             OnBeginInAnimation(context);
             await InAnimation(context);
             OnCompleteInAnimation(context);
@@ -61,7 +61,7 @@ namespace Lighthouse.Scene.SceneBase
 
         public async UniTask PlayOutAnimation(SceneTransitionContext context)
         {
-            // OutAnimation events are independent because they are expected to wait in WhenAll().
+            // NOTE: OutAnimation events are independent because they are expected to wait in WhenAll().
             OnBeginOutAnimation(context);
             await OutAnimation(context);
             OnCompleteOutAnimation(context);

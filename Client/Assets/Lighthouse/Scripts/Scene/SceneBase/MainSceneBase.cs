@@ -19,18 +19,19 @@ namespace Lighthouse.Scene.SceneBase
             gameObject.SetActive(true);
 
             TransitionData = (TTransitionData)context.TransitionData;
-            return base.OnEnter(context, cancelToken);
+
+            return OnEnter(TransitionData, context, cancelToken);
+        }
+
+        protected virtual UniTask OnEnter(TTransitionData transitionData,SceneTransitionContext context, CancellationToken cancelToken)
+        {
+            return UniTask.CompletedTask;
         }
 
         protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
         {
             gameObject.SetActive(false);
-
             return base.OnLeave(context, cancelToken);
-        }
-
-        protected virtual void OnBackKeyFallback()
-        {
         }
     }
 }

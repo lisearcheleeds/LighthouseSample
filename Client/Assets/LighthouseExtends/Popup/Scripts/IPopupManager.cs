@@ -18,7 +18,7 @@ namespace LighthouseExtends.Popup
         UniTask ClearAllPopup(CancellationToken token);
         UniTask ClearCurrentAllPopup(CancellationToken token);
 
-        UniTask ResumePopupFromSceneId(MainSceneId mainSceneId, CancellationToken token);
+        UniTask ResumePopupFromSceneId(MainSceneId mainSceneId, bool isPlayInAnimation, CancellationToken token);
         UniTask SuspendPopupFromSceneId(MainSceneId mainSceneId, CancellationToken token);
     }
 }

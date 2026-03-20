@@ -22,24 +22,44 @@ namespace LighthouseExtends.Popup
             return UniTask.CompletedTask;
         }
 
-        protected override async UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            if (context.TransitionDirectionType == TransitionDirectionType.Back)
+            if (context.TransitionDirectionType == TransitionDirectionType.Back && context.TransitionType == TransitionType.Exclusive)
             {
-                await popupManager.ResumePopupFromSceneId(context.SceneTransitionDiff.NextMainSceneId, cancelToken);
+                return popupManager.ResumePopupFromSceneId(context.SceneTransitionDiff.NextMainSceneId, false, cancelToken);
             }
 
-            await base.OnEnter(context, cancelToken);
+            return UniTask.CompletedTask;
         }
 
-        protected override async UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            if (context.TransitionDirectionType == TransitionDirectionType.Forward)
+            if (context.TransitionDirectionType == TransitionDirectionType.Forward && context.TransitionType == TransitionType.Exclusive)
             {
-                await popupManager.SuspendPopupFromSceneId(context.SceneTransitionDiff.CurrentMainSceneId, cancelToken);
+                return popupManager.SuspendPopupFromSceneId(context.SceneTransitionDiff.CurrentMainSceneId, cancelToken);
             }
 
-            await base.OnLeave(context, cancelToken);
+            return UniTask.CompletedTask;
+        }
+
+        protected override UniTask InAnimation(SceneTransitionContext context)
+        {
+            if (context.TransitionDirectionType == TransitionDirectionType.Back && context.TransitionType == TransitionType.Cross)
+            {
+                return popupManager.ResumePopupFromSceneId(context.SceneTransitionDiff.NextMainSceneId, true, CancellationToken.None);
+            }
+
+            return UniTask.CompletedTask;
+        }
+
+        protected override UniTask OutAnimation(SceneTransitionContext context)
+        {
+            if (context.TransitionDirectionType == TransitionDirectionType.Forward && context.TransitionType == TransitionType.Cross)
+            {
+                return popupManager.SuspendPopupFromSceneId(context.SceneTransitionDiff.CurrentMainSceneId, CancellationToken.None);
+            }
+
+            return UniTask.CompletedTask;
         }
     }
 }
