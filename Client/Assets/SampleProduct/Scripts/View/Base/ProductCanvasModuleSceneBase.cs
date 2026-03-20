@@ -11,19 +11,19 @@ namespace SampleProduct.View.Base
     {
         [SerializeField] LHTransitionAnimatorManager transitionAnimatorManager;
 
-        public override void ResetInAnimation(TransitionType transitionType)
+        public override void ResetInAnimation(SceneTransitionContext context)
         {
-            transitionAnimatorManager.ResetInAnimation(transitionType);
+            transitionAnimatorManager.ResetInAnimation();
         }
 
-        protected override async UniTask InAnimation(TransitionType transitionType, bool isActivateScene)
+        protected override async UniTask InAnimation(SceneTransitionContext context)
         {
-            await transitionAnimatorManager.InAnimation(transitionType);
+            await transitionAnimatorManager.InAnimation();
         }
 
-        protected override async UniTask OutAnimation(TransitionType transitionType, bool isDeactivateScene)
+        protected override async UniTask OutAnimation(SceneTransitionContext context)
         {
-            await transitionAnimatorManager.OutAnimation(transitionType);
+            await transitionAnimatorManager.OutAnimation();
         }
 
 #if UNITY_EDITOR

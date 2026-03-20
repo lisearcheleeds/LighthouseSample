@@ -9,7 +9,7 @@ namespace LighthouseExtends.Animation
     {
         ILHTransitionAnimator[] sceneTransitionAnimatorList;
 
-        public void ResetInAnimation(TransitionType transitionType)
+        public void ResetInAnimation()
         {
             foreach (var sceneTransitionAnimator in sceneTransitionAnimatorList)
             {
@@ -17,12 +17,12 @@ namespace LighthouseExtends.Animation
             }
         }
 
-        public async UniTask InAnimation(TransitionType transitionType)
+        public async UniTask InAnimation()
         {
             await UniTask.WhenAll(sceneTransitionAnimatorList.Select(x => x.InAnimation()));
         }
 
-        public async UniTask OutAnimation(TransitionType transitionType)
+        public async UniTask OutAnimation()
         {
             await UniTask.WhenAll(sceneTransitionAnimatorList.Select(x => x.OutAnimation()));
         }

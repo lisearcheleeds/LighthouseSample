@@ -23,7 +23,7 @@ namespace Lighthouse.Scene
             this.sceneGroupController = sceneGroupController;
         }
 
-        void ISceneManager.TransitionScene(TransitionDataBase nextTransitionData, MainSceneId backMainSceneId, Action<bool> onComplete)
+        void ISceneManager.TransitionScene(TransitionDataBase nextTransitionData, TransitionType transitionType, MainSceneId backMainSceneId, Action<bool> onComplete)
         {
             if (IsTransition)
             {
@@ -32,12 +32,12 @@ namespace Lighthouse.Scene
 
             UniTask.Void(async () =>
             {
-                var isSuccess = await TransitionSceneAsync(nextTransitionData, TransitionType.Default, backMainSceneId);
+                var isSuccess = await TransitionSceneAsync(nextTransitionData, TransitionDirectionType.Forward, transitionType, backMainSceneId);
                 onComplete?.Invoke(isSuccess);
             });
         }
 
-        void ISceneManager.BackScene()
+        void ISceneManager.BackScene(TransitionType transitionType)
         {
             if (IsTransition)
             {
@@ -49,10 +49,10 @@ namespace Lighthouse.Scene
                 return;
             }
 
-            BackSceneAsync().Forget();
+            BackSceneAsync(transitionType).Forget();
         }
 
-        async UniTask<bool> BackSceneAsync()
+        async UniTask<bool> BackSceneAsync(TransitionType transitionType)
         {
             if (transitionDataStack.Count < 2)
             {
@@ -79,17 +79,25 @@ namespace Lighthouse.Scene
                 backTargetSceneTransitionData = transitionDataStack.Pop();
             }
 
-            return await TransitionSceneAsync(backTargetSceneTransitionData, TransitionType.Back, null);
+            return await TransitionSceneAsync(backTargetSceneTransitionData, TransitionDirectionType.Back, transitionType, null);
         }
 
-        async UniTask<bool> TransitionSceneAsync(TransitionDataBase nextTransitionData, TransitionType transitionType, MainSceneId backMainSceneId)
+        async UniTask<bool> TransitionSceneAsync(
+            TransitionDataBase nextTransitionData,
+            TransitionDirectionType transitionDirectionType,
+            TransitionType transitionType,
+            MainSceneId backMainSceneId)
         {
             if (!nextTransitionData.CanTransition)
             {
                 return false;
             }
 
-            var transitionSuccess = await sceneGroupController.StartExclusiveTransitionSequence(nextTransitionData, transitionType, CancellationToken.None);
+            var transitionSuccess = await sceneGroupController.StartTransitionSequence(
+                nextTransitionData,
+                transitionDirectionType,
+                transitionType,
+                CancellationToken.None);
             if (!transitionSuccess)
             {
                 return false;

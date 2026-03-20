@@ -8,8 +8,11 @@ namespace Lighthouse.Scene
     {
         public ISceneTransitionPhase CurrentTransitionPhase { get; }
 
-        UniTask<bool> StartCrossTransitionSequence(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancellationToken);
-        UniTask<bool> StartExclusiveTransitionSequence(TransitionDataBase transitionData, TransitionType transitionType, CancellationToken cancellationToken);
+        UniTask<bool> StartTransitionSequence(
+            TransitionDataBase transitionData,
+            TransitionDirectionType transitionDirectionType,
+            TransitionType transitionType,
+            CancellationToken cancellationToken);
         UniTask PreReboot();
     }
 }

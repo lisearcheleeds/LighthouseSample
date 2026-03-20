@@ -4,7 +4,7 @@ namespace SampleProduct.View.Scene.ModuleScene.Overlay
 {
     public interface IOverlayModule
     {
-        UniTask PlayInAnimation(bool withStateChange);
-        UniTask PlayOutAnimation(bool withStateChange);
+        UniTask PlayInAnimation();
+        UniTask PlayOutAnimation();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Scene.SceneCamera;
 
 namespace Lighthouse.Scene.SceneTransitionStep
 {
@@ -11,8 +10,8 @@ namespace Lighthouse.Scene.SceneTransitionStep
             CancellationToken cancelToken)
         {
             await UniTask.WhenAll(
-                context.MainSceneManager.PlayInAnimation(context.TransitionData, context.TransitionType, context.SceneTransitionDiff),
-                context.ModuleSceneManager.PlayInAnimation(context.TransitionType, context.SceneTransitionDiff));
+                context.MainSceneManager.PlayInAnimation(context),
+                context.ModuleSceneManager.PlayInAnimation(context));
         }
     }
 }

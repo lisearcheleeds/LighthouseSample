@@ -9,8 +9,8 @@ namespace Lighthouse.Scene.SceneTransitionStep
             SceneTransitionContext context,
             CancellationToken cancelToken)
         {
-            context.MainSceneManager.OnSceneTransitionFinished(context.SceneTransitionDiff);
-            context.ModuleSceneManager.OnSceneTransitionFinished(context.SceneTransitionDiff);
+            context.MainSceneManager.OnSceneTransitionFinished(context);
+            context.ModuleSceneManager.OnSceneTransitionFinished(context);
             return UniTask.CompletedTask;
         }
     }

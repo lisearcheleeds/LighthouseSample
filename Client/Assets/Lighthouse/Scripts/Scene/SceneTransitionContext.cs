@@ -5,6 +5,7 @@ namespace Lighthouse.Scene
     public class SceneTransitionContext
     {
         public TransitionDataBase TransitionData { get; }
+        public TransitionDirectionType TransitionDirectionType { get; }
         public TransitionType TransitionType { get; }
         public SceneTransitionDiff SceneTransitionDiff { get; }
         public IMainSceneManager MainSceneManager { get; }
@@ -13,6 +14,7 @@ namespace Lighthouse.Scene
 
         public SceneTransitionContext(
             TransitionDataBase transitionData,
+            TransitionDirectionType transitionDirectionType,
             TransitionType transitionType,
             SceneTransitionDiff sceneTransitionDiff,
             IMainSceneManager mainSceneManager,
@@ -20,6 +22,7 @@ namespace Lighthouse.Scene
             ISceneCameraManager sceneCameraManager)
         {
             TransitionData = transitionData;
+            TransitionDirectionType = transitionDirectionType;
             TransitionType = transitionType;
             SceneTransitionDiff = sceneTransitionDiff;
             MainSceneManager = mainSceneManager;

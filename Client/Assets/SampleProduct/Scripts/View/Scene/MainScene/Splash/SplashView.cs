@@ -28,13 +28,13 @@ namespace SampleProduct.View.Scene.MainScene.Splash
         {
             await UniTask.Delay(1500);
 
-            await overlayModule.PlayOutAnimation(false);
+            await overlayModule.PlayOutAnimation();
 
             splashImage.sprite = splashImage2;
 
             await UniTask.Delay(100);
 
-            await overlayModule.PlayInAnimation(false);
+            await overlayModule.PlayInAnimation();
 
             await UniTask.Delay(1500);
         }

@@ -8,7 +8,12 @@ namespace Lighthouse.Scene
         public ISceneTransitionPhase CurrentTransitionPhase { get; }
         public bool IsTransition { get; }
 
-        public void TransitionScene(TransitionDataBase nextTransitionData, MainSceneId backMainSceneId = null, Action<bool> onComplete = null);
-        public void BackScene();
+        public void TransitionScene(
+            TransitionDataBase nextTransitionData,
+            TransitionType transitionType = TransitionType.Auto,
+            MainSceneId backMainSceneId = null,
+            Action<bool> onComplete = null);
+
+        public void BackScene(TransitionType transitionType = TransitionType.Auto);
     }
 }

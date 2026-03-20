@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Scene.SceneCamera;
 
 namespace Lighthouse.Scene.SceneTransitionStep
 {
@@ -12,8 +11,8 @@ namespace Lighthouse.Scene.SceneTransitionStep
         {
             context.SceneCameraManager.UpdateCameraStack(context.MainSceneManager, context.SceneTransitionDiff);
 
-            context.MainSceneManager.InitializeCanvas(context.SceneCameraManager, context.SceneTransitionDiff);
-            context.ModuleSceneManager.InitializeCanvas(context.SceneCameraManager, context.SceneTransitionDiff);
+            context.MainSceneManager.InitializeCanvas(context);
+            context.ModuleSceneManager.InitializeCanvas(context);
 
             return UniTask.CompletedTask;
         }

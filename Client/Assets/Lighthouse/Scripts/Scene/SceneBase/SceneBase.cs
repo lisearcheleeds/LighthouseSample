@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene.SceneCamera;
@@ -27,7 +26,7 @@ namespace Lighthouse.Scene.SceneBase
             return UniTask.CompletedTask;
         }
 
-        public async UniTask Enter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        public async UniTask Enter(SceneTransitionContext context, CancellationToken cancelToken)
         {
             if (!initialized)
             {
@@ -35,12 +34,12 @@ namespace Lighthouse.Scene.SceneBase
                 await OnSetup();
             }
 
-            await OnEnter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            await OnEnter(context, cancelToken);
         }
 
-        public async UniTask Leave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        public async UniTask Leave(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            await OnLeave(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            await OnLeave(context, cancelToken);
         }
 
         public virtual UniTask SaveSceneState(CancellationToken cancelToken)
@@ -56,22 +55,22 @@ namespace Lighthouse.Scene.SceneBase
         {
         }
 
-        public virtual void ResetInAnimation(TransitionType transitionType)
+        public virtual void ResetInAnimation(SceneTransitionContext context)
         {
         }
 
-        public async UniTask PlayInAnimation(TransitionType transitionType, bool isActivateScene)
+        public async UniTask PlayInAnimation(SceneTransitionContext context)
         {
-            OnBeginInAnimation(transitionType, isActivateScene);
-            await InAnimation(transitionType, isActivateScene);
-            OnCompleteInAnimation(transitionType, isActivateScene);
+            OnBeginInAnimation(context);
+            await InAnimation(context);
+            OnCompleteInAnimation(context);
         }
 
-        public async UniTask PlayOutAnimation(TransitionType transitionType, bool isDeactivateScene)
+        public async UniTask PlayOutAnimation(SceneTransitionContext context)
         {
-            OnBeginOutAnimation(transitionType, isDeactivateScene);
-            await OutAnimation(transitionType, isDeactivateScene);
-            OnCompleteOutAnimation(transitionType, isDeactivateScene);
+            OnBeginOutAnimation(context);
+            await OutAnimation(context);
+            OnCompleteOutAnimation(context);
         }
 
         public virtual void OnSceneTransitionFinished(SceneTransitionDiff sceneTransitionDiff)
@@ -84,39 +83,39 @@ namespace Lighthouse.Scene.SceneBase
             return UniTask.CompletedTask;
         }
 
-        protected virtual UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        protected virtual UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
         {
             return UniTask.CompletedTask;
         }
 
-        protected virtual UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        protected virtual UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
         {
             return UniTask.CompletedTask;
         }
 
-        protected virtual void OnBeginInAnimation(TransitionType transitionType, bool isActivateScene)
+        protected virtual void OnBeginInAnimation(SceneTransitionContext context)
         {
         }
 
-        protected virtual UniTask InAnimation(TransitionType transitionType, bool isActivateScene)
-        {
-            return UniTask.CompletedTask;
-        }
-
-        protected virtual void OnCompleteInAnimation(TransitionType transitionType, bool isActivateScene)
-        {
-        }
-
-        protected virtual void OnBeginOutAnimation(TransitionType transitionType, bool isDeactivateScene)
-        {
-        }
-
-        protected virtual UniTask OutAnimation(TransitionType transitionType, bool isDeactivateScene)
+        protected virtual UniTask InAnimation(SceneTransitionContext context)
         {
             return UniTask.CompletedTask;
         }
 
-        protected virtual void OnCompleteOutAnimation(TransitionType transitionType, bool isDeactivateScene)
+        protected virtual void OnCompleteInAnimation(SceneTransitionContext context)
+        {
+        }
+
+        protected virtual void OnBeginOutAnimation(SceneTransitionContext context)
+        {
+        }
+
+        protected virtual UniTask OutAnimation(SceneTransitionContext context)
+        {
+            return UniTask.CompletedTask;
+        }
+
+        protected virtual void OnCompleteOutAnimation(SceneTransitionContext context)
         {
         }
     }

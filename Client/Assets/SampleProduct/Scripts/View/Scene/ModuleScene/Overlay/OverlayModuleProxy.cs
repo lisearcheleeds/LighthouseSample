@@ -7,21 +7,21 @@ namespace SampleProduct.View.Scene.ModuleScene.Overlay
     {
         IOverlayModuleImpl module;
 
-        UniTask IOverlayModule.PlayInAnimation(bool withStateChange)
+        UniTask IOverlayModule.PlayInAnimation()
         {
             if (module != null)
             {
-                return module.PlayInAnimation(withStateChange);
+                return module.PlayInAnimation();
             }
 
             return UniTask.CompletedTask;
         }
 
-        UniTask IOverlayModule.PlayOutAnimation(bool withStateChange)
+        UniTask IOverlayModule.PlayOutAnimation()
         {
             if (module != null)
             {
-                return module.PlayOutAnimation(withStateChange);
+                return module.PlayOutAnimation();
             }
 
             return UniTask.CompletedTask;

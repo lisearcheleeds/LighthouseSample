@@ -9,19 +9,19 @@ namespace Lighthouse.Scene
     {
         void SetEnqueueParentLifetimeScope(Func<IDisposable> enqueueParentLifetimeScope);
 
-        public UniTask Load(SceneTransitionDiff sceneTransitionDiff);
-        public UniTask Unload(SceneTransitionDiff sceneTransitionDiff);
+        public UniTask Load(SceneTransitionContext context);
+        public UniTask Unload(SceneTransitionContext context);
 
-        public UniTask Enter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancellationToken);
-        public UniTask Leave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancellationToken);
+        public UniTask Enter(SceneTransitionContext context, CancellationToken cancellationToken);
+        public UniTask Leave(SceneTransitionContext context, CancellationToken cancellationToken);
 
-        public void ResetAnimation(TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff);
-        public UniTask PlayInAnimation(TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff);
-        public UniTask PlayOutAnimation(TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff);
+        public void ResetAnimation(SceneTransitionContext context);
+        public UniTask PlayInAnimation(SceneTransitionContext context);
+        public UniTask PlayOutAnimation(SceneTransitionContext context);
 
         public ISceneCamera[] GetSceneCameraList(ModuleSceneId[] requestSceneModuleIds);
-        public void InitializeCanvas(ISceneCameraManager sceneGroupManager, SceneTransitionDiff sceneTransitionDiff);
+        public void InitializeCanvas(SceneTransitionContext context);
 
-        public void OnSceneTransitionFinished(SceneTransitionDiff sceneTransitionDiff);
+        public void OnSceneTransitionFinished(SceneTransitionContext context);
     }
 }

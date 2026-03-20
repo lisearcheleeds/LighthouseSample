@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Input;
@@ -39,38 +39,49 @@ namespace Lighthouse.Scene
             this.inputBlocker = inputBlocker;
         }
 
-        async UniTask<bool> ISceneGroupController.StartCrossTransitionSequence(
+        async UniTask<bool> ISceneGroupController.StartTransitionSequence(
             TransitionDataBase transitionData,
+            TransitionDirectionType transitionDirectionType,
             TransitionType transitionType,
             CancellationToken cancellationToken)
         {
-            return await StartTransition(
-                sceneTransitionSequenceProvider.CrossSequence,
-                transitionData,
-                transitionType,
-                cancellationToken);
-        }
+            if (transitionType == TransitionType.Auto)
+            {
+                if (currentSceneGroup?.MainSceneIds.Contains(transitionData.MainSceneId) ?? false)
+                {
+                    transitionType = TransitionType.Cross;
+                }
+                else
+                {
+                    transitionType = TransitionType.Exclusive;
+                }
+            }
 
-        async UniTask<bool> ISceneGroupController.StartExclusiveTransitionSequence(
-            TransitionDataBase transitionData,
-            TransitionType transitionType,
-            CancellationToken cancellationToken)
-        {
+            transitionType = TransitionType.Exclusive;
+
+            var transitionSequence = transitionType switch
+            {
+                TransitionType.Cross => sceneTransitionSequenceProvider.CrossSequence,
+                _ => sceneTransitionSequenceProvider.ExclusiveSequence,
+            };
+
             return await StartTransition(
-                sceneTransitionSequenceProvider.ExclusiveSequence,
+                transitionSequence,
                 transitionData,
+                transitionDirectionType,
                 transitionType,
                 cancellationToken);
         }
 
         async UniTask ISceneGroupController.PreReboot()
         {
-            await mainSceneManager.Leave(null, TransitionType.Default, null, CancellationToken.None);
+            await mainSceneManager.Leave(null, CancellationToken.None);
         }
 
         async UniTask<bool> StartTransition(
             ISceneTransitionPhase[] transitionPhases,
             TransitionDataBase transitionData,
+            TransitionDirectionType transitionDirectionType,
             TransitionType transitionType,
             CancellationToken cancellationToken)
         {
@@ -91,7 +102,7 @@ namespace Lighthouse.Scene
 
             var afterSceneGroup = sceneGroupProvider.GetSceneGroup(transitionData.MainSceneId);
             var sceneTransitionDiff = new SceneTransitionDiff(currentSceneGroup, mainSceneManager.CurrentMainSceneId, afterSceneGroup, transitionData.MainSceneId);
-            var context = new SceneTransitionContext(transitionData, transitionType, sceneTransitionDiff, mainSceneManager, moduleSceneManager, sceneCameraManager);
+            var context = new SceneTransitionContext(transitionData, transitionDirectionType, transitionType, sceneTransitionDiff, mainSceneManager, moduleSceneManager, sceneCameraManager);
 
             inputBlocker.Block<SceneGroupController>();
 

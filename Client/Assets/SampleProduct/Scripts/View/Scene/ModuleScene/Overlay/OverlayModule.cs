@@ -14,14 +14,14 @@ namespace SampleProduct.View.Scene.ModuleScene.Overlay
             this.overlayModuleScene = overlayModuleScene;
         }
 
-        UniTask IOverlayModule.PlayInAnimation(bool withStateChange)
+        UniTask IOverlayModule.PlayInAnimation()
         {
-            return overlayModuleScene.PlayInAnimation(TransitionType.Default, withStateChange);
+            return overlayModuleScene.PlayInAnimation();
         }
 
-        UniTask IOverlayModule.PlayOutAnimation(bool withStateChange)
+        UniTask IOverlayModule.PlayOutAnimation()
         {
-            return overlayModuleScene.PlayOutAnimation(TransitionType.Default, withStateChange);
+            return overlayModuleScene.PlayOutAnimation();
         }
     }
 }

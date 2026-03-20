@@ -9,7 +9,7 @@ namespace Lighthouse.Scene.SceneTransitionStep
             SceneTransitionContext context,
             CancellationToken cancelToken)
         {
-            await context.TransitionData.LoadSceneState(context.TransitionType, cancelToken);
+            await context.TransitionData.LoadSceneState(context.TransitionDirectionType, cancelToken);
         }
     }
 }

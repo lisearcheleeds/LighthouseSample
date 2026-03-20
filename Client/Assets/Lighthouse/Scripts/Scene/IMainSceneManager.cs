@@ -11,24 +11,24 @@ namespace Lighthouse.Scene
 
         void SetEnqueueParentLifetimeScope(Func<IDisposable> enqueueParentLifetimeScope);
 
-        UniTask Load(SceneTransitionDiff sceneTransitionDiff);
-        UniTask Unload(SceneTransitionDiff sceneTransitionDiff);
+        UniTask Load(SceneTransitionContext context);
+        UniTask Unload(SceneTransitionContext context);
 
-        UniTask Enter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancellationToken);
-        UniTask Leave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancellationToken);
+        UniTask Enter(SceneTransitionContext context, CancellationToken cancellationToken);
+        UniTask Leave(SceneTransitionContext context, CancellationToken cancellationToken);
 
-        void ResetInAnimation(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff);
-        UniTask PlayInAnimation(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff);
-        UniTask PlayOutAnimation(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff);
+        void ResetInAnimation(SceneTransitionContext context);
+        UniTask PlayInAnimation(SceneTransitionContext context);
+        UniTask PlayOutAnimation(SceneTransitionContext context);
 
         UniTask SaveSceneState(CancellationToken cancelToken);
 
         ISceneCamera[] GetSceneCameraList(SceneTransitionDiff sceneTransitionDiff);
-        void InitializeCanvas(ISceneCameraManager sceneGroupManager, SceneTransitionDiff sceneTransitionDiff);
+        void InitializeCanvas(SceneTransitionContext context);
 
         void Suspend();
         void Resume();
 
-        void OnSceneTransitionFinished(SceneTransitionDiff sceneTransitionDiff);
+        void OnSceneTransitionFinished(SceneTransitionContext context);
     }
 }

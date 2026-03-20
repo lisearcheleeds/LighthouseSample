@@ -13,20 +13,20 @@ namespace Lighthouse.Scene.SceneBase
     {
         protected TTransitionData TransitionData { get; private set; }
 
-        protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        protected override UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
         {
             // If necessary, you can override OnEnter to control the gameObject.
             gameObject.SetActive(true);
 
-            TransitionData = (TTransitionData)transitionData;
-            return base.OnEnter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            TransitionData = (TTransitionData)context.TransitionData;
+            return base.OnEnter(context, cancelToken);
         }
 
-        protected override UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
         {
             gameObject.SetActive(false);
 
-            return base.OnLeave(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            return base.OnLeave(context, cancelToken);
         }
 
         protected virtual void OnBackKeyFallback()

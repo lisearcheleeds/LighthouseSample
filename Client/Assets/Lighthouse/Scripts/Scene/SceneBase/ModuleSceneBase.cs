@@ -11,24 +11,24 @@ namespace Lighthouse.Scene.SceneBase
         public virtual bool IsAlwaysInAnimation { get; protected set; } = false;
         public virtual bool IsAlwaysOutAnimation { get; protected set; } = false;
 
-        protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        protected override UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            if (sceneTransitionDiff.ActivateSceneModuleIds.Contains(ModuleSceneId))
+            if (context.SceneTransitionDiff.ActivateSceneModuleIds.Contains(ModuleSceneId))
             {
                 gameObject.SetActive(true);
             }
 
-            return base.OnEnter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            return base.OnEnter(context, cancelToken);
         }
 
-        protected override UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            if (sceneTransitionDiff.DeactivateSceneModuleIds.Contains(ModuleSceneId))
+            if (context.SceneTransitionDiff.DeactivateSceneModuleIds.Contains(ModuleSceneId))
             {
                 gameObject.SetActive(false);
             }
 
-            return base.OnLeave(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            return base.OnLeave(context, cancelToken);
         }
     }
 }

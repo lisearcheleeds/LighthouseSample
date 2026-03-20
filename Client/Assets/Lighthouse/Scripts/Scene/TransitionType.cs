@@ -2,7 +2,8 @@
 {
     public enum TransitionType
     {
-        Default,
-        Back,
+        Auto,
+        Exclusive,
+        Cross,
     }
 }

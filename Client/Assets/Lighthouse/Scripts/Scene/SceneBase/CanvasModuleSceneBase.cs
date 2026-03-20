@@ -19,24 +19,24 @@ namespace Lighthouse.Scene.SceneBase
             return base.OnLoad();
         }
 
-        protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        protected override UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            if (sceneTransitionDiff.ActivateSceneModuleIds.Contains(ModuleSceneId))
+            if (context.SceneTransitionDiff.ActivateSceneModuleIds.Contains(ModuleSceneId))
             {
                 canvasGroup.alpha = 1;
             }
 
-            return base.OnEnter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            return base.OnEnter(context, cancelToken);
         }
 
-        protected override UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            if (sceneTransitionDiff.DeactivateSceneModuleIds.Contains(ModuleSceneId))
+            if (context.SceneTransitionDiff.DeactivateSceneModuleIds.Contains(ModuleSceneId))
             {
                 canvasGroup.alpha = 0;
             }
 
-            return base.OnLeave(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            return base.OnLeave(context, cancelToken);
         }
 
         public virtual void InitializeCanvas(ISceneCamera canvasCamera)
@@ -44,17 +44,19 @@ namespace Lighthouse.Scene.SceneBase
             canvasInitializer.Initialize(canvasCamera);
         }
 
-        protected override void OnBeginInAnimation(TransitionType transitionType, bool isActivateScene)
+        protected override void OnBeginInAnimation(SceneTransitionContext context)
         {
-            base.OnBeginInAnimation(transitionType, isActivateScene);
+            base.OnBeginInAnimation(context);
 
+            var isActivateScene = IsAlwaysInAnimation || context.SceneTransitionDiff.ActivateSceneModuleIds.Contains(ModuleSceneId);
             canvasGroup.alpha = isActivateScene ? 1.0f : canvasGroup.alpha;
         }
 
-        protected override void OnCompleteOutAnimation(TransitionType transitionType, bool isDeactivateScene)
+        protected override void OnCompleteOutAnimation(SceneTransitionContext context)
         {
-            base.OnCompleteOutAnimation(transitionType, isDeactivateScene);
+            base.OnCompleteOutAnimation(context);
 
+            var isDeactivateScene = IsAlwaysOutAnimation || context.SceneTransitionDiff.DeactivateSceneModuleIds.Contains(ModuleSceneId);
             canvasGroup.alpha = isDeactivateScene ? 0.0f : canvasGroup.alpha;
         }
 

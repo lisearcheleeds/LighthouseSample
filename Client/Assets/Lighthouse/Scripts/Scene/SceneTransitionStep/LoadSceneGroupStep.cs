@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Scene.SceneCamera;
 
 namespace Lighthouse.Scene.SceneTransitionStep
 {
@@ -10,11 +9,11 @@ namespace Lighthouse.Scene.SceneTransitionStep
             SceneTransitionContext context,
             CancellationToken cancelToken)
         {
-            await context.MainSceneManager.Load(context.SceneTransitionDiff);
-            context.MainSceneManager.ResetInAnimation(context.TransitionData, context.TransitionType, context.SceneTransitionDiff);
+            await context.MainSceneManager.Load(context);
+            context.MainSceneManager.ResetInAnimation(context);
 
-            await context.ModuleSceneManager.Load(context.SceneTransitionDiff);
-            context.ModuleSceneManager.ResetAnimation(context.TransitionType, context.SceneTransitionDiff);
+            await context.ModuleSceneManager.Load(context);
+            context.ModuleSceneManager.ResetAnimation(context);
         }
     }
 }

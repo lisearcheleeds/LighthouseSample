@@ -22,24 +22,24 @@ namespace LighthouseExtends.Popup
             return UniTask.CompletedTask;
         }
 
-        protected override async UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        protected override async UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            if (transitionType == TransitionType.Back)
+            if (context.TransitionDirectionType == TransitionDirectionType.Back)
             {
-                await popupManager.ResumePopupFromSceneId(sceneTransitionDiff.NextMainSceneId, cancelToken);
+                await popupManager.ResumePopupFromSceneId(context.SceneTransitionDiff.NextMainSceneId, cancelToken);
             }
 
-            await base.OnEnter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            await base.OnEnter(context, cancelToken);
         }
 
-        protected override async UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        protected override async UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            if (transitionType == TransitionType.Default)
+            if (context.TransitionDirectionType == TransitionDirectionType.Forward)
             {
-                await popupManager.SuspendPopupFromSceneId(sceneTransitionDiff.CurrentMainSceneId, cancelToken);
+                await popupManager.SuspendPopupFromSceneId(context.SceneTransitionDiff.CurrentMainSceneId, cancelToken);
             }
 
-            await base.OnLeave(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            await base.OnLeave(context, cancelToken);
         }
     }
 }

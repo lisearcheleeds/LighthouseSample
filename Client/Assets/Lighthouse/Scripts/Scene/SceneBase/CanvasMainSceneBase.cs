@@ -18,16 +18,16 @@ namespace Lighthouse.Scene.SceneBase
             return base.OnLoad();
         }
 
-        protected override UniTask OnEnter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        protected override UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
         {
             canvasGroup.alpha = 1;
-            return base.OnEnter(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            return base.OnEnter(context, cancelToken);
         }
 
-        protected override UniTask OnLeave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancelToken)
+        protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
         {
             canvasGroup.alpha = 0;
-            return base.OnLeave(transitionData, transitionType, sceneTransitionDiff, cancelToken);
+            return base.OnLeave(context, cancelToken);
         }
 
         public virtual void InitializeCanvas(ISceneCamera canvasCamera)

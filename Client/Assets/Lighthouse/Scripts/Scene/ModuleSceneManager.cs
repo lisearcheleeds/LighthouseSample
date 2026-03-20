@@ -29,41 +29,46 @@ namespace Lighthouse.Scene
                 .ToArray();
         }
 
-        void IModuleSceneManager.ResetAnimation(TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff)
+        void IModuleSceneManager.ResetAnimation(SceneTransitionContext context)
         {
             var targetAnimations = loadedSceneModules
-                .Where(x => sceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
+                .Where(x => context.SceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
                 .ToArray();
 
             foreach (var targetAnimation in targetAnimations)
             {
-                targetAnimation.ResetInAnimation(transitionType);
+                targetAnimation.ResetInAnimation(context);
             }
         }
 
-        async UniTask IModuleSceneManager.PlayInAnimation(TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff)
+        async UniTask IModuleSceneManager.PlayInAnimation(SceneTransitionContext context)
         {
             var target = loadedSceneModules
-                .Where(x => sceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
-                .Select(x => x.PlayInAnimation(transitionType, x.IsAlwaysInAnimation || sceneTransitionDiff.ActivateSceneModuleIds.Contains(x.ModuleSceneId)))
+                .Where(x => context.SceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
+                .Select(x => x.PlayInAnimation(context))
                 .ToArray();
 
             await UniTask.WhenAll(target);
         }
 
-        async UniTask IModuleSceneManager.PlayOutAnimation(TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff)
+        async UniTask IModuleSceneManager.PlayOutAnimation(SceneTransitionContext context)
         {
+            if (context.SceneTransitionDiff.CurrentSceneGroup == null)
+            {
+                return;
+            }
+
             var target = loadedSceneModules
-                .Where(x => sceneTransitionDiff.CurrentSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
-                .Select(x => x.PlayOutAnimation(transitionType, x.IsAlwaysOutAnimation || sceneTransitionDiff.DeactivateSceneModuleIds.Contains(x.ModuleSceneId)))
+                .Where(x => context.SceneTransitionDiff.CurrentSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
+                .Select(x => x.PlayOutAnimation(context))
                 .ToArray();
 
             await UniTask.WhenAll(target);
         }
 
-        async UniTask IModuleSceneManager.Load(SceneTransitionDiff sceneTransitionDiff)
+        async UniTask IModuleSceneManager.Load(SceneTransitionContext context)
         {
-            if (!sceneTransitionDiff.LoadSceneModuleIds.Any())
+            if (!context.SceneTransitionDiff.LoadSceneModuleIds.Any())
             {
                 return;
             }
@@ -72,7 +77,7 @@ namespace Lighthouse.Scene
             {
                 // The scene loading progress is not linear, and the loading itself is completed in 0.9f.
                 // Call OnLoad before the scene's Active state to initialize the display.
-                var loadOperations = sceneTransitionDiff.LoadSceneModuleIds
+                var loadOperations = context.SceneTransitionDiff.LoadSceneModuleIds
                     .Select(sceneId => (sceneId: sceneId, ops: UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneId.Name, LoadSceneMode.Additive)))
                     .ToArray();
 
@@ -104,14 +109,14 @@ namespace Lighthouse.Scene
             }
         }
 
-        async UniTask IModuleSceneManager.Unload(SceneTransitionDiff sceneTransitionDiff)
+        async UniTask IModuleSceneManager.Unload(SceneTransitionContext context)
         {
-            if (!sceneTransitionDiff.UnloadSceneModuleIds.Any())
+            if (!context.SceneTransitionDiff.UnloadSceneModuleIds.Any())
             {
                 return;
             }
 
-            var unloadSceneModules = loadedSceneModules.Where(x => sceneTransitionDiff.UnloadSceneModuleIds.Contains(x.ModuleSceneId)).ToArray();
+            var unloadSceneModules = loadedSceneModules.Where(x => context.SceneTransitionDiff.UnloadSceneModuleIds.Contains(x.ModuleSceneId)).ToArray();
             await UniTask.WhenAll(unloadSceneModules.Select(s => s.OnUnload()));
 
             await UniTask.WhenAll(unloadSceneModules.Select(s => UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(s.ModuleSceneId.Name).ToUniTask()));
@@ -122,44 +127,49 @@ namespace Lighthouse.Scene
             }
         }
 
-        async UniTask IModuleSceneManager.Enter(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancellationToken)
+        async UniTask IModuleSceneManager.Enter(SceneTransitionContext context, CancellationToken cancellationToken)
         {
             var target = loadedSceneModules
-                .Where(x => sceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
-                .Select(x => x.Enter(transitionData, transitionType, sceneTransitionDiff, cancellationToken))
+                .Where(x => context.SceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
+                .Select(x => x.Enter(context, cancellationToken))
                 .ToArray();
 
             await UniTask.WhenAll(target);
         }
 
-        async UniTask IModuleSceneManager.Leave(TransitionDataBase transitionData, TransitionType transitionType, SceneTransitionDiff sceneTransitionDiff, CancellationToken cancellationToken)
+        async UniTask IModuleSceneManager.Leave(SceneTransitionContext context, CancellationToken cancellationToken)
         {
+            if (context.SceneTransitionDiff.CurrentSceneGroup == null)
+            {
+                return;
+            }
+
             var target = loadedSceneModules
-                .Where(x => sceneTransitionDiff.CurrentSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
-                .Select(x => x.Leave(transitionData, transitionType, sceneTransitionDiff, cancellationToken))
+                .Where(x => context.SceneTransitionDiff.CurrentSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
+                .Select(x => x.Leave(context, cancellationToken))
                 .ToArray();
 
             await UniTask.WhenAll(target);
         }
 
-        void IModuleSceneManager.InitializeCanvas(ISceneCameraManager sceneGroupManager, SceneTransitionDiff sceneTransitionDiff)
+        void IModuleSceneManager.InitializeCanvas(SceneTransitionContext context)
         {
             foreach (var sceneModule in loadedSceneModules)
             {
-                if (sceneTransitionDiff.LoadSceneModuleIds.Contains(sceneModule.ModuleSceneId) && sceneModule is ICanvasSceneBase canvasSceneModule)
+                if (context.SceneTransitionDiff.LoadSceneModuleIds.Contains(sceneModule.ModuleSceneId) && sceneModule is ICanvasSceneBase canvasSceneModule)
                 {
-                    canvasSceneModule.InitializeCanvas(sceneGroupManager.UICamera);
+                    canvasSceneModule.InitializeCanvas(context.SceneCameraManager.UICamera);
                 }
             }
         }
 
-        void IModuleSceneManager.OnSceneTransitionFinished(SceneTransitionDiff sceneTransitionDiff)
+        void IModuleSceneManager.OnSceneTransitionFinished(SceneTransitionContext context)
         {
             foreach (var sceneModule in loadedSceneModules)
             {
-                if (sceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(sceneModule.ModuleSceneId))
+                if (context.SceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(sceneModule.ModuleSceneId))
                 {
-                    sceneModule.OnSceneTransitionFinished(sceneTransitionDiff);
+                    sceneModule.OnSceneTransitionFinished(context.SceneTransitionDiff);
                 }
             }
         }
