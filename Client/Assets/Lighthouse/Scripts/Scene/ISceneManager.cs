@@ -1,5 +1,4 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 
 namespace Lighthouse.Scene
 {
@@ -7,11 +6,10 @@ namespace Lighthouse.Scene
     {
         bool IsTransition { get; }
 
-        void TransitionScene(
+        UniTask TransitionScene(
             TransitionDataBase nextTransitionData,
             TransitionType transitionType = TransitionType.Auto,
-            MainSceneId backMainSceneId = null,
-            Action<bool> onComplete = null);
+            MainSceneId backMainSceneId = null);
 
         void BackScene(TransitionType transitionType = TransitionType.Auto);
         UniTask PreReboot();

@@ -12,9 +12,9 @@ namespace Lighthouse.Scene
 {
     public sealed class MainSceneManager : IMainSceneManager
     {
-        Func<IDisposable> enqueueParentLifetimeScope;
+        readonly Dictionary<MainSceneId, MainSceneBase> loadedScenes = new();
 
-        Dictionary<MainSceneId, MainSceneBase> loadedScenes = new ();
+        Func<IDisposable> enqueueParentLifetimeScope;
 
         void IMainSceneManager.SetEnqueueParentLifetimeScope(Func<IDisposable> enqueueParentLifetimeScope)
         {
@@ -44,31 +44,30 @@ namespace Lighthouse.Scene
             }
         }
 
-        async UniTask IMainSceneManager.Enter(SceneTransitionContext context, CancellationToken cancellationToken)
+        async UniTask IMainSceneManager.Enter(SceneTransitionContext context, CancellationToken cancelToken)
         {
             if (!loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
             {
                 return;
             }
 
-            await scene.Enter(context, cancellationToken);
+            await scene.Enter(context, cancelToken);
         }
 
-        async UniTask IMainSceneManager.Leave(SceneTransitionContext context, CancellationToken cancellationToken)
+        async UniTask IMainSceneManager.Leave(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            if (context.SceneTransitionDiff.CurrentMainSceneId == null
+            if (context?.SceneTransitionDiff.CurrentMainSceneId == null
                 || !loadedScenes.TryGetValue(context.SceneTransitionDiff.CurrentMainSceneId, out var scene))
             {
                 return;
             }
 
-            await scene.Leave(context, cancellationToken);
+            await scene.Leave(context, cancelToken);
         }
 
         void IMainSceneManager.ResetInAnimation(SceneTransitionContext context)
         {
-            if (context.SceneTransitionDiff.CurrentMainSceneId == null
-                || !loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
+            if (!loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
             {
                 return;
             }
@@ -195,7 +194,7 @@ namespace Lighthouse.Scene
                     .Select(x => x.GetComponent<MainSceneBase>())
                     .First(x => x != null);
             }
-            catch
+            catch (InvalidOperationException)
             {
                 Debug.LogError($"[SceneGroup] MainSceneBase NotFound\n" +
                                $"To add a scene, you need to add the scene to UnityEditor and place a GameObject that inherits MainSceneBase at the root of the added scene.");

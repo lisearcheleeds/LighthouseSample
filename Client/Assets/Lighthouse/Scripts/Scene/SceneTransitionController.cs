@@ -35,7 +35,7 @@ namespace Lighthouse.Scene
             this.inputBlocker = inputBlocker;
         }
 
-        async UniTask<bool> ISceneTransitionController.StartTransitionSequence(
+        async UniTask ISceneTransitionController.StartTransitionSequence(
             TransitionDataBase transitionData,
             SceneTransitionDiff sceneTransitionDiff,
             TransitionDirectionType transitionDirectionType,
@@ -44,15 +44,10 @@ namespace Lighthouse.Scene
         {
             if (!CurrentTransitionPhase?.CanTransitionIntercept ?? false)
             {
-                Debug.LogError($"[SceneTransitionWorker] Scene transition is not possible in the current phase. {CurrentTransitionPhase}");
-                return false;
+                throw new InvalidOperationException($"[SceneTransitionWorker] Scene transition is not possible in the current phase. {CurrentTransitionPhase}");
             }
 
             CurrentTransitionPhase = null;
-
-            // MessageBroker.NotifySceneTransitionStart()
-            // var sw = new System.Diagnostics.Stopwatch();
-            // sw.Start();
 
             var prevPriority = Application.backgroundLoadingPriority;
             Application.backgroundLoadingPriority = UnityEngine.ThreadPriority.High;
@@ -96,15 +91,10 @@ namespace Lighthouse.Scene
             finally
             {
                 inputBlocker.UnBlock<SceneTransitionController>();
+
+                Application.backgroundLoadingPriority = prevPriority;
+                CurrentTransitionPhase = null;
             }
-
-            Application.backgroundLoadingPriority = prevPriority;
-
-            // sw.Stop();
-            // MessageBroker.NotifySceneTransitionFinished(prevMainSceneGroup.CurrentMainSceneId, transitionData.CurrentMainSceneId, (int)sw.ElapsedMilliseconds)
-
-            CurrentTransitionPhase = null;
-            return true;
         }
     }
 }

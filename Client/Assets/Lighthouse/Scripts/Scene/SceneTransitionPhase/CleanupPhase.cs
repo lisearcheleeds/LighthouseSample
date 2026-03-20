@@ -2,11 +2,11 @@
 
 namespace Lighthouse.Scene.SceneTransitionPhase
 {
-    public sealed class FinishTransitionPhase : ISceneTransitionPhase
+    public sealed class CleanupPhase : ISceneTransitionPhase
     {
         ISceneTransitionStep[] ISceneTransitionPhase.Steps { get; } =
         {
-            new FinishStep(),
+            new CleanupStep(),
         };
 
         bool ISceneTransitionPhase.CanTransitionIntercept => false;

@@ -52,15 +52,15 @@ namespace SampleProduct.Core
 
         void TransitionNextScene()
         {
-            sceneManager.TransitionScene(
-                new SplashScene.SplashTransitionData(),
-                onComplete: _ =>
+            UniTask.Void(async () =>
+            {
+                await sceneManager.TransitionScene(new SplashScene.SplashTransitionData());
+
+                if (!string.IsNullOrEmpty(UnityEngine.SceneManagement.SceneManager.GetSceneByName(LauncherSceneName).name))
                 {
-                    if (!string.IsNullOrEmpty(UnityEngine.SceneManagement.SceneManager.GetSceneByName(LauncherSceneName).name))
-                    {
-                        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(LauncherSceneName);
-                    }
-                });
+                    UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(LauncherSceneName);
+                }
+            });
         }
     }
 }

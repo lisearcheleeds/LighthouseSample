@@ -4,7 +4,7 @@ using VContainer;
 
 namespace Lighthouse.Scene.SceneCamera
 {
-    public class SceneCameraManager : ISceneCameraManager
+    public sealed class SceneCameraManager : ISceneCameraManager
     {
         readonly ICanvasSceneObject canvasSceneObject;
 

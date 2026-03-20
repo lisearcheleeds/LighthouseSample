@@ -13,6 +13,7 @@ namespace Lighthouse.Scene
             new LeaveScenePhase(),
             new UnloadSceneGroupPhase(),
             new FinishTransitionPhase(),
+            new CleanupPhase(),
         };
 
         ISceneTransitionPhase[] ISceneTransitionSequenceProvider.ExclusiveSequence { get; } =
@@ -25,6 +26,7 @@ namespace Lighthouse.Scene
             new EnterScenePhase(),
             new InAnimationPhase(),
             new FinishTransitionPhase(),
+            new CleanupPhase(),
         };
     }
 }

@@ -12,8 +12,8 @@ namespace Lighthouse.Scene
         UniTask Load(SceneTransitionContext context);
         UniTask Unload(SceneTransitionContext context);
 
-        UniTask Enter(SceneTransitionContext context, CancellationToken cancellationToken);
-        UniTask Leave(SceneTransitionContext context, CancellationToken cancellationToken);
+        UniTask Enter(SceneTransitionContext context, CancellationToken cancelToken);
+        UniTask Leave(SceneTransitionContext context, CancellationToken cancelToken);
 
         void ResetInAnimation(SceneTransitionContext context);
         UniTask PlayInAnimation(SceneTransitionContext context);

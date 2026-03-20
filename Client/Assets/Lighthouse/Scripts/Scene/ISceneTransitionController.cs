@@ -5,7 +5,7 @@ namespace Lighthouse.Scene
 {
     public interface ISceneTransitionController
     {
-        UniTask<bool> StartTransitionSequence(
+        UniTask StartTransitionSequence(
             TransitionDataBase transitionData,
             SceneTransitionDiff sceneTransitionDiff,
             TransitionDirectionType transitionDirectionType,

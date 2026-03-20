@@ -56,7 +56,7 @@ namespace Lighthouse.Scene
 
         static MainSceneId[] GetMainSceneIdsOnlyInCurrent(SceneGroup currentSceneGroup, SceneGroup nextSceneGroup)
         {
-            var currentMainSceneIds = currentSceneGroup?.MainSceneIds ?? Array.Empty<MainSceneId>();;
+            var currentMainSceneIds = currentSceneGroup?.MainSceneIds ?? Array.Empty<MainSceneId>();
             var nextMainSceneIds = nextSceneGroup.MainSceneIds;
 
             var nextSet = new HashSet<MainSceneId>(nextMainSceneIds);

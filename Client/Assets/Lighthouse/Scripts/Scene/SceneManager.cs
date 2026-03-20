@@ -30,7 +30,10 @@ namespace Lighthouse.Scene
             this.sceneGroupProvider = sceneGroupProvider;
         }
 
-        void ISceneManager.TransitionScene(TransitionDataBase nextTransitionData, TransitionType transitionType, MainSceneId backMainSceneId, Action<bool> onComplete)
+        async UniTask ISceneManager.TransitionScene(
+            TransitionDataBase nextTransitionData,
+            TransitionType transitionType,
+            MainSceneId backMainSceneId)
         {
             if (IsTransition)
             {
@@ -39,16 +42,12 @@ namespace Lighthouse.Scene
 
             var currentSceneTransitionData = transitionDataStack.Count != 0 ? transitionDataStack.Peek() : null;
 
-            UniTask.Void(async () =>
-            {
-                var isSuccess = await TransitionSceneAsync(
-                    currentSceneTransitionData,
-                    nextTransitionData,
-                    TransitionDirectionType.Forward,
-                    transitionType,
-                    backMainSceneId);
-                onComplete?.Invoke(isSuccess);
-            });
+            await TransitionSceneCore(
+                currentSceneTransitionData,
+                nextTransitionData,
+                TransitionDirectionType.Forward,
+                transitionType,
+                backMainSceneId);
         }
 
         void ISceneManager.BackScene(TransitionType transitionType)
@@ -93,7 +92,12 @@ namespace Lighthouse.Scene
                 backTargetSceneTransitionData = transitionDataStack.Pop();
             }
 
-            return await TransitionSceneAsync(
+            if (!backTargetSceneTransitionData.CanTransition || !backTargetSceneTransitionData.CanBackTransition)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return await TransitionSceneCore(
                 currentSceneTransitionData,
                 backTargetSceneTransitionData,
                 TransitionDirectionType.Back,
@@ -101,7 +105,7 @@ namespace Lighthouse.Scene
                 null);
         }
 
-        async UniTask<bool> TransitionSceneAsync(
+        async UniTask<bool> TransitionSceneCore(
             TransitionDataBase currentTransitionData,
             TransitionDataBase nextTransitionData,
             TransitionDirectionType transitionDirectionType,
@@ -114,23 +118,22 @@ namespace Lighthouse.Scene
             }
 
             var nextSceneGroup = sceneGroupProvider.GetSceneGroup(nextTransitionData.MainSceneId);
-
-            IsTransition = true;
-
             var sceneTransitionDiff = new SceneTransitionDiff(currentSceneGroup, currentTransitionData?.MainSceneId, nextSceneGroup, nextTransitionData.MainSceneId);
 
-            var transitionSuccess = await sceneTransitionController.StartTransitionSequence(
-                nextTransitionData,
-                sceneTransitionDiff,
-                transitionDirectionType,
-                transitionType,
-                CancellationToken.None);
-
-            IsTransition = false;
-
-            if (!transitionSuccess)
+            try
             {
-                return false;
+                IsTransition = true;
+
+                await sceneTransitionController.StartTransitionSequence(
+                    nextTransitionData,
+                    sceneTransitionDiff,
+                    transitionDirectionType,
+                    transitionType,
+                    CancellationToken.None);
+            }
+            finally
+            {
+                IsTransition = false;
             }
 
             currentSceneGroup = nextSceneGroup;
@@ -144,8 +147,6 @@ namespace Lighthouse.Scene
                     transitionDataStack.Pop();
                 }
             }
-
-            // await new WaitWhile(() => PopupManager.Instance.IsOpen(CurrentMainSceneId) || LoadingManager.Instance.IsShowGuard);
 
             return true;
         }
