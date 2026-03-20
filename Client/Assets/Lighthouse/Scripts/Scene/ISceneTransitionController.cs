@@ -1,18 +1,15 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Scene.SceneTransitionPhase;
 
 namespace Lighthouse.Scene
 {
-    public interface ISceneGroupController
+    public interface ISceneTransitionController
     {
-        public ISceneTransitionPhase CurrentTransitionPhase { get; }
-
         UniTask<bool> StartTransitionSequence(
             TransitionDataBase transitionData,
+            SceneTransitionDiff sceneTransitionDiff,
             TransitionDirectionType transitionDirectionType,
             TransitionType transitionType,
             CancellationToken cancellationToken);
-        UniTask PreReboot();
     }
 }

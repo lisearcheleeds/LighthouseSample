@@ -14,10 +14,7 @@ namespace Lighthouse.Scene
     {
         Func<IDisposable> enqueueParentLifetimeScope;
 
-        MainSceneBase currentScene;
-        List<MainSceneBase> loadedScenes = new ();
-
-        MainSceneId IMainSceneManager.CurrentMainSceneId => currentScene != null ? currentScene.MainSceneId : null;
+        Dictionary<MainSceneId, MainSceneBase> loadedScenes = new ();
 
         void IMainSceneManager.SetEnqueueParentLifetimeScope(Func<IDisposable> enqueueParentLifetimeScope)
         {
@@ -26,9 +23,9 @@ namespace Lighthouse.Scene
 
         ISceneCamera[] IMainSceneManager.GetSceneCameraList(SceneTransitionDiff sceneTransitionDiff)
         {
-            if (currentScene != null)
+            if (loadedScenes.ContainsKey(sceneTransitionDiff.NextMainSceneId))
             {
-                return currentScene.GetSceneCameraList();
+                return loadedScenes[sceneTransitionDiff.NextMainSceneId].GetSceneCameraList();
             }
 
             return Array.Empty<ISceneCamera>();
@@ -36,7 +33,12 @@ namespace Lighthouse.Scene
 
         void IMainSceneManager.InitializeCanvas(SceneTransitionContext context)
         {
-            if (currentScene is ICanvasSceneBase canvasSceneBase)
+            if (!loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
+            {
+                return;
+            }
+
+            if (scene is ICanvasSceneBase canvasSceneBase)
             {
                 canvasSceneBase.InitializeCanvas(context.SceneCameraManager.UICamera);
             }
@@ -44,50 +46,66 @@ namespace Lighthouse.Scene
 
         async UniTask IMainSceneManager.Enter(SceneTransitionContext context, CancellationToken cancellationToken)
         {
-            currentScene = loadedScenes.First(x => x.MainSceneId == context.TransitionData.MainSceneId);
-            await currentScene.Enter(context, cancellationToken);
-        }
-
-        async UniTask IMainSceneManager.Leave(SceneTransitionContext context, CancellationToken cancellationToken)
-        {
-            if (currentScene != null)
-            {
-                await currentScene.Leave(context, cancellationToken);
-            }
-        }
-
-        void IMainSceneManager.ResetInAnimation(SceneTransitionContext context)
-        {
-            if (currentScene != null)
-            {
-                currentScene.ResetInAnimation(context);
-            }
-        }
-
-        async UniTask IMainSceneManager.PlayInAnimation(SceneTransitionContext context)
-        {
-            if (currentScene != null)
-            {
-                await currentScene.PlayInAnimation(context);
-            }
-        }
-
-        async UniTask IMainSceneManager.PlayOutAnimation(SceneTransitionContext context)
-        {
-            if (currentScene != null)
-            {
-                await currentScene.PlayOutAnimation(context);
-            }
-        }
-
-        async UniTask IMainSceneManager.SaveSceneState(CancellationToken cancelToken)
-        {
-            if (currentScene == null)
+            if (!loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
             {
                 return;
             }
 
-            await currentScene.SaveSceneState(cancelToken);
+            await scene.Enter(context, cancellationToken);
+        }
+
+        async UniTask IMainSceneManager.Leave(SceneTransitionContext context, CancellationToken cancellationToken)
+        {
+            if (context.SceneTransitionDiff.CurrentMainSceneId == null
+                || !loadedScenes.TryGetValue(context.SceneTransitionDiff.CurrentMainSceneId, out var scene))
+            {
+                return;
+            }
+
+            await scene.Leave(context, cancellationToken);
+        }
+
+        void IMainSceneManager.ResetInAnimation(SceneTransitionContext context)
+        {
+            if (context.SceneTransitionDiff.CurrentMainSceneId == null
+                || !loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
+            {
+                return;
+            }
+
+            scene.ResetInAnimation(context);
+        }
+
+        async UniTask IMainSceneManager.PlayInAnimation(SceneTransitionContext context)
+        {
+            if (!loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
+            {
+                return;
+            }
+
+            await scene.PlayInAnimation(context);
+        }
+
+        async UniTask IMainSceneManager.PlayOutAnimation(SceneTransitionContext context)
+        {
+            if (context.SceneTransitionDiff.CurrentMainSceneId == null
+                || !loadedScenes.TryGetValue(context.SceneTransitionDiff.CurrentMainSceneId, out var scene))
+            {
+                return;
+            }
+
+            await scene.PlayOutAnimation(context);
+        }
+
+        async UniTask IMainSceneManager.SaveSceneState(SceneTransitionContext context, CancellationToken cancelToken)
+        {
+            if (context.SceneTransitionDiff.CurrentMainSceneId == null
+                || !loadedScenes.TryGetValue(context.SceneTransitionDiff.CurrentMainSceneId, out var scene))
+            {
+                return;
+            }
+
+            await scene.SaveSceneState(cancelToken);
         }
 
         async UniTask IMainSceneManager.Load(SceneTransitionContext context)
@@ -128,11 +146,12 @@ namespace Lighthouse.Scene
                         }))
                     .ContinueWith(scenes =>
                     {
-                        loadedScenes.AddRange(scenes);
+                        foreach (var scene in scenes)
+                        {
+                            loadedScenes.Add(scene.MainSceneId, scene);
+                        }
                     });
             }
-
-            currentScene = loadedScenes.First(x => x.MainSceneId == context.SceneTransitionDiff.NextMainSceneId);
         }
 
         async UniTask IMainSceneManager.Unload(SceneTransitionContext context)
@@ -142,40 +161,28 @@ namespace Lighthouse.Scene
                 return;
             }
 
-            var unloadTargetMainScenes = loadedScenes.Where(loadedScene => context.SceneTransitionDiff.UnloadMainSceneIds.Contains(loadedScene.MainSceneId)).ToArray();
-            await UniTask.WhenAll(unloadTargetMainScenes.Select(s => s.OnUnload()));
+            var unloadTargetMainScenes = loadedScenes
+                .Where(loadedScene => context.SceneTransitionDiff.UnloadMainSceneIds.Contains(loadedScene.Key))
+                .ToArray();
 
-            await UniTask.WhenAll(unloadTargetMainScenes.Select(s => UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(s.MainSceneId.Name).ToUniTask()));
+            await UniTask.WhenAll(unloadTargetMainScenes.Select(s => s.Value.OnUnload()));
+
+            await UniTask.WhenAll(unloadTargetMainScenes.Select(s => UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(s.Key.Name).ToUniTask()));
 
             foreach (var unloadTargetMainScene in unloadTargetMainScenes)
             {
-                loadedScenes.Remove(unloadTargetMainScene);
+                loadedScenes.Remove(unloadTargetMainScene.Key);
             }
-        }
-
-        void IMainSceneManager.Suspend()
-        {
-            if (currentScene == null)
-            {
-                return;
-            }
-
-            currentScene.OnSuspend();
-        }
-
-        void IMainSceneManager.Resume()
-        {
-            if (currentScene == null)
-            {
-                return;
-            }
-
-            currentScene.OnResume();
         }
 
         void IMainSceneManager.OnSceneTransitionFinished(SceneTransitionContext context)
         {
-            currentScene.OnSceneTransitionFinished(context.SceneTransitionDiff);
+            if (!loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
+            {
+                return;
+            }
+
+            scene.OnSceneTransitionFinished(context.SceneTransitionDiff);
         }
 
         MainSceneBase FindSceneBase(MainSceneId mainSceneId)

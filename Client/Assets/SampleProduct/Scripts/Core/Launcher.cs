@@ -11,13 +11,11 @@ namespace SampleProduct.Core
         static readonly string LauncherSceneName = "Launcher";
 
         ISceneManager sceneManager;
-        ISceneGroupController sceneGroupController;
 
         [Inject]
-        public Launcher(ISceneManager sceneManager, ISceneGroupController sceneGroupController)
+        public Launcher(ISceneManager sceneManager)
         {
             this.sceneManager = sceneManager;
-            this.sceneGroupController = sceneGroupController;
         }
 
         void ILauncher.Reboot()
@@ -26,7 +24,7 @@ namespace SampleProduct.Core
 
             async UniTask RebootProcess()
             {
-                await sceneGroupController.PreReboot();
+                await sceneManager.PreReboot();
 
                 await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(LauncherSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
                 await LaunchProcess();

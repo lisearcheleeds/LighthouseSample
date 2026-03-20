@@ -48,7 +48,7 @@ namespace Lighthouse.Scene.SceneBase
         {
             base.OnBeginInAnimation(context);
 
-            var isActivateScene = IsAlwaysInAnimation || context.SceneTransitionDiff.ActivateSceneModuleIds.Contains(ModuleSceneId);
+            var isActivateScene = context.SceneTransitionDiff.ActivateSceneModuleIds.Contains(ModuleSceneId);
             canvasGroup.alpha = isActivateScene ? 1.0f : canvasGroup.alpha;
         }
 
@@ -56,7 +56,7 @@ namespace Lighthouse.Scene.SceneBase
         {
             base.OnCompleteOutAnimation(context);
 
-            var isDeactivateScene = IsAlwaysOutAnimation || context.SceneTransitionDiff.DeactivateSceneModuleIds.Contains(ModuleSceneId);
+            var isDeactivateScene = context.SceneTransitionDiff.DeactivateSceneModuleIds.Contains(ModuleSceneId);
             canvasGroup.alpha = isDeactivateScene ? 0.0f : canvasGroup.alpha;
         }
 

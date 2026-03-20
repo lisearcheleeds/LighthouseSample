@@ -3,24 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Lighthouse.Scene.SceneTransitionPhase;
 using VContainer;
 
 namespace Lighthouse.Scene
 {
     public sealed class SceneManager : ISceneManager
     {
-        readonly ISceneGroupController sceneGroupController;
+        readonly ISceneTransitionController sceneTransitionController;
+        readonly IMainSceneManager mainSceneManager;
+        readonly ISceneGroupProvider sceneGroupProvider;
 
-        public ISceneTransitionPhase CurrentTransitionPhase => sceneGroupController.CurrentTransitionPhase;
-        public bool IsTransition => CurrentTransitionPhase != null;
+        public bool IsTransition { get; private set; }
 
         Stack<TransitionDataBase> transitionDataStack = new();
 
+        SceneGroup currentSceneGroup;
+
         [Inject]
-        public SceneManager(ISceneGroupController sceneGroupController)
+        public SceneManager(
+            ISceneTransitionController sceneTransitionController,
+            IMainSceneManager mainSceneManager,
+            ISceneGroupProvider sceneGroupProvider)
         {
-            this.sceneGroupController = sceneGroupController;
+            this.sceneTransitionController = sceneTransitionController;
+            this.mainSceneManager = mainSceneManager;
+            this.sceneGroupProvider = sceneGroupProvider;
         }
 
         void ISceneManager.TransitionScene(TransitionDataBase nextTransitionData, TransitionType transitionType, MainSceneId backMainSceneId, Action<bool> onComplete)
@@ -30,9 +37,16 @@ namespace Lighthouse.Scene
                 return;
             }
 
+            var currentSceneTransitionData = transitionDataStack.Count != 0 ? transitionDataStack.Peek() : null;
+
             UniTask.Void(async () =>
             {
-                var isSuccess = await TransitionSceneAsync(nextTransitionData, TransitionDirectionType.Forward, transitionType, backMainSceneId);
+                var isSuccess = await TransitionSceneAsync(
+                    currentSceneTransitionData,
+                    nextTransitionData,
+                    TransitionDirectionType.Forward,
+                    transitionType,
+                    backMainSceneId);
                 onComplete?.Invoke(isSuccess);
             });
         }
@@ -79,10 +93,16 @@ namespace Lighthouse.Scene
                 backTargetSceneTransitionData = transitionDataStack.Pop();
             }
 
-            return await TransitionSceneAsync(backTargetSceneTransitionData, TransitionDirectionType.Back, transitionType, null);
+            return await TransitionSceneAsync(
+                currentSceneTransitionData,
+                backTargetSceneTransitionData,
+                TransitionDirectionType.Back,
+                transitionType,
+                null);
         }
 
         async UniTask<bool> TransitionSceneAsync(
+            TransitionDataBase currentTransitionData,
             TransitionDataBase nextTransitionData,
             TransitionDirectionType transitionDirectionType,
             TransitionType transitionType,
@@ -93,15 +113,27 @@ namespace Lighthouse.Scene
                 return false;
             }
 
-            var transitionSuccess = await sceneGroupController.StartTransitionSequence(
+            var nextSceneGroup = sceneGroupProvider.GetSceneGroup(nextTransitionData.MainSceneId);
+
+            IsTransition = true;
+
+            var sceneTransitionDiff = new SceneTransitionDiff(currentSceneGroup, currentTransitionData?.MainSceneId, nextSceneGroup, nextTransitionData.MainSceneId);
+
+            var transitionSuccess = await sceneTransitionController.StartTransitionSequence(
                 nextTransitionData,
+                sceneTransitionDiff,
                 transitionDirectionType,
                 transitionType,
                 CancellationToken.None);
+
+            IsTransition = false;
+
             if (!transitionSuccess)
             {
                 return false;
             }
+
+            currentSceneGroup = nextSceneGroup;
 
             transitionDataStack.Push(nextTransitionData);
 
@@ -116,6 +148,11 @@ namespace Lighthouse.Scene
             // await new WaitWhile(() => PopupManager.Instance.IsOpen(CurrentMainSceneId) || LoadingManager.Instance.IsShowGuard);
 
             return true;
+        }
+
+        async UniTask ISceneManager.PreReboot()
+        {
+            await mainSceneManager.Leave(null, CancellationToken.None);
         }
     }
 }

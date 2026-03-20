@@ -7,8 +7,6 @@ namespace Lighthouse.Scene
 {
     public interface IMainSceneManager
     {
-        MainSceneId CurrentMainSceneId { get; }
-
         void SetEnqueueParentLifetimeScope(Func<IDisposable> enqueueParentLifetimeScope);
 
         UniTask Load(SceneTransitionContext context);
@@ -21,13 +19,10 @@ namespace Lighthouse.Scene
         UniTask PlayInAnimation(SceneTransitionContext context);
         UniTask PlayOutAnimation(SceneTransitionContext context);
 
-        UniTask SaveSceneState(CancellationToken cancelToken);
+        UniTask SaveSceneState(SceneTransitionContext context, CancellationToken cancelToken);
 
         ISceneCamera[] GetSceneCameraList(SceneTransitionDiff sceneTransitionDiff);
         void InitializeCanvas(SceneTransitionContext context);
-
-        void Suspend();
-        void Resume();
 
         void OnSceneTransitionFinished(SceneTransitionContext context);
     }

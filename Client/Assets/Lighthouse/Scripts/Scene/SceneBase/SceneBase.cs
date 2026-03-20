@@ -47,20 +47,13 @@ namespace Lighthouse.Scene.SceneBase
             return UniTask.CompletedTask;
         }
 
-        public virtual void OnSuspend()
-        {
-        }
-
-        public virtual void OnResume()
-        {
-        }
-
         public virtual void ResetInAnimation(SceneTransitionContext context)
         {
         }
 
         public async UniTask PlayInAnimation(SceneTransitionContext context)
         {
+            // InAnimation events are independent because they are expected to wait in WhenAll().
             OnBeginInAnimation(context);
             await InAnimation(context);
             OnCompleteInAnimation(context);
@@ -68,6 +61,7 @@ namespace Lighthouse.Scene.SceneBase
 
         public async UniTask PlayOutAnimation(SceneTransitionContext context)
         {
+            // OutAnimation events are independent because they are expected to wait in WhenAll().
             OnBeginOutAnimation(context);
             await OutAnimation(context);
             OnCompleteOutAnimation(context);

@@ -1,19 +1,19 @@
 ﻿using System;
-using Lighthouse.Scene.SceneTransitionPhase;
+using Cysharp.Threading.Tasks;
 
 namespace Lighthouse.Scene
 {
     public interface ISceneManager
     {
-        public ISceneTransitionPhase CurrentTransitionPhase { get; }
-        public bool IsTransition { get; }
+        bool IsTransition { get; }
 
-        public void TransitionScene(
+        void TransitionScene(
             TransitionDataBase nextTransitionData,
             TransitionType transitionType = TransitionType.Auto,
             MainSceneId backMainSceneId = null,
             Action<bool> onComplete = null);
 
-        public void BackScene(TransitionType transitionType = TransitionType.Auto);
+        void BackScene(TransitionType transitionType = TransitionType.Auto);
+        UniTask PreReboot();
     }
 }

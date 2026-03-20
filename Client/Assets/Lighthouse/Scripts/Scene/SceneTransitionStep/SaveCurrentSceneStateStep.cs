@@ -9,7 +9,7 @@ namespace Lighthouse.Scene.SceneTransitionStep
             SceneTransitionContext context,
             CancellationToken cancelToken)
         {
-            await context.MainSceneManager.SaveSceneState(cancelToken);
+            await context.MainSceneManager.SaveSceneState(context, cancelToken);
         }
     }
 }

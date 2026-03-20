@@ -8,9 +8,6 @@ namespace Lighthouse.Scene.SceneBase
     {
         public abstract ModuleSceneId ModuleSceneId { get; }
 
-        public virtual bool IsAlwaysInAnimation { get; protected set; } = false;
-        public virtual bool IsAlwaysOutAnimation { get; protected set; } = false;
-
         protected override UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
         {
             if (context.SceneTransitionDiff.ActivateSceneModuleIds.Contains(ModuleSceneId))

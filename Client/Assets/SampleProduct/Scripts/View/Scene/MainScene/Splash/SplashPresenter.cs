@@ -22,7 +22,7 @@ namespace SampleProduct.View.Scene.MainScene.Splash
             UniTask.Void(async () =>
             {
                 await splashView.PlaySplashAnimationAsync();
-                sceneManager.TransitionScene(new TitleScene.TitleTransitionData());
+                sceneManager.TransitionScene(new TitleScene.TitleTransitionData(), TransitionType.Exclusive);
             });
         }
     }
