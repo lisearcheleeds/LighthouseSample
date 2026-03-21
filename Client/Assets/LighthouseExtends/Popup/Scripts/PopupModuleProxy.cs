@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+using System;
 using Cysharp.Threading.Tasks;
 
 namespace LighthouseExtends.Popup
@@ -8,39 +7,39 @@ namespace LighthouseExtends.Popup
     {
         IPopupModuleImpl module;
 
-        UniTask IPopupModule.EnqueuePopup(IPopupData popupData, CancellationToken token)
+        UniTask IPopupModule.EnqueuePopup(IPopupData popupData)
         {
-            return module?.EnqueuePopup(popupData, token) ?? UniTask.CompletedTask;
+            return module?.EnqueuePopup(popupData) ?? UniTask.CompletedTask;
         }
 
-        UniTask IPopupModule.OpenPopup(CancellationToken token)
+        UniTask IPopupModule.OpenPopup()
         {
-            return module?.OpenPopup(token) ?? UniTask.CompletedTask;
+            return module?.OpenPopup() ?? UniTask.CompletedTask;
         }
 
-        UniTask IPopupModule.OpenPopup(IPopupData popupData, CancellationToken token)
+        UniTask IPopupModule.OpenPopup(IPopupData popupData)
         {
-            return module?.OpenPopup(popupData, token) ?? UniTask.CompletedTask;
+            return module?.OpenPopup(popupData) ?? UniTask.CompletedTask;
         }
 
-        UniTask IPopupModule.ClosePopup(CancellationToken token)
+        UniTask IPopupModule.ClosePopup()
         {
-            return module?.ClosePopup(token) ?? UniTask.CompletedTask;
+            return module?.ClosePopup() ?? UniTask.CompletedTask;
         }
 
-        UniTask IPopupModule.ClosePopup(IPopupData popupData, CancellationToken token)
+        UniTask IPopupModule.ClosePopup(IPopupData popupData)
         {
-            return module?.ClosePopup(popupData, token) ?? UniTask.CompletedTask;
+            return module?.ClosePopup(popupData) ?? UniTask.CompletedTask;
         }
 
-        UniTask IPopupModule.ClearAllPopup(CancellationToken token)
+        UniTask IPopupModule.ClearAllPopup()
         {
-            return module?.ClearAllPopup(token) ?? UniTask.CompletedTask;
+            return module?.ClearAllPopup() ?? UniTask.CompletedTask;
         }
 
-        UniTask IPopupModule.ClearCurrentAllPopup(CancellationToken token)
+        UniTask IPopupModule.ClearCurrentAllPopup()
         {
-            return module?.ClearCurrentAllPopup(token) ?? UniTask.CompletedTask;
+            return module?.ClearCurrentAllPopup() ?? UniTask.CompletedTask;
         }
 
         void IPopupModuleProxy.RegisterModule(IPopupModuleImpl module)

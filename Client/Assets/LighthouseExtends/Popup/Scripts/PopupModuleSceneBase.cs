@@ -26,7 +26,7 @@ namespace LighthouseExtends.Popup
         {
             if (context.TransitionDirectionType == TransitionDirectionType.Back && context.TransitionType == TransitionType.Exclusive)
             {
-                return popupManager.ResumePopupFromSceneId(context.SceneTransitionDiff.NextMainSceneId, false, cancelToken);
+                return popupManager.ResumePopupFromSceneId(context.SceneTransitionDiff.NextMainSceneId, false);
             }
 
             return UniTask.CompletedTask;
@@ -36,7 +36,7 @@ namespace LighthouseExtends.Popup
         {
             if (context.TransitionDirectionType == TransitionDirectionType.Forward && context.TransitionType == TransitionType.Exclusive)
             {
-                return popupManager.SuspendPopupFromSceneId(context.SceneTransitionDiff.CurrentMainSceneId, cancelToken);
+                return popupManager.SuspendPopupFromSceneId(context.SceneTransitionDiff.CurrentMainSceneId);
             }
 
             return UniTask.CompletedTask;
@@ -46,7 +46,7 @@ namespace LighthouseExtends.Popup
         {
             if (context.TransitionDirectionType == TransitionDirectionType.Back && context.TransitionType == TransitionType.Cross)
             {
-                return popupManager.ResumePopupFromSceneId(context.SceneTransitionDiff.NextMainSceneId, true, CancellationToken.None);
+                return popupManager.ResumePopupFromSceneId(context.SceneTransitionDiff.NextMainSceneId, true);
             }
 
             return UniTask.CompletedTask;
@@ -56,7 +56,7 @@ namespace LighthouseExtends.Popup
         {
             if (context.TransitionDirectionType == TransitionDirectionType.Forward && context.TransitionType == TransitionType.Cross)
             {
-                return popupManager.SuspendPopupFromSceneId(context.SceneTransitionDiff.CurrentMainSceneId, CancellationToken.None);
+                return popupManager.SuspendPopupFromSceneId(context.SceneTransitionDiff.CurrentMainSceneId);
             }
 
             return UniTask.CompletedTask;

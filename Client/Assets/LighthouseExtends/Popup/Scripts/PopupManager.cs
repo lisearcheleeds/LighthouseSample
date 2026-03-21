@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Input;
 using Lighthouse.Scene;
-using UnityEngine;
 using VContainer;
 
 namespace LighthouseExtends.Popup
@@ -20,25 +19,11 @@ namespace LighthouseExtends.Popup
         readonly List<(MainSceneId, List<IPopupData>)> popupDataSceneList = new();
         readonly List<PopupEntity> popupEntityList = new();
 
-        readonly Queue<PopupCommand> commandQueue = new();
+        readonly Queue<Func<UniTask>> commandQueue = new();
 
         List<IPopupData> popupDataList;
 
         bool isProcessing;
-
-        struct PopupCommand
-        {
-            public readonly Func<UniTask> Action;
-            public readonly UniTaskCompletionSource Tcs;
-            public readonly CancellationToken Token;
-
-            public PopupCommand(Func<UniTask> action, UniTaskCompletionSource tcs, CancellationToken token)
-            {
-                Action = action;
-                Tcs = tcs;
-                Token = token;
-            }
-        }
 
         [Inject]
         public PopupManager(
@@ -58,50 +43,50 @@ namespace LighthouseExtends.Popup
             popupBackgroundInputBlocker.Setup();
         }
 
-        UniTask IPopupManager.EnqueuePopup(IPopupData popupData, CancellationToken token)
+        UniTask IPopupManager.EnqueuePopup(IPopupData popupData)
         {
             return EnqueueCommand(() =>
             {
                 EnqueuePopupCore(popupData);
                 return UniTask.CompletedTask;
-            }, token);
+            });
         }
 
-        UniTask IPopupManager.OpenPopup(CancellationToken token)
+        UniTask IPopupManager.OpenPopup()
         {
-            return EnqueueCommand(() => OpenPopupCore(true, token), token);
+            return EnqueueCommand(() => OpenPopupCore(true));
         }
 
-        UniTask IPopupManager.OpenPopup(IPopupData popupData, CancellationToken token)
+        UniTask IPopupManager.OpenPopup(IPopupData popupData)
         {
             return EnqueueCommand(async () =>
             {
                 EnqueuePopupCore(popupData);
-                await OpenPopupCore(true, token);
-            }, token);
+                await OpenPopupCore(true);
+            });
         }
 
-        UniTask IPopupManager.ClosePopup(IPopupData popupData, CancellationToken token)
+        UniTask IPopupManager.ClosePopup(IPopupData popupData)
         {
-            return EnqueueCommand(() => ClosePopupCore(popupData, token), token);
+            return EnqueueCommand(() => ClosePopupCore(popupData));
         }
 
-        UniTask IPopupManager.ClosePopup(CancellationToken token)
+        UniTask IPopupManager.ClosePopup()
         {
-            return EnqueueCommand(() => ClosePopupCore(token), token);
+            return EnqueueCommand(() => ClosePopupCore());
         }
 
-        UniTask IPopupManager.ClearAllPopup(CancellationToken token)
+        UniTask IPopupManager.ClearAllPopup()
         {
-            return EnqueueCommand(() => ClearAllPopupCore(token), token);
+            return EnqueueCommand(() => ClearAllPopupCore());
         }
 
-        UniTask IPopupManager.ClearCurrentAllPopup(CancellationToken token)
+        UniTask IPopupManager.ClearCurrentAllPopup()
         {
-            return EnqueueCommand(() => ClearCurrentAllPopupCore(token), token);
+            return EnqueueCommand(() => ClearCurrentAllPopupCore());
         }
 
-        UniTask IPopupManager.ResumePopupFromSceneId(MainSceneId mainSceneId, bool isPlayInAnimation, CancellationToken token)
+        UniTask IPopupManager.ResumePopupFromSceneId(MainSceneId mainSceneId, bool isPlayInAnimation)
         {
             return EnqueueCommand(async () =>
             {
@@ -109,25 +94,36 @@ namespace LighthouseExtends.Popup
 
                 if (popupDataList?.Any() ?? false)
                 {
-                    await ResumeOpenPopupsCore(isPlayInAnimation, token);
+                    await ResumeOpenPopupsCore(isPlayInAnimation);
                 }
-            }, token);
+            });
         }
 
-        UniTask IPopupManager.SuspendPopupFromSceneId(MainSceneId mainSceneId, CancellationToken token)
+        UniTask IPopupManager.SuspendPopupFromSceneId(MainSceneId mainSceneId)
         {
             return EnqueueCommand(async () =>
             {
                 SuspendPopupFromSceneIdCore(mainSceneId);
-                await ClearCurrentAllPopupCore(token);
-            }, token);
+                await ClearCurrentAllPopupCore();
+            });
         }
 
-        UniTask EnqueueCommand(Func<UniTask> action, CancellationToken token)
+        UniTask EnqueueCommand(Func<UniTask> action)
         {
             var tcs = new UniTaskCompletionSource();
 
-            commandQueue.Enqueue(new PopupCommand(action, tcs, token));
+            commandQueue.Enqueue(async () =>
+            {
+                try
+                {
+                    await action();
+                    tcs.TrySetResult();
+                }
+                catch (Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
+            });
 
             if (!isProcessing)
             {
@@ -146,27 +142,7 @@ namespace LighthouseExtends.Popup
 
                 while (commandQueue.Count > 0)
                 {
-                    var command = commandQueue.Dequeue();
-
-                    if (command.Token.IsCancellationRequested)
-                    {
-                        command.Tcs.TrySetCanceled(command.Token);
-                        continue;
-                    }
-
-                    try
-                    {
-                        await command.Action();
-                        command.Tcs.TrySetResult();
-                    }
-                    catch (OperationCanceledException oce)
-                    {
-                        command.Tcs.TrySetCanceled(oce.CancellationToken);
-                    }
-                    catch (Exception ex)
-                    {
-                        command.Tcs.TrySetException(ex);
-                    }
+                    await commandQueue.Dequeue()();
                 }
             }
             finally
@@ -186,56 +162,64 @@ namespace LighthouseExtends.Popup
             popupDataList.Add(popupData);
         }
 
-        async UniTask ResumeOpenPopupsCore(bool isPlayInAnimation, CancellationToken token)
+        async UniTask ResumeOpenPopupsCore(bool isPlayInAnimation)
         {
-            for (var i = 0; i < popupDataList.Count; i++)
+            try
             {
-                var popupData = popupDataList[i];
-                var shouldPlayAnimation = isPlayInAnimation && i == popupDataList.Count - 1;
-
-                var prevPopupEntity = popupEntityList.LastOrDefault();
-                if (prevPopupEntity?.PopupData == popupData)
+                for (var i = 0; i < popupDataList.Count; i++)
                 {
-                    throw new InvalidOperationException($"Duplicate open");
-                }
+                    var popupData = popupDataList[i];
+                    var shouldPlayAnimation = isPlayInAnimation && i == popupDataList.Count - 1;
 
-                var popupEntity = await popupEntityFactory.CreateAsync(popupData, token);
-                if (shouldPlayAnimation)
-                {
-                    popupEntity.Popup.ResetInAnimation();
-                }
-                else
-                {
-                    popupEntity.Popup.EndInAnimation();
-                }
-
-                popupEntityList.Add(popupEntity);
-                popupCanvasController.AddChild(popupEntity.Popup, popupData.IsSystem);
-
-                await popupEntity.Popup.OnInitialize();
-
-                if (prevPopupEntity != null)
-                {
-                    if (!popupData.IsOverlayOpen)
+                    var prevPopupEntity = popupEntityList.LastOrDefault();
+                    if (prevPopupEntity?.PopupData == popupData)
                     {
-                        prevPopupEntity.Popup.EndOutAnimation();
+                        throw new InvalidOperationException($"Duplicate open");
                     }
 
-                    await prevPopupEntity.PopupPresenter.OnLeave();
-                }
+                    var popupEntity = await popupEntityFactory.CreateAsync(popupData, CancellationToken.None);
+                    if (shouldPlayAnimation)
+                    {
+                        popupEntity.Popup.ResetInAnimation();
+                    }
+                    else
+                    {
+                        popupEntity.Popup.EndInAnimation();
+                    }
 
-                await popupEntity.PopupPresenter.OnEnter(false);
+                    popupEntityList.Add(popupEntity);
+                    popupCanvasController.AddChild(popupEntity.Popup, popupData.IsSystem);
 
-                if (shouldPlayAnimation)
-                {
-                    await popupEntity.Popup.PlayInAnimation();
+                    await popupEntity.Popup.OnInitialize();
+
+                    if (prevPopupEntity != null)
+                    {
+                        if (!popupData.IsOverlayOpen)
+                        {
+                            prevPopupEntity.Popup.EndOutAnimation();
+                        }
+
+                        await prevPopupEntity.PopupPresenter.OnLeave();
+                    }
+
+                    await popupEntity.PopupPresenter.OnEnter(false);
+
+                    if (shouldPlayAnimation)
+                    {
+                        await popupEntity.Popup.PlayInAnimation();
+                    }
+
+                    popupBackgroundInputBlocker.BlockPopupBackground(popupData.IsSystem);
                 }
             }
-
-            popupBackgroundInputBlocker.BlockPopupBackground(popupDataList[^1].IsSystem);
+            catch (Exception)
+            {
+                await ClearCurrentAllPopupCore();
+                throw;
+            }
         }
 
-        async UniTask OpenPopupCore(bool isPlayInAnimation, CancellationToken token)
+        async UniTask OpenPopupCore(bool isPlayInAnimation)
         {
             var popupData = popupDataList?.LastOrDefault();
             if (popupData == null)
@@ -249,7 +233,7 @@ namespace LighthouseExtends.Popup
                 throw new InvalidOperationException($"Duplicate open");
             }
 
-            var popupEntity = await popupEntityFactory.CreateAsync(popupData, token);
+            var popupEntity = await popupEntityFactory.CreateAsync(popupData, CancellationToken.None);
 
             if (isPlayInAnimation)
             {
@@ -263,29 +247,43 @@ namespace LighthouseExtends.Popup
             popupEntityList.Add(popupEntity);
             popupCanvasController.AddChild(popupEntity.Popup, popupData.IsSystem);
 
-            await popupEntity.Popup.OnInitialize();
-
-            if (prevPopupEntity != null)
+            try
             {
-                if (!popupData.IsOverlayOpen)
+                await popupEntity.Popup.OnInitialize();
+
+                if (prevPopupEntity != null)
                 {
-                    await prevPopupEntity.Popup.PlayOutAnimation();
+                    if (!popupData.IsOverlayOpen)
+                    {
+                        await prevPopupEntity.Popup.PlayOutAnimation();
+                    }
+
+                    await prevPopupEntity.PopupPresenter.OnLeave();
                 }
 
-                await prevPopupEntity.PopupPresenter.OnLeave();
+                await popupEntity.PopupPresenter.OnEnter(false);
+
+                if (isPlayInAnimation)
+                {
+                    await popupEntity.Popup.PlayInAnimation();
+                }
+
+                popupBackgroundInputBlocker.BlockPopupBackground(popupData.IsSystem);
             }
-
-            await popupEntity.PopupPresenter.OnEnter(false);
-
-            if (isPlayInAnimation)
+            catch
             {
-                await popupEntity.Popup.PlayInAnimation();
-            }
+                popupEntityList.Remove(popupEntity);
+                popupEntity.Popup.Dispose();
+                if (prevPopupEntity != null && !popupData.IsOverlayOpen)
+                {
+                    prevPopupEntity.Popup.EndInAnimation();
+                }
 
-            popupBackgroundInputBlocker.BlockPopupBackground(popupData.IsSystem);
+                throw;
+            }
         }
 
-        async UniTask ClosePopupCore(IPopupData popupData, CancellationToken token)
+        async UniTask ClosePopupCore(IPopupData popupData)
         {
             if (popupDataList == null || !popupDataList.Remove(popupData))
             {
@@ -315,11 +313,17 @@ namespace LighthouseExtends.Popup
             var isLast = ReferenceEquals(target, popupEntityList[^1]);
             popupEntityList.Remove(target);
 
-            await target.Popup.PlayOutAnimation();
-            await target.PopupPresenter.OnLeave();
-            target.Popup.Dispose();
+            try
+            {
+                await target.Popup.PlayOutAnimation();
+                await target.PopupPresenter.OnLeave();
+            }
+            finally
+            {
+                target.Popup.Dispose();
+            }
 
-            await UniTask.DelayFrame(1, cancellationToken: token);
+            await UniTask.DelayFrame(1);
 
             if (!isLast)
             {
@@ -333,17 +337,27 @@ namespace LighthouseExtends.Popup
                 return;
             }
 
-            await prevPopup.PopupPresenter.OnEnter(true);
-
-            if (!popupData.IsOverlayOpen)
+            try
             {
-                await prevPopup.Popup.PlayInAnimation();
-            }
+                await prevPopup.PopupPresenter.OnEnter(true);
 
-            popupBackgroundInputBlocker.BlockPopupBackground(prevPopup.PopupData.IsSystem);
+                if (!popupData.IsOverlayOpen)
+                {
+                    await prevPopup.Popup.PlayInAnimation();
+                }
+            }
+            catch
+            {
+                prevPopup.Popup.EndInAnimation();
+                throw;
+            }
+            finally
+            {
+                popupBackgroundInputBlocker.BlockPopupBackground(prevPopup.PopupData.IsSystem);
+            }
         }
 
-        async UniTask ClosePopupCore(CancellationToken token)
+        async UniTask ClosePopupCore()
         {
             var lastPopupData = popupDataList?.LastOrDefault();
             if (lastPopupData == null || !popupDataList.Remove(lastPopupData))
@@ -359,11 +373,17 @@ namespace LighthouseExtends.Popup
 
             popupEntityList.Remove(currentPopup);
 
-            await currentPopup.Popup.PlayOutAnimation();
-            await currentPopup.PopupPresenter.OnLeave();
-            currentPopup.Popup.Dispose();
+            try
+            {
+                await currentPopup.Popup.PlayOutAnimation();
+                await currentPopup.PopupPresenter.OnLeave();
+            }
+            finally
+            {
+                currentPopup.Popup.Dispose();
+            }
 
-            await UniTask.DelayFrame(1, cancellationToken: token);
+            await UniTask.DelayFrame(1);
 
             var prevPopup = popupEntityList.LastOrDefault();
             if (prevPopup == null)
@@ -372,23 +392,33 @@ namespace LighthouseExtends.Popup
                 return;
             }
 
-            await prevPopup.PopupPresenter.OnEnter(true);
-
-            if (!lastPopupData.IsOverlayOpen)
+            try
             {
-                await prevPopup.Popup.PlayInAnimation();
-            }
+                await prevPopup.PopupPresenter.OnEnter(true);
 
-            popupBackgroundInputBlocker.BlockPopupBackground(prevPopup.PopupData.IsSystem);
+                if (!lastPopupData.IsOverlayOpen)
+                {
+                    await prevPopup.Popup.PlayInAnimation();
+                }
+            }
+            catch
+            {
+                prevPopup.Popup.EndInAnimation();
+                throw;
+            }
+            finally
+            {
+                popupBackgroundInputBlocker.BlockPopupBackground(prevPopup.PopupData.IsSystem);
+            }
         }
 
-        UniTask ClearAllPopupCore(CancellationToken token)
+        UniTask ClearAllPopupCore()
         {
             popupDataSceneList.Clear();
-            return ClearCurrentAllPopupCore(token);
+            return ClearCurrentAllPopupCore();
         }
 
-        async UniTask ClearCurrentAllPopupCore(CancellationToken token)
+        async UniTask ClearCurrentAllPopupCore()
         {
             popupDataList?.Clear();
 
@@ -399,13 +429,19 @@ namespace LighthouseExtends.Popup
                 var isLast = ReferenceEquals(target, lastTarget);
                 popupEntityList.RemoveAt(popupEntityList.Count - 1);
 
-                if (isLast || target.PopupData.IsOverlayOpen)
+                try
                 {
-                    await target.Popup.PlayOutAnimation();
-                }
+                    if (isLast || target.PopupData.IsOverlayOpen)
+                    {
+                        await target.Popup.PlayOutAnimation();
+                    }
 
-                await target.PopupPresenter.OnLeave();
-                target.Popup.Dispose();
+                    await target.PopupPresenter.OnLeave();
+                }
+                finally
+                {
+                    target.Popup.Dispose();
+                }
             }
 
             popupBackgroundInputBlocker.UnBlock();
@@ -423,12 +459,13 @@ namespace LighthouseExtends.Popup
 
             while (lastMainSceneId != mainSceneId)
             {
-                if (popupDataSceneList.Count == 0)
+                popupDataSceneList.RemoveAt(popupDataSceneList.Count - 1);
+
+                if (!popupDataSceneList.Any())
                 {
                     return;
                 }
 
-                popupDataSceneList.RemoveAt(popupDataSceneList.Count - 1);
                 (lastMainSceneId, lastPopupDataList) = popupDataSceneList[^1];
             }
 

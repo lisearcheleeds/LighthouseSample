@@ -36,7 +36,7 @@ namespace SampleProduct.View.Scene.MainScene.Home.PopupSampleConfirmPopup
         void OnClickCloseButton()
         {
             popupData.OnCloseAction();
-            popupModule.ClosePopup(CancellationToken.None).Forget();
+            popupModule.ClosePopup().Forget();
         }
     }
 }

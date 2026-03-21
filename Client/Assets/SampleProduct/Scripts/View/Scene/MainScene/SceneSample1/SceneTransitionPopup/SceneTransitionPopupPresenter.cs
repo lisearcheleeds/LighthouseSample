@@ -44,7 +44,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionPopup
 
         void OnClickCloseButton()
         {
-            popupModule.ClosePopup(CancellationToken.None).Forget();
+            popupModule.ClosePopup().Forget();
         }
 
         void OnTransitionSceneButtonClick()
@@ -58,7 +58,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionPopup
 
             async UniTask CloseAfterTransition()
             {
-                await popupModule.ClosePopup(CancellationToken.None);
+                await popupModule.ClosePopup();
                 await sceneManager.TransitionScene(new SceneSample2Scene.SceneSample2TransitionData());
             }
         }

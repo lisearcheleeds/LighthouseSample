@@ -1,4 +1,3 @@
-﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using VContainer;
 
@@ -14,39 +13,39 @@ namespace LighthouseExtends.Popup
             this.popupManager = popupManager;
         }
 
-        UniTask IPopupModule.EnqueuePopup(IPopupData popupData, CancellationToken token)
+        UniTask IPopupModule.EnqueuePopup(IPopupData popupData)
         {
-            return popupManager.EnqueuePopup(popupData, token);
+            return popupManager.EnqueuePopup(popupData);
         }
 
-        UniTask IPopupModule.OpenPopup(CancellationToken token)
+        UniTask IPopupModule.OpenPopup()
         {
-            return popupManager.OpenPopup(token);
+            return popupManager.OpenPopup();
         }
 
-        UniTask IPopupModule.OpenPopup(IPopupData popupData, CancellationToken token)
+        UniTask IPopupModule.OpenPopup(IPopupData popupData)
         {
-            return popupManager.OpenPopup(popupData, token);
+            return popupManager.OpenPopup(popupData);
         }
 
-        UniTask IPopupModule.ClosePopup(CancellationToken token)
+        UniTask IPopupModule.ClosePopup()
         {
-            return popupManager.ClosePopup(token);
+            return popupManager.ClosePopup();
         }
 
-        UniTask IPopupModule.ClosePopup(IPopupData popupData, CancellationToken token)
+        UniTask IPopupModule.ClosePopup(IPopupData popupData)
         {
-            return popupManager.ClosePopup(popupData, token);
+            return popupManager.ClosePopup(popupData);
         }
 
-        UniTask IPopupModule.ClearAllPopup(CancellationToken token)
+        UniTask IPopupModule.ClearAllPopup()
         {
-            return popupManager.ClearAllPopup(token);
+            return popupManager.ClearAllPopup();
         }
 
-        UniTask IPopupModule.ClearCurrentAllPopup(CancellationToken token)
+        UniTask IPopupModule.ClearCurrentAllPopup()
         {
-            return popupManager.ClearCurrentAllPopup(token);
+            return popupManager.ClearCurrentAllPopup();
         }
     }
 }

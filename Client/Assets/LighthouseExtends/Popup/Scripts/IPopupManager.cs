@@ -1,4 +1,3 @@
-﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 
@@ -8,17 +7,17 @@ namespace LighthouseExtends.Popup
     {
         void Setup();
 
-        UniTask EnqueuePopup(IPopupData popupData, CancellationToken token);
-        UniTask OpenPopup(CancellationToken token);
-        UniTask OpenPopup(IPopupData popupData, CancellationToken token);
+        UniTask EnqueuePopup(IPopupData popupData);
+        UniTask OpenPopup();
+        UniTask OpenPopup(IPopupData popupData);
 
-        UniTask ClosePopup(CancellationToken token);
-        UniTask ClosePopup(IPopupData popupData, CancellationToken token);
+        UniTask ClosePopup();
+        UniTask ClosePopup(IPopupData popupData);
 
-        UniTask ClearAllPopup(CancellationToken token);
-        UniTask ClearCurrentAllPopup(CancellationToken token);
+        UniTask ClearAllPopup();
+        UniTask ClearCurrentAllPopup();
 
-        UniTask ResumePopupFromSceneId(MainSceneId mainSceneId, bool isPlayInAnimation, CancellationToken token);
-        UniTask SuspendPopupFromSceneId(MainSceneId mainSceneId, CancellationToken token);
+        UniTask ResumePopupFromSceneId(MainSceneId mainSceneId, bool isPlayInAnimation);
+        UniTask SuspendPopupFromSceneId(MainSceneId mainSceneId);
     }
 }

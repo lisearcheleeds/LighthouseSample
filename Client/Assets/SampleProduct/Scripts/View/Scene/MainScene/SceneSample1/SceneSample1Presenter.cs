@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using LighthouseExtends.Popup;
 using SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionPopup;
@@ -48,7 +47,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
 
         void OnClickTransitionScene2()
         {
-            popupModule.OpenPopup(new SceneTransitionPopupData(), CancellationToken.None).Forget();
+            popupModule.OpenPopup(new SceneTransitionPopupData()).Forget();
         }
 
         void OnClickBackScene()

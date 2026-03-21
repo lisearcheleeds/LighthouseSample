@@ -47,7 +47,7 @@ namespace SampleProduct.View.Scene.MainScene.Home.PopupSample1Popup
 
         void OnClickCloseButton()
         {
-            popupModule.ClosePopup(CancellationToken.None).Forget();
+            popupModule.ClosePopup().Forget();
         }
 
         void OnClickShowCodeButton()
@@ -57,17 +57,17 @@ namespace SampleProduct.View.Scene.MainScene.Home.PopupSample1Popup
 
         void OnClickOpenPopup1Button()
         {
-            popupModule.OpenPopup(new PopupSample1PopupData(popupData.StackCount + 1), CancellationToken.None).Forget();
+            popupModule.OpenPopup(new PopupSample1PopupData(popupData.StackCount + 1)).Forget();
         }
 
         void OnClickOpenPopup2Button()
         {
-            popupModule.OpenPopup(new PopupSample2PopupData(popupData.StackCount + 1), CancellationToken.None).Forget();
+            popupModule.OpenPopup(new PopupSample2PopupData(popupData.StackCount + 1)).Forget();
         }
 
         void OnClickOpenConfirmPopupButton()
         {
-            popupModule.OpenPopup(new PopupSampleConfirmPopupData(() => popupModule.ClosePopup(CancellationToken.None).Forget()), CancellationToken.None).Forget();
+            popupModule.OpenPopup(new PopupSampleConfirmPopupData(() => popupModule.ClosePopup().Forget())).Forget();
         }
     }
 }

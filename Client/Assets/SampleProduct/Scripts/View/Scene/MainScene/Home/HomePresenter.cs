@@ -75,12 +75,12 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         void OnClickPopupSample1()
         {
-            popupModule.OpenPopup(new PopupSample1PopupData(1), CancellationToken.None).Forget();
+            popupModule.OpenPopup(new PopupSample1PopupData(1)).Forget();
         }
 
         void OnClickPopupSample2()
         {
-            popupModule.OpenPopup(new PopupSample2PopupData(1), CancellationToken.None).Forget();
+            popupModule.OpenPopup(new PopupSample2PopupData(1)).Forget();
         }
     }
 }
