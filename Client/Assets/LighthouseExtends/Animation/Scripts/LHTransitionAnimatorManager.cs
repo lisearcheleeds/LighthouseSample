@@ -29,11 +29,12 @@ namespace LighthouseExtends.Animation
 #if UNITY_EDITOR
         void OnValidate()
         {
+            var beforeCount = sceneTransitionAnimatorList?.Length ?? 0;
             sceneTransitionAnimatorList = GetComponentsInChildren<MonoBehaviour>()
                 .Where(x => x is ILHTransitionAnimator)
                 .ToArray();
 
-            if (sceneTransitionAnimatorList.Length != 0)
+            if (beforeCount != sceneTransitionAnimatorList.Length)
             {
                 Debug.Log($"[LHTransitionAnimatorManager] Collect ILHTransitionAnimator {sceneTransitionAnimatorList.Length}");
             }
