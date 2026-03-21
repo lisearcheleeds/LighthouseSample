@@ -6,30 +6,32 @@ namespace LighthouseExtends.Animation
 {
     public class LHTransitionAnimatorManager : MonoBehaviour
     {
-        ILHTransitionAnimator[] sceneTransitionAnimatorList;
+        [SerializeField] MonoBehaviour[] sceneTransitionAnimatorList;
 
         public void ResetInAnimation()
         {
             foreach (var sceneTransitionAnimator in sceneTransitionAnimatorList)
             {
-                sceneTransitionAnimator.ResetInAnimation();
+                ((ILHTransitionAnimator)sceneTransitionAnimator).ResetInAnimation();
             }
         }
 
         public async UniTask InAnimation()
         {
-            await UniTask.WhenAll(sceneTransitionAnimatorList.Select(x => x.InAnimation()));
+            await UniTask.WhenAll(sceneTransitionAnimatorList.Select(x => ((ILHTransitionAnimator)x).InAnimation()));
         }
 
         public async UniTask OutAnimation()
         {
-            await UniTask.WhenAll(sceneTransitionAnimatorList.Select(x => x.OutAnimation()));
+            await UniTask.WhenAll(sceneTransitionAnimatorList.Select(x => ((ILHTransitionAnimator)x).OutAnimation()));
         }
 
 #if UNITY_EDITOR
         void OnValidate()
         {
-            sceneTransitionAnimatorList = GetComponentsInChildren<MonoBehaviour>().OfType<ILHTransitionAnimator>().ToArray();
+            sceneTransitionAnimatorList = GetComponentsInChildren<MonoBehaviour>()
+                .Where(x => x is ILHTransitionAnimator)
+                .ToArray();
 
             if (sceneTransitionAnimatorList.Length != 0)
             {

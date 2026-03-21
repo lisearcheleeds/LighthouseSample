@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28abec229cb498e912540e948e6d195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lighthouse.Core.Scene.SceneTransitionAnimator
+  sceneTransitionAnimatorList: []
 --- !u!114 &484276632
 MonoBehaviour:
   m_ObjectHideFlags: 0

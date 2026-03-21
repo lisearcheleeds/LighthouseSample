@@ -130,6 +130,8 @@ GameObject:
   - component: {fileID: 1781478171}
   - component: {fileID: 1781478173}
   - component: {fileID: 1781478172}
+  - component: {fileID: 1781478175}
+  - component: {fileID: 1781478174}
   m_Layer: 0
   m_Name: EntryPoint
   m_TagString: Untagged
@@ -164,6 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac59eacb8b94bd6b36c94835d3de6a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Product.Scripts.View.Edit.EditScene
+  canvasGroup: {fileID: 1781478175}
+  canvasInitializer: {fileID: 1781478174}
+  transitionAnimatorManager: {fileID: 1781478173}
 --- !u!114 &1781478173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +181,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28abec229cb498e912540e948e6d195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lighthouse.Core.Scene.SceneTransitionAnimator
+  sceneTransitionAnimatorList: []
+--- !u!114 &1781478174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781478170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64460ee683924f29b697001f049609b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Lighthouse.Scene.SceneCamera.SceneCanvasInitializer
+  sceneCanvasList: []
+--- !u!225 &1781478175
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781478170}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
