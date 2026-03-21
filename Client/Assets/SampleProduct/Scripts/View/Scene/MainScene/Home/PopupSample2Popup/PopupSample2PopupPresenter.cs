@@ -35,7 +35,7 @@ namespace SampleProduct.View.Scene.MainScene.Home.PopupSample2Popup
 
         UniTask IPopupPresenter.OnEnter(bool isResume)
         {
-            popupView.SetText($"StackCount: {popupData.StackCount}");
+            popupView.SetText($"Stack\nCount\n{popupData.StackCount}");
 
             return UniTask.CompletedTask;
         }

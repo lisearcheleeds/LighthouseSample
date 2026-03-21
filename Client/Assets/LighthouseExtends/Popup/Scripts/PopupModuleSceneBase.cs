@@ -26,20 +26,24 @@ namespace LighthouseExtends.Popup
         {
             if (context.TransitionDirectionType == TransitionDirectionType.Back && context.TransitionType == TransitionType.Exclusive)
             {
-                return popupManager.ResumePopupFromSceneId(context.SceneTransitionDiff.NextMainSceneId, false);
+                return UniTask.WhenAll(
+                    popupManager.ResumePopupFromSceneId(context.SceneTransitionDiff.NextMainSceneId, false),
+                    base.OnEnter(context, cancelToken));
             }
 
-            return UniTask.CompletedTask;
+            return base.OnEnter(context, cancelToken);
         }
 
         protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
         {
             if (context.TransitionDirectionType == TransitionDirectionType.Forward && context.TransitionType == TransitionType.Exclusive)
             {
-                return popupManager.SuspendPopupFromSceneId(context.SceneTransitionDiff.CurrentMainSceneId);
+                return UniTask.WhenAll(
+                    popupManager.SuspendPopupFromSceneId(context.SceneTransitionDiff.CurrentMainSceneId),
+                    base.OnLeave(context, cancelToken));
             }
 
-            return UniTask.CompletedTask;
+            return base.OnLeave(context, cancelToken);
         }
 
         protected override UniTask InAnimation(SceneTransitionContext context)
