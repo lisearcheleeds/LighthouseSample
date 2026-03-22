@@ -1,5 +1,7 @@
 ﻿using Lighthouse.Scene;
+using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
+using UnityEngine;
 using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.SceneSample3
@@ -9,16 +11,19 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample3
         ISceneSample3View sceneSample3View;
         ISceneManager sceneManager;
         IGlobalHeaderModule globalHeaderModule;
+        IBackgroundModule backgroundModule;
 
         [Inject]
         public void Construct(
             ISceneSample3View sceneSample3View,
             ISceneManager sceneManager,
-            IGlobalHeaderModule globalHeaderModule)
+            IGlobalHeaderModule globalHeaderModule,
+            IBackgroundModule backgroundModule)
         {
             this.sceneSample3View = sceneSample3View;
             this.sceneManager = sceneManager;
             this.globalHeaderModule = globalHeaderModule;
+            this.backgroundModule = backgroundModule;
         }
 
         void ISceneSample3Presenter.Setup()
@@ -29,6 +34,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample3
         void ISceneSample3Presenter.OnEnter()
         {
             globalHeaderModule.SetHeaderText("Home > SampleScene1 > SampleScene2 > SampleScene3");
+            backgroundModule.SetBackgroundLayout(BackgroundLayout.Sample3Layout);
         }
 
         void ISceneSample3Presenter.ApplyChoiceData(int choiceData)

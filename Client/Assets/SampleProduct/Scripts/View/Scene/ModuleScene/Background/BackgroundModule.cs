@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using UnityEngine;
 using VContainer;
 
 namespace SampleProduct.View.Scene.ModuleScene.Background
@@ -13,9 +13,9 @@ namespace SampleProduct.View.Scene.ModuleScene.Background
             this.backgroundModuleScene = backgroundModuleScene;
         }
 
-        public UniTask SetBackground(string backgroundAsset)
+        void IBackgroundModule.SetBackgroundLayout(BackgroundLayout backgroundLayout)
         {
-            return backgroundModuleScene.SetBackground(backgroundAsset);
+            backgroundModuleScene.SetBackgroundLayout(backgroundLayout);
         }
     }
 }

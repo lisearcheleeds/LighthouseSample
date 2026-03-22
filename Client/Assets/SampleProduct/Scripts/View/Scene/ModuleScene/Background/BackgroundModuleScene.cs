@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using Lighthouse.Scene;
+﻿using Lighthouse.Scene;
 using SampleProduct.View.Base;
 using UnityEngine;
 
@@ -11,9 +10,9 @@ namespace SampleProduct.View.Scene.ModuleScene.Background
 
         public override ModuleSceneId ModuleSceneId => SampleProductModuleSceneId.Background;
 
-        public async UniTask SetBackground(string backgroundAsset)
+        public void SetBackgroundLayout(BackgroundLayout backgroundLayout)
         {
-            await backgroundView.SetBackground(backgroundAsset);
+            backgroundView.SetBackgroundLayout(backgroundLayout);
         }
     }
 }

@@ -6,6 +6,7 @@ using SampleProduct.View.Scene.MainScene.Home.PopupSample1Popup;
 using SampleProduct.View.Scene.MainScene.Home.PopupSample2Popup;
 using SampleProduct.View.Scene.MainScene.SceneSample1;
 using SampleProduct.View.Scene.MainScene.SceneSample2;
+using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using UnityEngine;
 using VContainer;
@@ -18,18 +19,21 @@ namespace SampleProduct.View.Scene.MainScene.Home
         IPopupModule popupModule;
         ISceneManager sceneManager;
         IGlobalHeaderModule globalHeaderModule;
+        IBackgroundModule backgroundModule;
 
         [Inject]
         public void Construct(
             IHomeView homeView,
             IPopupModule popupModule,
             ISceneManager sceneManager,
-            IGlobalHeaderModule globalHeaderModule)
+            IGlobalHeaderModule globalHeaderModule,
+            IBackgroundModule backgroundModule)
         {
             this.homeView = homeView;
             this.popupModule = popupModule;
             this.sceneManager = sceneManager;
             this.globalHeaderModule = globalHeaderModule;
+            this.backgroundModule = backgroundModule;
         }
 
         void IHomePresenter.Setup()
@@ -46,6 +50,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
         void IHomePresenter.OnEnter()
         {
             globalHeaderModule.SetHeaderText("Home");
+            backgroundModule.SetBackgroundLayout(BackgroundLayout.HomeLayout);
         }
 
         void OnClickEditButton()

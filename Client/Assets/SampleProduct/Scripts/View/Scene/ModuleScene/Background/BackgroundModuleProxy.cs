@@ -1,5 +1,4 @@
 ﻿using System;
-using Cysharp.Threading.Tasks;
 
 namespace SampleProduct.View.Scene.ModuleScene.Background
 {
@@ -7,11 +6,11 @@ namespace SampleProduct.View.Scene.ModuleScene.Background
     {
         IBackgroundModuleImpl module;
 
-        async UniTask IBackgroundModule.SetBackground(string backgroundAsset)
+        void IBackgroundModule.SetBackgroundLayout(BackgroundLayout backgroundLayout)
         {
             if (module != null)
             {
-                await module.SetBackground(backgroundAsset);
+                module.SetBackgroundLayout(backgroundLayout);
             }
         }
 

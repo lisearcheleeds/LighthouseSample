@@ -1,9 +1,7 @@
-﻿using Cysharp.Threading.Tasks;
-
-namespace SampleProduct.View.Scene.ModuleScene.Background
+﻿namespace SampleProduct.View.Scene.ModuleScene.Background
 {
     public interface IBackgroundModule
     {
-        UniTask SetBackground(string backgroundAsset);
+        void SetBackgroundLayout(BackgroundLayout backgroundLayout);
     }
 }

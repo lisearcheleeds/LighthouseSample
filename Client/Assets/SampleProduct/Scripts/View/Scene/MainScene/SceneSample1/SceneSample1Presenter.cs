@@ -3,7 +3,9 @@ using Lighthouse.Scene;
 using LighthouseExtends.Popup;
 using SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionPopup;
 using SampleProduct.View.Scene.MainScene.SceneSample2;
+using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
+using UnityEngine;
 using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.SceneSample1
@@ -14,18 +16,21 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
         IPopupModule popupModule;
         ISceneManager sceneManager;
         IGlobalHeaderModule globalHeaderModule;
+        IBackgroundModule backgroundModule;
 
         [Inject]
         public void Construct(
             ISceneSample1View sceneSample1View,
             IPopupModule popupModule,
             ISceneManager sceneManager,
-            IGlobalHeaderModule globalHeaderModule)
+            IGlobalHeaderModule globalHeaderModule,
+            IBackgroundModule backgroundModule)
         {
             this.sceneSample1View = sceneSample1View;
             this.popupModule = popupModule;
             this.sceneManager = sceneManager;
             this.globalHeaderModule = globalHeaderModule;
+            this.backgroundModule = backgroundModule;
         }
 
         void ISceneSample1Presenter.Setup()
@@ -38,6 +43,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
         void ISceneSample1Presenter.OnEnter()
         {
             globalHeaderModule.SetHeaderText("Home > SampleScene1");
+            backgroundModule.SetBackgroundLayout(BackgroundLayout.Sample1Layout);
         }
 
         void OnClickTransitionScene1()
