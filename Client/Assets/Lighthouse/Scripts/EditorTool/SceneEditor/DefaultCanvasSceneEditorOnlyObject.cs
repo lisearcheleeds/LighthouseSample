@@ -1,4 +1,5 @@
-﻿using Lighthouse.Scene.SceneBase;
+﻿#if UNITY_EDITOR
+using Lighthouse.Scene.SceneBase;
 using LighthouseExtends.UIComponent.Scripts.CanvasSceneObject;
 using UnityEngine;
 
@@ -8,7 +9,6 @@ namespace Lighthouse.EditorTool.SceneEditor
     {
         [SerializeField] LHCanvasSceneObject lhCanvasSceneObject;
 
-#if UNITY_EDITOR
         public void Apply(ICanvasSceneBase[] canvasSceneBaseList)
         {
             foreach (var canvasSceneBase in canvasSceneBaseList)
@@ -21,6 +21,6 @@ namespace Lighthouse.EditorTool.SceneEditor
         {
             DestroyImmediate(this);
         }
-#endif
     }
 }
+#endif

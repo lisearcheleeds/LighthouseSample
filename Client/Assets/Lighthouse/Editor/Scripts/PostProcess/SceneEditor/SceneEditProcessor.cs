@@ -82,7 +82,7 @@ namespace Lighthouse.Editor.PostProcess.SceneEditor
             var editorOnlyObject = Object.Instantiate(sceneEditSettings.CanvasSceneEditorOnlyObject);
             editorOnlyObject.name = sceneEditSettings.EditorOnlyObjectName;
 
-            SetHideFlags(editorOnlyObject.transform, HideFlags.DontSaveInEditor);
+            SetHideFlags(editorOnlyObject.transform, HideFlags.DontSave);
 
             var editorOnlyComponents = editorOnlyObject.GetComponents<MonoBehaviour>().OfType<IEditorOnlyObjectCanvasScene>().ToArray();
             foreach (var editorOnlyComponent in editorOnlyComponents)
