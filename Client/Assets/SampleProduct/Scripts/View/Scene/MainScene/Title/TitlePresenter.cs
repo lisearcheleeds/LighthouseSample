@@ -23,10 +23,7 @@ namespace SampleProduct.View.Scene.MainScene.Title
 
         void OnClickScreenButton()
         {
-            homeView.PlayGoToHomeAnimation(() =>
-            {
-                sceneManager.TransitionScene(new HomeScene.HomeTransitionData());
-            });
+            sceneManager.TransitionScene(new HomeScene.HomeTransitionData());
         }
     }
 }
