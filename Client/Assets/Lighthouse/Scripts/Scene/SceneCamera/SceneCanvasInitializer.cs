@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Lighthouse.Scene.SceneCamera
 {
@@ -9,7 +8,7 @@ namespace Lighthouse.Scene.SceneCamera
 
         public void Initialize(ISceneCamera canvasCamera)
         {
-            foreach (var canvas in sceneCanvasList.Where(c => c.worldCamera == null))
+            foreach (var canvas in sceneCanvasList)
             {
                 canvas.renderMode = RenderMode.ScreenSpaceCamera;
                 canvas.worldCamera = canvasCamera.GetCamera();

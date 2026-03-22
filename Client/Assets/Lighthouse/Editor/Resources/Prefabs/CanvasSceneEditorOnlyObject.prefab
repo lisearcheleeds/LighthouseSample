@@ -54,6 +54,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8827247822204970736}
     m_Modifications:
+    - target: {fileID: 5052210530770853306, guid: 29a592fb8503bc54d9d7e9dbc50479fe, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.6981132
+      objectReference: {fileID: 0}
+    - target: {fileID: 5052210530770853306, guid: 29a592fb8503bc54d9d7e9dbc50479fe, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.6981132
+      objectReference: {fileID: 0}
+    - target: {fileID: 5052210530770853306, guid: 29a592fb8503bc54d9d7e9dbc50479fe, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.6981132
+      objectReference: {fileID: 0}
     - target: {fileID: 7750188729127548625, guid: 29a592fb8503bc54d9d7e9dbc50479fe, type: 3}
       propertyPath: m_Name
       value: CanvasSceneObject
