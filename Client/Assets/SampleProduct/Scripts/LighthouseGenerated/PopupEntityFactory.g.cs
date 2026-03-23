@@ -8,9 +8,9 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Popup;
 using VContainer;
-using SampleProduct.View.Scene.MainScene.Home.PopupSample1Popup;
-using SampleProduct.View.Scene.MainScene.Home.PopupSample2Popup;
-using SampleProduct.View.Scene.MainScene.Home.PopupSampleConfirmPopup;
+using SampleProduct.View.Scene.MainScene.SampleTop.PopupSample1Popup;
+using SampleProduct.View.Scene.MainScene.SampleTop.PopupSample2Popup;
+using SampleProduct.View.Scene.MainScene.SampleTop.PopupSampleConfirmPopup;
 using SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionPopup;
 
 namespace SampleProduct

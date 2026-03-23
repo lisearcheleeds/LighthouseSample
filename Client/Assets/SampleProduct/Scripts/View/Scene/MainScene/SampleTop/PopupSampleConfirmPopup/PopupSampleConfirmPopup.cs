@@ -2,7 +2,7 @@
 using SampleProduct.View.Popup;
 using UnityEngine;
 
-namespace SampleProduct.View.Scene.MainScene.Home.PopupSampleConfirmPopup
+namespace SampleProduct.View.Scene.MainScene.SampleTop.PopupSampleConfirmPopup
 {
     public sealed class PopupSampleConfirmPopup : StandardPopupBase, IPopupSetup<PopupSampleConfirmPopupPresenter, PopupSampleConfirmPopupData>
     {

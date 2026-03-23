@@ -1,9 +1,8 @@
-﻿using System.Threading;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using LighthouseExtends.Popup;
 using VContainer;
 
-namespace SampleProduct.View.Scene.MainScene.Home.PopupSampleConfirmPopup
+namespace SampleProduct.View.Scene.MainScene.SampleTop.PopupSampleConfirmPopup
 {
     public sealed class PopupSampleConfirmPopupPresenter : IPopupPresenter
     {

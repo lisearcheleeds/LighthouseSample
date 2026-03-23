@@ -1,11 +1,6 @@
-﻿using System.Threading;
-using Cysharp.Threading.Tasks;
-using Lighthouse.Scene;
+﻿using Lighthouse.Scene;
 using LighthouseExtends.Popup;
-using SampleProduct.View.Scene.MainScene.Home.PopupSample1Popup;
-using SampleProduct.View.Scene.MainScene.Home.PopupSample2Popup;
-using SampleProduct.View.Scene.MainScene.SceneSample1;
-using SampleProduct.View.Scene.MainScene.SceneSample2;
+using SampleProduct.View.Scene.MainScene.SampleTop;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using UnityEngine;
@@ -16,76 +11,61 @@ namespace SampleProduct.View.Scene.MainScene.Home
     public sealed class HomePresenter : IHomePresenter
     {
         IHomeView homeView;
-        IPopupModule popupModule;
         ISceneManager sceneManager;
-        IGlobalHeaderModule globalHeaderModule;
         IBackgroundModule backgroundModule;
 
         [Inject]
         public void Construct(
             IHomeView homeView,
-            IPopupModule popupModule,
             ISceneManager sceneManager,
-            IGlobalHeaderModule globalHeaderModule,
             IBackgroundModule backgroundModule)
         {
             this.homeView = homeView;
-            this.popupModule = popupModule;
             this.sceneManager = sceneManager;
-            this.globalHeaderModule = globalHeaderModule;
             this.backgroundModule = backgroundModule;
         }
 
         void IHomePresenter.Setup()
         {
-            homeView.SubscribeEditButtonClick(OnClickEditButton);
-            homeView.SubscribeGame1ButtonClick(OnClickGame1Button);
-            homeView.SubscribeGame2ButtonClick(OnClickGame2Button);
-            homeView.SubscribeSceneSample1ButtonClick(OnClickSceneSample1);
-            homeView.SubscribeSceneSample2ButtonClick(OnClickSceneSample2);
-            homeView.SubscribePopupSample1ButtonClick(OnClickPopupSample1);
-            homeView.SubscribePopupSample2ButtonClick(OnClickPopupSample2);
+            homeView.SubscribeGuideButtonClick(OnClickGuideButton);
+            homeView.SubscribeGithubButtonClick(OnClickGithubButton);
+            homeView.SubscribeSnsButtonClick(OnClickSnsButton);
+            homeView.SubscribePhilosophyButtonClick(OnClickPhilosophyButton);
+            homeView.SubscribeSampleButtonClick(OnClickSampleButton);
+            homeView.SubscribeElementsButtonClick(OnClickElementsButton);
         }
 
         void IHomePresenter.OnEnter()
         {
-            globalHeaderModule.SetHeaderText("Home");
             backgroundModule.SetBackgroundLayout(BackgroundLayout.HomeLayout);
         }
 
-        void OnClickEditButton()
+        void OnClickGuideButton()
         {
-            Debug.Log("OnClickEditButton");
+            Application.OpenURL("https://github.com/lisearcheleeds/LighthouseFramework/");
         }
 
-        void OnClickGame1Button()
+        void OnClickGithubButton()
         {
-            Debug.Log("OnClickGame1Button");
+            Application.OpenURL("https://github.com/lisearcheleeds/LighthouseFramework/");
         }
 
-        void OnClickGame2Button()
+        void OnClickSnsButton()
         {
-            Debug.Log("OnClickGame2Button");
+            Application.OpenURL("https://x.com/archeleeds");
         }
 
-        void OnClickSceneSample1()
+        void OnClickPhilosophyButton()
         {
-            sceneManager.TransitionScene(new SceneSample1Scene.SceneSample1TransitionData());
         }
 
-        void OnClickSceneSample2()
+        void OnClickSampleButton()
         {
-            sceneManager.TransitionScene(new SceneSample2Scene.SceneSample2TransitionData());
+            sceneManager.TransitionScene(new SampleTopScene.SampleTopTransitionData());
         }
 
-        void OnClickPopupSample1()
+        void OnClickElementsButton()
         {
-            popupModule.OpenPopup(new PopupSample1PopupData(1)).Forget();
-        }
-
-        void OnClickPopupSample2()
-        {
-            popupModule.OpenPopup(new PopupSample2PopupData(1)).Forget();
         }
     }
 }

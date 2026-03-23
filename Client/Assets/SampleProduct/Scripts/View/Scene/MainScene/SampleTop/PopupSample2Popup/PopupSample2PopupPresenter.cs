@@ -1,12 +1,11 @@
-﻿using System.Threading;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using LighthouseExtends.Popup;
-using SampleProduct.View.Scene.MainScene.Home.PopupSample1Popup;
-using SampleProduct.View.Scene.MainScene.Home.PopupSampleConfirmPopup;
+using SampleProduct.View.Scene.MainScene.SampleTop.PopupSample1Popup;
+using SampleProduct.View.Scene.MainScene.SampleTop.PopupSampleConfirmPopup;
 using UnityEngine;
 using VContainer;
 
-namespace SampleProduct.View.Scene.MainScene.Home.PopupSample2Popup
+namespace SampleProduct.View.Scene.MainScene.SampleTop.PopupSample2Popup
 {
     public sealed class PopupSample2PopupPresenter : IPopupPresenter
     {

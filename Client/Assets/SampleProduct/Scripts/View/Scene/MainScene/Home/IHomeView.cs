@@ -4,14 +4,12 @@ namespace SampleProduct.View.Scene.MainScene.Home
 {
     public interface IHomeView
     {
-        public IDisposable SubscribeEditButtonClick(Action action);
-        public IDisposable SubscribeGame1ButtonClick(Action action);
-        public IDisposable SubscribeGame2ButtonClick(Action action);
+        public IDisposable SubscribeGuideButtonClick(Action action);
+        public IDisposable SubscribeGithubButtonClick(Action action);
+        public IDisposable SubscribeSnsButtonClick(Action action);
 
-        public IDisposable SubscribeSceneSample1ButtonClick(Action action);
-        public IDisposable SubscribeSceneSample2ButtonClick(Action action);
-
-        public IDisposable SubscribePopupSample1ButtonClick(Action action);
-        public IDisposable SubscribePopupSample2ButtonClick(Action action);
+        public IDisposable SubscribePhilosophyButtonClick(Action action);
+        public IDisposable SubscribeSampleButtonClick(Action action);
+        public IDisposable SubscribeElementsButtonClick(Action action);
     }
 }

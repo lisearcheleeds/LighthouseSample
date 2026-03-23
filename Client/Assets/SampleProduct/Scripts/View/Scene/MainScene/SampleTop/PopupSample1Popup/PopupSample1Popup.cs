@@ -2,7 +2,7 @@
 using SampleProduct.View.Popup;
 using UnityEngine;
 
-namespace SampleProduct.View.Scene.MainScene.Home.PopupSample1Popup
+namespace SampleProduct.View.Scene.MainScene.SampleTop.PopupSample1Popup
 {
     public sealed class PopupSample1Popup : StandardPopupBase, IPopupSetup<PopupSample1PopupPresenter, PopupSample1PopupData>
     {

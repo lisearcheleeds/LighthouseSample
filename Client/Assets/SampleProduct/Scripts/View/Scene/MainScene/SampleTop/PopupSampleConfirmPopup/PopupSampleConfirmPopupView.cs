@@ -3,7 +3,7 @@ using LighthouseExtends.UIComponent.Scripts.Button;
 using SampleProduct.Extensions;
 using UnityEngine;
 
-namespace SampleProduct.View.Scene.MainScene.Home.PopupSampleConfirmPopup
+namespace SampleProduct.View.Scene.MainScene.SampleTop.PopupSampleConfirmPopup
 {
     public class PopupSampleConfirmPopupView : MonoBehaviour
     {

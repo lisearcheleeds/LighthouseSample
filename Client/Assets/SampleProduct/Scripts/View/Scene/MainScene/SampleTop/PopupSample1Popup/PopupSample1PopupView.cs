@@ -4,9 +4,9 @@ using SampleProduct.Extensions;
 using TMPro;
 using UnityEngine;
 
-namespace SampleProduct.View.Scene.MainScene.Home.PopupSample2Popup
+namespace SampleProduct.View.Scene.MainScene.SampleTop.PopupSample1Popup
 {
-    public class PopupSample2PopupView : MonoBehaviour
+    public class PopupSample1PopupView : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI subtitleText;
 
