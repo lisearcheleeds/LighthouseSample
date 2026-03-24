@@ -195,10 +195,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Product.Util.SceneTransitionAnimator
   animator: {fileID: 464900210}
   inAnimationClips:
-  - {fileID: 7400000, guid: 733e6693db13b5f47801af4827a3b07e, type: 2}
+  - {fileID: 7400000, guid: fe982ae1c3b69694ba6c14700c045b7d, type: 2}
   inDelayMilliSec: 0
   outAnimationClips:
-  - {fileID: 7400000, guid: fe982ae1c3b69694ba6c14700c045b7d, type: 2}
+  - {fileID: 7400000, guid: 733e6693db13b5f47801af4827a3b07e, type: 2}
   outDelayMilliSec: 0
 --- !u!225 &464900213
 CanvasGroup:
