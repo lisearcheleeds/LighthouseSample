@@ -1,6 +1,6 @@
 {
     "name": "LighthouseExtends.Animation.Runtime",
-    "rootNamespace": "LighthouseExtends.Animation",
+    "rootNamespace": "",
     "references": [
         "UniTask"
     ],

@@ -2,7 +2,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace LighthouseExtends.Animation
+namespace LighthouseExtends.Animation.Runtime
 {
     public class LHTransitionAnimatorManager : MonoBehaviour
     {

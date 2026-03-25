@@ -1,6 +1,6 @@
 {
     "name": "SampleProduct.Runtime",
-    "rootNamespace": "SampleProduct",
+    "rootNamespace": "",
     "references": [
         "Lighthouse.Runtime",
         "LighthouseExtends.Animation.Runtime",

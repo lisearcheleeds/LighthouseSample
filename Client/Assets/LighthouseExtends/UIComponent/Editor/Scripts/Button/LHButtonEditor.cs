@@ -1,4 +1,4 @@
-﻿using LighthouseExtends.UIComponent.Scripts.Button;
+﻿using LighthouseExtends.UIComponent.Button;
 using UnityEditor;
 using UnityEditor.UI;
 

@@ -2,7 +2,6 @@
 using SampleProduct.View.Scene.MainScene.SceneSample3;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
-using UnityEngine;
 using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.SceneSample2

@@ -1,7 +1,6 @@
 ﻿using Lighthouse.Scene;
 using SampleProduct.View.Scene.MainScene.SampleTop;
 using SampleProduct.View.Scene.ModuleScene.Background;
-using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using UnityEngine;
 using VContainer;
 

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace LighthouseExtends.UIComponent.Scripts.CanvasSceneObject
+namespace LighthouseExtends.UIComponent.CanvasSceneObject
 {
     public class LHCanvasSceneObject : MonoBehaviour, ICanvasSceneObject
     {

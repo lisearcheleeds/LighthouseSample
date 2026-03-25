@@ -1,12 +1,12 @@
 {
-    "name": "Lighthouse.Runtime",
-    "rootNamespace": "Lighthouse",
+    "name": "Lighthouse.Editor",
+    "rootNamespace": "",
     "references": [
-        "UniTask",
-        "VContainer",
-        "Unity.RenderPipelines.Universal.Runtime"
+        "Lighthouse.Runtime"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

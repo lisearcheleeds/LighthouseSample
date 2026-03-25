@@ -1,4 +1,4 @@
-﻿using LighthouseExtends.UIComponent.Scripts.RaycastTargetObject;
+﻿using LighthouseExtends.UIComponent.RaycastTargetObject;
 using UnityEditor;
 using UnityEngine;
 

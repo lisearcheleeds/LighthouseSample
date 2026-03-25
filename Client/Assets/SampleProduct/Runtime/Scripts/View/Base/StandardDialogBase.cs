@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using LighthouseExtends.Animation;
+using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.ScreenStack;
 using UnityEngine;
 

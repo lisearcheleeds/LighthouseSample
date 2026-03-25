@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Lighthouse.Editor.Menu;
 using Lighthouse.Editor.ScriptableObject;
-using Lighthouse.EditorTool.SceneEditor;
+using Lighthouse.EditorTool;
 using Lighthouse.Scene.SceneBase;
 using UnityEditor;
 using UnityEditor.SceneManagement;

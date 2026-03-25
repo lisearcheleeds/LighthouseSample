@@ -1,7 +1,7 @@
 ﻿#if UNITY_EDITOR
 using Lighthouse.Scene.SceneBase;
 
-namespace Lighthouse.EditorTool.SceneEditor
+namespace Lighthouse.EditorTool
 {
     public interface IEditorOnlyObjectCanvasScene
     {

@@ -1,9 +1,8 @@
 ﻿using System;
-using LighthouseExtends.UIComponent.Scripts.Button;
+using LighthouseExtends.UIComponent.Button;
 using SampleProduct.Extensions;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog
 {

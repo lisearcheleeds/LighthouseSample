@@ -1,8 +1,8 @@
 {
-    "name": "Lighthouse.Editor",
-    "rootNamespace": "Lighthouse.Editor",
+    "name": "LighthouseExtends.ScreenStack.Editor",
+    "rootNamespace": "",
     "references": [
-        "Lighthouse.Runtime"
+        "LighthouseExtends.ScreenStack.Runtime"
     ],
     "includePlatforms": [
         "Editor"

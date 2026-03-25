@@ -1,8 +1,8 @@
-﻿using LighthouseExtends.UIComponent.Scripts.ExclusiveInput;
+﻿using LighthouseExtends.UIComponent.ExclusiveInput;
 using UnityEngine.EventSystems;
 using VContainer;
 
-namespace LighthouseExtends.UIComponent.Scripts.Button
+namespace LighthouseExtends.UIComponent.Button
 {
     public class LHButton : UnityEngine.UI.Button
     {

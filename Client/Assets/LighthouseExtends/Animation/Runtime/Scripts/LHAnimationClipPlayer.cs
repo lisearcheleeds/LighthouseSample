@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 
-namespace LighthouseExtends.Animation
+namespace LighthouseExtends.Animation.Runtime
 {
     public sealed class LHAnimationClipPlayer : ILHAnimationClipPlayer, IAnimationClipSource, IDisposable
     {

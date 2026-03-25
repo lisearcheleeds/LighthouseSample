@@ -1,9 +1,10 @@
 ﻿#if UNITY_EDITOR
+using Lighthouse.EditorTool;
 using Lighthouse.Scene.SceneBase;
-using LighthouseExtends.UIComponent.Scripts.CanvasSceneObject;
+using LighthouseExtends.UIComponent.CanvasSceneObject;
 using UnityEngine;
 
-namespace Lighthouse.EditorTool.SceneEditor
+namespace LighthouseExtends.UIComponent.EditorTool
 {
     public class DefaultCanvasSceneEditorOnlyObject : MonoBehaviour, IEditorOnlyObjectCanvasScene
     {

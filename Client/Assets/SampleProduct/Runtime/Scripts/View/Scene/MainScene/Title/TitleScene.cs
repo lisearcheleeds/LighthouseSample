@@ -1,8 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using SampleProduct.View.Base;
-using SampleProduct.View.Scene.MainScene.Home;
-using UnityEngine;
 using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Title

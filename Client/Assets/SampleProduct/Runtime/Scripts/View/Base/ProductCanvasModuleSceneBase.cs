@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using Lighthouse.Scene.SceneBase;
-using LighthouseExtends.Animation;
+using LighthouseExtends.Animation.Runtime;
 using UnityEngine;
 
 namespace SampleProduct.View.Base

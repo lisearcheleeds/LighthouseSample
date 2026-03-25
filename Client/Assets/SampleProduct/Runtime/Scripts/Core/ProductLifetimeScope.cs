@@ -1,9 +1,9 @@
 ﻿using Lighthouse.Scene;
 using Lighthouse.Scene.SceneCamera;
 using LighthouseExtends.ScreenStack;
-using LighthouseExtends.UIComponent.Scripts.CanvasSceneObject;
-using LighthouseExtends.UIComponent.Scripts.ExclusiveInput;
-using LighthouseExtends.UIComponent.Scripts.InputBlocker;
+using LighthouseExtends.UIComponent.CanvasSceneObject;
+using LighthouseExtends.UIComponent.ExclusiveInput;
+using LighthouseExtends.UIComponent.InputBlocker;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using SampleProduct.View.Scene.ModuleScene.Overlay;

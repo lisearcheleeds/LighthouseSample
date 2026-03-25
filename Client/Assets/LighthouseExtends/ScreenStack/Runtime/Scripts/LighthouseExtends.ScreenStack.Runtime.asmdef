@@ -1,13 +1,13 @@
 {
-    "name": "LighthouseExtends.UIComponent.Editor",
-    "rootNamespace": "LighthouseExtends.UIComponent.Editor",
+    "name": "LighthouseExtends.ScreenStack.Runtime",
+    "rootNamespace": "",
     "references": [
-        "LighthouseExtends.UIComponent.Runtime",
-        "UnityEditor.UI"
+        "Lighthouse.Runtime",
+        "UniTask",
+        "VContainer",
+        "LighthouseExtends.UIComponent.Runtime"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

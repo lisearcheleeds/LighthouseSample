@@ -1,6 +1,6 @@
 {
     "name": "LighthouseExtends.UIComponent.Runtime",
-    "rootNamespace": "LighthouseExtends.UIComponent",
+    "rootNamespace": "",
     "references": [
         "Lighthouse.Runtime",
         "VContainer",
