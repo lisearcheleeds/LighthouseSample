@@ -1,5 +1,4 @@
 ﻿using LighthouseExtends.UIComponent.Scripts.RaycastTargetObject;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,7 +22,7 @@ namespace LighthouseExtends.UIComponent.Editor.RaycastTargetObject
             raycastTargetObject = (LHRaycastTargetObject)target;
             raycastTargetObject.color = Color.clear;
 
-            raycastTargetRectTransform = target.GetComponent<RectTransform>();
+            raycastTargetRectTransform = raycastTargetObject.GetComponent<RectTransform>();
         }
 
         protected virtual void OnSceneGUI()
