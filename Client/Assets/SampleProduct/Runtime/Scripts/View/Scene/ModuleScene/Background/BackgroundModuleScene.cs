@@ -1,6 +1,7 @@
 ﻿using Lighthouse.Scene;
 using SampleProduct.View.Base;
 using UnityEngine;
+using SampleProduct.LighthouseGenerated;
 
 namespace SampleProduct.View.Scene.ModuleScene.Background
 {

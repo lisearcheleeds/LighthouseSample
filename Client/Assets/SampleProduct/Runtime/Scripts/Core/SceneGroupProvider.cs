@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Lighthouse.Scene;
+using SampleProduct.LighthouseGenerated;
 
 namespace SampleProduct.Core
 {
@@ -14,23 +15,40 @@ namespace SampleProduct.Core
             SampleProductModuleSceneId.ScreenStack
         };
 
-        static readonly IReadOnlyDictionary<MainSceneId, ModuleSceneId[]> SceneModuleMap = new Dictionary<MainSceneId, ModuleSceneId[]>()
+        static readonly IReadOnlyDictionary<MainSceneId, ModuleSceneId[]> SceneModuleMap =
+            new Dictionary<MainSceneId, ModuleSceneId[]>
             {
                 { SampleProductMainSceneId.Splash, null },
                 { SampleProductMainSceneId.Title, null },
-                { SampleProductMainSceneId.Home, new[] { SampleProductModuleSceneId.Background }},
-                { SampleProductMainSceneId.SampleTop, new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }},
-                { SampleProductMainSceneId.SceneSample1, new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }},
-                { SampleProductMainSceneId.SceneSample2, new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }},
-                { SampleProductMainSceneId.SceneSample3, new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }},
-                { SampleProductMainSceneId.Edit, null },
+                { SampleProductMainSceneId.Home, new[] { SampleProductModuleSceneId.Background } },
+                {
+                    SampleProductMainSceneId.SampleTop,
+                    new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }
+                },
+                {
+                    SampleProductMainSceneId.SceneSample1,
+                    new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }
+                },
+                {
+                    SampleProductMainSceneId.SceneSample2,
+                    new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }
+                },
+                {
+                    SampleProductMainSceneId.SceneSample3,
+                    new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }
+                },
+                { SampleProductMainSceneId.Edit, null }
             };
 
         static readonly MainSceneId[][] MainSceneGroupList =
         {
             new[] { SampleProductMainSceneId.Splash, SampleProductMainSceneId.Title },
             new[] { SampleProductMainSceneId.Home, SampleProductMainSceneId.Edit },
-            new[] { SampleProductMainSceneId.SampleTop, SampleProductMainSceneId.SceneSample1, SampleProductMainSceneId.SceneSample2, SampleProductMainSceneId.SceneSample3 }
+            new[]
+            {
+                SampleProductMainSceneId.SampleTop, SampleProductMainSceneId.SceneSample1,
+                SampleProductMainSceneId.SceneSample2, SampleProductMainSceneId.SceneSample3
+            }
         };
 
         static readonly SceneGroup[] SceneGroupList = CreateSceneGroups();
@@ -65,7 +83,8 @@ namespace SampleProduct.Core
         {
             var sceneModuleDic = mainSceneKeyList.ToDictionary(
                 mainSceneKey => mainSceneKey,
-                mainSceneKey => RequireSceneModuleIds.Concat(SceneModuleMap[mainSceneKey] ?? Array.Empty<ModuleSceneId>()).ToArray());
+                mainSceneKey => RequireSceneModuleIds
+                    .Concat(SceneModuleMap[mainSceneKey] ?? Array.Empty<ModuleSceneId>()).ToArray());
 
             return new SceneGroup(sceneModuleDic);
         }

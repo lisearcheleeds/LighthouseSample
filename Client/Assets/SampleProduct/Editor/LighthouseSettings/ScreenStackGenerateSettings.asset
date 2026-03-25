@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96dcc159cf8892e4586ae70d3e740fb8, type: 3}
   m_Name: ScreenStackGenerateSettings
   m_EditorClassIdentifier: Assembly-CSharp-Editor::LighthouseExtends.Popup.Editor.ScriptableObject.PopupGenerateSettings
-  screenStackEntityFactoryDirectory: SampleProduct/Runtime/Scripts/LighthouseGenerated
+  screenStackEntityFactoryDirectoryAsset: {fileID: 102900000, guid: 420c8e3f373889f44b334ff6cab545d5, type: 3}
   screenStackEntityFactoryClassName: ScreenStackEntityFactory
   screenStackEntityFactoryNamespace: SampleProduct.LighthouseGenerated

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7b41da29e133440aa6745774a6968a, type: 3}
   m_Name: GenerateSettings
   m_EditorClassIdentifier: Assembly-CSharp-Editor::Lighthouse.Editor.Scripts.ScriptableObject.GenerateSettings
-  productNameSpace: SampleProduct
-  generatedFileDirectory: SampleProduct/Runtime/Scripts/LighthouseGenerated
+  productNameSpace: SampleProduct.LighthouseGenerated
+  generatedFileDirectoryAsset: {fileID: 102900000, guid: 420c8e3f373889f44b334ff6cab545d5, type: 3}
   mainSceneIdPrefix: SampleProduct
   moduleSceneIdPrefix: SampleProduct

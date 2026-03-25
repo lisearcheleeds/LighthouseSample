@@ -1,5 +1,6 @@
 ﻿using Lighthouse.Scene;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.LighthouseGenerated;
 
 namespace SampleProduct.View.Scene.ModuleScene.ScreenStack
 {

@@ -1,5 +1,6 @@
 ﻿using Lighthouse.Scene;
 using SampleProduct.View.Base;
+using SampleProduct.LighthouseGenerated;
 
 namespace SampleProduct.View.Scene.MainScene.Edit
 {

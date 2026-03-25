@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using SampleProduct.View.Base;
 using VContainer;
+using SampleProduct.LighthouseGenerated;
 
 namespace SampleProduct.View.Scene.MainScene.Home
 {
