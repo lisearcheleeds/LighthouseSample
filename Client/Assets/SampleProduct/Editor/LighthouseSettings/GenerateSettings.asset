@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: GenerateSettings
   m_EditorClassIdentifier: Assembly-CSharp-Editor::Lighthouse.Editor.Scripts.ScriptableObject.GenerateSettings
   productNameSpace: SampleProduct
-  generatedFileDirectory: SampleProduct/Scripts/LighthouseGenerated
+  generatedFileDirectory: SampleProduct/Runtime/Scripts/LighthouseGenerated
   mainSceneIdPrefix: SampleProduct
   moduleSceneIdPrefix: SampleProduct
