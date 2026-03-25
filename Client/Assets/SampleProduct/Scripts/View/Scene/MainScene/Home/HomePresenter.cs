@@ -1,5 +1,4 @@
 ﻿using Lighthouse.Scene;
-using LighthouseExtends.Popup;
 using SampleProduct.View.Scene.MainScene.SampleTop;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;

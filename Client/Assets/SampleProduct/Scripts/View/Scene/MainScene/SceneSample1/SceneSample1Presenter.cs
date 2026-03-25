@@ -1,11 +1,10 @@
 ﻿using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
-using LighthouseExtends.Popup;
-using SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionPopup;
+using LighthouseExtends.ScreenStack;
+using SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionDialog;
 using SampleProduct.View.Scene.MainScene.SceneSample2;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
-using UnityEngine;
 using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.SceneSample1
@@ -13,7 +12,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
     public class SceneSample1Presenter : ISceneSample1Presenter
     {
         ISceneSample1View sceneSample1View;
-        IPopupModule popupModule;
+        IScreenStackModule screenStackModule;
         ISceneManager sceneManager;
         IGlobalHeaderModule globalHeaderModule;
         IBackgroundModule backgroundModule;
@@ -21,13 +20,13 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
         [Inject]
         public void Construct(
             ISceneSample1View sceneSample1View,
-            IPopupModule popupModule,
+            IScreenStackModule screenStackModule,
             ISceneManager sceneManager,
             IGlobalHeaderModule globalHeaderModule,
             IBackgroundModule backgroundModule)
         {
             this.sceneSample1View = sceneSample1View;
-            this.popupModule = popupModule;
+            this.screenStackModule = screenStackModule;
             this.sceneManager = sceneManager;
             this.globalHeaderModule = globalHeaderModule;
             this.backgroundModule = backgroundModule;
@@ -53,7 +52,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
 
         void OnClickTransitionScene2()
         {
-            popupModule.OpenPopup(new SceneTransitionPopupData()).Forget();
+            screenStackModule.Open(new SceneTransitionData()).Forget();
         }
 
         void OnClickBackScene()

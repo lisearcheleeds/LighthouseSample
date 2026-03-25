@@ -2,6 +2,7 @@
 using LighthouseExtends.UIComponent.Scripts.Button;
 using SampleProduct.Extensions;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop
 {
@@ -15,8 +16,8 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
 
         [SerializeField] LHButton sceneSample1Button;
 
-        [SerializeField] LHButton popupSample1Button;
-        [SerializeField] LHButton popupSample2Button;
+        [SerializeField] LHButton dialogSample1Button;
+        [SerializeField] LHButton dialogSample2Button;
 
         IDisposable ISampleTopView.SubscribeBackSceneButtonClick(Action action) => backSceneButton.SubscribeOnClick(action);
 
@@ -26,7 +27,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
 
         IDisposable ISampleTopView.SubscribeSceneSample1ButtonClick(Action action) => sceneSample1Button.SubscribeOnClick(action);
 
-        IDisposable ISampleTopView.SubscribePopupSample1ButtonClick(Action action) => popupSample1Button.SubscribeOnClick(action);
-        IDisposable ISampleTopView.SubscribePopupSample2ButtonClick(Action action) => popupSample2Button.SubscribeOnClick(action);
+        IDisposable ISampleTopView.SubscribeDialogSample1ButtonClick(Action action) => dialogSample1Button.SubscribeOnClick(action);
+        IDisposable ISampleTopView.SubscribeDialogSample2ButtonClick(Action action) => dialogSample2Button.SubscribeOnClick(action);
     }
 }

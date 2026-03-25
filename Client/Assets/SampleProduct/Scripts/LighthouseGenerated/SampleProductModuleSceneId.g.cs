@@ -14,7 +14,7 @@ namespace SampleProduct
         public static readonly ModuleSceneId GlobalHeader = new ModuleSceneId(2, "GlobalHeader");
         public static readonly ModuleSceneId Overlay = new ModuleSceneId(3, "Overlay");
         public static readonly ModuleSceneId Background = new ModuleSceneId(4, "Background");
-        public static readonly ModuleSceneId Popup = new ModuleSceneId(5, "Popup");
+        public static readonly ModuleSceneId ScreenStack = new ModuleSceneId(5, "ScreenStack");
 
         public static ReadOnlySpan<ModuleSceneId> All
         {
@@ -26,7 +26,7 @@ namespace SampleProduct
                     GlobalHeader,
                     Overlay,
                     Background,
-                    Popup,
+                    ScreenStack,
                 };
             }
         }

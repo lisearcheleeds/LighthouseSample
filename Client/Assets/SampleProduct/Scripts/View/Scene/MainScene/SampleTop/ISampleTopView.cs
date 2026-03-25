@@ -12,7 +12,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
 
         public IDisposable SubscribeSceneSample1ButtonClick(Action action);
 
-        public IDisposable SubscribePopupSample1ButtonClick(Action action);
-        public IDisposable SubscribePopupSample2ButtonClick(Action action);
+        public IDisposable SubscribeDialogSample1ButtonClick(Action action);
+        public IDisposable SubscribeDialogSample2ButtonClick(Action action);
     }
 }

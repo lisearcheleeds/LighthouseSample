@@ -11,7 +11,7 @@ namespace SampleProduct.Core
         static readonly ModuleSceneId[] RequireSceneModuleIds =
         {
             SampleProductModuleSceneId.Overlay,
-            SampleProductModuleSceneId.Popup
+            SampleProductModuleSceneId.ScreenStack
         };
 
         static readonly IReadOnlyDictionary<MainSceneId, ModuleSceneId[]> SceneModuleMap = new Dictionary<MainSceneId, ModuleSceneId[]>()

@@ -1,6 +1,6 @@
 ﻿using Lighthouse.Scene;
 using Lighthouse.Scene.SceneCamera;
-using LighthouseExtends.Popup;
+using LighthouseExtends.ScreenStack;
 using LighthouseExtends.UIComponent.Scripts.CanvasSceneObject;
 using LighthouseExtends.UIComponent.Scripts.ExclusiveInput;
 using LighthouseExtends.UIComponent.Scripts.InputBlocker;
@@ -42,7 +42,7 @@ namespace SampleProduct.Core
                 builder.Register<ExclusiveInputService>(Lifetime.Singleton).AsImplementedInterfaces();
 
                 // Modules
-                builder.Register<PopupModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<ScreenStackModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
             }
 
             {

@@ -1,8 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
-using LighthouseExtends.Popup;
-using SampleProduct.View.Scene.MainScene.SampleTop.PopupSample1Popup;
-using SampleProduct.View.Scene.MainScene.SampleTop.PopupSample2Popup;
+using LighthouseExtends.ScreenStack;
+using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog;
+using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog;
 using SampleProduct.View.Scene.MainScene.SceneSample1;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
@@ -14,7 +14,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
     public sealed class SampleTopPresenter : ISampleTopPresenter
     {
         ISampleTopView sampleTopView;
-        IPopupModule popupModule;
+        IScreenStackModule screenStackModule;
         ISceneManager sceneManager;
         IGlobalHeaderModule globalHeaderModule;
         IBackgroundModule backgroundModule;
@@ -22,13 +22,13 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         [Inject]
         public void Construct(
             ISampleTopView sampleTopView,
-            IPopupModule popupModule,
+            IScreenStackModule screenStackModule,
             ISceneManager sceneManager,
             IGlobalHeaderModule globalHeaderModule,
             IBackgroundModule backgroundModule)
         {
             this.sampleTopView = sampleTopView;
-            this.popupModule = popupModule;
+            this.screenStackModule = screenStackModule;
             this.sceneManager = sceneManager;
             this.globalHeaderModule = globalHeaderModule;
             this.backgroundModule = backgroundModule;
@@ -44,8 +44,8 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
 
             sampleTopView.SubscribeSceneSample1ButtonClick(OnClickSceneSample1);
 
-            sampleTopView.SubscribePopupSample1ButtonClick(OnClickPopupSample1);
-            sampleTopView.SubscribePopupSample2ButtonClick(OnClickPopupSample2);
+            sampleTopView.SubscribeDialogSample1ButtonClick(OnClickDialogSample1);
+            sampleTopView.SubscribeDialogSample2ButtonClick(OnClickDialogSample2);
         }
 
         void ISampleTopPresenter.OnEnter()
@@ -79,14 +79,14 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
             sceneManager.TransitionScene(new SceneSample1Scene.SceneSample1TransitionData());
         }
 
-        void OnClickPopupSample1()
+        void OnClickDialogSample1()
         {
-            popupModule.OpenPopup(new PopupSample1PopupData(1)).Forget();
+            screenStackModule.Open(new DialogSample1Data(1)).Forget();
         }
 
-        void OnClickPopupSample2()
+        void OnClickDialogSample2()
         {
-            popupModule.OpenPopup(new PopupSample2PopupData(1)).Forget();
+            screenStackModule.Open(new DialogSample2Data(1)).Forget();
         }
     }
 }

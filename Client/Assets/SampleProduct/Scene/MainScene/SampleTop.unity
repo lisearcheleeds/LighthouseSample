@@ -2726,8 +2726,8 @@ MonoBehaviour:
   game1Button: {fileID: 80206001}
   game2Button: {fileID: 1199651304}
   sceneSample1Button: {fileID: 991144266}
-  popupSample1Button: {fileID: 1773668327}
-  popupSample2Button: {fileID: 354823540}
+  dialogSample1Button: {fileID: 1773668327}
+  dialogSample2Button: {fileID: 354823540}
 --- !u!1 &1494169780
 GameObject:
   m_ObjectHideFlags: 0
