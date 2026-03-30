@@ -6,24 +6,24 @@ using UnityEngine;
 
 namespace SampleProduct.View.Base
 {
-    [RequireComponent(typeof(LHTransitionAnimatorManager))]
+    [RequireComponent(typeof(LHSceneTransitionAnimatorManager))]
     public abstract class ProductCanvasMainSceneBase<TTransitionData> : CanvasMainSceneBase<TTransitionData> where TTransitionData : ProductTransitionDataBase
     {
-        [SerializeField] LHTransitionAnimatorManager transitionAnimatorManager;
+        [SerializeField] LHSceneTransitionAnimatorManager sceneTransitionAnimatorManager;
 
         public override void ResetInAnimation(SceneTransitionContext context)
         {
-            transitionAnimatorManager.ResetInAnimation();
+            sceneTransitionAnimatorManager.ResetInAnimation();
         }
 
         protected override async UniTask InAnimation(SceneTransitionContext context)
         {
-            await transitionAnimatorManager.InAnimation();
+            await sceneTransitionAnimatorManager.InAnimation();
         }
 
         protected override async UniTask OutAnimation(SceneTransitionContext context)
         {
-            await transitionAnimatorManager.OutAnimation();
+            await sceneTransitionAnimatorManager.OutAnimation();
         }
 
 #if UNITY_EDITOR
@@ -31,7 +31,7 @@ namespace SampleProduct.View.Base
         {
             base.OnValidate();
 
-            transitionAnimatorManager ??= GetComponent<LHTransitionAnimatorManager>();
+            sceneTransitionAnimatorManager ??= GetComponent<LHSceneTransitionAnimatorManager>();
         }
 #endif
     }

@@ -23,10 +23,9 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog
         public void Bind(DialogSample1View dialogView, DialogSample1Data screenStackData)
         {
             dialogView.SubscribeCloseButtonClick(OnClickCloseButton);
-            dialogView.SubscribeShowCodeButtonClick(OnClickShowCodeButton);
             dialogView.SubscribeOpenDialog1ButtonClick(OnClickOpenDialog1Button);
             dialogView.SubscribeOpenDialog2ButtonClick(OnClickOpenDialog2Button);
-            dialogView.SubscribeConfirmOpenDialogButtonClick(OnClickOpenConfirmPopupButton);
+            dialogView.SubscribeConfirmOpenDialogButtonClick(OnClickOpenConfirmDialogButton);
 
             this.dialogView = dialogView;
             this.screenStackData = screenStackData;
@@ -34,7 +33,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog
 
         UniTask IScreenStackPresenter.OnEnter(bool isResume)
         {
-            dialogView.SetText($"Stack\nCount\n{screenStackData.StackCount}");
+            dialogView.SetText($"Stack count {screenStackData.StackCount}");
 
             return UniTask.CompletedTask;
         }
@@ -49,11 +48,6 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog
             screenStackModule.Close().Forget();
         }
 
-        void OnClickShowCodeButton()
-        {
-            Application.OpenURL("https://github.com/lisearcheleeds/LighthouseFramework");
-        }
-
         void OnClickOpenDialog1Button()
         {
             screenStackModule.Open(new DialogSample1Data(screenStackData.StackCount + 1)).Forget();
@@ -64,7 +58,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog
             screenStackModule.Open(new DialogSample2Data(screenStackData.StackCount + 1)).Forget();
         }
 
-        void OnClickOpenConfirmPopupButton()
+        void OnClickOpenConfirmDialogButton()
         {
             screenStackModule.Open(new DialogSampleConfirmData(() => screenStackModule.Close().Forget())).Forget();
         }

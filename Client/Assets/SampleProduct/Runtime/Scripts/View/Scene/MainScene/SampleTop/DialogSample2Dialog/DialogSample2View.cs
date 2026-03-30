@@ -11,13 +11,11 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog
         [SerializeField] TextMeshProUGUI subtitleText;
 
         [SerializeField] LHButton closeButton;
-        [SerializeField] LHButton showCodeButton;
         [SerializeField] LHButton openDialog1Button;
         [SerializeField] LHButton openDialog2Button;
         [SerializeField] LHButton openConfirmDialogButton;
 
         public IDisposable SubscribeCloseButtonClick(Action action) => closeButton.SubscribeOnClick(action);
-        public IDisposable SubscribeShowCodeButtonClick(Action action) => showCodeButton.SubscribeOnClick(action);
         public IDisposable SubscribeOpenDialog1ButtonClick(Action action) => openDialog1Button.SubscribeOnClick(action);
         public IDisposable SubscribeOpenDialog2ButtonClick(Action action) => openDialog2Button.SubscribeOnClick(action);
         public IDisposable SubscribeConfirmOpenDialogButtonClick(Action action) => openConfirmDialogButton.SubscribeOnClick(action);

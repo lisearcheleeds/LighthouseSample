@@ -13,7 +13,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         [SerializeField] LHButton philosophyButton;
         [SerializeField] LHButton sampleButton;
-        [SerializeField] LHButton elementsButton;
+        [SerializeField] LHButton requireToolsButton;
 
         IDisposable IHomeView.SubscribeGuideButtonClick(Action action) => guideButton.SubscribeOnClick(action);
         IDisposable IHomeView.SubscribeGithubButtonClick(Action action) => githubButton.SubscribeOnClick(action);
@@ -21,6 +21,6 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         IDisposable IHomeView.SubscribePhilosophyButtonClick(Action action) => philosophyButton.SubscribeOnClick(action);
         IDisposable IHomeView.SubscribeSampleButtonClick(Action action) => sampleButton.SubscribeOnClick(action);
-        IDisposable IHomeView.SubscribeElementsButtonClick(Action action) => elementsButton.SubscribeOnClick(action);
+        IDisposable IHomeView.SubscribeRequireToolsButtonClick(Action action) => requireToolsButton.SubscribeOnClick(action);
     }
 }

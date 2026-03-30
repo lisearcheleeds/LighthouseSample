@@ -297,9 +297,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1094060324}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c4a0cb4f5143f0a91f51d9c4bcfc61, type: 3}
+  m_Script: {fileID: 11500000, guid: fb0d9e27caf940689e939ddb028c8ca6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Lighthouse.Extends.Animation.LHTransitionAnimator
+  m_EditorClassIdentifier: LighthouseExtends.Animation.Runtime::LighthouseExtends.Animation.Runtime.LHSceneTransitionAnimator
   animator: {fileID: 1094060326}
   inAnimationClips:
   - {fileID: 7400000, guid: 977544ec2d7f88141833b56e122d3e47, type: 2}
@@ -307,6 +307,9 @@ MonoBehaviour:
   outAnimationClips:
   - {fileID: 7400000, guid: 7006aff7fa0fa0f49bdb9432e5daafa2, type: 2}
   outDelayMilliSec: 0
+  invokeResetInAnimation: 1
+  invokeInAnimation: 1
+  invokeOutAnimation: 1
 --- !u!1 &1101355730
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Product.View.GlobalHeader.EntryPoint
   canvasGroup: {fileID: 1114308255}
   canvasInitializer: {fileID: 1114308254}
-  transitionAnimatorManager: {fileID: 1114308253}
+  sceneTransitionAnimatorManager: {fileID: 1114308253}
   globalHeaderView: {fileID: 1559229584}
 --- !u!114 &1114308253
 MonoBehaviour:

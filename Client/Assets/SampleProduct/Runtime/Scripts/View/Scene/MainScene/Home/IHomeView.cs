@@ -10,6 +10,6 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         public IDisposable SubscribePhilosophyButtonClick(Action action);
         public IDisposable SubscribeSampleButtonClick(Action action);
-        public IDisposable SubscribeElementsButtonClick(Action action);
+        public IDisposable SubscribeRequireToolsButtonClick(Action action);
     }
 }

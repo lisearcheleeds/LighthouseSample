@@ -9,6 +9,10 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog
 
         public int StackCount { get; }
 
+        public DialogSample2Data() : this(1)
+        {
+        }
+
         public DialogSample2Data(int stackCount)
         {
             StackCount = stackCount;

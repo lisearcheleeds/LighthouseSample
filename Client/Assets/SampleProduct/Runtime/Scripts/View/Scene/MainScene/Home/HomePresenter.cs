@@ -30,7 +30,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
             homeView.SubscribeSnsButtonClick(OnClickSnsButton);
             homeView.SubscribePhilosophyButtonClick(OnClickPhilosophyButton);
             homeView.SubscribeSampleButtonClick(OnClickSampleButton);
-            homeView.SubscribeElementsButtonClick(OnClickElementsButton);
+            homeView.SubscribeRequireToolsButtonClick(OnClickRequireToolsButton);
         }
 
         void IHomePresenter.OnEnter()
@@ -59,10 +59,11 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         void OnClickSampleButton()
         {
-            sceneManager.TransitionScene(new SampleTopScene.SampleTopTransitionData());
+            // Cross fading is possible even if the scene groups are different, as long as the loading order is different. However, be mindful of performance.
+            sceneManager.TransitionScene(new SampleTopScene.SampleTopTransitionData(), TransitionType.Cross);
         }
 
-        void OnClickElementsButton()
+        void OnClickRequireToolsButton()
         {
         }
     }

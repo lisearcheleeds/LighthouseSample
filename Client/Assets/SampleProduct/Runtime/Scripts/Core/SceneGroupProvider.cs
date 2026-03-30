@@ -21,10 +21,7 @@ namespace SampleProduct.Core
                 { SampleProductMainSceneId.Splash, null },
                 { SampleProductMainSceneId.Title, null },
                 { SampleProductMainSceneId.Home, new[] { SampleProductModuleSceneId.Background } },
-                {
-                    SampleProductMainSceneId.SampleTop,
-                    new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }
-                },
+                { SampleProductMainSceneId.SampleTop, new[] { SampleProductModuleSceneId.Background } },
                 {
                     SampleProductMainSceneId.SceneSample1,
                     new[] { SampleProductModuleSceneId.Background, SampleProductModuleSceneId.GlobalHeader }
@@ -46,8 +43,10 @@ namespace SampleProduct.Core
             new[] { SampleProductMainSceneId.Home, SampleProductMainSceneId.Edit },
             new[]
             {
-                SampleProductMainSceneId.SampleTop, SampleProductMainSceneId.SceneSample1,
-                SampleProductMainSceneId.SceneSample2, SampleProductMainSceneId.SceneSample3
+                SampleProductMainSceneId.SampleTop,
+                SampleProductMainSceneId.SceneSample1,
+                SampleProductMainSceneId.SceneSample2,
+                SampleProductMainSceneId.SceneSample3
             }
         };
 

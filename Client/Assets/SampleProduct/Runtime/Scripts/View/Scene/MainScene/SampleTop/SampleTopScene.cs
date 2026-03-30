@@ -16,6 +16,22 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         public class SampleTopTransitionData : ProductTransitionDataBase
         {
             public override MainSceneId MainSceneId => SampleProductMainSceneId.SampleTop;
+
+            public TabType TargetTabType { get; private set; }
+
+            public SampleTopTransitionData() : this(TabType.Overview)
+            {
+            }
+
+            public SampleTopTransitionData(TabType targetTabType)
+            {
+                SetTargetTabType(targetTabType);
+            }
+
+            public void SetTargetTabType(TabType targetTabType)
+            {
+                TargetTabType = targetTabType;
+            }
         }
 
         [Inject]
@@ -32,8 +48,19 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
 
         protected override UniTask OnEnter(SampleTopTransitionData transitionData, SceneTransitionContext context, CancellationToken cancelToken)
         {
-            sampleTopPresenter.OnEnter();
-            return UniTask.CompletedTask;
+            sampleTopPresenter.OnEnter(transitionData.TargetTabType);
+            return base.OnEnter(transitionData, context, cancelToken);
+        }
+
+        protected override void OnCompleteInAnimation(SceneTransitionContext context)
+        {
+            sampleTopPresenter.OnCompleteInAnimation();
+        }
+
+        protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
+        {
+            TransitionData.SetTargetTabType(sampleTopPresenter.CurrentTabType);
+            return base.OnLeave(context, cancelToken);
         }
     }
 }

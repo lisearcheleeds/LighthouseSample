@@ -2,7 +2,10 @@
 {
     public interface ISampleTopPresenter
     {
+        TabType CurrentTabType { get; }
+
         void Setup();
-        void OnEnter();
+        void OnEnter(TabType targetTabType);
+        void OnCompleteInAnimation();
     }
 }

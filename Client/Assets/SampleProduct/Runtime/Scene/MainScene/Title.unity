@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 30586182}
   - component: {fileID: 30586184}
-  - component: {fileID: 30586183}
+  - component: {fileID: 30586185}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -160,25 +160,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &30586183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 30586181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c4a0cb4f5143f0a91f51d9c4bcfc61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Product.Util.SceneTransitionAnimator
-  animator: {fileID: 30586184}
-  inAnimationClips:
-  - {fileID: 7400000, guid: 607019cdbd5641345a7d38d37f4ed30d, type: 2}
-  inDelayMilliSec: 0
-  outAnimationClips:
-  - {fileID: 7400000, guid: 4bb251078df7c6d4e860efbf640ea036, type: 2}
-  outDelayMilliSec: 0
 --- !u!95 &30586184
 Animator:
   serializedVersion: 7
@@ -201,6 +182,28 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &30586185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30586181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0d9e27caf940689e939ddb028c8ca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LighthouseExtends.Animation.Runtime::LighthouseExtends.Animation.Runtime.LHSceneTransitionAnimator
+  animator: {fileID: 30586184}
+  inAnimationClips:
+  - {fileID: 7400000, guid: 607019cdbd5641345a7d38d37f4ed30d, type: 2}
+  inDelayMilliSec: 0
+  outAnimationClips:
+  - {fileID: 7400000, guid: 4bb251078df7c6d4e860efbf640ea036, type: 2}
+  outDelayMilliSec: 0
+  invokeResetInAnimation: 1
+  invokeInAnimation: 1
+  invokeOutAnimation: 1
 --- !u!1 &435704337
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Product.Scripts.View.Title.TitleScene
   canvasGroup: {fileID: 726240417}
   canvasInitializer: {fileID: 726240416}
-  transitionAnimatorManager: {fileID: 726240414}
+  sceneTransitionAnimatorManager: {fileID: 726240414}
 --- !u!114 &726240414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,7 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lighthouse.Core.Scene.SceneTransitionAnimator
   sceneTransitionAnimatorList:
-  - {fileID: 30586183}
+  - {fileID: 30586185}
 --- !u!4 &726240415
 Transform:
   m_ObjectHideFlags: 0

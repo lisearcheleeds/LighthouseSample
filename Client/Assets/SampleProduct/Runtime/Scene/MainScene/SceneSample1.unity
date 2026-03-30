@@ -119,43 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &28380221
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 28380222}
-  m_Layer: 5
-  m_Name: Right
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &28380222
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 28380221}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 506251062}
-  - {fileID: 1975236608}
-  m_Father: {fileID: 1672435516}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -30, y: 0}
-  m_SizeDelta: {x: 760, y: 880}
-  m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &135657735
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,9 +128,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 135657736}
-  - component: {fileID: 135657739}
   - component: {fileID: 135657738}
   - component: {fileID: 135657737}
+  - component: {fileID: 135657739}
   m_Layer: 5
   m_Name: Container
   m_TagString: Untagged
@@ -238,9 +201,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 135657735}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c4a0cb4f5143f0a91f51d9c4bcfc61, type: 3}
+  m_Script: {fileID: 11500000, guid: fb0d9e27caf940689e939ddb028c8ca6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LighthouseExtends.Animation.LHTransitionAnimator
+  m_EditorClassIdentifier: LighthouseExtends.Animation.Runtime::LighthouseExtends.Animation.Runtime.LHSceneTransitionAnimator
   animator: {fileID: 135657738}
   inAnimationClips:
   - {fileID: 7400000, guid: f5a4b02dfe97f5f4facb897358af3f97, type: 2}
@@ -248,6 +211,9 @@ MonoBehaviour:
   outAnimationClips:
   - {fileID: 7400000, guid: f59a80b9804f9c54e99bfc14086436e4, type: 2}
   outDelayMilliSec: 300
+  invokeResetInAnimation: 1
+  invokeInAnimation: 1
+  invokeOutAnimation: 1
 --- !u!1 &316471743
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,11 +243,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1159148720}
-  m_Father: {fileID: 825555071}
+  m_Father: {fileID: 1672435516}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -290}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 410, y: 160}
   m_SizeDelta: {x: 700, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &347972149
@@ -430,9 +396,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 374767410}
-  - component: {fileID: 374767413}
   - component: {fileID: 374767412}
   - component: {fileID: 374767411}
+  - component: {fileID: 374767413}
   m_Layer: 5
   m_Name: Container
   m_TagString: Untagged
@@ -503,9 +469,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 374767409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c4a0cb4f5143f0a91f51d9c4bcfc61, type: 3}
+  m_Script: {fileID: 11500000, guid: fb0d9e27caf940689e939ddb028c8ca6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LighthouseExtends.Animation.LHTransitionAnimator
+  m_EditorClassIdentifier: LighthouseExtends.Animation.Runtime::LighthouseExtends.Animation.Runtime.LHSceneTransitionAnimator
   animator: {fileID: 374767412}
   inAnimationClips:
   - {fileID: 7400000, guid: c21edbe07828c0f428a13d89a75c8b80, type: 2}
@@ -513,6 +479,9 @@ MonoBehaviour:
   outAnimationClips:
   - {fileID: 7400000, guid: 4f94ab5a2d6ddeb408db03be11cca004, type: 2}
   outDelayMilliSec: 0
+  invokeResetInAnimation: 1
+  invokeInAnimation: 1
+  invokeOutAnimation: 1
 --- !u!1 &472377406
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,11 +649,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 374767410}
-  m_Father: {fileID: 28380222}
+  m_Father: {fileID: 1672435516}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 380, y: -360}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -410, y: 80}
   m_SizeDelta: {x: 700, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &792381384
@@ -789,43 +758,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &825555070
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 825555071}
-  m_Layer: 5
-  m_Name: Left
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &825555071
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 825555070}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 316471744}
-  - {fileID: 1289021721}
-  m_Father: {fileID: 1672435516}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 30, y: 0}
-  m_SizeDelta: {x: 760, y: 880}
-  m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &881591194
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,9 +767,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 881591195}
-  - component: {fileID: 881591198}
   - component: {fileID: 881591197}
   - component: {fileID: 881591196}
+  - component: {fileID: 881591199}
   m_Layer: 5
   m_Name: Container
   m_TagString: Untagged
@@ -899,7 +831,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &881591198
+--- !u!114 &881591199
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -908,9 +840,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 881591194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c4a0cb4f5143f0a91f51d9c4bcfc61, type: 3}
+  m_Script: {fileID: 11500000, guid: fb0d9e27caf940689e939ddb028c8ca6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LighthouseExtends.Animation.LHTransitionAnimator
+  m_EditorClassIdentifier: LighthouseExtends.Animation.Runtime::LighthouseExtends.Animation.Runtime.LHSceneTransitionAnimator
   animator: {fileID: 881591197}
   inAnimationClips:
   - {fileID: 7400000, guid: 2d0232333e49078448293fc05c757d8b, type: 2}
@@ -918,6 +850,9 @@ MonoBehaviour:
   outAnimationClips:
   - {fileID: 7400000, guid: afea3d58b326edd41bebaa3cf3f5e483, type: 2}
   outDelayMilliSec: 300
+  invokeResetInAnimation: 1
+  invokeInAnimation: 1
+  invokeOutAnimation: 1
 --- !u!1 &953919255
 GameObject:
   m_ObjectHideFlags: 0
@@ -1140,9 +1075,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1159148720}
-  - component: {fileID: 1159148723}
   - component: {fileID: 1159148722}
   - component: {fileID: 1159148721}
+  - component: {fileID: 1159148723}
   m_Layer: 5
   m_Name: Container
   m_TagString: Untagged
@@ -1213,9 +1148,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1159148719}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c4a0cb4f5143f0a91f51d9c4bcfc61, type: 3}
+  m_Script: {fileID: 11500000, guid: fb0d9e27caf940689e939ddb028c8ca6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LighthouseExtends.Animation.LHTransitionAnimator
+  m_EditorClassIdentifier: LighthouseExtends.Animation.Runtime::LighthouseExtends.Animation.Runtime.LHSceneTransitionAnimator
   animator: {fileID: 1159148722}
   inAnimationClips:
   - {fileID: 7400000, guid: c21edbe07828c0f428a13d89a75c8b80, type: 2}
@@ -1223,6 +1158,9 @@ MonoBehaviour:
   outAnimationClips:
   - {fileID: 7400000, guid: 4f94ab5a2d6ddeb408db03be11cca004, type: 2}
   outDelayMilliSec: 0
+  invokeResetInAnimation: 1
+  invokeInAnimation: 1
+  invokeOutAnimation: 1
 --- !u!1 &1215875236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1522,15 +1460,15 @@ RectTransform:
   m_GameObject: {fileID: 1289021720}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1.0000801}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 135657736}
-  m_Father: {fileID: 825555071}
+  m_Father: {fileID: 1672435516}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: -385}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 230, y: 65}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1319414587
@@ -1593,10 +1531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lighthouse.Core.Scene.SceneTransitionAnimator
   sceneTransitionAnimatorList:
-  - {fileID: 1159148723}
   - {fileID: 135657739}
-  - {fileID: 374767413}
-  - {fileID: 881591198}
 --- !u!4 &1319414592
 Transform:
   m_ObjectHideFlags: 0
@@ -1627,7 +1562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SampleProduct.View.Scene.MainScene.SceneSample1.SceneSample1Scene
   canvasGroup: {fileID: 1319414589}
   canvasInitializer: {fileID: 1319414588}
-  transitionAnimatorManager: {fileID: 1319414591}
+  sceneTransitionAnimatorManager: {fileID: 1319414591}
 --- !u!114 &1319414594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1893,8 +1828,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 825555071}
-  - {fileID: 28380222}
+  - {fileID: 316471744}
+  - {fileID: 1289021721}
+  - {fileID: 506251062}
+  - {fileID: 1975236608}
   m_Father: {fileID: 792381388}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2088,11 +2025,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 881591195}
-  m_Father: {fileID: 28380222}
+  m_Father: {fileID: 1672435516}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 380, y: -570}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -410, y: -130}
   m_SizeDelta: {x: 760, y: 310}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2057983444

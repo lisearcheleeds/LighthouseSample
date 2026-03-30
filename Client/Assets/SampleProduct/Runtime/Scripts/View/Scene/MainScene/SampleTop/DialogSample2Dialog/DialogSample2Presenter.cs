@@ -23,7 +23,6 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog
         public void Bind(DialogSample2View dialogView, DialogSample2Data screenStackData)
         {
             dialogView.SubscribeCloseButtonClick(OnClickCloseButton);
-            dialogView.SubscribeShowCodeButtonClick(OnClickShowCodeButton);
             dialogView.SubscribeOpenDialog1ButtonClick(OnClickOpenDialog1Button);
             dialogView.SubscribeOpenDialog2ButtonClick(OnClickOpenDialog2Button);
             dialogView.SubscribeConfirmOpenDialogButtonClick(OnClickOpenConfirmDialogButton);
@@ -34,7 +33,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog
 
         UniTask IScreenStackPresenter.OnEnter(bool isResume)
         {
-            dialogView.SetText($"Stack\nCount\n{screenStackData.StackCount}");
+            dialogView.SetText($"Stack count {screenStackData.StackCount}");
 
             return UniTask.CompletedTask;
         }
@@ -47,11 +46,6 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog
         void OnClickCloseButton()
         {
             screenStackModule.Close().Forget();
-        }
-
-        void OnClickShowCodeButton()
-        {
-            Application.OpenURL("https://github.com/lisearcheleeds/LighthouseFramework");
         }
 
         void OnClickOpenDialog1Button()
