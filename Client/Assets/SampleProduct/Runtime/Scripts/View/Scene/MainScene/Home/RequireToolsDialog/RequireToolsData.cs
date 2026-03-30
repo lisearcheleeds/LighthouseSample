@@ -1,7 +1,14 @@
-﻿namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
+﻿using LighthouseExtends.ScreenStack;
+
+namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
 {
-    public class RequireToolsData
+    public sealed class RequireToolsData : IScreenStackData
     {
-        
+        public bool IsSystem => false;
+        public bool IsOverlayOpen => false;
+
+        public RequireToolsData()
+        {
+        }
     }
 }

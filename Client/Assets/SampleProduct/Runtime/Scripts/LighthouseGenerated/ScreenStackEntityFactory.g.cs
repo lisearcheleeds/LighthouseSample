@@ -8,6 +8,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using VContainer;
+using SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSampleConfirmDialog;
@@ -34,6 +35,7 @@ namespace SampleProduct.LighthouseGenerated
                 DialogSampleConfirmData d => CreateScreenStackEntityAsync<DialogSampleConfirmDialog, DialogSampleConfirmPresenter, DialogSampleConfirmData>("DialogSampleConfirmDialog", d, ct),
                 DialogSample2Data d => CreateScreenStackEntityAsync<DialogSample2Dialog, DialogSample2Presenter, DialogSample2Data>("DialogSample2Dialog", d, ct),
                 DialogSample1Data d => CreateScreenStackEntityAsync<DialogSample1Dialog, DialogSample1Presenter, DialogSample1Data>("DialogSample1Dialog", d, ct),
+                RequireToolsData d => CreateScreenStackEntityAsync<RequireToolsDialog, RequireToolsPresenter, RequireToolsData>("RequireToolsDialog", d, ct),
                 _ => throw new ArgumentOutOfRangeException(nameof(data), data.GetType().FullName, "Unknown screenStack data type")
             };
         }

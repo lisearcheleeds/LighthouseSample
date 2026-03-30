@@ -1,4 +1,7 @@
-﻿using Lighthouse.Scene;
+﻿using Cysharp.Threading.Tasks;
+using Lighthouse.Scene;
+using LighthouseExtends.ScreenStack;
+using SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog;
 using SampleProduct.View.Scene.MainScene.SampleTop;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using UnityEngine;
@@ -11,16 +14,19 @@ namespace SampleProduct.View.Scene.MainScene.Home
         IHomeView homeView;
         ISceneManager sceneManager;
         IBackgroundModule backgroundModule;
+        IScreenStackModule screenStackModule;
 
         [Inject]
         public void Construct(
             IHomeView homeView,
             ISceneManager sceneManager,
-            IBackgroundModule backgroundModule)
+            IBackgroundModule backgroundModule,
+            IScreenStackModule screenStackModule)
         {
             this.homeView = homeView;
             this.sceneManager = sceneManager;
             this.backgroundModule = backgroundModule;
+            this.screenStackModule = screenStackModule;
         }
 
         void IHomePresenter.Setup()
@@ -65,6 +71,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         void OnClickRequireToolsButton()
         {
+            screenStackModule.Open(new RequireToolsData()).Forget();
         }
     }
 }
