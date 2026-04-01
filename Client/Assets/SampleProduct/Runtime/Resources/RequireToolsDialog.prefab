@@ -1175,6 +1175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72f93ddac5df4b4ea6e850ed6911e53e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SampleProduct.Runtime::SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog.RequireToolsView
+  closeButton: {fileID: 8800831729635588373}
 --- !u!114 &4444461692227310419
 MonoBehaviour:
   m_ObjectHideFlags: 0
