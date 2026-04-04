@@ -1,4 +1,4 @@
-﻿namespace SampleProduct.View.Scene.ModuleScene.Overlay
+namespace SampleProduct.View.Scene.ModuleScene.Overlay
 {
     public interface IOverlayModuleProxy
     {

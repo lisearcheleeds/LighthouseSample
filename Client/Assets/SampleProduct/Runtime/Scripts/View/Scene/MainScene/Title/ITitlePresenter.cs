@@ -1,4 +1,4 @@
-﻿namespace SampleProduct.View.Scene.MainScene.Title
+namespace SampleProduct.View.Scene.MainScene.Title
 {
     public interface ITitlePresenter
     {

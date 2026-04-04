@@ -1,4 +1,4 @@
-﻿using VContainer;
+using VContainer;
 
 namespace SampleProduct.View.Scene.ModuleScene.Background
 {

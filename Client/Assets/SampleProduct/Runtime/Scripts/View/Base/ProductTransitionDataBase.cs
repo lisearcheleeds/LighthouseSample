@@ -1,4 +1,4 @@
-﻿using Lighthouse.Scene;
+using Lighthouse.Scene;
 
 namespace SampleProduct.View.Base
 {

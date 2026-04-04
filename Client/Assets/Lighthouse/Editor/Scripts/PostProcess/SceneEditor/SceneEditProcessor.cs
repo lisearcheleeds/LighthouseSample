@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Lighthouse.Editor.Menu;
 using Lighthouse.Editor.ScriptableObject;
 using Lighthouse.EditorTool;

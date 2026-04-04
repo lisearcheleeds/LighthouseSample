@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSampleConfirmDialog;

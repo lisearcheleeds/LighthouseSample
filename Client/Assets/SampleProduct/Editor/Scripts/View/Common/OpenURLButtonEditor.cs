@@ -1,4 +1,4 @@
-﻿using LighthouseExtends.UIComponent.Editor.Button;
+using LighthouseExtends.UIComponent.Editor.Button;
 using SampleProduct.View.Common;
 using UnityEditor;
 

@@ -1,4 +1,4 @@
-﻿namespace LighthouseExtends.UIComponent.ExclusiveInput
+namespace LighthouseExtends.UIComponent.ExclusiveInput
 {
     public interface IExclusiveInputService
     {

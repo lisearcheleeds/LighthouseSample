@@ -1,4 +1,4 @@
-﻿using Lighthouse.Scene.SceneTransitionStep;
+using Lighthouse.Scene.SceneTransitionStep;
 
 namespace Lighthouse.Scene.SceneTransitionPhase
 {

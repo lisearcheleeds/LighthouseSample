@@ -1,4 +1,4 @@
-﻿namespace Lighthouse.Scene.SceneCamera
+namespace Lighthouse.Scene.SceneCamera
 {
     public interface ISceneCameraManager
     {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using LighthouseExtends.UIComponent.Button;
 using SampleProduct.Extensions;
 using TMPro;

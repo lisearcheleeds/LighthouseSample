@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Lighthouse.Editor.ScriptableObject;
 using UnityEditor;
 using UnityEngine;

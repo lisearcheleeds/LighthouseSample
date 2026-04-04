@@ -1,4 +1,4 @@
-﻿namespace Lighthouse.Scene
+namespace Lighthouse.Scene
 {
     public interface ISceneGroupProvider
     {

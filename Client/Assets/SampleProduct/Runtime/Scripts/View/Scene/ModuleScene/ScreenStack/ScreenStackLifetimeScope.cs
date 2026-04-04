@@ -1,4 +1,4 @@
-﻿using LighthouseExtends.ScreenStack;
+using LighthouseExtends.ScreenStack;
 using SampleProduct.Infrastructure.AssetLoader;
 using SampleProduct.LighthouseGenerated;
 using UnityEngine;

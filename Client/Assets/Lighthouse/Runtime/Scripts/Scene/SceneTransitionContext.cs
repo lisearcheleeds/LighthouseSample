@@ -1,4 +1,4 @@
-﻿using Lighthouse.Scene.SceneCamera;
+using Lighthouse.Scene.SceneCamera;
 
 namespace Lighthouse.Scene
 {

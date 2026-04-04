@@ -1,4 +1,4 @@
-﻿namespace SampleProduct.View.Scene.MainScene.SampleTop
+namespace SampleProduct.View.Scene.MainScene.SampleTop
 {
     public interface ISampleTopPresenter
     {

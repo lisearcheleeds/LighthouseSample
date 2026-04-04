@@ -1,4 +1,4 @@
-﻿using Lighthouse.Scene.SceneCamera;
+using Lighthouse.Scene.SceneCamera;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 using Lighthouse.EditorTool;
 using Lighthouse.Scene.SceneBase;
 using LighthouseExtends.UIComponent.CanvasSceneObject;

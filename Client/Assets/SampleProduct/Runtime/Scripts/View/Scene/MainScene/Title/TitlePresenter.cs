@@ -1,4 +1,4 @@
-﻿using Lighthouse.Scene;
+using Lighthouse.Scene;
 using SampleProduct.View.Scene.MainScene.Home;
 using VContainer;
 

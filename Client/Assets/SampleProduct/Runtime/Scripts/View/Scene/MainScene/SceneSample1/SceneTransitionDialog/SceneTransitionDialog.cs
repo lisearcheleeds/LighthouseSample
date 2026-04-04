@@ -1,4 +1,4 @@
-﻿using LighthouseExtends.ScreenStack;
+using LighthouseExtends.ScreenStack;
 using SampleProduct.View.Base;
 using UnityEngine;
 using UnityEngine.Serialization;

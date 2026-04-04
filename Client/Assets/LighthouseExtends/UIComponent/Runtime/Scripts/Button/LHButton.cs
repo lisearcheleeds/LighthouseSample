@@ -1,4 +1,4 @@
-﻿using LighthouseExtends.UIComponent.ExclusiveInput;
+using LighthouseExtends.UIComponent.ExclusiveInput;
 using UnityEngine.EventSystems;
 using VContainer;
 

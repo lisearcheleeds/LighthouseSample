@@ -1,4 +1,4 @@
-﻿using Lighthouse.Scene;
+using Lighthouse.Scene;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.LighthouseGenerated;
 

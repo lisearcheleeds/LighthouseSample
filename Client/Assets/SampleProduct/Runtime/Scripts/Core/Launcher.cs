@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using SampleProduct.View.Scene.MainScene.Splash;
 using UnityEngine;

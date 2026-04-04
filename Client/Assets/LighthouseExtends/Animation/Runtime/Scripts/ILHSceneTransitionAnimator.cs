@@ -1,4 +1,4 @@
-﻿namespace LighthouseExtends.Animation.Runtime
+namespace LighthouseExtends.Animation.Runtime
 {
     public interface ILHSceneTransitionAnimator : ILHTransitionAnimator
     {

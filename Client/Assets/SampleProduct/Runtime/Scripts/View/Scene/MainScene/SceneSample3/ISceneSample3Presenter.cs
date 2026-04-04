@@ -1,4 +1,4 @@
-﻿namespace SampleProduct.View.Scene.MainScene.SceneSample3
+namespace SampleProduct.View.Scene.MainScene.SceneSample3
 {
     public interface ISceneSample3Presenter
     {

@@ -1,4 +1,4 @@
-﻿namespace SampleProduct.View.Scene.MainScene.Home
+namespace SampleProduct.View.Scene.MainScene.Home
 {
     public interface IHomePresenter
     {

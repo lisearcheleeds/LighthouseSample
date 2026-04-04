@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.UIComponent.Button;

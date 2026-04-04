@@ -1,4 +1,4 @@
-﻿namespace SampleProduct.View.Scene.ModuleScene.Background
+namespace SampleProduct.View.Scene.ModuleScene.Background
 {
     public interface IBackgroundModule
     {

@@ -1,4 +1,4 @@
-﻿using Lighthouse.Scene;
+using Lighthouse.Scene;
 using Lighthouse.Scene.SceneCamera;
 using LighthouseExtends.ScreenStack;
 using LighthouseExtends.UIComponent.CanvasSceneObject;

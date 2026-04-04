@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog;

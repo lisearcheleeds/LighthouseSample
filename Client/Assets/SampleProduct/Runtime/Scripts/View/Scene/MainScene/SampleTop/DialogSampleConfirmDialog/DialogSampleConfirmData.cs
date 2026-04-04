@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using LighthouseExtends.ScreenStack;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSampleConfirmDialog

@@ -1,4 +1,4 @@
-﻿using Lighthouse.Scene;
+using Lighthouse.Scene;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using VContainer;

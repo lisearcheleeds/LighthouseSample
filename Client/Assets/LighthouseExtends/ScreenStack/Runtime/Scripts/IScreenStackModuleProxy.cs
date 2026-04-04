@@ -1,4 +1,4 @@
-﻿namespace LighthouseExtends.ScreenStack
+namespace LighthouseExtends.ScreenStack
 {
     public interface IScreenStackModuleProxy
     {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace SampleProduct.View.Scene.MainScene.SceneSample3
 {

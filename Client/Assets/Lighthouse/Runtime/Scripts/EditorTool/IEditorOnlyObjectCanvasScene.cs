@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 using Lighthouse.Scene.SceneBase;
 
 namespace Lighthouse.EditorTool

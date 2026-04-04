@@ -1,4 +1,4 @@
-﻿using LighthouseExtends.ScreenStack;
+using LighthouseExtends.ScreenStack;
 
 namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
 {

@@ -1,4 +1,4 @@
-﻿using LighthouseExtends.UIComponent.Button;
+using LighthouseExtends.UIComponent.Button;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

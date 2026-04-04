@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using VContainer;
 
 namespace SampleProduct.View.Scene.ModuleScene.Overlay
