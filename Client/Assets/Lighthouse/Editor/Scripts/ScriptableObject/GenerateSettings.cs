@@ -11,6 +11,8 @@ namespace Lighthouse.Editor.ScriptableObject
         [SerializeField, FolderOnly] DefaultAsset generatedFileDirectoryAsset;
         [SerializeField] string mainSceneIdPrefix = "SampleProduct";
         [SerializeField] string moduleSceneIdPrefix = "SampleProduct";
+        [SerializeField] TextAsset mainSceneIdTemplate;
+        [SerializeField] TextAsset moduleSceneIdTemplate;
 
         string MainSceneIdFileName => $"{mainSceneIdPrefix}MainSceneId.g.cs";
         string ModuleSceneIdFileName => $"{mainSceneIdPrefix}ModuleSceneId.g.cs";
@@ -31,5 +33,7 @@ namespace Lighthouse.Editor.ScriptableObject
         public string SceneModuleIdIdFilePath => Path.Combine(Application.dataPath, GeneratedFileDirectory, ModuleSceneIdFileName);
         public string MainSceneIdPrefix => mainSceneIdPrefix;
         public string ModuleSceneIdPrefix => moduleSceneIdPrefix;
+        public TextAsset MainSceneIdTemplate => mainSceneIdTemplate;
+        public TextAsset ModuleSceneIdTemplate => moduleSceneIdTemplate;
     }
 }
