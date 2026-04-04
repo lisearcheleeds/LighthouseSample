@@ -20,13 +20,13 @@ namespace LighthouseExtends.ScreenStack.Editor.ScriptGenerator
             Generate();
         }
 
-        [MenuItem("Lighthouse Extends/Auto Generate/Generate ScreenStack Entity Factory")]
+        [MenuItem("Lighthouse/Auto Generate/Generate ScreenStack Entity Factory")]
         static void GenerateFromMenu()
         {
             Generate();
         }
 
-        [MenuItem("Lighthouse Extends/Settings/ScreenStackGenerateSettings")]
+        [MenuItem("Lighthouse/Settings/ScreenStackGenerateSettings")]
         static void ShowSettings()
         {
             var settings = LoadOrCreateSettings();
