@@ -193,6 +193,8 @@ namespace Lighthouse.Scene
                     await loadedScene.Value.SaveSceneState(CancellationToken.None);
                 }
             }
+
+            loadedScenes.Clear();
         }
 
         MainSceneBase FindSceneBase(MainSceneId mainSceneId)

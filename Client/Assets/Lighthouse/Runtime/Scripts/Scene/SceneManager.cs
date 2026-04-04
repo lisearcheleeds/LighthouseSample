@@ -11,6 +11,7 @@ namespace Lighthouse.Scene
     {
         readonly ISceneTransitionController sceneTransitionController;
         readonly IMainSceneManager mainSceneManager;
+        readonly IModuleSceneManager moduleSceneManager;
         readonly ISceneGroupProvider sceneGroupProvider;
 
         public bool IsTransition { get; private set; }
@@ -23,10 +24,12 @@ namespace Lighthouse.Scene
         public SceneManager(
             ISceneTransitionController sceneTransitionController,
             IMainSceneManager mainSceneManager,
+            IModuleSceneManager moduleSceneManager,
             ISceneGroupProvider sceneGroupProvider)
         {
             this.sceneTransitionController = sceneTransitionController;
             this.mainSceneManager = mainSceneManager;
+            this.moduleSceneManager = moduleSceneManager;
             this.sceneGroupProvider = sceneGroupProvider;
         }
 
@@ -148,6 +151,10 @@ namespace Lighthouse.Scene
         async UniTask ISceneManager.PreReboot()
         {
             await mainSceneManager.PreReboot();
+            await moduleSceneManager.PreReboot();
+
+            transitionDataStack.Clear();
+            currentSceneGroup = null;
         }
     }
 }

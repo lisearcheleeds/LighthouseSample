@@ -174,6 +174,12 @@ namespace Lighthouse.Scene
             }
         }
 
+        UniTask IModuleSceneManager.PreReboot()
+        {
+            loadedSceneModules.Clear();
+            return UniTask.CompletedTask;
+        }
+
         ModuleSceneBase FindSceneBase(ModuleSceneId moduleSceneId)
         {
             try
