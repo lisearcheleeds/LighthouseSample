@@ -8,6 +8,7 @@ namespace LighthouseExtends.UIComponent.Button
     {
         IExclusiveInputService exclusiveInputService;
         bool isUsing;
+        int currentPointerId;
 
         [Inject]
         public void Construct(IExclusiveInputService exclusiveInputService)
@@ -17,22 +18,62 @@ namespace LighthouseExtends.UIComponent.Button
 
         public override void OnPointerDown(PointerEventData eventData)
         {
-            base.OnPointerDown(eventData);
-        }
+            if (!exclusiveInputService.TryUsePointerId(eventData.pointerId))
+            {
+                return;
+            }
 
-        public override void OnPointerClick(PointerEventData eventData)
-        {
-            base.OnPointerClick(eventData);
+            isUsing = true;
+            currentPointerId = eventData.pointerId;
+            base.OnPointerDown(eventData);
         }
 
         public override void OnPointerUp(PointerEventData eventData)
         {
+            if (!isUsing)
+            {
+                return;
+            }
+
             base.OnPointerUp(eventData);
+        }
+
+        public override void OnPointerClick(PointerEventData eventData)
+        {
+            if (!isUsing)
+            {
+                return;
+            }
+
+            base.OnPointerClick(eventData);
+            Release();
         }
 
         public override void OnPointerExit(PointerEventData eventData)
         {
             base.OnPointerExit(eventData);
+
+            if (isUsing)
+            {
+                Release();
+            }
+        }
+
+        void OnApplicationPause(bool pause)
+        {
+            if (!pause || !isUsing)
+            {
+                return;
+            }
+
+            Release();
+            InstantClearState();
+        }
+
+        void Release()
+        {
+            exclusiveInputService.ReleasePointerId(currentPointerId);
+            isUsing = false;
         }
     }
 }
