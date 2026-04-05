@@ -163,7 +163,7 @@ namespace LighthouseExtends.ScreenStack.Editor.ScriptGenerator
             sb.AppendLine("    }");
             sb.AppendLine("}");
 
-            return sb.ToString();
+            return sb.ToString().Replace("\r\n", "\n");
         }
 
         static void WriteContent(string content, string filePath)

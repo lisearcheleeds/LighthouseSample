@@ -11,7 +11,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96dcc159cf8892e4586ae70d3e740fb8, type: 3}
   m_Name: ScreenStackGenerateSettings
-  m_EditorClassIdentifier: Assembly-CSharp-Editor::LighthouseExtends.Popup.Editor.ScriptableObject.PopupGenerateSettings
+  m_EditorClassIdentifier: LighthouseExtends.ScreenStack.Editor::LighthouseExtends.ScreenStack.Editor.ScriptableObject.ScreenStackGenerateSettings
   screenStackEntityFactoryDirectoryAsset: {fileID: 102900000, guid: 420c8e3f373889f44b334ff6cab545d5, type: 3}
   screenStackEntityFactoryClassName: ScreenStackEntityFactory
-  screenStackEntityFactoryNamespace: SampleProduct.LighthouseGenerated
+  screenStackEntityFactoryNamespace: SampleProduct
+  screenStackDialogScriptOutputDirectoryAsset: {fileID: 102900000, guid: c5c2f3f6abaef3e4ea6d4af556d3c4f0, type: 3}
+  screenStackDialogScriptNamespace: SampleProduct
+  screenStackDialogDialogTemplate: {fileID: 4900000, guid: aa38d9f20b6dddc428ed656fb7c22e34, type: 3}
+  screenStackDialogDataTemplate: {fileID: 4900000, guid: d774daebcc1d3fb41a0ebf817f447a68, type: 3}
+  screenStackDialogPresenterTemplate: {fileID: 4900000, guid: 09d66b7ae1084fa4983b6faa8507d26d, type: 3}
+  screenStackDialogViewTemplate: {fileID: 4900000, guid: 52c16e997ac9cc243a9a36da199551d2, type: 3}

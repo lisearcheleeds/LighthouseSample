@@ -1,0 +1,16 @@
+using LighthouseExtends.ScreenStack;
+using {{BASE_CLASS_NAMESPACE}};
+using UnityEngine;
+
+namespace {{NAMESPACE}}
+{
+    public sealed class {{DIALOG_NAME}}Dialog : {{BASE_CLASS}}, IScreenStackSetup<{{DIALOG_NAME}}Presenter, {{DIALOG_NAME}}Data>
+    {
+        [SerializeField] {{DIALOG_NAME}}View {{DIALOG_NAME_CAMEL}}View;
+
+        public void Setup({{DIALOG_NAME}}Presenter presenter, {{DIALOG_NAME}}Data screenStackData)
+        {
+            presenter.Bind({{DIALOG_NAME_CAMEL}}View, screenStackData);
+        }
+    }
+}
