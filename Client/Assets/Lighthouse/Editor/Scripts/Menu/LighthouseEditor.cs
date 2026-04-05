@@ -7,7 +7,7 @@ namespace Lighthouse.Editor.Menu
 {
     public class LighthouseEditor : UnityEditor.Editor
     {
-        const string SettingsDefaultDirectory = "Assets/Settings";
+        const string SettingsDefaultDirectory = "Assets/Settings/Lighthouse";
         const string SettingsFileExtension = ".asset";
 
         [MenuItem("Lighthouse/Settings/GenerateSettings")]
@@ -22,9 +22,9 @@ namespace Lighthouse.Editor.Menu
             ShowSettings<SceneEditSettings>();
         }
 
-        public static T GetSettings<T>() where T : UnityEngine.ScriptableObject
+        public static T GetOrCreateSettings<T>() where T : UnityEngine.ScriptableObject
         {
-            return LoadSettings<T>();
+            return LoadSettings<T>() ?? CreateSettings<T>();
         }
 
         static void ShowSettings<T>() where T : UnityEngine.ScriptableObject
@@ -60,6 +60,13 @@ namespace Lighthouse.Editor.Menu
 
             var assetPath = $"{SettingsDefaultDirectory}/{typeof(T).Name}{SettingsFileExtension}";
             AssetDatabase.CreateAsset(settings, assetPath);
+
+            if (settings is GenerateSettings generateSettings)
+            {
+                generateSettings.InitializeDefaults();
+                EditorUtility.SetDirty(settings);
+            }
+
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             return settings;
@@ -73,7 +80,7 @@ namespace Lighthouse.Editor.Menu
                 return null;
             }
 
-            if (guids.Length > 1)
+            if (1 < guids.Length)
             {
                 Debug.LogWarning($"[LighthouseEditor] Multiple {typeof(T).Name} found. Using the first one.");
             }

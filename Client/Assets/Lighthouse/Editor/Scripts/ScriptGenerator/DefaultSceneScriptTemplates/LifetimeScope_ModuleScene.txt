@@ -1,0 +1,17 @@
+using UnityEngine;
+using VContainer;
+using VContainer.Unity;
+
+namespace {{NAMESPACE}}
+{
+    public class {{SCENE_NAME}}LifetimeScope : LifetimeScope
+    {
+        [SerializeField] {{SCENE_FILE_NAME}} {{SCENE_FILE_NAME_CAMEL}};
+
+        protected override void Configure(IContainerBuilder builder)
+        {
+            // TODO: Register dependencies
+            builder.RegisterComponent({{SCENE_FILE_NAME_CAMEL}});
+        }
+    }
+}

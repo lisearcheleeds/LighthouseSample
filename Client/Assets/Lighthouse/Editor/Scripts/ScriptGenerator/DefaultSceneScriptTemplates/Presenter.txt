@@ -1,0 +1,6 @@
+namespace {{NAMESPACE}}
+{
+    public sealed class {{SCENE_NAME}}Presenter : I{{SCENE_NAME}}Presenter
+    {
+    }
+}

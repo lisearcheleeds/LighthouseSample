@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7b41da29e133440aa6745774a6968a, type: 3}
+  m_Name: GenerateSettings
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::Lighthouse.Editor.Scripts.ScriptableObject.GenerateSettings
+  productNameSpace: SampleProduct.LighthouseGenerated
+  generatedFileDirectoryAsset: {fileID: 102900000, guid: 420c8e3f373889f44b334ff6cab545d5, type: 3}
+  mainSceneIdPrefix: SampleProduct
+  moduleSceneIdPrefix: SampleProduct
+  mainSceneIdTemplate: {fileID: 4900000, guid: baf713703904d764bb74423445629723, type: 3}
+  moduleSceneIdTemplate: {fileID: 4900000, guid: baf713703904d764bb74423445629723, type: 3}
+  sceneScriptOutputDirectoryAsset: {fileID: 102900000, guid: 5be4ae114c264bda88e5ca69d5163027, type: 3}
+  lifetimeScopeMainSceneTemplate: {fileID: 4900000, guid: c541d093cafab474baba289635db4435, type: 3}
+  lifetimeScopeModuleSceneTemplate: {fileID: 4900000, guid: 58825d4618ec9c34eb1036bda5fe533f, type: 3}
+  sceneMainSceneTemplate: {fileID: 4900000, guid: f580a7eba91f8664ea001f5ac110b001, type: 3}
+  sceneModuleSceneTemplate: {fileID: 4900000, guid: 8ba6d4499ff4bb24180b74cfe72b50e5, type: 3}
+  iPresenterTemplate: {fileID: 4900000, guid: 1d2dc9d080463fa4da9e1dcd718ee19c, type: 3}
+  presenterTemplate: {fileID: 4900000, guid: 079e07f90a70c274999f3c3d8d110c86, type: 3}
+  iViewTemplate: {fileID: 4900000, guid: 7f58928d93a40ee47befbfa796bb8e84, type: 3}
+  viewTemplate: {fileID: 4900000, guid: ed00c58b7f3df924c9a5a1d07507f22c, type: 3}

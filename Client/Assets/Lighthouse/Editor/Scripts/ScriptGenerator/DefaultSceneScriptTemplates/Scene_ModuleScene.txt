@@ -1,0 +1,11 @@
+using Lighthouse.Scene;
+using {{BASE_CLASS_NAMESPACE}};
+using {{GENERATED_SCENE_ID_NAMESPACE}};
+
+namespace {{NAMESPACE}}
+{
+    public class {{SCENE_FILE_NAME}} : {{BASE_CLASS}}
+    {
+        public override ModuleSceneId ModuleSceneId => {{SCENE_ID_CLASS}}.{{SCENE_NAME}};
+    }
+}

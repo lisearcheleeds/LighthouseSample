@@ -1,0 +1,6 @@
+namespace {{NAMESPACE}}
+{
+    public interface I{{SCENE_NAME}}Presenter
+    {
+    }
+}

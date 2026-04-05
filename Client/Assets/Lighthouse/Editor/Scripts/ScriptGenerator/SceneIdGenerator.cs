@@ -27,18 +27,22 @@ namespace Lighthouse.Editor.ScriptGenerator
         [MenuItem("Lighthouse/Auto Generate/Generate Main Scene Id")]
         static void GenerateMainSceneId()
         {
-            var generateSettings = LighthouseEditor.GetSettings<GenerateSettings>();
-            GenerateSceneId("MainScene", generateSettings.MainSceneIdPrefix, generateSettings.MainSceneIdFilePath, generateSettings.ProductNameSpace, generateSettings.MainSceneIdTemplate);
+            var generateSettings = LighthouseEditor.GetOrCreateSettings<GenerateSettings>();
+            GenerateSceneId("MainScene", generateSettings.MainSceneIdPrefix, generateSettings.MainSceneIdFilePath,
+                generateSettings.ProductNameSpace, generateSettings.MainSceneIdTemplate);
         }
 
         [MenuItem("Lighthouse/Auto Generate/Generate Module Scene Id")]
         static void GenerateModuleSceneId()
         {
-            var generateSettings = LighthouseEditor.GetSettings<GenerateSettings>();
-            GenerateSceneId("ModuleScene", generateSettings.ModuleSceneIdPrefix, generateSettings.SceneModuleIdIdFilePath, generateSettings.ProductNameSpace, generateSettings.ModuleSceneIdTemplate);
+            var generateSettings = LighthouseEditor.GetOrCreateSettings<GenerateSettings>();
+            GenerateSceneId("ModuleScene", generateSettings.ModuleSceneIdPrefix,
+                generateSettings.SceneModuleIdIdFilePath, generateSettings.ProductNameSpace,
+                generateSettings.ModuleSceneIdTemplate);
         }
 
-        static void GenerateSceneId(string sceneIdType, string prefix, string outputPath, string nameSpace, TextAsset templateOverride)
+        static void GenerateSceneId(string sceneIdType, string prefix, string outputPath, string nameSpace,
+            TextAsset templateOverride)
         {
             var scenes = EditorBuildSettings.scenes
                 .Where(s => s.enabled)
@@ -62,25 +66,30 @@ namespace Lighthouse.Editor.ScriptGenerator
                 return;
             }
 
-            AssetDatabase.ImportAsset(outputPath, ImportAssetOptions.ForceUpdate);
-            AssetDatabase.Refresh();
+            var assetPath = FsPathToAssetPath(outputPath);
+            AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceSynchronousImport);
             Debug.Log("[SceneIdGenerator] Generated.");
         }
 
         static string LoadTemplate(TextAsset templateOverride)
         {
             if (templateOverride != null)
+            {
                 return templateOverride.text;
+            }
 
             var defaultTemplate = AssetDatabase.LoadAssetAtPath<TextAsset>(DefaultTemplatePath);
             if (defaultTemplate != null)
+            {
                 return defaultTemplate.text;
+            }
 
             Debug.LogError($"[SceneIdGenerator] Default template not found at: {DefaultTemplatePath}");
             return null;
         }
 
-        static string BuildContent(string sceneIdType, string prefix, string[] sceneNames, string nameSpace, string template)
+        static string BuildContent(string sceneIdType, string prefix, string[] sceneNames, string nameSpace,
+            string template)
         {
             if (sceneNames.Length == 0)
             {
@@ -105,14 +114,16 @@ namespace Lighthouse.Editor.ScriptGenerator
             var sb = new StringBuilder();
             byte id = 1;
 
-            sb.AppendLine($"        public static readonly {sceneIdTypeName} None = new {sceneIdTypeName}({id}, string.Empty);");
+            sb.AppendLine(
+                $"        public static readonly {sceneIdTypeName} None = new {sceneIdTypeName}({id}, string.Empty);");
             id++;
 
             foreach (var sceneName in sceneNames)
             {
                 var validSceneName = Path.GetFileNameWithoutExtension(sceneName);
                 var identifier = SanitizeIdentifier(validSceneName);
-                sb.AppendLine($"        public static readonly {sceneIdTypeName} {identifier} = new {sceneIdTypeName}({id}, \"{validSceneName}\");");
+                sb.AppendLine(
+                    $"        public static readonly {sceneIdTypeName} {identifier} = new {sceneIdTypeName}({id}, \"{validSceneName}\");");
                 id++;
             }
 
@@ -151,8 +162,20 @@ namespace Lighthouse.Editor.ScriptGenerator
                 }
             }
 
-            File.WriteAllText(sceneIdFilePath, content, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+            File.WriteAllText(sceneIdFilePath, content, new UTF8Encoding(false));
             return true;
+        }
+
+        static string FsPathToAssetPath(string fsPath)
+        {
+            var normalized = fsPath.Replace('\\', '/');
+            var dataPath = Application.dataPath.Replace('\\', '/');
+            if (normalized.StartsWith(dataPath))
+            {
+                return "Assets" + normalized.Substring(dataPath.Length);
+            }
+
+            return fsPath;
         }
 
         static string SanitizeIdentifier(string name)

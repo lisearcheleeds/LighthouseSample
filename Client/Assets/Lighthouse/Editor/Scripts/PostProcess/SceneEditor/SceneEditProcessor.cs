@@ -6,7 +6,7 @@ using Lighthouse.Scene.SceneBase;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using SceneManager = UnityEngine.SceneManagement.SceneManager;
+using UnityEngine.SceneManagement;
 
 namespace Lighthouse.Editor.PostProcess.SceneEditor
 {
@@ -22,7 +22,7 @@ namespace Lighthouse.Editor.PostProcess.SceneEditor
                 return;
             }
 
-            sceneEditSettings = LighthouseEditor.GetSettings<SceneEditSettings>();
+            sceneEditSettings = LighthouseEditor.GetOrCreateSettings<SceneEditSettings>();
             if (sceneEditSettings.EnableSceneEditProcess)
             {
                 SetupSceneEditProcessor();
@@ -37,10 +37,7 @@ namespace Lighthouse.Editor.PostProcess.SceneEditor
                 InitEditorOnlyObject();
             };
 
-            EditorSceneManager.sceneClosed += scene =>
-            {
-                DestroyEditorOnlyObject();
-            };
+            EditorSceneManager.sceneClosed += scene => { DestroyEditorOnlyObject(); };
 
             EditorApplication.playModeStateChanged += mode =>
             {
@@ -105,8 +102,7 @@ namespace Lighthouse.Editor.PostProcess.SceneEditor
             return Enumerable.Range(0, SceneManager.sceneCount)
                 .Select(SceneManager.GetSceneAt)
                 .Where(scene => scene.IsValid() && scene.isLoaded)
-                .SelectMany(scene => scene.GetRootGameObjects()
-                    .SelectMany(x => x.GetComponents<MonoBehaviour>().OfType<T>()))
+                .SelectMany(scene => scene.GetRootGameObjects().SelectMany(x => x.GetComponents<MonoBehaviour>().OfType<T>()))
                 .ToArray();
         }
 
