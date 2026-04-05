@@ -18,7 +18,7 @@ namespace Lighthouse.Editor.ScriptGenerator
         GenerateSettings settings;
         string templateError;
 
-        [MenuItem("Lighthouse/Generate Scene Scripts")]
+        [MenuItem("Lighthouse/Generate/Scene scripts from template")]
         static void Open()
         {
             var window = GetWindow<SceneScriptGeneratorWindow>("Scene Script Generator");
@@ -80,9 +80,7 @@ namespace Lighthouse.Editor.ScriptGenerator
 
         int FindDefaultIndex()
         {
-            var defaultName = sceneType == SceneType.MainScene
-                ? "CanvasMainSceneBase"
-                : "CanvasModuleSceneBase";
+            var defaultName = sceneType == SceneType.MainScene ? "CanvasMainSceneBase" : "CanvasModuleSceneBase";
             var idx = System.Array.FindIndex(baseClasses, b => b.TypeName == defaultName);
             return idx >= 0 ? idx : 0;
         }

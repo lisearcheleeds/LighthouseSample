@@ -28,17 +28,13 @@ namespace Lighthouse.Editor.ScriptGenerator
         {
             get
             {
-                return IsGeneric
-                    ? $"{TypeName}<T>  ({Namespace})"
-                    : $"{TypeName}  ({Namespace})";
+                return IsGeneric ? $"{TypeName}<T>  ({Namespace})" : $"{TypeName}  ({Namespace})";
             }
         }
 
         public string GetBaseClassExpression(string sceneFileName, string sceneName)
         {
-            return IsGeneric
-                ? $"{TypeName}<{sceneFileName}.{sceneName}TransitionData>"
-                : TypeName;
+            return IsGeneric ? $"{TypeName}<{sceneFileName}.{sceneName}TransitionData>" : TypeName;
         }
     }
 
@@ -58,8 +54,7 @@ namespace Lighthouse.Editor.ScriptGenerator
                     .Concat(CompilationPipeline.GetAssemblies(AssembliesType.Player))
                     .Select(a => a.name));
 
-            var loadedNames =
-                new HashSet<string>(AppDomain.CurrentDomain.GetAssemblies().Select(a => a.GetName().Name));
+            var loadedNames = new HashSet<string>(AppDomain.CurrentDomain.GetAssemblies().Select(a => a.GetName().Name));
 
             return compiledNames.Any(name => !loadedNames.Contains(name));
         }
@@ -85,11 +80,7 @@ namespace Lighthouse.Editor.ScriptGenerator
                 .ToArray();
         }
 
-        public static void GenerateFiles(
-            string sceneName,
-            SceneType sceneType,
-            BaseClassInfo baseClass,
-            GenerateSettings settings)
+        public static void GenerateFiles(string sceneName, SceneType sceneType, BaseClassInfo baseClass, GenerateSettings settings)
         {
             if (settings == null)
             {
@@ -100,8 +91,7 @@ namespace Lighthouse.Editor.ScriptGenerator
             var outputRoot = settings.SceneScriptOutputDirectory;
             if (string.IsNullOrEmpty(outputRoot))
             {
-                Debug.LogError(
-                    "[SceneScriptGenerator] Output directory is not configured in GenerateSettings.");
+                Debug.LogError("[SceneScriptGenerator] Output directory is not configured in GenerateSettings.");
                 return;
             }
 
@@ -144,18 +134,12 @@ namespace Lighthouse.Editor.ScriptGenerator
 
             var files = new[]
             {
-                ($"{outputAssetDir}/{sceneName}LifetimeScope.cs",
-                    LoadTemplate(lifetimeScopeTemplate)),
-                ($"{outputAssetDir}/{sceneFileName}.cs",
-                    LoadTemplate(sceneTemplate)),
-                ($"{outputAssetDir}/I{sceneName}Presenter.cs",
-                    LoadTemplate(settings.IPresenterTemplate)),
-                ($"{outputAssetDir}/{sceneName}Presenter.cs",
-                    LoadTemplate(settings.PresenterTemplate)),
-                ($"{outputAssetDir}/I{sceneName}View.cs",
-                    LoadTemplate(settings.IViewTemplate)),
-                ($"{outputAssetDir}/{sceneName}View.cs",
-                    LoadTemplate(settings.ViewTemplate)),
+                ($"{outputAssetDir}/{sceneName}LifetimeScope.cs", LoadTemplate(lifetimeScopeTemplate)),
+                ($"{outputAssetDir}/{sceneFileName}.cs", LoadTemplate(sceneTemplate)),
+                ($"{outputAssetDir}/I{sceneName}Presenter.cs", LoadTemplate(settings.IPresenterTemplate)),
+                ($"{outputAssetDir}/{sceneName}Presenter.cs", LoadTemplate(settings.PresenterTemplate)),
+                ($"{outputAssetDir}/I{sceneName}View.cs", LoadTemplate(settings.IViewTemplate)),
+                ($"{outputAssetDir}/{sceneName}View.cs", LoadTemplate(settings.ViewTemplate)),
             };
 
             foreach (var (assetPath, templateContent) in files)
@@ -203,8 +187,7 @@ namespace Lighthouse.Editor.ScriptGenerator
                 return;
             }
 
-            var content = replacements.Aggregate(template,
-                (current, pair) => current.Replace(pair.Key, pair.Value));
+            var content = replacements.Aggregate(template, (current, pair) => current.Replace(pair.Key, pair.Value));
 
             if (File.Exists(fsPath))
             {

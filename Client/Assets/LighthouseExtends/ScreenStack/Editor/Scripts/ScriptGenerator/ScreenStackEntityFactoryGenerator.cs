@@ -20,7 +20,7 @@ namespace LighthouseExtends.ScreenStack.Editor.ScriptGenerator
             Generate();
         }
 
-        [MenuItem("Lighthouse/Auto Generate/Generate ScreenStack Entity Factory")]
+        [MenuItem("Lighthouse/Generate/Auto/Generate \"ScreenStackEntityFactory\" manually")]
         static void GenerateFromMenu()
         {
             Generate();
