@@ -1,4 +1,3 @@
-using LighthouseExtends.UIComponent.Button;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -13,7 +12,6 @@ namespace SampleProduct.View.Scene.MainScene.Home
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponent(homeScene);
-            builder.RegisterComponentInHierarchy<LHButton>();
 
             builder.Register<HomePresenter>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.RegisterComponent(homeView).AsImplementedInterfaces();

@@ -1,4 +1,3 @@
-using LighthouseExtends.UIComponent.Button;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -13,7 +12,6 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponent(sampleTopScene);
-            builder.RegisterComponentInHierarchy<LHButton>();
 
             builder.Register<SampleTopPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.RegisterComponent(sampleTopView).AsImplementedInterfaces();

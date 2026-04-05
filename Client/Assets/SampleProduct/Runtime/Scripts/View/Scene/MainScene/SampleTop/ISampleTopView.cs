@@ -21,6 +21,14 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         public IDisposable SubscribeDialogSample1ButtonClick(Action action);
         public IDisposable SubscribeDialogSample2ButtonClick(Action action);
 
+        public IDisposable SubscribeElementDialogButtonClick(Action action);
+        public IDisposable SubscribeElementPopupButtonClick(Action action);
+        public IDisposable SubscribeElementOverlayButtonClick(Action action);
+        public IDisposable SubscribeAnimationButtonClick(Action action);
+        public IDisposable SubscribeTransitionAnimationButtonClick(Action action);
+        public IDisposable SubscribeButtonButtonClick(Action action);
+        public IDisposable SubscribeTextButtonClick(Action action);
+
         public IDisposable SubscribeGame1ButtonClick(Action action);
         public IDisposable SubscribeGame2ButtonClick(Action action);
 

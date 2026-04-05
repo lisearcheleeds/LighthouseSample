@@ -1,24 +1,17 @@
 using LighthouseExtends.UIComponent.ExclusiveInput;
 using UnityEngine.EventSystems;
-using VContainer;
 
 namespace LighthouseExtends.UIComponent.Button
 {
     public class LHButton : UnityEngine.UI.Button
     {
-        IExclusiveInputService exclusiveInputService;
         bool isUsing;
         int currentPointerId;
 
-        [Inject]
-        public void Construct(IExclusiveInputService exclusiveInputService)
-        {
-            this.exclusiveInputService = exclusiveInputService;
-        }
-
         public override void OnPointerDown(PointerEventData eventData)
         {
-            if (!exclusiveInputService.TryUsePointerId(eventData.pointerId))
+            var service = ExclusiveInputService.Instance;
+            if (service != null && !service.TryUsePointerId(eventData.pointerId))
             {
                 return;
             }
@@ -72,7 +65,7 @@ namespace LighthouseExtends.UIComponent.Button
 
         void Release()
         {
-            exclusiveInputService.ReleasePointerId(currentPointerId);
+            ExclusiveInputService.Instance?.ReleasePointerId(currentPointerId);
             isUsing = false;
         }
     }

@@ -26,6 +26,14 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         [SerializeField] LHButton dialogSample1Button;
         [SerializeField] LHButton dialogSample2Button;
 
+        [SerializeField] LHButton elementDialogButton;
+        [SerializeField] LHButton elementPopupButton;
+        [SerializeField] LHButton elementOverlayButton;
+        [SerializeField] LHButton animationButton;
+        [SerializeField] LHButton transitionAnimationButton;
+        [SerializeField] LHButton buttonButton;
+        [SerializeField] LHButton textButton;
+
         [SerializeField] LHButton game1Button;
         [SerializeField] LHButton game2Button;
 
@@ -60,6 +68,14 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
 
         IDisposable ISampleTopView.SubscribeDialogSample1ButtonClick(Action action) => dialogSample1Button.SubscribeOnClick(action);
         IDisposable ISampleTopView.SubscribeDialogSample2ButtonClick(Action action) => dialogSample2Button.SubscribeOnClick(action);
+
+        IDisposable ISampleTopView.SubscribeElementDialogButtonClick(Action action) => elementDialogButton.SubscribeOnClick(action);
+        IDisposable ISampleTopView.SubscribeElementPopupButtonClick(Action action) => elementPopupButton.SubscribeOnClick(action);
+        IDisposable ISampleTopView.SubscribeElementOverlayButtonClick(Action action) => elementOverlayButton.SubscribeOnClick(action);
+        IDisposable ISampleTopView.SubscribeAnimationButtonClick(Action action) => animationButton.SubscribeOnClick(action);
+        IDisposable ISampleTopView.SubscribeTransitionAnimationButtonClick(Action action) => transitionAnimationButton.SubscribeOnClick(action);
+        IDisposable ISampleTopView.SubscribeButtonButtonClick(Action action) => buttonButton.SubscribeOnClick(action);
+        IDisposable ISampleTopView.SubscribeTextButtonClick(Action action) => textButton.SubscribeOnClick(action);
 
         IDisposable ISampleTopView.SubscribeGame1ButtonClick(Action action) => game1Button.SubscribeOnClick(action);
         IDisposable ISampleTopView.SubscribeGame2ButtonClick(Action action) => game2Button.SubscribeOnClick(action);

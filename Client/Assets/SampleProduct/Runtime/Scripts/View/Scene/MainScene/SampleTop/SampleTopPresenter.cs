@@ -55,6 +55,14 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
             sampleTopView.SubscribeDialogSample1ButtonClick(OnClickDialogSample1);
             sampleTopView.SubscribeDialogSample2ButtonClick(OnClickDialogSample2);
 
+            sampleTopView.SubscribeElementDialogButtonClick(OnClickElementDialog);
+            sampleTopView.SubscribeElementPopupButtonClick(OnClickElementPopup);
+            sampleTopView.SubscribeElementOverlayButtonClick(OnClickElementOverlay);
+            sampleTopView.SubscribeAnimationButtonClick(OnClickAnimation);
+            sampleTopView.SubscribeTransitionAnimationButtonClick(OnClickTransitionAnimation);
+            sampleTopView.SubscribeButtonButtonClick(OnClickButton);
+            sampleTopView.SubscribeTextButtonClick(OnClickText);
+
             sampleTopView.SubscribeGame1ButtonClick(OnClickGame1Button);
             sampleTopView.SubscribeGame2ButtonClick(OnClickGame2Button);
         }
@@ -180,6 +188,41 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         void OnClickDialogSample2()
         {
             screenStackModule.Open(new DialogSample2Data()).Forget();
+        }
+
+        void OnClickElementDialog()
+        {
+            Debug.Log("OnClickElementDialog");
+        }
+
+        void OnClickElementPopup()
+        {
+            Debug.Log("OnClickElementPopup");
+        }
+
+        void OnClickElementOverlay()
+        {
+            Debug.Log("OnClickElementOverlay");
+        }
+
+        void OnClickAnimation()
+        {
+            Debug.Log("OnClickAnimation");
+        }
+
+        void OnClickTransitionAnimation()
+        {
+            Debug.Log("OnClickTransitionAnimation");
+        }
+
+        void OnClickButton()
+        {
+            Debug.Log("OnClickButton");
+        }
+
+        void OnClickText()
+        {
+            Debug.Log("OnClickText");
         }
 
         void OnClickGame1Button()
