@@ -29,7 +29,7 @@ namespace Lighthouse.Editor.ScriptGenerator
         {
             var generateSettings = LighthouseEditor.GetOrCreateSettings<GenerateSettings>();
             GenerateSceneId("MainScene", generateSettings.MainSceneIdPrefix, generateSettings.MainSceneIdFilePath,
-                generateSettings.ProductNameSpace, generateSettings.MainSceneIdTemplate);
+                generateSettings.GeneratedSceneIdNamespace, generateSettings.MainSceneIdTemplate);
         }
 
         [MenuItem("Lighthouse/Auto Generate/Generate Module Scene Id")]
@@ -37,7 +37,7 @@ namespace Lighthouse.Editor.ScriptGenerator
         {
             var generateSettings = LighthouseEditor.GetOrCreateSettings<GenerateSettings>();
             GenerateSceneId("ModuleScene", generateSettings.ModuleSceneIdPrefix,
-                generateSettings.SceneModuleIdIdFilePath, generateSettings.ProductNameSpace,
+                generateSettings.SceneModuleIdIdFilePath, generateSettings.GeneratedSceneIdNamespace,
                 generateSettings.ModuleSceneIdTemplate);
         }
 

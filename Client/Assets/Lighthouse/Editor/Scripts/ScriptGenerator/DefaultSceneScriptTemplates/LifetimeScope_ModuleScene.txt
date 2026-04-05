@@ -7,11 +7,13 @@ namespace {{NAMESPACE}}
     public class {{SCENE_NAME}}LifetimeScope : LifetimeScope
     {
         [SerializeField] {{SCENE_FILE_NAME}} {{SCENE_FILE_NAME_CAMEL}};
+        [SerializeField] {{SCENE_NAME}}View {{SCENE_NAME_CAMEL}}View;
 
         protected override void Configure(IContainerBuilder builder)
         {
-            // TODO: Register dependencies
             builder.RegisterComponent({{SCENE_FILE_NAME_CAMEL}});
+            builder.Register<{{SCENE_NAME}}Presenter>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.RegisterComponent({{SCENE_NAME_CAMEL}}View).AsImplementedInterfaces();
         }
     }
 }

@@ -86,7 +86,7 @@ namespace Lighthouse.Editor.ScriptableObject
 
         public void InitializeDefaults()
         {
-            const string TemplatesRoot = "Assets/Lighthouse/Editor/Scripts/ScriptGenerator/SceneScriptTemplates";
+            const string TemplatesRoot = "Assets/Lighthouse/Editor/Scripts/ScriptGenerator/DefaultSceneScriptTemplates";
             lifetimeScopeMainSceneTemplate = AssetDatabase.LoadAssetAtPath<TextAsset>($"{TemplatesRoot}/LifetimeScope_MainScene.txt");
             lifetimeScopeModuleSceneTemplate = AssetDatabase.LoadAssetAtPath<TextAsset>($"{TemplatesRoot}/LifetimeScope_ModuleScene.txt");
             sceneMainSceneTemplate = AssetDatabase.LoadAssetAtPath<TextAsset>($"{TemplatesRoot}/Scene_MainScene.txt");
