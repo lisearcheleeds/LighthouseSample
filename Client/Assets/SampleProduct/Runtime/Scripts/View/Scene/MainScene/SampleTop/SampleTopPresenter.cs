@@ -1,6 +1,11 @@
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.AnimationElement;
+using SampleProduct.DialogElement;
+using SampleProduct.OverlayElement;
+using SampleProduct.PopupElement;
+using SampleProduct.TransitionAnimationElement;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog;
 using SampleProduct.View.Scene.MainScene.SceneSample1;
@@ -192,27 +197,27 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
 
         void OnClickElementDialog()
         {
-            Debug.Log("OnClickElementDialog");
+            screenStackModule.Open(new DialogElementData()).Forget();
         }
 
         void OnClickElementPopup()
         {
-            Debug.Log("OnClickElementPopup");
+            screenStackModule.Open(new PopupElementData()).Forget();
         }
 
         void OnClickElementOverlay()
         {
-            Debug.Log("OnClickElementOverlay");
+            screenStackModule.Open(new OverlayElementData()).Forget();
         }
 
         void OnClickAnimation()
         {
-            Debug.Log("OnClickAnimation");
+            screenStackModule.Open(new AnimationElementData()).Forget();
         }
 
         void OnClickTransitionAnimation()
         {
-            Debug.Log("OnClickTransitionAnimation");
+            screenStackModule.Open(new TransitionAnimationElementData()).Forget();
         }
 
         void OnClickButton()

@@ -8,6 +8,11 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using VContainer;
+using SampleProduct.AnimationElement;
+using SampleProduct.DialogElement;
+using SampleProduct.OverlayElement;
+using SampleProduct.PopupElement;
+using SampleProduct.TransitionAnimationElement;
 using SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog;
@@ -31,6 +36,11 @@ namespace SampleProduct
         {
             return data switch
             {
+                TransitionAnimationElementData d => CreateScreenStackEntityAsync<TransitionAnimationElementOverlay, TransitionAnimationElementPresenter, TransitionAnimationElementData>("TransitionAnimationElementOverlay", d, ct),
+                PopupElementData d => CreateScreenStackEntityAsync<PopupElementPopup, PopupElementPresenter, PopupElementData>("PopupElementPopup", d, ct),
+                OverlayElementData d => CreateScreenStackEntityAsync<OverlayElementOverlay, OverlayElementPresenter, OverlayElementData>("OverlayElementOverlay", d, ct),
+                DialogElementData d => CreateScreenStackEntityAsync<DialogElementDialog, DialogElementPresenter, DialogElementData>("DialogElementDialog", d, ct),
+                AnimationElementData d => CreateScreenStackEntityAsync<AnimationElementOverlay, AnimationElementPresenter, AnimationElementData>("AnimationElementOverlay", d, ct),
                 SceneTransitionData d => CreateScreenStackEntityAsync<SceneTransitionDialog, SceneTransitionPresenter, SceneTransitionData>("SceneTransitionDialog", d, ct),
                 DialogSampleConfirmData d => CreateScreenStackEntityAsync<DialogSampleConfirmDialog, DialogSampleConfirmPresenter, DialogSampleConfirmData>("DialogSampleConfirmDialog", d, ct),
                 DialogSample2Data d => CreateScreenStackEntityAsync<DialogSample2Dialog, DialogSample2Presenter, DialogSample2Data>("DialogSample2Dialog", d, ct),
