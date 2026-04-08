@@ -1,17 +1,10 @@
 {
-    "name": "SampleProduct.Runtime",
+    "name": "LighthouseExtends.TextMeshPro.Runtime",
     "rootNamespace": "",
     "references": [
-        "Lighthouse.Runtime",
-        "LighthouseExtends.Animation.Runtime",
-        "LighthouseExtends.ScreenStack.Runtime",
-        "LighthouseExtends.UIComponent.Runtime",
         "LighthouseExtends.TextTable.Runtime",
-        "UniTask",
         "R3.Unity",
-        "VContainer",
-        "Unity.TextMeshPro",
-        "UnityEngine.UI"
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

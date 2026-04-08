@@ -1,0 +1,105 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using LighthouseExtends.ScreenStack;
+using LighthouseExtends.TextTable;
+using UnityEngine;
+using VContainer;
+using VContainer.Unity;
+
+namespace SampleProduct.Infrastructure.AssetLoader
+{
+    public sealed class SampleAssetLoader : IScreenStackInstanceFactory, ITextTableLoader
+    {
+        const string ResourcesPath = "TextTable";
+
+        readonly IObjectResolver objectResolver;
+
+        [Inject]
+        public SampleAssetLoader(IObjectResolver objectResolver)
+        {
+            this.objectResolver = objectResolver;
+        }
+
+        async UniTask<TScreenStack> IScreenStackInstanceFactory.CreateScreenStackInstance<TScreenStack>(string screenStackAddress, CancellationToken ct)
+        {
+            var request = Resources.LoadAsync<GameObject>(screenStackAddress);
+            await request.ToUniTask(cancellationToken: ct);
+            var prefab = request.asset as GameObject;
+            var gameObject = objectResolver.Instantiate(prefab);
+            return gameObject.GetComponents<MonoBehaviour>().OfType<TScreenStack>().First();
+        }
+
+        UniTask<IReadOnlyDictionary<string, string>> ITextTableLoader.LoadAsync(string languageCode, CancellationToken cancellationToken)
+        {
+            var result = new Dictionary<string, string>();
+            var assets = Resources.LoadAll<TextAsset>(ResourcesPath);
+
+            foreach (var asset in assets)
+            {
+                // Expected filename format: {domain}.{language} (e.g., "Common.ja")
+                var dotIndex = asset.name.LastIndexOf('.');
+                if (dotIndex < 0)
+                {
+                    continue;
+                }
+
+                var language = asset.name.Substring(dotIndex + 1);
+                if (language != languageCode)
+                {
+                    continue;
+                }
+
+                ParseTsv(asset.text, asset.name, languageCode, result);
+            }
+
+            return UniTask.FromResult<IReadOnlyDictionary<string, string>>(result);
+        }
+
+        static void ParseTsv(string content, string assetName, string languageCode, Dictionary<string, string> table)
+        {
+            var lines = content.Split('\n');
+            var isHeader = true;
+
+            foreach (var line in lines)
+            {
+                if (isHeader)
+                {
+                    isHeader = false;
+                    continue;
+                }
+
+                var trimmed = line.TrimEnd('\r');
+                if (string.IsNullOrEmpty(trimmed))
+                {
+                    continue;
+                }
+
+                var tabIndex = trimmed.IndexOf('\t');
+                if (tabIndex < 0)
+                {
+                    continue;
+                }
+
+                var key = trimmed.Substring(0, tabIndex);
+                var text = trimmed.Substring(tabIndex + 1);
+
+                if (table.ContainsKey(key))
+                {
+#if DEBUG
+                    throw new InvalidOperationException(
+                        $"[TextTable] Duplicate key '{key}' found in '{assetName}' (language: {languageCode}).");
+#else
+                    table[key] = text;
+#endif
+                }
+                else
+                {
+                    table[key] = text;
+                }
+            }
+        }
+    }
+}
