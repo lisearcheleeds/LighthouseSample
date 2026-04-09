@@ -67,6 +67,11 @@ namespace LighthouseExtends.TextTable.Editor
         GUIStyle dirtyTextFieldStyle;
         GUIStyle deleteButtonStyle;
 
+        // Error state
+        string assetListError;
+        string tableLoadError;
+        List<string> tsvLoadErrors = new();
+
         // ─────────────────────────────────────────────────────────────────
         // Open
         // ─────────────────────────────────────────────────────────────────
@@ -87,9 +92,9 @@ namespace LighthouseExtends.TextTable.Editor
         void LoadOrCreateSettings()
         {
             var guids = AssetDatabase.FindAssets($"t:{nameof(TextTableEditorSettings)}");
-            if (guids.Length > 0)
+            if (0 < guids.Length)
             {
-                if (guids.Length > 1)
+                if (1 < guids.Length)
                 {
                     Debug.LogWarning("[TextTable] Multiple TextTableEditorSettings found. Using the first one.");
                 }
@@ -115,22 +120,35 @@ namespace LighthouseExtends.TextTable.Editor
 
         void RefreshAssetList()
         {
-            sceneEntries = AssetDatabase.FindAssets("t:SceneAsset")
-                .Select(AssetDatabase.GUIDToAssetPath)
-                .Where(p => p.StartsWith("Assets/"))
-                .Select(p => new AssetEntry(p, Path.GetFileNameWithoutExtension(p),
-                    $"Scene{Path.GetFileNameWithoutExtension(p)}", isScene: true))
-                .ToList();
+            assetListError = null;
+            try
+            {
+                sceneEntries = AssetDatabase.FindAssets("t:SceneAsset")
+                    .Select(AssetDatabase.GUIDToAssetPath)
+                    .Where(p => p.StartsWith("Assets/"))
+                    .Select(p => new AssetEntry(p, Path.GetFileNameWithoutExtension(p),
+                        $"Scene{Path.GetFileNameWithoutExtension(p)}", isScene: true))
+                    .ToList();
 
-            var prefabPaths = AssetDatabase.FindAssets("t:Prefab")
-                .Select(AssetDatabase.GUIDToAssetPath)
-                .Where(p => p.StartsWith("Assets/"))
-                .ToList();
+                var prefabPaths = AssetDatabase.FindAssets("t:Prefab")
+                    .Select(AssetDatabase.GUIDToAssetPath)
+                    .Where(p => p.StartsWith("Assets/"))
+                    .ToList();
 
-            var baseNames = ComputePrefabBaseNames(prefabPaths);
-            prefabEntries = prefabPaths
-                .Select((p, i) => new AssetEntry(p, Path.GetFileNameWithoutExtension(p), baseNames[i], isScene: false))
-                .ToList();
+                var baseNames = ComputePrefabBaseNames(prefabPaths);
+                prefabEntries = prefabPaths
+                    .Select((p, i) => new AssetEntry(p, Path.GetFileNameWithoutExtension(p), baseNames[i], isScene: false))
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                assetListError = $"Failed to load Scene / Prefab list.\n" +
+                                 $"Fix: Verify the AssetDatabase is initialized. Try restarting Unity or running Assets > Reimport All.\n" +
+                                 $"Detail: {e.Message}";
+                sceneEntries = new List<AssetEntry>();
+                prefabEntries = new List<AssetEntry>();
+                Debug.LogException(e);
+            }
         }
 
         static List<string> ComputePrefabBaseNames(List<string> paths)
@@ -142,7 +160,7 @@ namespace LighthouseExtends.TextTable.Editor
             {
                 depth++;
                 var duplicates = names.GroupBy(n => n)
-                    .Where(g => g.Count() > 1)
+                    .Where(g => 1 < g.Count())
                     .Select(g => g.Key)
                     .ToHashSet();
 
@@ -198,7 +216,7 @@ namespace LighthouseExtends.TextTable.Editor
         void SyncLangColWidths()
         {
             while (langColWidths.Count < languages.Count) { langColWidths.Add(160f); }
-            while (langColWidths.Count > languages.Count) { langColWidths.RemoveAt(langColWidths.Count - 1); }
+            while (languages.Count < langColWidths.Count) { langColWidths.RemoveAt(langColWidths.Count - 1); }
         }
 
         // ─────────────────────────────────────────────────────────────────
@@ -239,6 +257,8 @@ namespace LighthouseExtends.TextTable.Editor
             keySourceMap = new Dictionary<string, Dictionary<string, string>>();
             deletedTsvKeys = new HashSet<string>();
             isDirty = false;
+            tableLoadError = null;
+            tsvLoadErrors = new List<string>();
 
             if (selectedEntry == null || settings == null)
             {
@@ -246,14 +266,53 @@ namespace LighthouseExtends.TextTable.Editor
             }
 
             var folder = ToAbsolutePath(settings.TextTableFolderPath);
-            languages = DetectLanguages(folder);
+
+            try
+            {
+                languages = DetectLanguages(folder);
+            }
+            catch (Exception e)
+            {
+                tableLoadError = $"Failed to read the TSV folder.\n" +
+                                 $"Fix: Check 'Text Table Folder Path' in Settings. Current value: {settings.TextTableFolderPath}\n" +
+                                 $"Detail: {e.Message}";
+                Debug.LogException(e);
+                return;
+            }
+
             SyncLangColWidths();
 
-            var (loaded, loadedSourceMap) = LoadAllTsvData(folder);
-            allTsvData = loaded;
-            keySourceMap = loadedSourceMap;
+            try
+            {
+                var (loaded, loadedSourceMap, errors) = LoadAllTsvData(folder);
+                allTsvData = loaded;
+                keySourceMap = loadedSourceMap;
+                tsvLoadErrors = errors;
+            }
+            catch (Exception e)
+            {
+                tableLoadError = $"Failed to load TSV files.\n" +
+                                 $"Fix: Verify the TSV files in '{settings.TextTableFolderPath}' are correctly formatted.\n" +
+                                 $"Detail: {e.Message}";
+                Debug.LogException(e);
+                return;
+            }
 
-            foreach (var (comp, path) in FindComponents(selectedEntry))
+            List<(LHTextMeshPro comp, string path)> componentList;
+            try
+            {
+                componentList = FindComponents(selectedEntry);
+            }
+            catch (Exception e)
+            {
+                tableLoadError = $"Failed to load components from '{selectedEntry.displayName}'.\n" +
+                                 $"Fix: Check the file is not corrupted. Path: {selectedEntry.assetPath}\n" +
+                                 $"Detail: {e.Message}";
+                Debug.LogException(e);
+                return;
+            }
+
+            foreach (var (comp, path) in componentList)
             {
                 var key = ReadTextKey(comp);
                 var langData = new Dictionary<string, string>();
@@ -313,63 +372,73 @@ namespace LighthouseExtends.TextTable.Editor
         }
 
         static (Dictionary<string, Dictionary<string, string>> data,
-            Dictionary<string, Dictionary<string, string>> sourceMap)
+            Dictionary<string, Dictionary<string, string>> sourceMap,
+            List<string> errors)
             LoadAllTsvData(string folder)
         {
             var data = new Dictionary<string, Dictionary<string, string>>();
             var sourceMap = new Dictionary<string, Dictionary<string, string>>();
+            var errors = new List<string>();
 
             if (!Directory.Exists(folder))
             {
-                return (data, sourceMap);
+                return (data, sourceMap, errors);
             }
 
             foreach (var file in Directory.GetFiles(folder, "*.tsv"))
             {
-                var nameNoExt = Path.GetFileNameWithoutExtension(file);
-                var dot = nameNoExt.LastIndexOf('.');
-                if (dot < 0)
+                try
                 {
-                    continue;
+                    var nameNoExt = Path.GetFileNameWithoutExtension(file);
+                    var dot = nameNoExt.LastIndexOf('.');
+                    if (dot < 0)
+                    {
+                        continue;
+                    }
+
+                    var lang = nameNoExt.Substring(dot + 1);
+                    var baseName = nameNoExt.Substring(0, dot);
+
+                    foreach (var line in File.ReadAllLines(file).Skip(1))
+                    {
+                        var trimmed = line.TrimEnd('\r');
+                        if (string.IsNullOrEmpty(trimmed))
+                        {
+                            continue;
+                        }
+
+                        var tab = trimmed.IndexOf('\t');
+                        if (tab < 0)
+                        {
+                            continue;
+                        }
+
+                        var key = trimmed.Substring(0, tab);
+                        var text = trimmed.Substring(tab + 1);
+
+                        if (!data.ContainsKey(key))
+                        {
+                            data[key] = new Dictionary<string, string>();
+                        }
+
+                        data[key][lang] = text;
+
+                        if (!sourceMap.ContainsKey(key))
+                        {
+                            sourceMap[key] = new Dictionary<string, string>();
+                        }
+
+                        sourceMap[key][lang] = baseName;
+                    }
                 }
-
-                var lang = nameNoExt.Substring(dot + 1);
-                var baseName = nameNoExt.Substring(0, dot);
-
-                foreach (var line in File.ReadAllLines(file).Skip(1))
+                catch (Exception e)
                 {
-                    var trimmed = line.TrimEnd('\r');
-                    if (string.IsNullOrEmpty(trimmed))
-                    {
-                        continue;
-                    }
-
-                    var tab = trimmed.IndexOf('\t');
-                    if (tab < 0)
-                    {
-                        continue;
-                    }
-
-                    var key = trimmed.Substring(0, tab);
-                    var text = trimmed.Substring(tab + 1);
-
-                    if (!data.ContainsKey(key))
-                    {
-                        data[key] = new Dictionary<string, string>();
-                    }
-
-                    data[key][lang] = text;
-
-                    if (!sourceMap.ContainsKey(key))
-                    {
-                        sourceMap[key] = new Dictionary<string, string>();
-                    }
-
-                    sourceMap[key][lang] = baseName;
+                    errors.Add($"'{Path.GetFileName(file)}': {e.Message} (Fix: Ensure the file is not open in another app and is encoded as UTF-8)");
+                    Debug.LogException(e);
                 }
             }
 
-            return (data, sourceMap);
+            return (data, sourceMap, errors);
         }
 
         void Save()
@@ -567,13 +636,13 @@ namespace LighthouseExtends.TextTable.Editor
                     break;
                 }
             }
-            else if (e.type == EventType.MouseDrag && resizingColIndex >= 0)
+            else if (e.type == EventType.MouseDrag && 0 <= resizingColIndex)
             {
                 SetColWidth(resizingColIndex, resizeStartColWidth + (e.mousePosition.x - resizeStartMouseX));
                 Repaint();
                 e.Use();
             }
-            else if (e.type == EventType.MouseUp && resizingColIndex >= 0)
+            else if (e.type == EventType.MouseUp && 0 <= resizingColIndex)
             {
                 resizingColIndex = -1;
                 e.Use();
@@ -667,9 +736,20 @@ namespace LighthouseExtends.TextTable.Editor
             {
                 assetListScroll = EditorGUILayout.BeginScrollView(assetListScroll);
 
-                DrawAssetGroup("Scenes", sceneEntries);
-                GUILayout.Space(6);
-                DrawAssetGroup("Prefabs", prefabEntries);
+                if (!string.IsNullOrEmpty(assetListError))
+                {
+                    EditorGUILayout.HelpBox(assetListError, MessageType.Error);
+                    if (GUILayout.Button("Retry", GUILayout.Width(leftPanelWidth - 8)))
+                    {
+                        RefreshAssetList();
+                    }
+                }
+                else
+                {
+                    DrawAssetGroup("Scenes", sceneEntries);
+                    GUILayout.Space(6);
+                    DrawAssetGroup("Prefabs", prefabEntries);
+                }
 
                 EditorGUILayout.EndScrollView();
             }
@@ -731,14 +811,34 @@ namespace LighthouseExtends.TextTable.Editor
                     return;
                 }
 
+                // Tab bar is always drawn, even when an error occurs below
+                DrawTabBar();
+
+                if (!string.IsNullOrEmpty(tableLoadError))
+                {
+                    EditorGUILayout.HelpBox(tableLoadError, MessageType.Error);
+                    if (GUILayout.Button("Retry"))
+                    {
+                        LoadTableData();
+                    }
+
+                    return;
+                }
+
+                if (0 < tsvLoadErrors.Count)
+                {
+                    foreach (var err in tsvLoadErrors)
+                    {
+                        EditorGUILayout.HelpBox(err, MessageType.Warning);
+                    }
+                }
+
                 if (languages.Count == 0)
                 {
                     EditorGUILayout.HelpBox(
-                        $"No .tsv files found in: {settings?.TextTableFolderPath}", MessageType.Warning);
+                        $"No TSV files found.\nFix: Check 'Text Table Folder Path' in Settings, or add a language via Add Language.\nPath: {settings?.TextTableFolderPath}",
+                        MessageType.Warning);
                 }
-
-                // Tab bar
-                DrawTabBar();
 
                 // Header (outside scroll view — keeps window-space coords for column resize)
                 DrawTableHeader();
@@ -1124,7 +1224,7 @@ namespace LighthouseExtends.TextTable.Editor
             }
 
             var duplicates = keyToScopes
-                .Where(kvp => kvp.Value.Count > 1)
+                .Where(kvp => 1 < kvp.Value.Count)
                 .OrderBy(kvp => kvp.Key)
                 .Select(kvp => (kvp.Key, kvp.Value))
                 .ToList();
@@ -1262,104 +1362,6 @@ namespace LighthouseExtends.TextTable.Editor
                 this.displayName = displayName;
                 this.tsvBaseName = tsvBaseName;
                 this.isScene = isScene;
-            }
-        }
-
-        class DuplicateKeysWindow : EditorWindow
-        {
-            List<(string key, HashSet<string> scopes)> duplicates;
-            Vector2 scroll;
-
-            public static void Show(List<(string, HashSet<string>)> duplicates)
-            {
-                var window = GetWindow<DuplicateKeysWindow>(true, "Duplicate TextKeys", true);
-                window.duplicates = duplicates;
-                window.minSize = new Vector2(440, 300);
-            }
-
-            void OnGUI()
-            {
-                EditorGUILayout.LabelField(
-                    $"{duplicates.Count} duplicate key(s) found across scopes:",
-                    EditorStyles.boldLabel);
-                EditorGUILayout.Space(4);
-
-                scroll = EditorGUILayout.BeginScrollView(scroll);
-
-                foreach (var (key, scopes) in duplicates)
-                {
-                    using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
-                    {
-                        EditorGUILayout.LabelField(key, EditorStyles.boldLabel);
-                        EditorGUILayout.LabelField(
-                            $"Scopes: {string.Join(", ", scopes.OrderBy(s => s))}",
-                            EditorStyles.miniLabel);
-                    }
-
-                    EditorGUILayout.Space(2);
-                }
-
-                EditorGUILayout.EndScrollView();
-            }
-        }
-
-        class AddLanguagePopup : PopupWindowContent
-        {
-            string languageCode = string.Empty;
-            readonly Action<string> onConfirm;
-            bool focusRequested;
-
-            public AddLanguagePopup(Action<string> onConfirm)
-            {
-                this.onConfirm = onConfirm;
-            }
-
-            public override Vector2 GetWindowSize() => new Vector2(240, 68);
-
-            public override void OnGUI(Rect rect)
-            {
-                EditorGUILayout.LabelField("Language code (e.g. ja, en):");
-
-                GUI.SetNextControlName("LangCodeField");
-                languageCode = EditorGUILayout.TextField(languageCode);
-
-                if (!focusRequested)
-                {
-                    EditorGUI.FocusTextInControl("LangCodeField");
-                    focusRequested = true;
-                }
-
-                EditorGUILayout.Space(2);
-
-                using (new EditorGUILayout.HorizontalScope())
-                {
-                    using (new EditorGUI.DisabledScope(string.IsNullOrWhiteSpace(languageCode)))
-                    {
-                        if (GUILayout.Button("OK"))
-                        {
-                            Confirm();
-                        }
-                    }
-
-                    if (GUILayout.Button("Cancel"))
-                    {
-                        editorWindow.Close();
-                    }
-                }
-
-                if (Event.current.type == EventType.KeyDown &&
-                    Event.current.keyCode == KeyCode.Return &&
-                    !string.IsNullOrWhiteSpace(languageCode))
-                {
-                    Confirm();
-                    Event.current.Use();
-                }
-            }
-
-            void Confirm()
-            {
-                onConfirm?.Invoke(languageCode.Trim());
-                editorWindow.Close();
             }
         }
 
