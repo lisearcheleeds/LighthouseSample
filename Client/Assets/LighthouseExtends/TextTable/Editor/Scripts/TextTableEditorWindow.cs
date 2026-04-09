@@ -20,6 +20,9 @@ namespace LighthouseExtends.TextTable.Editor
         const float ResizeHandleWidth = 4f;
         const float ColHandleWidth = 6f;
         const float MinColWidth = 60f;
+        const float DeleteButtonWidth = 22f;
+
+        enum TableViewTab { LHTextMeshPro, TextKey }
 
         // Settings
         TextTableEditorSettings settings;
@@ -37,12 +40,15 @@ namespace LighthouseExtends.TextTable.Editor
         Rect addLanguageButtonRect;
 
         // Right panel
+        TableViewTab activeTab;
+        int pendingFocusRowIndex = -1;
         List<ComponentRow> rows = new();
         List<string> languages = new();
         Dictionary<string, Dictionary<string, string>> allTsvData = new();
         Dictionary<string, Dictionary<string, string>> keySourceMap = new();
         Vector2 tableScroll;
         bool isDirty;
+        HashSet<string> deletedTsvKeys = new();
 
         // Column widths (resizable)
         float pathColWidth = 200f;
@@ -59,6 +65,7 @@ namespace LighthouseExtends.TextTable.Editor
         // Cached styles
         GUIStyle leftAlignedButtonStyle;
         GUIStyle dirtyTextFieldStyle;
+        GUIStyle deleteButtonStyle;
 
         // ─────────────────────────────────────────────────────────────────
         // Open
@@ -169,7 +176,6 @@ namespace LighthouseExtends.TextTable.Editor
         // Column width helpers
         // ─────────────────────────────────────────────────────────────────
 
-        // Column index: 0=path, 1=placeholder, 2=key, 3+=lang
         float GetColWidth(int index)
         {
             if (index == 0) { return pathColWidth; }
@@ -203,7 +209,6 @@ namespace LighthouseExtends.TextTable.Editor
         {
             if (isDirty)
             {
-                // 0 = Save, 1 = Cancel, 2 = Discard
                 var choice = EditorUtility.DisplayDialogComplex(
                     "Unsaved Changes",
                     "There are unsaved changes.",
@@ -232,6 +237,7 @@ namespace LighthouseExtends.TextTable.Editor
             rows = new List<ComponentRow>();
             allTsvData = new Dictionary<string, Dictionary<string, string>>();
             keySourceMap = new Dictionary<string, Dictionary<string, string>>();
+            deletedTsvKeys = new HashSet<string>();
             isDirty = false;
 
             if (selectedEntry == null || settings == null)
@@ -430,6 +436,12 @@ namespace LighthouseExtends.TextTable.Editor
                     }
                 }
 
+                // Remove keys that were explicitly deleted in TextKey View
+                foreach (var deleted in deletedTsvKeys)
+                {
+                    existing.Remove(deleted);
+                }
+
                 var writtenKeys = new HashSet<string>();
                 foreach (var row in rows)
                 {
@@ -527,9 +539,13 @@ namespace LighthouseExtends.TextTable.Editor
 
         void HandleColumnResize()
         {
+            if (activeTab != TableViewTab.LHTextMeshPro)
+            {
+                return;
+            }
+
             var e = Event.current;
 
-            // Always register cursor rects from last Repaint
             for (var i = 0; i < colHandleRects.Count; i++)
             {
                 EditorGUIUtility.AddCursorRect(colHandleRects[i], MouseCursor.ResizeHorizontal);
@@ -579,6 +595,12 @@ namespace LighthouseExtends.TextTable.Editor
                 dirtyTextFieldStyle = new GUIStyle(EditorStyles.textField);
                 dirtyTextFieldStyle.normal.textColor = new Color(1f, 0.85f, 0f);
                 dirtyTextFieldStyle.focused.textColor = new Color(1f, 0.85f, 0f);
+            }
+
+            if (deleteButtonStyle == null)
+            {
+                deleteButtonStyle = new GUIStyle(EditorStyles.miniButton);
+                deleteButtonStyle.normal.textColor = new Color(0.9f, 0.3f, 0.3f);
             }
         }
 
@@ -695,6 +717,10 @@ namespace LighthouseExtends.TextTable.Editor
             }
         }
 
+        // ─────────────────────────────────────────────────────────────────
+        // Table (dispatcher)
+        // ─────────────────────────────────────────────────────────────────
+
         void DrawTable()
         {
             using (new EditorGUILayout.VerticalScope())
@@ -711,21 +737,62 @@ namespace LighthouseExtends.TextTable.Editor
                         $"No .tsv files found in: {settings?.TextTableFolderPath}", MessageType.Warning);
                 }
 
-                // Header is drawn outside the scroll view so its rects stay
-                // in window-space coordinates, matching HandleColumnResize.
+                // Tab bar
+                DrawTabBar();
+
+                // Header (outside scroll view — keeps window-space coords for column resize)
                 DrawTableHeader();
 
                 tableScroll = EditorGUILayout.BeginScrollView(tableScroll);
-                foreach (var row in rows)
+
+                if (activeTab == TableViewTab.LHTextMeshPro)
                 {
-                    DrawTableRow(row);
+                    for (var i = 0; i < rows.Count; i++)
+                    {
+                        DrawLHTextMeshProRow(rows[i], i);
+                    }
+                }
+                else
+                {
+                    DrawTextKeyView();
                 }
 
                 EditorGUILayout.EndScrollView();
             }
         }
 
+        void DrawTabBar()
+        {
+            var newTab = (TableViewTab)GUILayout.Toolbar(
+                (int)activeTab,
+                new[] { "LHTextMeshPro View", "TextKey View" },
+                EditorStyles.toolbarButton);
+
+            if (newTab != activeTab)
+            {
+                activeTab = newTab;
+                pendingFocusRowIndex = -1;
+                Repaint();
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // LHTextMeshPro View
+        // ─────────────────────────────────────────────────────────────────
+
         void DrawTableHeader()
+        {
+            if (activeTab == TableViewTab.LHTextMeshPro)
+            {
+                DrawLHTextMeshProHeader();
+            }
+            else
+            {
+                DrawTextKeyViewHeader();
+            }
+        }
+
+        void DrawLHTextMeshProHeader()
         {
             using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
             {
@@ -756,7 +823,7 @@ namespace LighthouseExtends.TextTable.Editor
             colHandleRects[colIndex] = handleRect;
         }
 
-        void DrawTableRow(ComponentRow row)
+        void DrawLHTextMeshProRow(ComponentRow row, int rowIndex)
         {
             using (new EditorGUILayout.HorizontalScope())
             {
@@ -772,6 +839,8 @@ namespace LighthouseExtends.TextTable.Editor
                     GUILayout.Height(EditorGUIUtility.singleLineHeight));
 
                 // Column 3: TextKey (yellow if unsaved)
+                var controlName = $"TextKeyField_{rowIndex}";
+                GUI.SetNextControlName(controlName);
                 var keyStyle = row.IsTextKeyDirty ? dirtyTextFieldStyle : EditorStyles.textField;
                 var nextKey = EditorGUILayout.TextField(row.textKey, keyStyle, GUILayout.Width(keyColWidth));
                 if (nextKey != row.textKey)
@@ -786,6 +855,13 @@ namespace LighthouseExtends.TextTable.Editor
                     }
 
                     isDirty = true;
+                }
+
+                // Focus request from TextKey View
+                if (pendingFocusRowIndex == rowIndex)
+                {
+                    EditorGUI.FocusTextInControl(controlName);
+                    pendingFocusRowIndex = -1;
                 }
 
                 // Column 4+: Language text
@@ -821,6 +897,114 @@ namespace LighthouseExtends.TextTable.Editor
 
             EditorGUILayout.Space(1);
         }
+
+        // ─────────────────────────────────────────────────────────────────
+        // TextKey View
+        // ─────────────────────────────────────────────────────────────────
+
+        void DrawTextKeyViewHeader()
+        {
+            using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
+            {
+                EditorGUILayout.LabelField(string.Empty, EditorStyles.toolbarButton, GUILayout.Width(DeleteButtonWidth));
+                EditorGUILayout.LabelField("TextKey / Hierarchy Path", EditorStyles.toolbarButton);
+            }
+        }
+
+        void DrawTextKeyView()
+        {
+            // Keys from TSV for the current scope
+            var tsvKeys = keySourceMap
+                .Where(kvp => kvp.Value.Values.Any(v => v == selectedEntry.tsvBaseName))
+                .Select(kvp => kvp.Key)
+                .ToHashSet();
+
+            // Keys from in-memory rows (includes unsaved new keys)
+            foreach (var r in rows)
+            {
+                if (!string.IsNullOrEmpty(r.textKey))
+                {
+                    tsvKeys.Add(r.textKey);
+                }
+            }
+
+            var allKeys = tsvKeys
+                .Where(k => !deletedTsvKeys.Contains(k))
+                .OrderBy(k => k)
+                .ToList();
+
+            foreach (var key in allKeys)
+            {
+                var referencingRows = rows.Where(r => r.textKey == key).ToList();
+                DrawTextKeyGroupRow(key, referencingRows);
+
+                foreach (var row in referencingRows)
+                {
+                    DrawTextKeyChildRow(row);
+                }
+
+                EditorGUILayout.Space(2);
+            }
+        }
+
+        void DrawTextKeyGroupRow(string key, List<ComponentRow> referencingRows)
+        {
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                if (GUILayout.Button("×", deleteButtonStyle, GUILayout.Width(DeleteButtonWidth)))
+                {
+                    deletedTsvKeys.Add(key);
+                    foreach (var r in referencingRows)
+                    {
+                        r.textKey = string.Empty;
+                    }
+
+                    isDirty = true;
+                }
+
+                EditorGUILayout.LabelField(key, EditorStyles.boldLabel);
+            }
+        }
+
+        void DrawTextKeyChildRow(ComponentRow row)
+        {
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                GUILayout.Space(DeleteButtonWidth);
+
+                if (GUILayout.Button("×", deleteButtonStyle, GUILayout.Width(DeleteButtonWidth)))
+                {
+                    row.textKey = string.Empty;
+                    isDirty = true;
+                }
+
+                if (GUILayout.Button(row.hierarchyPath, leftAlignedButtonStyle))
+                {
+                    SwitchToLHTextMeshProViewAndFocus(row);
+                }
+            }
+        }
+
+        void SwitchToLHTextMeshProViewAndFocus(ComponentRow row)
+        {
+            var rowIndex = rows.IndexOf(row);
+            if (rowIndex < 0)
+            {
+                return;
+            }
+
+            activeTab = TableViewTab.LHTextMeshPro;
+            pendingFocusRowIndex = rowIndex;
+
+            var estimatedRowHeight = EditorGUIUtility.singleLineHeight + 3f;
+            tableScroll.y = rowIndex * estimatedRowHeight;
+
+            Repaint();
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Select GameObject
+        // ─────────────────────────────────────────────────────────────────
 
         void SelectGameObject(ComponentRow row)
         {
@@ -902,7 +1086,6 @@ namespace LighthouseExtends.TextTable.Editor
                 return;
             }
 
-            // key -> set of base names (scopes) that contain this key
             var keyToScopes = new Dictionary<string, HashSet<string>>();
 
             foreach (var file in Directory.GetFiles(folder, "*.tsv"))
