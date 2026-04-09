@@ -12,5 +12,22 @@ namespace LighthouseExtends.TextTable
             TextKey = textKey;
             Params = textParams;
         }
+
+#if UNITY_EDITOR
+        /// <summary>
+        /// This method is for UnityEditor only.
+        /// By running the Lighthouse extension, this method call will be replaced with a constructor call,
+        /// and writing to the TextTable will be performed simultaneously.
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="textKey"></param>
+        /// <param name="text"></param>
+        /// <param name="textParams"></param>
+        /// <returns></returns>
+        public static TextData CreateTextData(string category, string textKey, string text, IReadOnlyDictionary<string, object> textParams = null)
+        {
+            return new TextData(textKey, textParams);
+        }
+#endif
     }
 }

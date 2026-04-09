@@ -1,4 +1,5 @@
 using System;
+using LighthouseExtends.TextTable;
 
 namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
 {
@@ -6,11 +7,11 @@ namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
     {
         IGlobalHeaderModuleImpl module;
 
-        void IGlobalHeaderModule.SetHeaderText(string headerText)
+        void IGlobalHeaderModule.SetHeaderText(ITextData textValue)
         {
             if (module != null)
             {
-                module.SetHeaderText(headerText);
+                module.SetHeaderText(textValue);
             }
         }
 

@@ -1,4 +1,5 @@
 using Lighthouse.Scene;
+using LighthouseExtends.TextTable;
 using SampleProduct.View.Scene.MainScene.SceneSample3;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
@@ -37,7 +38,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample2
 
         void ISceneSample2Presenter.OnEnter()
         {
-            globalHeaderModule.SetHeaderText("Home > SampleScene1 > SampleScene2");
+            globalHeaderModule.SetHeaderText(TextData.CreateTextData("SceneSample2", "GlobalHeader", "Home > SampleScene1 > SampleScene2"));
             backgroundModule.SetBackgroundLayout(BackgroundLayout.Sample2Layout);
         }
 

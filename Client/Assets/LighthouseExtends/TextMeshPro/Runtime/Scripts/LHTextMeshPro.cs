@@ -26,6 +26,11 @@ namespace LighthouseExtends.UIComponent.TextMeshPro
         {
             base.OnEnable();
 
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+
             var service = TextTableService.Instance;
             if (service == null)
             {
