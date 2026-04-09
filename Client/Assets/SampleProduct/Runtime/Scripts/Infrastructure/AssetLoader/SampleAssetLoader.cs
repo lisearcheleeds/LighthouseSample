@@ -13,7 +13,7 @@ namespace SampleProduct.Infrastructure.AssetLoader
 {
     public sealed class SampleAssetLoader : IScreenStackInstanceFactory, ITextTableLoader
     {
-        const string ResourcesPath = "TextTable";
+        const string ResourcesPath = "TextTables";
 
         readonly IObjectResolver objectResolver;
 
