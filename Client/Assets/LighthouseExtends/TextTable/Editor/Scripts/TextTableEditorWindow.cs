@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,7 @@ namespace LighthouseExtends.TextTable.Editor
         const float ColHandleWidth = 6f;
         const float MinColWidth = 60f;
         const float DeleteButtonWidth = 22f;
+        const float ActionButtonWidth = 60f;
 
         enum TableViewTab { LHTextMeshPro, TextKey }
 
@@ -49,6 +51,8 @@ namespace LighthouseExtends.TextTable.Editor
         Vector2 tableScroll;
         bool isDirty;
         HashSet<string> deletedTsvKeys = new();
+        HashSet<string> deletedGlobalTsvKeys = new();
+        bool globalTsvDirty;
 
         // Column widths (resizable)
         float pathColWidth = 200f;
@@ -256,6 +260,8 @@ namespace LighthouseExtends.TextTable.Editor
             allTsvData = new Dictionary<string, Dictionary<string, string>>();
             keySourceMap = new Dictionary<string, Dictionary<string, string>>();
             deletedTsvKeys = new HashSet<string>();
+            deletedGlobalTsvKeys = new HashSet<string>();
+            globalTsvDirty = false;
             isDirty = false;
             tableLoadError = null;
             tsvLoadErrors = new List<string>();
@@ -542,6 +548,13 @@ namespace LighthouseExtends.TextTable.Editor
                 File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
             }
 
+            if (globalTsvDirty)
+            {
+                SaveGlobalTsv(folder);
+                deletedGlobalTsvKeys.Clear();
+                globalTsvDirty = false;
+            }
+
             AssetDatabase.Refresh();
 
             foreach (var row in rows)
@@ -550,6 +563,38 @@ namespace LighthouseExtends.TextTable.Editor
             }
 
             isDirty = false;
+        }
+
+        void SaveGlobalTsv(string folder)
+        {
+            foreach (var lang in languages)
+            {
+                var filePath = Path.Combine(folder, $"Global.{lang}.tsv");
+                var sb = new StringBuilder("key\ttext\n");
+                var writtenKeys = new HashSet<string>();
+
+                foreach (var (key, langSources) in keySourceMap)
+                {
+                    if (deletedGlobalTsvKeys.Contains(key)) { continue; }
+                    if (!langSources.TryGetValue(lang, out var src) || src != "Global") { continue; }
+                    if (!writtenKeys.Add(key)) { continue; }
+
+                    var text = string.Empty;
+                    var refRow = rows.FirstOrDefault(r => r.textKey == key);
+                    if (refRow != null && refRow.langData.TryGetValue(lang, out var rowText))
+                    {
+                        text = rowText;
+                    }
+                    else if (allTsvData.TryGetValue(key, out var langMap) && langMap.TryGetValue(lang, out var tsvText))
+                    {
+                        text = tsvText;
+                    }
+
+                    sb.Append($"{key}\t{text}\n");
+                }
+
+                File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
+            }
         }
 
         // ─────────────────────────────────────────────────────────────────
@@ -693,6 +738,11 @@ namespace LighthouseExtends.TextTable.Editor
                     if (GUILayout.Button("Check Duplicates", EditorStyles.toolbarButton, GUILayout.Width(110)))
                     {
                         CheckDuplicateKeys();
+                    }
+
+                    if (GUILayout.Button("Check Missing", EditorStyles.toolbarButton, GUILayout.Width(100)))
+                    {
+                        CheckMissingKeys();
                     }
                 }
 
@@ -886,10 +936,6 @@ namespace LighthouseExtends.TextTable.Editor
             {
                 DrawLHTextMeshProHeader();
             }
-            else
-            {
-                DrawTextKeyViewHeader();
-            }
         }
 
         void DrawLHTextMeshProHeader()
@@ -1002,75 +1048,121 @@ namespace LighthouseExtends.TextTable.Editor
         // TextKey View
         // ─────────────────────────────────────────────────────────────────
 
-        void DrawTextKeyViewHeader()
-        {
-            using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
-            {
-                EditorGUILayout.LabelField(string.Empty, EditorStyles.toolbarButton, GUILayout.Width(DeleteButtonWidth));
-                EditorGUILayout.LabelField("TextKey / Hierarchy Path", EditorStyles.toolbarButton);
-            }
-        }
-
         void DrawTextKeyView()
         {
-            // Keys from TSV for the current scope
-            var tsvKeys = keySourceMap
-                .Where(kvp => kvp.Value.Values.Any(v => v == selectedEntry.tsvBaseName))
+            // Global keys: any lang source is "Global", not yet deleted
+            var globalKeys = keySourceMap
+                .Where(kvp => kvp.Value.Values.Any(v => v == "Global") && !deletedGlobalTsvKeys.Contains(kvp.Key))
                 .Select(kvp => kvp.Key)
                 .ToHashSet();
 
-            // Keys from in-memory rows (includes unsaved new keys)
+            // Local keys: any lang source is the current scope, not yet deleted, not in Global
+            var localTsvKeys = keySourceMap
+                .Where(kvp => kvp.Value.Values.Any(v => v == selectedEntry.tsvBaseName) && !deletedTsvKeys.Contains(kvp.Key))
+                .Select(kvp => kvp.Key)
+                .ToHashSet();
+
+            // Also include in-memory row keys not yet saved to TSV
             foreach (var r in rows)
             {
-                if (!string.IsNullOrEmpty(r.textKey))
+                if (!string.IsNullOrEmpty(r.textKey) && !deletedTsvKeys.Contains(r.textKey) && !globalKeys.Contains(r.textKey))
                 {
-                    tsvKeys.Add(r.textKey);
+                    localTsvKeys.Add(r.textKey);
                 }
             }
 
-            var allKeys = tsvKeys
-                .Where(k => !deletedTsvKeys.Contains(k))
-                .OrderBy(k => k)
-                .ToList();
-
-            foreach (var key in allKeys)
+            if (0 < globalKeys.Count)
             {
-                var referencingRows = rows.Where(r => r.textKey == key).ToList();
-                DrawTextKeyGroupRow(key, referencingRows);
+                EditorGUILayout.LabelField("Global", EditorStyles.boldLabel);
+                EditorGUILayout.Space(2);
 
-                foreach (var row in referencingRows)
+                foreach (var key in globalKeys.OrderBy(k => k))
                 {
-                    DrawTextKeyChildRow(row);
+                    var refs = rows.Where(r => r.textKey == key).ToList();
+                    DrawTextKeyGroupRow(key, refs, isGlobal: true);
+
+                    foreach (var row in refs)
+                    {
+                        DrawTextKeyChildRow(row);
+                    }
+
+                    EditorGUILayout.Space(2);
                 }
 
+                EditorGUILayout.Space(6);
+            }
+
+            if (0 < localTsvKeys.Count)
+            {
+                EditorGUILayout.LabelField(selectedEntry.tsvBaseName, EditorStyles.boldLabel);
                 EditorGUILayout.Space(2);
+
+                foreach (var key in localTsvKeys.OrderBy(k => k))
+                {
+                    var refs = rows.Where(r => r.textKey == key).ToList();
+                    DrawTextKeyGroupRow(key, refs, isGlobal: false);
+
+                    foreach (var row in refs)
+                    {
+                        DrawTextKeyChildRow(row);
+                    }
+
+                    EditorGUILayout.Space(2);
+                }
             }
         }
 
-        void DrawTextKeyGroupRow(string key, List<ComponentRow> referencingRows)
+        void DrawTextKeyGroupRow(string key, List<ComponentRow> referencingRows, bool isGlobal)
         {
-            using (new EditorGUILayout.HorizontalScope())
+            var rowRect = EditorGUILayout.BeginHorizontal();
+
+            if (Event.current.type == EventType.Repaint && 0 < rowRect.height)
             {
-                if (GUILayout.Button("×", deleteButtonStyle, GUILayout.Width(DeleteButtonWidth)))
+                EditorGUI.DrawRect(rowRect, new Color(0f, 0f, 0f, 0.1f));
+            }
+
+            var label = isGlobal ? "Localize" : "Globalize";
+            if (GUILayout.Button(label, EditorStyles.miniButton, GUILayout.Width(ActionButtonWidth)))
+            {
+                if (isGlobal) { LocalizeKey(key); } else { GlobalizeKey(key); }
+            }
+
+            if (GUILayout.Button("×", deleteButtonStyle, GUILayout.Width(DeleteButtonWidth)))
+            {
+                if (isGlobal)
+                {
+                    deletedGlobalTsvKeys.Add(key);
+                    globalTsvDirty = true;
+                }
+                else
                 {
                     deletedTsvKeys.Add(key);
-                    foreach (var r in referencingRows)
-                    {
-                        r.textKey = string.Empty;
-                    }
-
-                    isDirty = true;
                 }
 
-                EditorGUILayout.LabelField(key, EditorStyles.boldLabel);
+                foreach (var r in referencingRows)
+                {
+                    r.textKey = string.Empty;
+                }
+
+                isDirty = true;
             }
+
+            EditorGUILayout.LabelField(key, EditorStyles.boldLabel, GUILayout.ExpandWidth(false));
+
+            var preview = GetTextKeyPreview(key);
+            if (!string.IsNullOrEmpty(preview))
+            {
+                EditorGUILayout.LabelField(preview, EditorStyles.miniLabel);
+            }
+
+            EditorGUILayout.EndHorizontal();
         }
 
         void DrawTextKeyChildRow(ComponentRow row)
         {
             using (new EditorGUILayout.HorizontalScope())
             {
-                GUILayout.Space(DeleteButtonWidth);
+                GUILayout.Space(ActionButtonWidth + DeleteButtonWidth); // indent to align under parent's key label
 
                 if (GUILayout.Button("×", deleteButtonStyle, GUILayout.Width(DeleteButtonWidth)))
                 {
@@ -1168,6 +1260,46 @@ namespace LighthouseExtends.TextTable.Editor
         }
 
         // ─────────────────────────────────────────────────────────────────
+        // Globalize / Localize
+        // ─────────────────────────────────────────────────────────────────
+
+        void GlobalizeKey(string key)
+        {
+            if (!keySourceMap.TryGetValue(key, out var sm))
+            {
+                sm = new Dictionary<string, string>();
+                keySourceMap[key] = sm;
+            }
+
+            foreach (var lang in languages)
+            {
+                sm[lang] = "Global";
+            }
+
+            deletedTsvKeys.Add(key);
+            globalTsvDirty = true;
+            isDirty = true;
+        }
+
+        void LocalizeKey(string key)
+        {
+            if (selectedEntry == null) { return; }
+            if (!keySourceMap.TryGetValue(key, out var sm)) { return; }
+
+            foreach (var lang in languages)
+            {
+                if (sm.TryGetValue(lang, out var src) && src == "Global")
+                {
+                    sm[lang] = selectedEntry.tsvBaseName;
+                }
+            }
+
+            deletedGlobalTsvKeys.Add(key);
+            globalTsvDirty = true;
+            isDirty = true;
+        }
+
+        // ─────────────────────────────────────────────────────────────────
         // Check Duplicates
         // ─────────────────────────────────────────────────────────────────
 
@@ -1240,6 +1372,93 @@ namespace LighthouseExtends.TextTable.Editor
         }
 
         // ─────────────────────────────────────────────────────────────────
+        // Check Missing
+        // ─────────────────────────────────────────────────────────────────
+
+        void CheckMissingKeys()
+        {
+            if (settings == null) { return; }
+
+            var folder = ToAbsolutePath(settings.TextTableFolderPath);
+            if (!Directory.Exists(folder))
+            {
+                EditorUtility.DisplayDialog("Folder Not Found",
+                    $"TSV folder not found:\n{settings.TextTableFolderPath}", "OK");
+                return;
+            }
+
+            if (!EditorUtility.DisplayDialog(
+                    "Check Missing",
+                    "This will open all scenes to scan components. Your active scene may change.\nContinue?",
+                    "Continue",
+                    "Cancel"))
+            {
+                return;
+            }
+
+            var (_, sourceMap, _) = LoadAllTsvData(folder);
+
+            var globalKeys = sourceMap
+                .Where(kvp => kvp.Value.Values.Any(v => v == "Global"))
+                .Select(kvp => kvp.Key)
+                .ToHashSet();
+
+            var scopeKeys = new Dictionary<string, HashSet<string>>();
+            foreach (var (key, langSources) in sourceMap)
+            {
+                foreach (var src in langSources.Values.Where(v => v != "Global").Distinct())
+                {
+                    if (!scopeKeys.ContainsKey(src))
+                    {
+                        scopeKeys[src] = new HashSet<string>();
+                    }
+
+                    scopeKeys[src].Add(key);
+                }
+            }
+
+            var missing = new List<(string scope, string hierarchyPath, string textKey)>();
+
+            foreach (var entry in sceneEntries.Concat(prefabEntries))
+            {
+                List<(LHTextMeshPro comp, string path)> comps;
+                try
+                {
+                    comps = FindComponents(entry);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"[TextTable] CheckMissing: failed to load '{entry.displayName}': {e.Message}");
+                    continue;
+                }
+
+                var available = globalKeys.ToHashSet();
+                if (scopeKeys.TryGetValue(entry.tsvBaseName, out var localKeys))
+                {
+                    foreach (var k in localKeys) { available.Add(k); }
+                }
+
+                foreach (var (comp, path) in comps)
+                {
+                    var key = ReadTextKey(comp);
+                    if (string.IsNullOrEmpty(key)) { continue; }
+                    if (!available.Contains(key))
+                    {
+                        missing.Add((entry.displayName, path, key));
+                    }
+                }
+            }
+
+            if (missing.Count == 0)
+            {
+                EditorUtility.DisplayDialog("Check Missing", "No missing TextKey references found.", "OK");
+                return;
+            }
+
+            MissingKeysWindow.Show(missing);
+        }
+
+        // ─────────────────────────────────────────────────────────────────
         // Reload
         // ─────────────────────────────────────────────────────────────────
 
@@ -1296,6 +1515,38 @@ namespace LighthouseExtends.TextTable.Editor
         // ─────────────────────────────────────────────────────────────────
         // Helpers
         // ─────────────────────────────────────────────────────────────────
+
+        string GetTextKeyPreview(string key)
+        {
+            if (!allTsvData.TryGetValue(key, out var langMap) || langMap.Count == 0)
+            {
+                return null;
+            }
+
+            // 1. User's UI language
+            var userLang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+            if (langMap.TryGetValue(userLang, out var userText) && !string.IsNullOrEmpty(userText))
+            {
+                return $"({userLang}: {userText})";
+            }
+
+            // 2. English fallback
+            if (langMap.TryGetValue("en", out var enText) && !string.IsNullOrEmpty(enText))
+            {
+                return $"(en: {enText})";
+            }
+
+            // 3. First available language
+            foreach (var (lang, text) in langMap)
+            {
+                if (!string.IsNullOrEmpty(text))
+                {
+                    return $"({lang}: {text})";
+                }
+            }
+
+            return null;
+        }
 
         static string ReadTextKey(LHTextMeshPro comp)
         {

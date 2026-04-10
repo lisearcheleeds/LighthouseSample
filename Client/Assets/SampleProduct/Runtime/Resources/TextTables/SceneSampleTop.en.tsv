@@ -1,0 +1,33 @@
+﻿key	text
+SampleTopTabOverview	Overview
+SampleTopTabScene	Scene sample
+SampleTopTabDialog	Dialog sample
+SampleTopTabOther	Other elements
+SampleTopTabInGame	In game sample
+SampleTopTabOverviewP1	Lighthouse is an architectural framework for managing Unity scenes.
+SampleTopTabOverviewP2	The screen is constructed by combining one main scene with multiple modular scenes. For example, backgrounds, touch effects, dialogues, headers, and overlay effects are implemented as modules.
+SampleTopTabOverviewP3	Scenes are loaded in units called scene groups to create seamless transitions and crossfades. Each scene can implement content simply by receiving events.
+SampleTopTabOverviewP41	Lighthouse promotes a clean architecture by utilizing: • VContainer (DI) • UniTask (async/await) • R3
+SampleTopTabOverviewP42	If you're an amateur, you can use Lighthouse to focus on creating game content.  If you're a professional, you can fully customize and tune the scene control mechanism to suit your project.  If you're an AI, you can use LighthouseExtend to implement with the fewest tokens, ignoring the finer considerations.
+SampleTopTabOverviewP4Link	GitHub
+SampleTopTabOverviewPrev	Prev
+SampleTopTabOverviewNext	Next
+SampleTopTabSceneDescription	Scenes are stacked each time you transition. You can return to the previous scene by using BackScene.
+SampleTopTabSceneSample	Transition sample scene
+SampleTopTabSceneLabel1	Scene 1
+SampleTopTabSceneLabel2	Scene 2
+SampleTopTabSceneLabel3	Scene 3
+SampleTopTabSceneTransition	Transition Scene
+SampleTopTabSceneBack	Back Scene
+SampleTopTabDiologDescription	Dialogs can be implemented using a feature called ScreenStack. You can stack any number of dialogs and close them individually.
+SampleTopTabDiologOpenE	Open exclusive
+SampleTopTabDiologOpenO	Open overlay
+SampleTopTabOtherDialog	Dialog
+SampleTopTabOtherPopup	Popup
+SampleTopTabOtherOverlay	Overlay
+SampleTopTabOtherAnimator	LHAnimationClipPlayer
+SampleTopTabOtherTransitionAnimator	LHSceneTransitionAnimator
+SampleTopTabOtherButton	LHButton
+SampleTopTabOtherText	LHTextView
+SampleTopTabIngame1	InGame1
+SampleTopTabIngame2	InGame2

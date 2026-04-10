@@ -1,0 +1,6 @@
+﻿key	text
+SceneSample1ToggleHeader	Toggle
+SceneSample1Choice1	Transition scene with choice 1
+SceneSample1Choice2	Transition scene with choice 2
+SceneSample1Choice3	Transition scene with choice 3
+SceneSample1Description	For example, a carousel UI like this can be implemented for selecting decks or forming teams before the game starts.
