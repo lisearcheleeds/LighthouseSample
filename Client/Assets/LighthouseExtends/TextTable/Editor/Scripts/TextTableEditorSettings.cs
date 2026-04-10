@@ -4,7 +4,7 @@ namespace LighthouseExtends.TextTable.Editor
 {
     public class TextTableEditorSettings : ScriptableObject
     {
-        [SerializeField] string textTableFolderPath = "Assets/SampleProduct/Runtime/Resources/TextTables";
+        [SerializeField] string textTableFolderPath = "Assets/StreamingAssets/TextTables";
 
         public string TextTableFolderPath => textTableFolderPath;
     }

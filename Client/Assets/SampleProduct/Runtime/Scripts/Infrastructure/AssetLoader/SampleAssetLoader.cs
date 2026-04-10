@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace SampleProduct.Infrastructure.AssetLoader
 {
     public sealed class SampleAssetLoader : IScreenStackInstanceFactory, ITextTableLoader
     {
-        const string ResourcesPath = "TextTables";
+        const string TsvSubFolder = "TextTables";
 
         readonly IObjectResolver objectResolver;
 
@@ -35,24 +36,31 @@ namespace SampleProduct.Infrastructure.AssetLoader
         UniTask<IReadOnlyDictionary<string, string>> ITextTableLoader.LoadAsync(string languageCode, CancellationToken cancellationToken)
         {
             var result = new Dictionary<string, string>();
-            var assets = Resources.LoadAll<TextAsset>(ResourcesPath);
+            var folderPath = Path.Combine(Application.streamingAssetsPath, TsvSubFolder);
 
-            foreach (var asset in assets)
+            if (!Directory.Exists(folderPath))
             {
-                // Expected filename format: {domain}.{language} (e.g., "Common.ja")
-                var dotIndex = asset.name.LastIndexOf('.');
+                return UniTask.FromResult<IReadOnlyDictionary<string, string>>(result);
+            }
+
+            foreach (var filePath in Directory.GetFiles(folderPath, "*.tsv"))
+            {
+                // Expected filename format: {domain}.{language}.tsv (e.g., "SceneHome.ja.tsv")
+                var fileNameWithoutExt = Path.GetFileNameWithoutExtension(filePath);
+                var dotIndex = fileNameWithoutExt.LastIndexOf('.');
                 if (dotIndex < 0)
                 {
                     continue;
                 }
 
-                var language = asset.name.Substring(dotIndex + 1);
+                var language = fileNameWithoutExt.Substring(dotIndex + 1);
                 if (language != languageCode)
                 {
                     continue;
                 }
 
-                ParseTsv(asset.text, asset.name, languageCode, result);
+                var content = File.ReadAllText(filePath);
+                ParseTsv(content, fileNameWithoutExt, languageCode, result);
             }
 
             return UniTask.FromResult<IReadOnlyDictionary<string, string>>(result);
