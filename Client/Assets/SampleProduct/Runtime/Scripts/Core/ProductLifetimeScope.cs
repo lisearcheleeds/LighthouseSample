@@ -1,5 +1,6 @@
 using Lighthouse.Scene;
 using Lighthouse.Scene.SceneCamera;
+using LighthouseExtends.Language;
 using LighthouseExtends.ScreenStack;
 using LighthouseExtends.TextTable;
 using LighthouseExtends.UIComponent.CanvasSceneObject;
@@ -43,6 +44,7 @@ namespace SampleProduct.Core
                 // LightHouse.Extends
                 builder.Register<ExclusiveInputService>(Lifetime.Singleton).AsImplementedInterfaces();
 
+                builder.Register<LanguageService>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<TextTableService>(Lifetime.Singleton).AsImplementedInterfaces();
 
                 // Modules

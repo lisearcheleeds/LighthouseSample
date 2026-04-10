@@ -2,6 +2,7 @@
     "name": "LighthouseExtends.TextMeshPro.Runtime",
     "rootNamespace": "",
     "references": [
+        "LighthouseExtends.Language.Runtime",
         "LighthouseExtends.TextTable.Runtime",
         "R3.Unity",
         "Unity.TextMeshPro"

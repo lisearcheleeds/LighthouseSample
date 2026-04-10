@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using R3;
+using LighthouseExtends.Language;
 using VContainer;
 
 namespace LighthouseExtends.TextTable
@@ -12,18 +12,15 @@ namespace LighthouseExtends.TextTable
         public static ITextTableService Instance { get; private set; }
 
         readonly ITextTableLoader loader;
-        readonly ReactiveProperty<string> currentLanguage;
 
         IReadOnlyDictionary<string, string> activeTable;
 
-        public ReadOnlyReactiveProperty<string> CurrentLanguage => currentLanguage;
-
         [Inject]
-        public TextTableService(ITextTableLoader loader)
+        public TextTableService(ITextTableLoader loader, ILanguageService languageService)
         {
             Instance = this;
             this.loader = loader;
-            currentLanguage = new ReactiveProperty<string>(string.Empty);
+            languageService.RegisterChangeHandler(LoadTableAsync);
         }
 
         public string GetText(ITextData textData)
@@ -33,7 +30,7 @@ namespace LighthouseExtends.TextTable
                 return textData.TextKey;
             }
 
-            if (textData.Params != null && textData.Params.Count > 0)
+            if (textData.Params != null && 0 < textData.Params.Count)
             {
                 text = FormatText(text, textData.Params);
             }
@@ -41,16 +38,14 @@ namespace LighthouseExtends.TextTable
             return text;
         }
 
-        public async UniTask SetLanguage(string languageCode, CancellationToken cancellationToken)
-        {
-            activeTable = await loader.LoadAsync(languageCode, cancellationToken);
-            currentLanguage.Value = languageCode;
-        }
-
         public void Dispose()
         {
-            currentLanguage.Dispose();
             Instance = null;
+        }
+
+        async UniTask LoadTableAsync(string languageCode, CancellationToken cancellationToken)
+        {
+            activeTable = await loader.LoadAsync(languageCode, cancellationToken);
         }
 
         static string FormatText(string text, IReadOnlyDictionary<string, object> textParams)

@@ -1,8 +1,8 @@
 {
-    "name": "LighthouseExtends.TextTable.Runtime",
+    "name": "LighthouseExtends.Language.Runtime",
     "rootNamespace": "",
     "references": [
-        "LighthouseExtends.Language.Runtime",
+        "R3.Unity",
         "UniTask",
         "VContainer"
     ],

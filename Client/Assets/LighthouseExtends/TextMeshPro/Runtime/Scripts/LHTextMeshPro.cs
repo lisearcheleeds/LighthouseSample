@@ -1,4 +1,5 @@
 using System;
+using LighthouseExtends.Language;
 using LighthouseExtends.TextTable;
 using R3;
 using TMPro;
@@ -31,14 +32,14 @@ namespace LighthouseExtends.UIComponent.TextMeshPro
                 return;
             }
 
-            var service = TextTableService.Instance;
-            if (service == null)
+            var languageService = LanguageService.Instance;
+            if (languageService == null)
             {
                 ApplyText();
                 return;
             }
 
-            languageSubscription = service.CurrentLanguage.Subscribe(_ => ApplyText());
+            languageSubscription = languageService.CurrentLanguage.Subscribe(_ => ApplyText());
         }
 
         protected override void OnDisable()

@@ -3,6 +3,7 @@
     "rootNamespace": "",
     "references": [
         "Lighthouse.Runtime",
+        "LighthouseExtends.Language.Runtime",
         "LighthouseExtends.Animation.Runtime",
         "LighthouseExtends.ScreenStack.Runtime",
         "LighthouseExtends.UIComponent.Runtime",
