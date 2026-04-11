@@ -24,6 +24,7 @@ namespace LighthouseExtends.TextTable.Editor
         const float MinColWidth = 60f;
         const float DeleteButtonWidth = 22f;
         const float ActionButtonWidth = 60f;
+        const float ScopeColWidth = 64f;
 
         // Column resize state
         readonly List<Rect> colHandleRects = new();
@@ -1048,6 +1049,7 @@ namespace LighthouseExtends.TextTable.Editor
                 DrawHeaderCell("Hierarchy Path", 0);
                 DrawHeaderCell("PlaceHolder", 1);
                 DrawHeaderCell("TextKey", 2);
+                EditorGUILayout.LabelField("Scope", EditorStyles.toolbarButton, GUILayout.Width(ScopeColWidth));
                 for (var i = 0; i < languages.Count; i++)
                 {
                     DrawHeaderCell(languages[i], 3 + i);
@@ -1118,6 +1120,15 @@ namespace LighthouseExtends.TextTable.Editor
                     pendingFocusRowIndex = -1;
                 }
 
+                // Scope column
+                var isGlobal = IsGlobalKey(row.textKey);
+                var scopeLabel = isGlobal ? "(Global)" : "(Local)";
+                var scopeColor = isGlobal ? new Color(0.4f, 0.75f, 1f) : new Color(0.6f, 0.6f, 0.6f);
+                var prevColor = GUI.contentColor;
+                GUI.contentColor = scopeColor;
+                EditorGUILayout.LabelField(scopeLabel, EditorStyles.miniLabel, GUILayout.Width(ScopeColWidth));
+                GUI.contentColor = prevColor;
+
                 // Column 4+: Language text
                 for (var i = 0; i < languages.Count; i++)
                 {
@@ -1128,7 +1139,8 @@ namespace LighthouseExtends.TextTable.Editor
                     var isReadOnly = hasKey &&
                                      keySourceMap.TryGetValue(row.textKey, out var sm) &&
                                      sm.TryGetValue(lang, out var src) &&
-                                     src != selectedEntry.tsvBaseName;
+                                     src != selectedEntry.tsvBaseName &&
+                                     src != "Global";
 
                     using (new EditorGUI.DisabledScope(!hasKey || isReadOnly))
                     {
@@ -1144,6 +1156,10 @@ namespace LighthouseExtends.TextTable.Editor
                             }
 
                             isDirty = true;
+                            if (isGlobal)
+                            {
+                                globalTsvDirty = true;
+                            }
                         }
                     }
                 }
@@ -1434,6 +1450,13 @@ namespace LighthouseExtends.TextTable.Editor
             deletedTsvKeys.Add(key);
             globalTsvDirty = true;
             isDirty = true;
+        }
+
+        bool IsGlobalKey(string key)
+        {
+            return !string.IsNullOrEmpty(key) &&
+                   keySourceMap.TryGetValue(key, out var sm) &&
+                   sm.Values.Any(v => v == "Global");
         }
 
         List<string> FindOtherFilesContainingKey(string key, string folder)
