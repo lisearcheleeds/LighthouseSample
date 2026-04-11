@@ -1,5 +1,6 @@
 using Lighthouse.Scene;
 using Lighthouse.Scene.SceneCamera;
+using LighthouseExtends.Font;
 using LighthouseExtends.Language;
 using LighthouseExtends.ScreenStack;
 using LighthouseExtends.TextTable;
@@ -19,6 +20,7 @@ namespace SampleProduct.Core
     public class ProductLifetimeScope : LifetimeScope
     {
         [SerializeField] ProductLifetimeScopeSettings productLifetimeScopeSettings;
+        [SerializeField] LanguageFontSettings languageFontSettings;
         [SerializeField] LHCanvasSceneObject canvasSceneObjectPrefab;
         [SerializeField] LHInputBlocker inputBlockerPrefab;
 
@@ -46,6 +48,8 @@ namespace SampleProduct.Core
 
                 builder.Register<LanguageService>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<TextTableService>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.RegisterInstance(languageFontSettings);
+                builder.Register<FontService>(Lifetime.Singleton).AsImplementedInterfaces();
 
                 // Modules
                 builder.Register<ScreenStackModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();

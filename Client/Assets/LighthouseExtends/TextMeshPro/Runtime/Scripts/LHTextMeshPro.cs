@@ -1,5 +1,5 @@
 using System;
-using LighthouseExtends.Language;
+using LighthouseExtends.Font;
 using LighthouseExtends.TextTable;
 using R3;
 using TMPro;
@@ -12,7 +12,8 @@ namespace LighthouseExtends.UIComponent.TextMeshPro
         [SerializeField] string textKey;
 
         ITextData textData;
-        IDisposable languageSubscription;
+        IDisposable textSubscription;
+        IDisposable fontSubscription;
 
         public void SetTextData(ITextData textData)
         {
@@ -32,22 +33,31 @@ namespace LighthouseExtends.UIComponent.TextMeshPro
                 return;
             }
 
-            var languageService = LanguageService.Instance;
-            if (languageService == null)
+            var textTableService = TextTableService.Instance;
+            if (textTableService == null)
             {
                 ApplyText();
                 return;
             }
 
-            languageSubscription = languageService.CurrentLanguage.Subscribe(_ => ApplyText());
+            textSubscription = textTableService.CurrentLanguage.Subscribe(_ => ApplyText());
+
+            var fontService = FontService.Instance;
+            if (fontService != null)
+            {
+                fontSubscription = fontService.CurrentFont.Subscribe(ApplyFont);
+            }
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
 
-            languageSubscription?.Dispose();
-            languageSubscription = null;
+            textSubscription?.Dispose();
+            textSubscription = null;
+
+            fontSubscription?.Dispose();
+            fontSubscription = null;
         }
 
         void ApplyText()
@@ -60,6 +70,14 @@ namespace LighthouseExtends.UIComponent.TextMeshPro
 
             var service = TextTableService.Instance;
             text = service != null ? service.GetText(data) : data.TextKey;
+        }
+
+        void ApplyFont(TMP_FontAsset fontAsset)
+        {
+            if (fontAsset != null)
+            {
+                font = fontAsset;
+            }
         }
     }
 }

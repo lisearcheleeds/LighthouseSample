@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Language;
+using R3;
 using VContainer;
 
 namespace LighthouseExtends.TextTable
@@ -12,8 +13,11 @@ namespace LighthouseExtends.TextTable
         public static ITextTableService Instance { get; private set; }
 
         readonly ITextTableLoader loader;
+        readonly ReactiveProperty<string> currentLanguage = new(string.Empty);
 
         IReadOnlyDictionary<string, string> activeTable;
+
+        public ReadOnlyReactiveProperty<string> CurrentLanguage => currentLanguage;
 
         [Inject]
         public TextTableService(ITextTableLoader loader, ILanguageService languageService)
@@ -40,12 +44,14 @@ namespace LighthouseExtends.TextTable
 
         public void Dispose()
         {
+            currentLanguage.Dispose();
             Instance = null;
         }
 
         async UniTask LoadTableAsync(string languageCode, CancellationToken cancellationToken)
         {
             activeTable = await loader.LoadAsync(languageCode, cancellationToken);
+            currentLanguage.Value = languageCode;
         }
 
         static string FormatText(string text, IReadOnlyDictionary<string, object> textParams)
