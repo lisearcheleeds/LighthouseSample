@@ -104,8 +104,8 @@ namespace SampleProduct.Infrastructure.AssetLoader
                     continue;
                 }
 
-                var key = trimmed.Substring(0, tabIndex);
-                var text = trimmed.Substring(tabIndex + 1);
+                var key = trimmed.Substring(0, tabIndex).Trim('\0', '\uFEFF');
+                var text = trimmed.Substring(tabIndex + 1).Trim('\0', '\uFEFF');
 
                 if (table.ContainsKey(key))
                 {

@@ -24,8 +24,7 @@ namespace LighthouseExtends.TextTable
         /// <param name="text"></param>
         /// <param name="textParams"></param>
         /// <returns></returns>
-        public static TextData CreateTextData(string category, string textKey, string text,
-            IReadOnlyDictionary<string, object> textParams = null)
+        public static TextData CreateTextData(string category, string textKey, string text, IReadOnlyDictionary<string, object> textParams = null)
         {
             return new TextData(textKey, textParams);
         }
