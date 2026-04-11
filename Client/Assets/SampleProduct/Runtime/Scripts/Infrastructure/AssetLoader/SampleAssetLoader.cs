@@ -40,6 +40,7 @@ namespace SampleProduct.Infrastructure.AssetLoader
 
             if (!Directory.Exists(folderPath))
             {
+                Debug.LogError($"[TextTable] TSV folder not found: '{folderPath}'");
                 return UniTask.FromResult<IReadOnlyDictionary<string, string>>(result);
             }
 
@@ -59,8 +60,20 @@ namespace SampleProduct.Infrastructure.AssetLoader
                     continue;
                 }
 
-                var content = File.ReadAllText(filePath);
-                ParseTsv(content, fileNameWithoutExt, languageCode, result);
+                try
+                {
+                    var content = File.ReadAllText(filePath);
+                    ParseTsv(content, fileNameWithoutExt, languageCode, result);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"[TextTable] Failed to load TSV file: '{filePath}'\n{e}");
+                }
+            }
+
+            if (result.Count == 0)
+            {
+                Debug.LogWarning($"[TextTable] No entries loaded for language '{languageCode}'. Folder: '{folderPath}'");
             }
 
             return UniTask.FromResult<IReadOnlyDictionary<string, string>>(result);

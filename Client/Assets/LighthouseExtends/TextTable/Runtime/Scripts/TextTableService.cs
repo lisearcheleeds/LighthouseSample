@@ -4,16 +4,17 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Language;
 using R3;
+using UnityEngine;
 using VContainer;
 
 namespace LighthouseExtends.TextTable
 {
     public sealed class TextTableService : ITextTableService, IDisposable
     {
-        readonly ReactiveProperty<string> currentLanguage = new(string.Empty);
-        readonly ITextTableLoader loader;
-
         public static ITextTableService Instance { get; private set; }
+
+        readonly ITextTableLoader loader;
+        readonly ReactiveProperty<string> currentLanguage = new(string.Empty);
 
         IReadOnlyDictionary<string, string> activeTable;
 
@@ -27,16 +28,16 @@ namespace LighthouseExtends.TextTable
             languageService.RegisterChangeHandler(LoadTableAsync);
         }
 
-        public void Dispose()
-        {
-            currentLanguage.Dispose();
-            Instance = null;
-        }
-
         public string GetText(ITextData textData)
         {
-            if (activeTable == null || !activeTable.TryGetValue(textData.TextKey, out var text))
+            if (activeTable == null)
             {
+                return textData.TextKey;
+            }
+
+            if (!activeTable.TryGetValue(textData.TextKey, out var text))
+            {
+                Debug.LogWarning($"[TextTable] Key not found: '{textData.TextKey}' (language: '{currentLanguage.Value}')");
                 return textData.TextKey;
             }
 
@@ -46,6 +47,12 @@ namespace LighthouseExtends.TextTable
             }
 
             return text;
+        }
+
+        public void Dispose()
+        {
+            currentLanguage.Dispose();
+            Instance = null;
         }
 
         async UniTask LoadTableAsync(string languageCode, CancellationToken cancellationToken)

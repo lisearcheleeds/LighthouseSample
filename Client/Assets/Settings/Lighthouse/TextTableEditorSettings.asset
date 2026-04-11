@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5fe48bcd3fad7541bf1695092579410, type: 3}
   m_Name: TextTableEditorSettings
   m_EditorClassIdentifier: LighthouseExtends.TextTable.Editor::LighthouseExtends.TextTable.Editor.TextTableEditorSettings
-  textTableFolderPath: Assets/SampleProduct/Runtime/Resources/TextTables
+  textTableFolderPath: Assets/StreamingAssets/TextTables

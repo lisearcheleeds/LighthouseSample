@@ -50,6 +50,11 @@ namespace SampleProduct.Core
                 builder.Register<TextTableService>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.RegisterInstance(languageFontSettings);
                 builder.Register<FontService>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.RegisterBuildCallback(container =>
+                {
+                    container.Resolve<ITextTableService>();
+                    container.Resolve<IFontService>();
+                });
 
                 // Modules
                 builder.Register<ScreenStackModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();

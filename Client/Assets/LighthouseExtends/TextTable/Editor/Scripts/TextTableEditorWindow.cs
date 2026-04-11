@@ -79,6 +79,10 @@ namespace LighthouseExtends.TextTable.Editor
         {
             LoadOrCreateSettings();
             RefreshAssetList();
+            if (selectedEntry != null)
+            {
+                LoadTableData();
+            }
         }
 
         // ─────────────────────────────────────────────────────────────────
