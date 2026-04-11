@@ -61,6 +61,7 @@ namespace LighthouseExtends.TextTable.Editor
         // Column widths (resizable)
         float pathColWidth = 200f;
         int pendingFocusRowIndex = -1;
+        bool autoNewLine = true;
         float placeholderColWidth = 160f;
         List<AssetEntry> prefabEntries = new();
         float resizeStartColWidth;
@@ -105,6 +106,7 @@ namespace LighthouseExtends.TextTable.Editor
 
             HandlePanelResize();
             HandleColumnResize();
+
         }
 
         // ─────────────────────────────────────────────────────────────────
@@ -610,7 +612,7 @@ namespace LighthouseExtends.TextTable.Editor
                 var sb = new StringBuilder("key\ttext\n");
                 foreach (var (key, text) in existing)
                 {
-                    sb.Append($"{key}\t{text}\n");
+                    sb.Append($"{key}\t{SanitizeTsvValue(text)}\n");
                 }
 
                 File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
@@ -659,7 +661,7 @@ namespace LighthouseExtends.TextTable.Editor
                     var otherSb = new StringBuilder("key\ttext\n");
                     foreach (var (k, v) in existing)
                     {
-                        otherSb.Append($"{k}\t{v}\n");
+                        otherSb.Append($"{k}\t{SanitizeTsvValue(v)}\n");
                     }
 
                     File.WriteAllText(otherFilePath, otherSb.ToString(), Encoding.UTF8);
@@ -714,7 +716,7 @@ namespace LighthouseExtends.TextTable.Editor
                         text = tsvText;
                     }
 
-                    sb.Append($"{key}\t{text}\n");
+                    sb.Append($"{key}\t{SanitizeTsvValue(text)}\n");
                 }
 
                 File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
@@ -847,6 +849,17 @@ namespace LighthouseExtends.TextTable.Editor
                     if (GUILayout.Button("Check Missing", EditorStyles.toolbarButton, GUILayout.Width(100)))
                     {
                         CheckMissingKeys();
+                    }
+
+                    var newAutoNewLine = GUILayout.Toggle(
+                        autoNewLine,
+                        new GUIContent(@"\n as ↵", @"When enabled, \n in TSV values is shown as a real newline in text fields and converted back on edit."),
+                        EditorStyles.toolbarButton,
+                        GUILayout.Width(70));
+                    if (newAutoNewLine != autoNewLine)
+                    {
+                        autoNewLine = newAutoNewLine;
+                        Repaint();
                     }
                 }
 
@@ -1089,10 +1102,13 @@ namespace LighthouseExtends.TextTable.Editor
                     SelectGameObject(row);
                 }
 
-                // Column 2: PlaceHolder (selectable)
-                EditorGUILayout.SelectableLabel(row.placeholderText,
+                // Column 2: PlaceHolder (selectable, multiline)
+                var placeholderDisplay = row.placeholderText.Replace("\\n", "\n");
+                var placeholderLineCount = Mathf.Max(1, placeholderDisplay.Count(c => c == '\n') + 1);
+                var placeholderHeight = placeholderLineCount * EditorGUIUtility.singleLineHeight;
+                EditorGUILayout.SelectableLabel(placeholderDisplay,
                     GUILayout.Width(placeholderColWidth),
-                    GUILayout.Height(EditorGUIUtility.singleLineHeight));
+                    GUILayout.Height(placeholderHeight));
 
                 // Column 3: TextKey (yellow if unsaved)
                 var controlName = $"TextKeyField_{rowIndex}";
@@ -1142,24 +1158,34 @@ namespace LighthouseExtends.TextTable.Editor
                                      src != selectedEntry.tsvBaseName &&
                                      src != "Global";
 
+                    var langControlName = $"LangField_{rowIndex}_{lang}";
+                    GUI.SetNextControlName(langControlName);
+
+                    var displayValue = autoNewLine ? current.Replace("\\n", "\n") : current;
+                    var lineCount = Mathf.Max(1, displayValue.Count(c => c == '\n') + 1);
+                    var cellHeight = Mathf.Min(lineCount * EditorGUIUtility.singleLineHeight + 4f, 160f);
+                    string next;
+
                     using (new EditorGUI.DisabledScope(!hasKey || isReadOnly))
                     {
-                        var next = EditorGUILayout.TextField(current, GUILayout.Width(colW));
-                        if (hasKey && !isReadOnly && next != current)
-                        {
-                            foreach (var r in rows)
-                            {
-                                if (r.textKey == row.textKey)
-                                {
-                                    r.langData[lang] = next;
-                                }
-                            }
+                        var nextDisplay = EditorGUILayout.TextArea(displayValue, GUILayout.Width(colW), GUILayout.Height(cellHeight));
+                        next = autoNewLine ? nextDisplay.Replace("\n", "\\n") : nextDisplay;
+                    }
 
-                            isDirty = true;
-                            if (isGlobal)
+                    if (hasKey && !isReadOnly && next != current)
+                    {
+                        foreach (var r in rows)
+                        {
+                            if (r.textKey == row.textKey)
                             {
-                                globalTsvDirty = true;
+                                r.langData[lang] = next;
                             }
+                        }
+
+                        isDirty = true;
+                        if (isGlobal)
+                        {
+                            globalTsvDirty = true;
                         }
                     }
                 }
@@ -1280,7 +1306,8 @@ namespace LighthouseExtends.TextTable.Editor
                 isDirty = true;
             }
 
-            EditorGUILayout.LabelField(key, EditorStyles.boldLabel, GUILayout.ExpandWidth(false));
+            EditorGUILayout.SelectableLabel(key, EditorStyles.boldLabel,
+                GUILayout.ExpandWidth(false), GUILayout.Height(EditorGUIUtility.singleLineHeight));
 
             var preview = GetTextKeyPreview(key);
             if (!string.IsNullOrEmpty(preview))
@@ -1815,6 +1842,11 @@ namespace LighthouseExtends.TextTable.Editor
             }
 
             return string.Join("/", parts);
+        }
+
+        static string SanitizeTsvValue(string value)
+        {
+            return value.Replace("\r\n", "\\n").Replace("\r", "\\n").Replace("\n", "\\n");
         }
 
         static string ToAbsolutePath(string unityPath)
