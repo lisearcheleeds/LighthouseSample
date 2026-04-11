@@ -55,11 +55,19 @@ namespace LighthouseExtends.TextTable.Editor
             }
 
             var replacements = new List<(int start, int end, string newText)>();
+            var stringMask = BuildStringCommentMask(source);
 
             var match = CallRegex.Match(source);
             while (match.Success)
             {
                 var openParen = match.Index + match.Length - 1;
+
+                // Skip matches inside string literals or comments
+                if (stringMask[match.Index])
+                {
+                    match = match.NextMatch();
+                    continue;
+                }
 
                 if (!TryParseArguments(source, openParen, out var args, out var closeParen))
                 {
@@ -122,11 +130,12 @@ namespace LighthouseExtends.TextTable.Editor
                     continue;
                 }
 
-                WriteTsvEntry(tsvFolder, category, textKey, text, Path.GetFileName(filePath), lineNum);
+                var prefixedKey = category + textKey;
+                WriteTsvEntry(tsvFolder, category, prefixedKey, text, Path.GetFileName(filePath), lineNum);
 
                 var newCall = textParamsArg != null
-                    ? $"new TextData({textKeyArg}, {textParamsArg})"
-                    : $"new TextData({textKeyArg})";
+                    ? $"new TextData(\"{prefixedKey}\", {textParamsArg})"
+                    : $"new TextData(\"{prefixedKey}\")";
 
                 replacements.Add((match.Index, closeParen + 1, newCall));
                 replaced++;
@@ -441,10 +450,24 @@ namespace LighthouseExtends.TextTable.Editor
 
             if (files.Length == 0)
             {
-                Debug.LogWarning(
-                    $"[TextTableGenerator] '{sourceFile}':{lineNum} — " +
-                    $"No TSV file found for category '{category}' in '{tsvFolder}'. " +
-                    $"Create the file via the TextTable Editor window, then re-run.");
+                var languages = DetectLanguages(tsvFolder);
+                if (languages.Count == 0)
+                {
+                    Debug.LogWarning(
+                        $"[TextTableGenerator] '{sourceFile}':{lineNum} — " +
+                        $"No TSV files found in '{tsvFolder}'. Cannot detect languages. " +
+                        $"Create at least one TSV file via the TextTable Editor window, then re-run.");
+                    return;
+                }
+
+                var sanitized = SanitizeTsvValue(text);
+                foreach (var lang in languages)
+                {
+                    var newPath = Path.Combine(tsvFolder, $"{category}.{lang}.tsv");
+                    File.WriteAllText(newPath, $"key\ttext\n{textKey}\t{sanitized}\n", Encoding.UTF8);
+                    Debug.Log($"[TextTableGenerator] Created '{category}.{lang}.tsv' and added key '{textKey}'.");
+                }
+
                 return;
             }
 
@@ -483,6 +506,74 @@ namespace LighthouseExtends.TextTable.Editor
 
         // ─────────────────────────────────────────────────────────────────
         // Helpers
+
+        // Returns a mask where true = position is inside a string literal or comment.
+        static bool[] BuildStringCommentMask(string source)
+        {
+            var mask = new bool[source.Length];
+            var pos = 0;
+
+            while (pos < source.Length)
+            {
+                var c = source[pos];
+
+                if (IsStringStart(source, pos))
+                {
+                    var start = pos;
+                    pos = SkipStringLiteral(source, pos);
+                    for (var i = start; i < pos && i < mask.Length; i++) { mask[i] = true; }
+                    continue;
+                }
+
+                if (c == '\'')
+                {
+                    var start = pos;
+                    pos = SkipCharLiteral(source, pos);
+                    for (var i = start; i < pos && i < mask.Length; i++) { mask[i] = true; }
+                    continue;
+                }
+
+                if (c == '/' && pos + 1 < source.Length)
+                {
+                    if (source[pos + 1] == '/')
+                    {
+                        var start = pos;
+                        var nl = source.IndexOf('\n', pos);
+                        pos = nl >= 0 ? nl : source.Length;
+                        for (var i = start; i < pos && i < mask.Length; i++) { mask[i] = true; }
+                        continue;
+                    }
+
+                    if (source[pos + 1] == '*')
+                    {
+                        var start = pos;
+                        var end = source.IndexOf("*/", pos + 2, System.StringComparison.Ordinal);
+                        pos = end >= 0 ? end + 2 : source.Length;
+                        for (var i = start; i < pos && i < mask.Length; i++) { mask[i] = true; }
+                        continue;
+                    }
+                }
+
+                pos++;
+            }
+
+            return mask;
+        }
+
+        // Detects languages from existing TSV filenames (e.g. "Global.ja.tsv" → "ja").
+        static IReadOnlyList<string> DetectLanguages(string tsvFolder)
+        {
+            return Directory.GetFiles(tsvFolder, "*.tsv")
+                .Select(f =>
+                {
+                    var name = Path.GetFileNameWithoutExtension(f);
+                    var dotIdx = name.LastIndexOf('.');
+                    return dotIdx >= 0 ? name.Substring(dotIdx + 1) : null;
+                })
+                .Where(l => l != null)
+                .Distinct()
+                .ToList();
+        }
 
         static TextTableEditorSettings LoadSettings()
         {
