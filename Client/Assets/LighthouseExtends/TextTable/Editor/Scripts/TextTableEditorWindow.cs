@@ -41,6 +41,7 @@ namespace LighthouseExtends.TextTable.Editor
         GUIStyle deleteButtonStyle;
         HashSet<string> deletedGlobalTsvKeys = new();
         HashSet<string> deletedTsvKeys = new();
+        Dictionary<string, HashSet<string>> deletedOtherTsvKeys = new();
         GUIStyle dirtyTextFieldStyle;
         bool globalTsvDirty;
         bool isDirty;
@@ -325,6 +326,7 @@ namespace LighthouseExtends.TextTable.Editor
             keySourceMap = new Dictionary<string, Dictionary<string, string>>();
             deletedTsvKeys = new HashSet<string>();
             deletedGlobalTsvKeys = new HashSet<string>();
+            deletedOtherTsvKeys = new Dictionary<string, HashSet<string>>();
             globalTsvDirty = false;
             isDirty = false;
             tableLoadError = null;
@@ -619,6 +621,51 @@ namespace LighthouseExtends.TextTable.Editor
                 deletedGlobalTsvKeys.Clear();
                 globalTsvDirty = false;
             }
+
+            foreach (var (baseName, keysToDelete) in deletedOtherTsvKeys)
+            {
+                foreach (var lang in languages)
+                {
+                    var otherFilePath = Path.Combine(folder, $"{baseName}.{lang}.tsv");
+                    if (!File.Exists(otherFilePath))
+                    {
+                        continue;
+                    }
+
+                    var existing = new Dictionary<string, string>();
+                    foreach (var line in File.ReadAllLines(otherFilePath).Skip(1))
+                    {
+                        var trimmed = line.TrimEnd('\r');
+                        if (string.IsNullOrEmpty(trimmed))
+                        {
+                            continue;
+                        }
+
+                        var tab = trimmed.IndexOf('\t');
+                        if (tab < 0)
+                        {
+                            continue;
+                        }
+
+                        existing[trimmed.Substring(0, tab)] = trimmed.Substring(tab + 1);
+                    }
+
+                    foreach (var k in keysToDelete)
+                    {
+                        existing.Remove(k);
+                    }
+
+                    var otherSb = new StringBuilder("key\ttext\n");
+                    foreach (var (k, v) in existing)
+                    {
+                        otherSb.Append($"{k}\t{v}\n");
+                    }
+
+                    File.WriteAllText(otherFilePath, otherSb.ToString(), Encoding.UTF8);
+                }
+            }
+
+            deletedOtherTsvKeys.Clear();
 
             AssetDatabase.Refresh();
 
@@ -1341,6 +1388,44 @@ namespace LighthouseExtends.TextTable.Editor
                 keySourceMap[key] = sm;
             }
 
+            var folder = ToAbsolutePath(settings.TextTableFolderPath);
+            var otherFiles = FindOtherFilesContainingKey(key, folder);
+
+            if (otherFiles.Count > 0)
+            {
+                var fileList = string.Join("\n", otherFiles.Select(s => $"  • {s}"));
+                var message =
+                    $"The key \"{key}\" also exists in the following TSV files:\n\n{fileList}\n\n" +
+                    "After globalizing, these files will still define the same key, " +
+                    "causing a runtime duplicate (last-loaded file wins).\n\n" +
+                    "Remove this key from those files on Save?";
+
+                var choice = EditorUtility.DisplayDialogComplex(
+                    "Duplicate Key Detected",
+                    message,
+                    "Remove on Save",
+                    "Cancel",
+                    "Keep As-Is");
+
+                if (choice == 1)
+                {
+                    return;
+                }
+
+                if (choice == 0)
+                {
+                    foreach (var baseName in otherFiles)
+                    {
+                        if (!deletedOtherTsvKeys.ContainsKey(baseName))
+                        {
+                            deletedOtherTsvKeys[baseName] = new HashSet<string>();
+                        }
+
+                        deletedOtherTsvKeys[baseName].Add(key);
+                    }
+                }
+            }
+
             foreach (var lang in languages)
             {
                 sm[lang] = "Global";
@@ -1349,6 +1434,55 @@ namespace LighthouseExtends.TextTable.Editor
             deletedTsvKeys.Add(key);
             globalTsvDirty = true;
             isDirty = true;
+        }
+
+        List<string> FindOtherFilesContainingKey(string key, string folder)
+        {
+            var result = new List<string>();
+            if (!Directory.Exists(folder))
+            {
+                return result;
+            }
+
+            var seen = new HashSet<string>();
+            foreach (var file in Directory.GetFiles(folder, "*.tsv"))
+            {
+                var nameNoExt = Path.GetFileNameWithoutExtension(file);
+                var dot = nameNoExt.LastIndexOf('.');
+                if (dot < 0)
+                {
+                    continue;
+                }
+
+                var baseName = nameNoExt.Substring(0, dot);
+                if (baseName == "Global" || baseName == selectedEntry.tsvBaseName || !seen.Add(baseName))
+                {
+                    continue;
+                }
+
+                foreach (var line in File.ReadAllLines(file).Skip(1))
+                {
+                    var trimmed = line.TrimEnd('\r');
+                    if (string.IsNullOrEmpty(trimmed))
+                    {
+                        continue;
+                    }
+
+                    var tab = trimmed.IndexOf('\t');
+                    if (tab < 0)
+                    {
+                        continue;
+                    }
+
+                    if (trimmed.Substring(0, tab) == key)
+                    {
+                        result.Add(baseName);
+                        break;
+                    }
+                }
+            }
+
+            return result;
         }
 
         void LocalizeKey(string key)

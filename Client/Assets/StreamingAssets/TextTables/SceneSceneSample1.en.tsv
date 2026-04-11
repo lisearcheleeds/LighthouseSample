@@ -1,5 +1,4 @@
 ﻿key	text
-BackScene1	
 SceneSample1Description1	Since the scenes are stacked, you don't need to specify a destination scene in BackScene.
 SceneSample1Description2	Scene transitions can also be performed from a popup.
 SceneSample1TransitionHeader	SceneSample
