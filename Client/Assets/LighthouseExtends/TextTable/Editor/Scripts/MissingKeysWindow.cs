@@ -9,18 +9,9 @@ namespace LighthouseExtends.TextTable.Editor
         List<(string scope, string hierarchyPath, string textKey)> missingRefs;
         Vector2 scroll;
 
-        public static void Show(List<(string, string, string)> missingRefs)
-        {
-            var window = GetWindow<MissingKeysWindow>(true, "Missing TextKey References", true);
-            window.missingRefs = missingRefs;
-            window.minSize = new Vector2(520, 300);
-        }
-
         void OnGUI()
         {
-            EditorGUILayout.LabelField(
-                $"{missingRefs.Count} missing TextKey reference(s) found:",
-                EditorStyles.boldLabel);
+            EditorGUILayout.LabelField($"{missingRefs.Count} missing TextKey reference(s) found:", EditorStyles.boldLabel);
             EditorGUILayout.Space(4);
 
             scroll = EditorGUILayout.BeginScrollView(scroll);
@@ -38,6 +29,13 @@ namespace LighthouseExtends.TextTable.Editor
             }
 
             EditorGUILayout.EndScrollView();
+        }
+
+        public static void Show(List<(string, string, string)> missingRefs)
+        {
+            var window = GetWindow<MissingKeysWindow>(true, "Missing TextKey References", true);
+            window.missingRefs = missingRefs;
+            window.minSize = new Vector2(520, 300);
         }
     }
 }

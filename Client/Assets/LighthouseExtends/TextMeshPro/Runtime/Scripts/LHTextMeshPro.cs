@@ -10,19 +10,10 @@ namespace LighthouseExtends.UIComponent.TextMeshPro
     public class LHTextMeshPro : TextMeshProUGUI
     {
         [SerializeField] string textKey;
+        IDisposable fontSubscription;
 
         ITextData textData;
         IDisposable textSubscription;
-        IDisposable fontSubscription;
-
-        public void SetTextData(ITextData textData)
-        {
-            this.textData = textData;
-            if (isActiveAndEnabled)
-            {
-                ApplyText();
-            }
-        }
 
         protected override void OnEnable()
         {
@@ -58,6 +49,15 @@ namespace LighthouseExtends.UIComponent.TextMeshPro
 
             fontSubscription?.Dispose();
             fontSubscription = null;
+        }
+
+        public void SetTextData(ITextData textData)
+        {
+            this.textData = textData;
+            if (isActiveAndEnabled)
+            {
+                ApplyText();
+            }
         }
 
         void ApplyText()

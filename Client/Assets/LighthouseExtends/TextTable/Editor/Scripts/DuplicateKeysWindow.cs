@@ -10,13 +10,6 @@ namespace LighthouseExtends.TextTable.Editor
         List<(string key, HashSet<string> scopes)> duplicates;
         Vector2 scroll;
 
-        public static void Show(List<(string, HashSet<string>)> duplicates)
-        {
-            var window = GetWindow<DuplicateKeysWindow>(true, "Duplicate TextKeys", true);
-            window.duplicates = duplicates;
-            window.minSize = new Vector2(440, 300);
-        }
-
         void OnGUI()
         {
             EditorGUILayout.LabelField(
@@ -40,6 +33,13 @@ namespace LighthouseExtends.TextTable.Editor
             }
 
             EditorGUILayout.EndScrollView();
+        }
+
+        public static void Show(List<(string, HashSet<string>)> duplicates)
+        {
+            var window = GetWindow<DuplicateKeysWindow>(true, "Duplicate TextKeys", true);
+            window.duplicates = duplicates;
+            window.minSize = new Vector2(440, 300);
         }
     }
 }

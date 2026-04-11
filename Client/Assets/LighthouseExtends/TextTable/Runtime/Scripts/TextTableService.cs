@@ -10,10 +10,10 @@ namespace LighthouseExtends.TextTable
 {
     public sealed class TextTableService : ITextTableService, IDisposable
     {
-        public static ITextTableService Instance { get; private set; }
-
-        readonly ITextTableLoader loader;
         readonly ReactiveProperty<string> currentLanguage = new(string.Empty);
+        readonly ITextTableLoader loader;
+
+        public static ITextTableService Instance { get; private set; }
 
         IReadOnlyDictionary<string, string> activeTable;
 
@@ -25,6 +25,12 @@ namespace LighthouseExtends.TextTable
             Instance = this;
             this.loader = loader;
             languageService.RegisterChangeHandler(LoadTableAsync);
+        }
+
+        public void Dispose()
+        {
+            currentLanguage.Dispose();
+            Instance = null;
         }
 
         public string GetText(ITextData textData)
@@ -40,12 +46,6 @@ namespace LighthouseExtends.TextTable
             }
 
             return text;
-        }
-
-        public void Dispose()
-        {
-            currentLanguage.Dispose();
-            Instance = null;
         }
 
         async UniTask LoadTableAsync(string languageCode, CancellationToken cancellationToken)

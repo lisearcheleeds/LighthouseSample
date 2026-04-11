@@ -6,16 +6,19 @@ namespace LighthouseExtends.TextTable.Editor
 {
     public class AddLanguagePopup : PopupWindowContent
     {
-        string languageCode = string.Empty;
         readonly Action<string> onConfirm;
         bool focusRequested;
+        string languageCode = string.Empty;
 
         public AddLanguagePopup(Action<string> onConfirm)
         {
             this.onConfirm = onConfirm;
         }
 
-        public override Vector2 GetWindowSize() => new Vector2(240, 68);
+        public override Vector2 GetWindowSize()
+        {
+            return new Vector2(240, 68);
+        }
 
         public override void OnGUI(Rect rect)
         {
