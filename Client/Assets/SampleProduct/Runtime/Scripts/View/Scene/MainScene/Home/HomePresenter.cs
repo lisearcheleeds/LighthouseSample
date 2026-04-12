@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
+using LighthouseExtends.Language;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog;
 using SampleProduct.View.Scene.MainScene.SampleTop;
@@ -15,18 +16,21 @@ namespace SampleProduct.View.Scene.MainScene.Home
         ISceneManager sceneManager;
         IBackgroundModule backgroundModule;
         IScreenStackModule screenStackModule;
+        ILanguageService languageService;
 
         [Inject]
         public void Construct(
             IHomeView homeView,
             ISceneManager sceneManager,
             IBackgroundModule backgroundModule,
-            IScreenStackModule screenStackModule)
+            IScreenStackModule screenStackModule,
+            ILanguageService languageService)
         {
             this.homeView = homeView;
             this.sceneManager = sceneManager;
             this.backgroundModule = backgroundModule;
             this.screenStackModule = screenStackModule;
+            this.languageService = languageService;
         }
 
         void IHomePresenter.Setup()
@@ -37,6 +41,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
             homeView.SubscribePhilosophyButtonClick(OnClickPhilosophyButton);
             homeView.SubscribeSampleButtonClick(OnClickSampleButton);
             homeView.SubscribeRequireToolsButtonClick(OnClickRequireToolsButton);
+            homeView.SubscribeRequireLanguageSwitchButtonClick(OnClickRequireLanguageSwitchButton);
         }
 
         void IHomePresenter.OnEnter()
@@ -72,6 +77,11 @@ namespace SampleProduct.View.Scene.MainScene.Home
         void OnClickRequireToolsButton()
         {
             screenStackModule.Open(new RequireToolsData()).Forget();
+        }
+
+        void OnClickRequireLanguageSwitchButton()
+        {
+            // languageService.CurrentLanguage
         }
     }
 }

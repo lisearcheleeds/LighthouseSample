@@ -15,6 +15,8 @@ namespace SampleProduct.View.Scene.MainScene.Home
         [SerializeField] LHButton sampleButton;
         [SerializeField] LHButton requireToolsButton;
 
+        [SerializeField] LHButton languageSwitchButton;
+
         IDisposable IHomeView.SubscribeGuideButtonClick(Action action) => guideButton.SubscribeOnClick(action);
         IDisposable IHomeView.SubscribeGithubButtonClick(Action action) => githubButton.SubscribeOnClick(action);
         IDisposable IHomeView.SubscribeSnsButtonClick(Action action) => snsButton.SubscribeOnClick(action);
@@ -22,5 +24,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
         IDisposable IHomeView.SubscribePhilosophyButtonClick(Action action) => philosophyButton.SubscribeOnClick(action);
         IDisposable IHomeView.SubscribeSampleButtonClick(Action action) => sampleButton.SubscribeOnClick(action);
         IDisposable IHomeView.SubscribeRequireToolsButtonClick(Action action) => requireToolsButton.SubscribeOnClick(action);
+
+        IDisposable IHomeView.SubscribeRequireLanguageSwitchButtonClick(Action action) => languageSwitchButton.SubscribeOnClick(action);
     }
 }
