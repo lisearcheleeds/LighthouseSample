@@ -1,14 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SampleProduct.Infrastructure.Language
+namespace LighthouseExtends.Language
 {
-    [CreateAssetMenu(
-        fileName = "SupportedLanguageSettings",
-        menuName = "SampleProduct/SupportedLanguageSettings")]
+    [CreateAssetMenu(menuName = "Lighthouse/Language/Supported Language Settings")]
     public class SupportedLanguageSettings : ScriptableObject
     {
-        [SerializeField] List<string> supportedLanguages = new() { "en", "ja", "zh", "ko" };
+        [SerializeField] List<string> supportedLanguages = new() { "en" };
         [SerializeField] string defaultLanguage = "en";
 
         public IReadOnlyList<string> SupportedLanguages => supportedLanguages;

@@ -8,7 +8,6 @@ using LighthouseExtends.UIComponent.CanvasSceneObject;
 using LighthouseExtends.UIComponent.ExclusiveInput;
 using LighthouseExtends.UIComponent.InputBlocker;
 using SampleProduct.Infrastructure.AssetLoader;
-using SampleProduct.Infrastructure.Language;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using SampleProduct.View.Scene.ModuleScene.Overlay;

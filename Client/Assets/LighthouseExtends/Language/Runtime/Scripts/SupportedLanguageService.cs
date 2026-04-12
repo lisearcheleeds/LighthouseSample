@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using LighthouseExtends.Language;
 using VContainer;
 
-namespace SampleProduct.Infrastructure.Language
+namespace LighthouseExtends.Language
 {
     public sealed class SupportedLanguageService : ISupportedLanguageService
     {
