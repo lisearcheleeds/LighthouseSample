@@ -26,17 +26,12 @@ namespace LighthouseExtends.TextTable.Editor
         const float ActionButtonWidth = 60f;
         const float ScopeColWidth = 64f;
 
-        // Column resize state
         readonly List<Rect> colHandleRects = new();
+        readonly List<float> langColWidths = new();
 
-        // Right panel
         TableViewTab activeTab;
-
-        // Toolbar state
         Rect addLanguageButtonRect;
         Dictionary<string, Dictionary<string, string>> allTsvData = new();
-
-        // Error state
         string assetListError;
         Vector2 assetListScroll;
         GUIStyle deleteButtonStyle;
@@ -49,16 +44,9 @@ namespace LighthouseExtends.TextTable.Editor
         bool isResizingPanel;
         float keyColWidth = 180f;
         Dictionary<string, Dictionary<string, string>> keySourceMap = new();
-        readonly List<float> langColWidths = new();
         List<string> languages = new();
-
-        // Cached styles
         GUIStyle leftAlignedButtonStyle;
-
-        // Left panel
         float leftPanelWidth = LeftPanelDefaultWidth;
-
-        // Column widths (resizable)
         float pathColWidth = 200f;
         int pendingFocusRowIndex = -1;
         bool autoNewLine = true;
@@ -68,15 +56,22 @@ namespace LighthouseExtends.TextTable.Editor
         float resizeStartMouseX;
         int resizingColIndex = -1;
         List<ComponentRow> rows = new();
-
         List<AssetEntry> sceneEntries = new();
         AssetEntry selectedEntry;
-
-        // Settings
         TextTableEditorSettings settings;
         string tableLoadError;
         Vector2 tableScroll;
         List<string> tsvLoadErrors = new();
+
+        // ─────────────────────────────────────────────────────────────────
+        // EditorWindow lifecycle
+        // ─────────────────────────────────────────────────────────────────
+
+        [MenuItem(MenuPath)]
+        static void Open()
+        {
+            GetWindow<TextTableEditorWindow>("TextTable Editor");
+        }
 
         void OnEnable()
         {
@@ -87,10 +82,6 @@ namespace LighthouseExtends.TextTable.Editor
                 LoadTableData();
             }
         }
-
-        // ─────────────────────────────────────────────────────────────────
-        // GUI
-        // ─────────────────────────────────────────────────────────────────
 
         void OnGUI()
         {
@@ -106,622 +97,187 @@ namespace LighthouseExtends.TextTable.Editor
 
             HandlePanelResize();
             HandleColumnResize();
-
         }
 
         // ─────────────────────────────────────────────────────────────────
-        // Open
+        // Styles
         // ─────────────────────────────────────────────────────────────────
 
-        [MenuItem(MenuPath)]
-        static void Open()
+        void EnsureStyles()
         {
-            GetWindow<TextTableEditorWindow>("TextTable Editor");
-        }
-
-        // ─────────────────────────────────────────────────────────────────
-        // Settings
-        // ─────────────────────────────────────────────────────────────────
-
-        void LoadOrCreateSettings()
-        {
-            var guids = AssetDatabase.FindAssets($"t:{nameof(TextTableEditorSettings)}");
-            if (0 < guids.Length)
+            if (leftAlignedButtonStyle == null)
             {
-                if (1 < guids.Length)
+                leftAlignedButtonStyle = new GUIStyle(EditorStyles.miniButton)
                 {
-                    Debug.LogWarning("[TextTable] Multiple TextTableEditorSettings found. Using the first one.");
+                    alignment = TextAnchor.MiddleLeft
+                };
+            }
+
+            if (dirtyTextFieldStyle == null)
+            {
+                dirtyTextFieldStyle = new GUIStyle(EditorStyles.textField);
+                dirtyTextFieldStyle.normal.textColor = new Color(1f, 0.85f, 0f);
+                dirtyTextFieldStyle.focused.textColor = new Color(1f, 0.85f, 0f);
+            }
+
+            if (deleteButtonStyle == null)
+            {
+                deleteButtonStyle = new GUIStyle(EditorStyles.miniButton);
+                deleteButtonStyle.normal.textColor = new Color(0.9f, 0.3f, 0.3f);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Toolbar
+        // ─────────────────────────────────────────────────────────────────
+
+        void DrawToolbar()
+        {
+            using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
+            {
+                var next = (TextTableEditorSettings)EditorGUILayout.ObjectField(
+                    settings, typeof(TextTableEditorSettings), false, GUILayout.Width(320));
+                if (next != settings)
+                {
+                    settings = next;
+                    selectedEntry = null;
+                    rows = new List<ComponentRow>();
+                    allTsvData = new Dictionary<string, Dictionary<string, string>>();
+                    RefreshAssetList();
                 }
 
-                settings = AssetDatabase.LoadAssetAtPath<TextTableEditorSettings>(AssetDatabase.GUIDToAssetPath(guids[0]));
-                return;
-            }
-
-            settings = CreateInstance<TextTableEditorSettings>();
-            if (!Directory.Exists(SettingsDefaultDirectory))
-            {
-                Directory.CreateDirectory(SettingsDefaultDirectory);
-            }
-
-            AssetDatabase.CreateAsset(settings, $"{SettingsDefaultDirectory}/{nameof(TextTableEditorSettings)}.asset");
-            AssetDatabase.SaveAssets();
-        }
-
-        // ─────────────────────────────────────────────────────────────────
-        // Asset Discovery
-        // ─────────────────────────────────────────────────────────────────
-
-        void RefreshAssetList()
-        {
-            assetListError = null;
-            try
-            {
-                sceneEntries = AssetDatabase.FindAssets("t:SceneAsset")
-                    .Select(AssetDatabase.GUIDToAssetPath)
-                    .Where(p => p.StartsWith("Assets/"))
-                    .Select(p => new AssetEntry(p, Path.GetFileNameWithoutExtension(p), $"Scene{Path.GetFileNameWithoutExtension(p)}", true))
-                    .ToList();
-
-                var prefabPaths = AssetDatabase.FindAssets("t:Prefab")
-                    .Select(AssetDatabase.GUIDToAssetPath)
-                    .Where(p => p.StartsWith("Assets/"))
-                    .ToList();
-
-                var baseNames = ComputePrefabBaseNames(prefabPaths);
-                prefabEntries = prefabPaths
-                    .Select((p, i) => new AssetEntry(p, Path.GetFileNameWithoutExtension(p), baseNames[i], false))
-                    .ToList();
-            }
-            catch (Exception e)
-            {
-                assetListError = "Failed to load Scene / Prefab list.\n" +
-                                 "Fix: Verify the AssetDatabase is initialized. Try restarting Unity or running Assets > Reimport All.\n" +
-                                 $"Detail: {e.Message}";
-                sceneEntries = new List<AssetEntry>();
-                prefabEntries = new List<AssetEntry>();
-                Debug.LogException(e);
-            }
-        }
-
-        static List<string> ComputePrefabBaseNames(List<string> paths)
-        {
-            var depth = 1;
-            var names = paths.Select(p => GetParentDirSuffix(p, depth)).ToList();
-
-            for (var iter = 0; iter < 10 && HasDuplicates(names); iter++)
-            {
-                depth++;
-                var duplicates = names.GroupBy(n => n)
-                    .Where(g => 1 < g.Count())
-                    .Select(g => g.Key)
-                    .ToHashSet();
-
-                for (var i = 0; i < names.Count; i++)
+                using (new EditorGUI.DisabledScope(settings == null))
                 {
-                    if (duplicates.Contains(names[i]))
+                    if (GUILayout.Button("Check Duplicates", EditorStyles.toolbarButton, GUILayout.Width(110)))
                     {
-                        names[i] = GetParentDirSuffix(paths[i], depth);
+                        CheckDuplicateKeys();
+                    }
+
+                    if (GUILayout.Button("Check Missing", EditorStyles.toolbarButton, GUILayout.Width(100)))
+                    {
+                        CheckMissingKeys();
+                    }
+
+                    var newAutoNewLine = GUILayout.Toggle(
+                        autoNewLine,
+                        new GUIContent(@"\n as ↵", @"When enabled, \n in TSV values is shown as a real newline in text fields and converted back on edit."),
+                        EditorStyles.toolbarButton,
+                        GUILayout.Width(70));
+                    if (newAutoNewLine != autoNewLine)
+                    {
+                        autoNewLine = newAutoNewLine;
+                        Repaint();
+                    }
+                }
+
+                GUILayout.FlexibleSpace();
+
+                using (new EditorGUI.DisabledScope(settings == null))
+                {
+                    if (GUILayout.Button("Add Language", EditorStyles.toolbarButton, GUILayout.Width(90)))
+                    {
+                        var rect = addLanguageButtonRect;
+                        EditorApplication.delayCall += () => PopupWindow.Show(rect, new AddLanguagePopup(AddLanguage));
+                    }
+
+                    if (Event.current.type == EventType.Repaint)
+                    {
+                        addLanguageButtonRect = GUILayoutUtility.GetLastRect();
+                    }
+                }
+
+                using (new EditorGUI.DisabledScope(selectedEntry == null))
+                {
+                    if (GUILayout.Button("Reload", EditorStyles.toolbarButton, GUILayout.Width(60)))
+                    {
+                        ReloadTableData();
+                    }
+                }
+
+                using (new EditorGUI.DisabledScope(!isDirty))
+                {
+                    if (GUILayout.Button("Save", EditorStyles.toolbarButton, GUILayout.Width(60)))
+                    {
+                        Save();
                     }
                 }
             }
-
-            return names.Select(n => $"Prefab{n}").ToList();
-        }
-
-        static string GetParentDirSuffix(string assetPath, int depth)
-        {
-            var parts = assetPath.Replace('\\', '/').Split('/');
-            var taken = new List<string>();
-            for (var d = 1; d <= depth && d < parts.Length - 1; d++)
-            {
-                taken.Insert(0, parts[parts.Length - 1 - d]);
-            }
-
-            return string.Concat(taken);
-        }
-
-        static bool HasDuplicates(List<string> list)
-        {
-            return list.Count != list.Distinct().Count();
         }
 
         // ─────────────────────────────────────────────────────────────────
-        // Column width helpers
+        // Asset list panel
         // ─────────────────────────────────────────────────────────────────
 
-        float GetColWidth(int index)
+        void DrawAssetList()
         {
-            if (index == 0)
+            using (new EditorGUILayout.VerticalScope(GUILayout.Width(leftPanelWidth), GUILayout.ExpandHeight(true)))
             {
-                return pathColWidth;
-            }
+                assetListScroll = EditorGUILayout.BeginScrollView(assetListScroll);
 
-            if (index == 1)
-            {
-                return placeholderColWidth;
-            }
-
-            if (index == 2)
-            {
-                return keyColWidth;
-            }
-
-            var li = index - 3;
-            return li < langColWidths.Count ? langColWidths[li] : 160f;
-        }
-
-        void SetColWidth(int index, float width)
-        {
-            var w = Mathf.Max(MinColWidth, width);
-            if (index == 0)
-            {
-                pathColWidth = w;
-                return;
-            }
-
-            if (index == 1)
-            {
-                placeholderColWidth = w;
-                return;
-            }
-
-            if (index == 2)
-            {
-                keyColWidth = w;
-                return;
-            }
-
-            var li = index - 3;
-            if (li < langColWidths.Count)
-            {
-                langColWidths[li] = w;
-            }
-        }
-
-        void SyncLangColWidths()
-        {
-            while (langColWidths.Count < languages.Count)
-            {
-                langColWidths.Add(160f);
-            }
-
-            while (languages.Count < langColWidths.Count)
-            {
-                langColWidths.RemoveAt(langColWidths.Count - 1);
-            }
-        }
-
-        // ─────────────────────────────────────────────────────────────────
-        // Data Loading
-        // ─────────────────────────────────────────────────────────────────
-
-        void SelectAsset(AssetEntry entry)
-        {
-            if (isDirty)
-            {
-                var choice = EditorUtility.DisplayDialogComplex(
-                    "Unsaved Changes",
-                    "There are unsaved changes.",
-                    "Save",
-                    "Cancel",
-                    "Discard");
-
-                if (choice == 1)
+                if (!string.IsNullOrEmpty(assetListError))
                 {
-                    return;
-                }
-
-                if (choice == 0)
-                {
-                    Save();
-                }
-            }
-
-            selectedEntry = entry;
-            LoadTableData();
-            Repaint();
-        }
-
-        void LoadTableData()
-        {
-            rows = new List<ComponentRow>();
-            allTsvData = new Dictionary<string, Dictionary<string, string>>();
-            keySourceMap = new Dictionary<string, Dictionary<string, string>>();
-            deletedTsvKeys = new HashSet<string>();
-            deletedGlobalTsvKeys = new HashSet<string>();
-            deletedOtherTsvKeys = new Dictionary<string, HashSet<string>>();
-            globalTsvDirty = false;
-            isDirty = false;
-            tableLoadError = null;
-            tsvLoadErrors = new List<string>();
-
-            if (selectedEntry == null || settings == null)
-            {
-                return;
-            }
-
-            var folder = ToAbsolutePath(settings.TextTableFolderPath);
-
-            try
-            {
-                languages = DetectLanguages(folder);
-            }
-            catch (Exception e)
-            {
-                tableLoadError = "Failed to read the TSV folder.\n" +
-                                 $"Fix: Check 'Text Table Folder Path' in Settings. Current value: {settings.TextTableFolderPath}\n" +
-                                 $"Detail: {e.Message}";
-                Debug.LogException(e);
-                return;
-            }
-
-            SyncLangColWidths();
-
-            try
-            {
-                var (loaded, loadedSourceMap, errors) = LoadAllTsvData(folder);
-                allTsvData = loaded;
-                keySourceMap = loadedSourceMap;
-                tsvLoadErrors = errors;
-            }
-            catch (Exception e)
-            {
-                tableLoadError = "Failed to load TSV files.\n" +
-                                 $"Fix: Verify the TSV files in '{settings.TextTableFolderPath}' are correctly formatted.\n" +
-                                 $"Detail: {e.Message}";
-                Debug.LogException(e);
-                return;
-            }
-
-            List<(LHTextMeshPro comp, string path)> componentList;
-            try
-            {
-                componentList = FindComponents(selectedEntry);
-            }
-            catch (Exception e)
-            {
-                tableLoadError = $"Failed to load components from '{selectedEntry.displayName}'.\n" +
-                                 $"Fix: Check the file is not corrupted. Path: {selectedEntry.assetPath}\n" +
-                                 $"Detail: {e.Message}";
-                Debug.LogException(e);
-                return;
-            }
-
-            foreach (var (comp, path) in componentList)
-            {
-                var key = ReadTextKey(comp);
-                var langData = new Dictionary<string, string>();
-                foreach (var lang in languages)
-                {
-                    langData[lang] = allTsvData.TryGetValue(key, out var langMap) &&
-                                     langMap.TryGetValue(lang, out var text)
-                        ? text
-                        : string.Empty;
-                }
-
-                var placeholder = ReadPlaceholderText(comp);
-                rows.Add(new ComponentRow(path, key, placeholder, comp, langData));
-            }
-        }
-
-        static List<(LHTextMeshPro comp, string path)> FindComponents(AssetEntry entry)
-        {
-            LHTextMeshPro[] comps;
-            if (entry.isScene)
-            {
-                EditorSceneManager.OpenScene(entry.assetPath, OpenSceneMode.Single);
-                comps = SceneManager.GetActiveScene()
-                    .GetRootGameObjects()
-                    .SelectMany(go => go.GetComponentsInChildren<LHTextMeshPro>(true))
-                    .ToArray();
-            }
-            else
-            {
-                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(entry.assetPath);
-                comps = prefab != null
-                    ? prefab.GetComponentsInChildren<LHTextMeshPro>(true)
-                    : Array.Empty<LHTextMeshPro>();
-            }
-
-            return comps.Select(c => (c, GetHierarchyPath(c.gameObject))).ToList();
-        }
-
-        // ─────────────────────────────────────────────────────────────────
-        // TSV I/O
-        // ─────────────────────────────────────────────────────────────────
-
-        static List<string> DetectLanguages(string folder)
-        {
-            if (!Directory.Exists(folder))
-            {
-                return new List<string>();
-            }
-
-            return Directory.GetFiles(folder, "*.tsv")
-                .Select(f => Path.GetFileNameWithoutExtension(f))
-                .Where(n => n.Contains('.'))
-                .Select(n => n.Substring(n.LastIndexOf('.') + 1))
-                .Distinct()
-                .OrderBy(l => l)
-                .ToList();
-        }
-
-        static (Dictionary<string, Dictionary<string, string>> data,
-            Dictionary<string, Dictionary<string, string>> sourceMap,
-            List<string> errors)
-            LoadAllTsvData(string folder)
-        {
-            var data = new Dictionary<string, Dictionary<string, string>>();
-            var sourceMap = new Dictionary<string, Dictionary<string, string>>();
-            var errors = new List<string>();
-
-            if (!Directory.Exists(folder))
-            {
-                return (data, sourceMap, errors);
-            }
-
-            foreach (var file in Directory.GetFiles(folder, "*.tsv"))
-            {
-                try
-                {
-                    var nameNoExt = Path.GetFileNameWithoutExtension(file);
-                    var dot = nameNoExt.LastIndexOf('.');
-                    if (dot < 0)
+                    EditorGUILayout.HelpBox(assetListError, MessageType.Error);
+                    if (GUILayout.Button("Retry", GUILayout.Width(leftPanelWidth - 8)))
                     {
-                        continue;
+                        RefreshAssetList();
                     }
-
-                    var lang = nameNoExt.Substring(dot + 1);
-                    var baseName = nameNoExt.Substring(0, dot);
-
-                    foreach (var line in File.ReadAllLines(file).Skip(1))
-                    {
-                        var trimmed = line.TrimEnd('\r');
-                        if (string.IsNullOrEmpty(trimmed))
-                        {
-                            continue;
-                        }
-
-                        var tab = trimmed.IndexOf('\t');
-                        if (tab < 0)
-                        {
-                            continue;
-                        }
-
-                        var key = trimmed.Substring(0, tab);
-                        var text = trimmed.Substring(tab + 1);
-
-                        if (!data.ContainsKey(key))
-                        {
-                            data[key] = new Dictionary<string, string>();
-                        }
-
-                        data[key][lang] = text;
-
-                        if (!sourceMap.ContainsKey(key))
-                        {
-                            sourceMap[key] = new Dictionary<string, string>();
-                        }
-
-                        sourceMap[key][lang] = baseName;
-                    }
-                }
-                catch (Exception e)
-                {
-                    errors.Add(
-                        $"'{Path.GetFileName(file)}': {e.Message} (Fix: Ensure the file is not open in another app and is encoded as UTF-8)");
-                    Debug.LogException(e);
-                }
-            }
-
-            return (data, sourceMap, errors);
-        }
-
-        void Save()
-        {
-            if (selectedEntry == null || settings == null)
-            {
-                return;
-            }
-
-            // Save TextKey changes to Scene / Prefab
-            if (rows.Any(r => r.IsTextKeyDirty))
-            {
-                foreach (var row in rows)
-                {
-                    if (!row.IsTextKeyDirty)
-                    {
-                        continue;
-                    }
-
-                    var so = new SerializedObject(row.component);
-                    so.FindProperty("textKey").stringValue = row.textKey;
-                    so.ApplyModifiedProperties();
-                }
-
-                if (selectedEntry.isScene)
-                {
-                    EditorSceneManager.SaveScene(SceneManager.GetActiveScene());
                 }
                 else
                 {
-                    AssetDatabase.SaveAssets();
-                }
-            }
-
-            // Save TSV files
-            var folder = ToAbsolutePath(settings.TextTableFolderPath);
-            if (!Directory.Exists(folder))
-            {
-                Directory.CreateDirectory(folder);
-            }
-
-            foreach (var lang in languages)
-            {
-                var filePath = Path.Combine(folder, $"{selectedEntry.tsvBaseName}.{lang}.tsv");
-
-                var existing = new Dictionary<string, string>();
-                if (File.Exists(filePath))
-                {
-                    foreach (var line in File.ReadAllLines(filePath).Skip(1))
-                    {
-                        var trimmed = line.TrimEnd('\r');
-                        if (string.IsNullOrEmpty(trimmed))
-                        {
-                            continue;
-                        }
-
-                        var tab = trimmed.IndexOf('\t');
-                        if (tab < 0)
-                        {
-                            continue;
-                        }
-
-                        existing[trimmed.Substring(0, tab)] = trimmed.Substring(tab + 1);
-                    }
+                    DrawAssetGroup("Scenes", sceneEntries);
+                    GUILayout.Space(6);
+                    DrawAssetGroup("Prefabs", prefabEntries);
                 }
 
-                // Remove keys that were explicitly deleted in TextKey View
-                foreach (var deleted in deletedTsvKeys)
-                {
-                    existing.Remove(deleted);
-                }
-
-                var writtenKeys = new HashSet<string>();
-                foreach (var row in rows)
-                {
-                    var key = row.textKey;
-                    if (string.IsNullOrEmpty(key) || !writtenKeys.Add(key))
-                    {
-                        continue;
-                    }
-
-                    if (keySourceMap.TryGetValue(key, out var sm) &&
-                        sm.TryGetValue(lang, out var src) &&
-                        src != selectedEntry.tsvBaseName)
-                    {
-                        continue;
-                    }
-
-                    if (row.langData.TryGetValue(lang, out var text))
-                    {
-                        existing[key] = text;
-                    }
-                }
-
-                var sb = new StringBuilder("key\ttext\n");
-                foreach (var (key, text) in existing)
-                {
-                    sb.Append($"{key}\t{SanitizeTsvValue(text)}\n");
-                }
-
-                File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
+                EditorGUILayout.EndScrollView();
             }
-
-            if (globalTsvDirty)
-            {
-                SaveGlobalTsv(folder);
-                deletedGlobalTsvKeys.Clear();
-                globalTsvDirty = false;
-            }
-
-            foreach (var (baseName, keysToDelete) in deletedOtherTsvKeys)
-            {
-                foreach (var lang in languages)
-                {
-                    var otherFilePath = Path.Combine(folder, $"{baseName}.{lang}.tsv");
-                    if (!File.Exists(otherFilePath))
-                    {
-                        continue;
-                    }
-
-                    var existing = new Dictionary<string, string>();
-                    foreach (var line in File.ReadAllLines(otherFilePath).Skip(1))
-                    {
-                        var trimmed = line.TrimEnd('\r');
-                        if (string.IsNullOrEmpty(trimmed))
-                        {
-                            continue;
-                        }
-
-                        var tab = trimmed.IndexOf('\t');
-                        if (tab < 0)
-                        {
-                            continue;
-                        }
-
-                        existing[trimmed.Substring(0, tab)] = trimmed.Substring(tab + 1);
-                    }
-
-                    foreach (var k in keysToDelete)
-                    {
-                        existing.Remove(k);
-                    }
-
-                    var otherSb = new StringBuilder("key\ttext\n");
-                    foreach (var (k, v) in existing)
-                    {
-                        otherSb.Append($"{k}\t{SanitizeTsvValue(v)}\n");
-                    }
-
-                    File.WriteAllText(otherFilePath, otherSb.ToString(), Encoding.UTF8);
-                }
-            }
-
-            deletedOtherTsvKeys.Clear();
-
-            AssetDatabase.Refresh();
-
-            foreach (var row in rows)
-            {
-                row.MarkSaved();
-            }
-
-            isDirty = false;
         }
 
-        void SaveGlobalTsv(string folder)
+        void DrawAssetGroup(string label, List<AssetEntry> entries)
         {
-            foreach (var lang in languages)
+            EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
+
+            var groups = entries
+                .GroupBy(e => Path.GetDirectoryName(e.assetPath).Replace('\\', '/'))
+                .OrderBy(g => g.Key);
+
+            foreach (var group in groups)
             {
-                var filePath = Path.Combine(folder, $"Global.{lang}.tsv");
-                var sb = new StringBuilder("key\ttext\n");
-                var writtenKeys = new HashSet<string>();
+                EditorGUI.indentLevel++;
+                EditorGUILayout.LabelField(group.Key, EditorStyles.miniLabel, GUILayout.Width(leftPanelWidth - 16));
+                EditorGUI.indentLevel--;
 
-                foreach (var (key, langSources) in keySourceMap)
+                foreach (var entry in group)
                 {
-                    if (deletedGlobalTsvKeys.Contains(key))
-                    {
-                        continue;
-                    }
-
-                    if (!langSources.TryGetValue(lang, out var src) || src != "Global")
-                    {
-                        continue;
-                    }
-
-                    if (!writtenKeys.Add(key))
-                    {
-                        continue;
-                    }
-
-                    var text = string.Empty;
-                    var refRow = rows.FirstOrDefault(r => r.textKey == key);
-                    if (refRow != null && refRow.langData.TryGetValue(lang, out var rowText))
-                    {
-                        text = rowText;
-                    }
-                    else if (allTsvData.TryGetValue(key, out var langMap) && langMap.TryGetValue(lang, out var tsvText))
-                    {
-                        text = tsvText;
-                    }
-
-                    sb.Append($"{key}\t{SanitizeTsvValue(text)}\n");
+                    DrawAssetButton(entry);
                 }
-
-                File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
             }
         }
+
+        void DrawAssetButton(AssetEntry entry)
+        {
+            var isSelected = selectedEntry == entry;
+            using (new BackgroundColorScope(isSelected ? new Color(0.4f, 0.6f, 1f) : Color.white))
+            {
+                if (GUILayout.Button(entry.displayName, leftAlignedButtonStyle))
+                {
+                    SelectAsset(entry);
+                    var asset = AssetDatabase.LoadAssetAtPath<Object>(entry.assetPath);
+                    if (asset != null)
+                    {
+                        EditorGUIUtility.PingObject(asset);
+                        if (!entry.isScene)
+                        {
+                            Selection.activeObject = asset;
+                        }
+                    }
+                }
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Panel and column resize
+        // ─────────────────────────────────────────────────────────────────
 
         void DrawPanelResizeHandle()
         {
@@ -800,167 +356,40 @@ namespace LighthouseExtends.TextTable.Editor
             }
         }
 
-        void EnsureStyles()
+        float GetColWidth(int index)
         {
-            if (leftAlignedButtonStyle == null)
-            {
-                leftAlignedButtonStyle = new GUIStyle(EditorStyles.miniButton)
-                {
-                    alignment = TextAnchor.MiddleLeft
-                };
-            }
+            if (index == 0) { return pathColWidth; }
+            if (index == 1) { return placeholderColWidth; }
+            if (index == 2) { return keyColWidth; }
 
-            if (dirtyTextFieldStyle == null)
-            {
-                dirtyTextFieldStyle = new GUIStyle(EditorStyles.textField);
-                dirtyTextFieldStyle.normal.textColor = new Color(1f, 0.85f, 0f);
-                dirtyTextFieldStyle.focused.textColor = new Color(1f, 0.85f, 0f);
-            }
+            var li = index - 3;
+            return li < langColWidths.Count ? langColWidths[li] : 160f;
+        }
 
-            if (deleteButtonStyle == null)
+        void SetColWidth(int index, float width)
+        {
+            var w = Mathf.Max(MinColWidth, width);
+            if (index == 0) { pathColWidth = w; return; }
+            if (index == 1) { placeholderColWidth = w; return; }
+            if (index == 2) { keyColWidth = w; return; }
+
+            var li = index - 3;
+            if (li < langColWidths.Count)
             {
-                deleteButtonStyle = new GUIStyle(EditorStyles.miniButton);
-                deleteButtonStyle.normal.textColor = new Color(0.9f, 0.3f, 0.3f);
+                langColWidths[li] = w;
             }
         }
 
-        void DrawToolbar()
+        void SyncLangColWidths()
         {
-            using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
+            while (langColWidths.Count < languages.Count)
             {
-                var next = (TextTableEditorSettings)EditorGUILayout.ObjectField(
-                    settings, typeof(TextTableEditorSettings), false, GUILayout.Width(320));
-                if (next != settings)
-                {
-                    settings = next;
-                    selectedEntry = null;
-                    rows = new List<ComponentRow>();
-                    allTsvData = new Dictionary<string, Dictionary<string, string>>();
-                    RefreshAssetList();
-                }
-
-                using (new EditorGUI.DisabledScope(settings == null))
-                {
-                    if (GUILayout.Button("Check Duplicates", EditorStyles.toolbarButton, GUILayout.Width(110)))
-                    {
-                        CheckDuplicateKeys();
-                    }
-
-                    if (GUILayout.Button("Check Missing", EditorStyles.toolbarButton, GUILayout.Width(100)))
-                    {
-                        CheckMissingKeys();
-                    }
-
-                    var newAutoNewLine = GUILayout.Toggle(
-                        autoNewLine,
-                        new GUIContent(@"\n as ↵", @"When enabled, \n in TSV values is shown as a real newline in text fields and converted back on edit."),
-                        EditorStyles.toolbarButton,
-                        GUILayout.Width(70));
-                    if (newAutoNewLine != autoNewLine)
-                    {
-                        autoNewLine = newAutoNewLine;
-                        Repaint();
-                    }
-                }
-
-                GUILayout.FlexibleSpace();
-
-                using (new EditorGUI.DisabledScope(settings == null))
-                {
-                    if (GUILayout.Button("Add Language", EditorStyles.toolbarButton, GUILayout.Width(90)))
-                    {
-                        var rect = addLanguageButtonRect;
-                        EditorApplication.delayCall += () => PopupWindow.Show(rect, new AddLanguagePopup(AddLanguage));
-                    }
-
-                    if (Event.current.type == EventType.Repaint)
-                    {
-                        addLanguageButtonRect = GUILayoutUtility.GetLastRect();
-                    }
-                }
-
-                using (new EditorGUI.DisabledScope(selectedEntry == null))
-                {
-                    if (GUILayout.Button("Reload", EditorStyles.toolbarButton, GUILayout.Width(60)))
-                    {
-                        ReloadTableData();
-                    }
-                }
-
-                using (new EditorGUI.DisabledScope(!isDirty))
-                {
-                    if (GUILayout.Button("Save", EditorStyles.toolbarButton, GUILayout.Width(60)))
-                    {
-                        Save();
-                    }
-                }
+                langColWidths.Add(160f);
             }
-        }
 
-        void DrawAssetList()
-        {
-            using (new EditorGUILayout.VerticalScope(GUILayout.Width(leftPanelWidth), GUILayout.ExpandHeight(true)))
+            while (languages.Count < langColWidths.Count)
             {
-                assetListScroll = EditorGUILayout.BeginScrollView(assetListScroll);
-
-                if (!string.IsNullOrEmpty(assetListError))
-                {
-                    EditorGUILayout.HelpBox(assetListError, MessageType.Error);
-                    if (GUILayout.Button("Retry", GUILayout.Width(leftPanelWidth - 8)))
-                    {
-                        RefreshAssetList();
-                    }
-                }
-                else
-                {
-                    DrawAssetGroup("Scenes", sceneEntries);
-                    GUILayout.Space(6);
-                    DrawAssetGroup("Prefabs", prefabEntries);
-                }
-
-                EditorGUILayout.EndScrollView();
-            }
-        }
-
-        void DrawAssetGroup(string label, List<AssetEntry> entries)
-        {
-            EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
-
-            var groups = entries
-                .GroupBy(e => Path.GetDirectoryName(e.assetPath).Replace('\\', '/'))
-                .OrderBy(g => g.Key);
-
-            foreach (var group in groups)
-            {
-                EditorGUI.indentLevel++;
-                EditorGUILayout.LabelField(group.Key, EditorStyles.miniLabel, GUILayout.Width(leftPanelWidth - 16));
-                EditorGUI.indentLevel--;
-
-                foreach (var entry in group)
-                {
-                    DrawAssetButton(entry);
-                }
-            }
-        }
-
-        void DrawAssetButton(AssetEntry entry)
-        {
-            var isSelected = selectedEntry == entry;
-            using (new BackgroundColorScope(isSelected ? new Color(0.4f, 0.6f, 1f) : Color.white))
-            {
-                if (GUILayout.Button(entry.displayName, leftAlignedButtonStyle))
-                {
-                    SelectAsset(entry);
-                    var asset = AssetDatabase.LoadAssetAtPath<Object>(entry.assetPath);
-                    if (asset != null)
-                    {
-                        EditorGUIUtility.PingObject(asset);
-                        if (!entry.isScene)
-                        {
-                            Selection.activeObject = asset;
-                        }
-                    }
-                }
+                langColWidths.RemoveAt(langColWidths.Count - 1);
             }
         }
 
@@ -978,7 +407,6 @@ namespace LighthouseExtends.TextTable.Editor
                     return;
                 }
 
-                // Tab bar is always drawn, even when an error occurs below
                 DrawTabBar();
 
                 if (!string.IsNullOrEmpty(tableLoadError))
@@ -1007,7 +435,6 @@ namespace LighthouseExtends.TextTable.Editor
                         MessageType.Warning);
                 }
 
-                // Header (outside scroll view — keeps window-space coords for column resize)
                 DrawTableHeader();
 
                 tableScroll = EditorGUILayout.BeginScrollView(tableScroll);
@@ -1044,7 +471,7 @@ namespace LighthouseExtends.TextTable.Editor
         }
 
         // ─────────────────────────────────────────────────────────────────
-        // LHTextMeshPro View
+        // LHTextMeshPro view
         // ─────────────────────────────────────────────────────────────────
 
         void DrawTableHeader()
@@ -1195,25 +622,22 @@ namespace LighthouseExtends.TextTable.Editor
         }
 
         // ─────────────────────────────────────────────────────────────────
-        // TextKey View
+        // TextKey view
         // ─────────────────────────────────────────────────────────────────
 
         void DrawTextKeyView()
         {
-            // Global keys: any lang source is "Global", not yet deleted
             var globalKeys = keySourceMap
                 .Where(kvp => kvp.Value.Values.Any(v => v == "Global") && !deletedGlobalTsvKeys.Contains(kvp.Key))
                 .Select(kvp => kvp.Key)
                 .ToHashSet();
 
-            // Local keys: any lang source is the current scope, not yet deleted, not in Global
             var localTsvKeys = keySourceMap
                 .Where(kvp =>
                     kvp.Value.Values.Any(v => v == selectedEntry.tsvBaseName) && !deletedTsvKeys.Contains(kvp.Key))
                 .Select(kvp => kvp.Key)
                 .ToHashSet();
 
-            // Also include in-memory row keys not yet saved to TSV
             foreach (var r in rows)
             {
                 if (!string.IsNullOrEmpty(r.textKey) && !deletedTsvKeys.Contains(r.textKey) &&
@@ -1322,7 +746,7 @@ namespace LighthouseExtends.TextTable.Editor
         {
             using (new EditorGUILayout.HorizontalScope())
             {
-                GUILayout.Space(ActionButtonWidth + DeleteButtonWidth); // indent to align under parent's key label
+                GUILayout.Space(ActionButtonWidth + DeleteButtonWidth);
 
                 if (GUILayout.Button("×", deleteButtonStyle, GUILayout.Width(DeleteButtonWidth)))
                 {
@@ -1355,7 +779,7 @@ namespace LighthouseExtends.TextTable.Editor
         }
 
         // ─────────────────────────────────────────────────────────────────
-        // Select GameObject
+        // GameObject selection
         // ─────────────────────────────────────────────────────────────────
 
         void SelectGameObject(ComponentRow row)
@@ -1561,7 +985,7 @@ namespace LighthouseExtends.TextTable.Editor
         }
 
         // ─────────────────────────────────────────────────────────────────
-        // Check Duplicates
+        // Check operations
         // ─────────────────────────────────────────────────────────────────
 
         void CheckDuplicateKeys()
@@ -1632,10 +1056,6 @@ namespace LighthouseExtends.TextTable.Editor
             DuplicateKeysWindow.Show(duplicates);
         }
 
-        // ─────────────────────────────────────────────────────────────────
-        // Check Missing
-        // ─────────────────────────────────────────────────────────────────
-
         void CheckMissingKeys()
         {
             if (settings == null)
@@ -1660,7 +1080,7 @@ namespace LighthouseExtends.TextTable.Editor
                 return;
             }
 
-            var (_, sourceMap, _) = LoadAllTsvData(folder);
+            var (_, sourceMap, _) = TextTableTsvRepository.LoadAllTsvData(folder);
 
             var globalKeys = sourceMap
                 .Where(kvp => kvp.Value.Values.Any(v => v == "Global"))
@@ -1730,8 +1150,117 @@ namespace LighthouseExtends.TextTable.Editor
         }
 
         // ─────────────────────────────────────────────────────────────────
-        // Reload
+        // Data management
         // ─────────────────────────────────────────────────────────────────
+
+        void SelectAsset(AssetEntry entry)
+        {
+            if (isDirty)
+            {
+                var choice = EditorUtility.DisplayDialogComplex(
+                    "Unsaved Changes",
+                    "There are unsaved changes.",
+                    "Save",
+                    "Cancel",
+                    "Discard");
+
+                if (choice == 1)
+                {
+                    return;
+                }
+
+                if (choice == 0)
+                {
+                    Save();
+                }
+            }
+
+            selectedEntry = entry;
+            LoadTableData();
+            Repaint();
+        }
+
+        void LoadTableData()
+        {
+            rows = new List<ComponentRow>();
+            allTsvData = new Dictionary<string, Dictionary<string, string>>();
+            keySourceMap = new Dictionary<string, Dictionary<string, string>>();
+            deletedTsvKeys = new HashSet<string>();
+            deletedGlobalTsvKeys = new HashSet<string>();
+            deletedOtherTsvKeys = new Dictionary<string, HashSet<string>>();
+            globalTsvDirty = false;
+            isDirty = false;
+            tableLoadError = null;
+            tsvLoadErrors = new List<string>();
+
+            if (selectedEntry == null || settings == null)
+            {
+                return;
+            }
+
+            var folder = ToAbsolutePath(settings.TextTableFolderPath);
+
+            try
+            {
+                languages = TextTableTsvRepository.DetectLanguages(folder);
+            }
+            catch (Exception e)
+            {
+                tableLoadError = "Failed to read the TSV folder.\n" +
+                                 $"Fix: Check 'Text Table Folder Path' in Settings. Current value: {settings.TextTableFolderPath}\n" +
+                                 $"Detail: {e.Message}";
+                Debug.LogException(e);
+                return;
+            }
+
+            SyncLangColWidths();
+
+            try
+            {
+                var (loaded, loadedSourceMap, errors) = TextTableTsvRepository.LoadAllTsvData(folder);
+                allTsvData = loaded;
+                keySourceMap = loadedSourceMap;
+                tsvLoadErrors = errors;
+            }
+            catch (Exception e)
+            {
+                tableLoadError = "Failed to load TSV files.\n" +
+                                 $"Fix: Verify the TSV files in '{settings.TextTableFolderPath}' are correctly formatted.\n" +
+                                 $"Detail: {e.Message}";
+                Debug.LogException(e);
+                return;
+            }
+
+            List<(LHTextMeshPro comp, string path)> componentList;
+            try
+            {
+                componentList = FindComponents(selectedEntry);
+            }
+            catch (Exception e)
+            {
+                tableLoadError = $"Failed to load components from '{selectedEntry.displayName}'.\n" +
+                                 $"Fix: Check the file is not corrupted. Path: {selectedEntry.assetPath}\n" +
+                                 $"Detail: {e.Message}";
+                Debug.LogException(e);
+                return;
+            }
+
+            foreach (var (comp, path) in componentList)
+            {
+                var key = ReadTextKey(comp);
+                var langData = new Dictionary<string, string>();
+                foreach (var lang in languages)
+                {
+                    langData[lang] = allTsvData.TryGetValue(key, out var langMap) &&
+                                     langMap.TryGetValue(lang, out var text)
+                        ? text
+                        : string.Empty;
+                }
+
+                var placeholder = ReadPlaceholderText(comp);
+                rows.Add(new ComponentRow(path, key, placeholder, comp, langData));
+            }
+        }
 
         void ReloadTableData()
         {
@@ -1747,10 +1276,6 @@ namespace LighthouseExtends.TextTable.Editor
             LoadTableData();
             Repaint();
         }
-
-        // ─────────────────────────────────────────────────────────────────
-        // Add Language
-        // ─────────────────────────────────────────────────────────────────
 
         void AddLanguage(string langCode)
         {
@@ -1784,6 +1309,346 @@ namespace LighthouseExtends.TextTable.Editor
         }
 
         // ─────────────────────────────────────────────────────────────────
+        // Settings
+        // ─────────────────────────────────────────────────────────────────
+
+        void LoadOrCreateSettings()
+        {
+            var guids = AssetDatabase.FindAssets($"t:{nameof(TextTableEditorSettings)}");
+            if (0 < guids.Length)
+            {
+                if (1 < guids.Length)
+                {
+                    Debug.LogWarning("[TextTable] Multiple TextTableEditorSettings found. Using the first one.");
+                }
+
+                settings = AssetDatabase.LoadAssetAtPath<TextTableEditorSettings>(AssetDatabase.GUIDToAssetPath(guids[0]));
+                return;
+            }
+
+            settings = CreateInstance<TextTableEditorSettings>();
+            if (!Directory.Exists(SettingsDefaultDirectory))
+            {
+                Directory.CreateDirectory(SettingsDefaultDirectory);
+            }
+
+            AssetDatabase.CreateAsset(settings, $"{SettingsDefaultDirectory}/{nameof(TextTableEditorSettings)}.asset");
+            AssetDatabase.SaveAssets();
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Asset discovery
+        // ─────────────────────────────────────────────────────────────────
+
+        void RefreshAssetList()
+        {
+            assetListError = null;
+            try
+            {
+                sceneEntries = AssetDatabase.FindAssets("t:SceneAsset")
+                    .Select(AssetDatabase.GUIDToAssetPath)
+                    .Where(p => p.StartsWith("Assets/"))
+                    .Select(p => new AssetEntry(p, Path.GetFileNameWithoutExtension(p), $"Scene{Path.GetFileNameWithoutExtension(p)}", true))
+                    .ToList();
+
+                var prefabPaths = AssetDatabase.FindAssets("t:Prefab")
+                    .Select(AssetDatabase.GUIDToAssetPath)
+                    .Where(p => p.StartsWith("Assets/"))
+                    .ToList();
+
+                var baseNames = ComputePrefabBaseNames(prefabPaths);
+                prefabEntries = prefabPaths
+                    .Select((p, i) => new AssetEntry(p, Path.GetFileNameWithoutExtension(p), baseNames[i], false))
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                assetListError = "Failed to load Scene / Prefab list.\n" +
+                                 "Fix: Verify the AssetDatabase is initialized. Try restarting Unity or running Assets > Reimport All.\n" +
+                                 $"Detail: {e.Message}";
+                sceneEntries = new List<AssetEntry>();
+                prefabEntries = new List<AssetEntry>();
+                Debug.LogException(e);
+            }
+        }
+
+        static List<string> ComputePrefabBaseNames(List<string> paths)
+        {
+            var depth = 1;
+            var names = paths.Select(p => GetParentDirSuffix(p, depth)).ToList();
+
+            for (var iter = 0; iter < 10 && HasDuplicates(names); iter++)
+            {
+                depth++;
+                var duplicates = names.GroupBy(n => n)
+                    .Where(g => 1 < g.Count())
+                    .Select(g => g.Key)
+                    .ToHashSet();
+
+                for (var i = 0; i < names.Count; i++)
+                {
+                    if (duplicates.Contains(names[i]))
+                    {
+                        names[i] = GetParentDirSuffix(paths[i], depth);
+                    }
+                }
+            }
+
+            return names.Select(n => $"Prefab{n}").ToList();
+        }
+
+        static string GetParentDirSuffix(string assetPath, int depth)
+        {
+            var parts = assetPath.Replace('\\', '/').Split('/');
+            var taken = new List<string>();
+            for (var d = 1; d <= depth && d < parts.Length - 1; d++)
+            {
+                taken.Insert(0, parts[parts.Length - 1 - d]);
+            }
+
+            return string.Concat(taken);
+        }
+
+        static bool HasDuplicates(List<string> list)
+        {
+            return list.Count != list.Distinct().Count();
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Component discovery
+        // ─────────────────────────────────────────────────────────────────
+
+        static List<(LHTextMeshPro comp, string path)> FindComponents(AssetEntry entry)
+        {
+            LHTextMeshPro[] comps;
+            if (entry.isScene)
+            {
+                EditorSceneManager.OpenScene(entry.assetPath, OpenSceneMode.Single);
+                comps = SceneManager.GetActiveScene()
+                    .GetRootGameObjects()
+                    .SelectMany(go => go.GetComponentsInChildren<LHTextMeshPro>(true))
+                    .ToArray();
+            }
+            else
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(entry.assetPath);
+                comps = prefab != null
+                    ? prefab.GetComponentsInChildren<LHTextMeshPro>(true)
+                    : Array.Empty<LHTextMeshPro>();
+            }
+
+            return comps.Select(c => (c, GetHierarchyPath(c.gameObject))).ToList();
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Save
+        // ─────────────────────────────────────────────────────────────────
+
+        void Save()
+        {
+            if (selectedEntry == null || settings == null)
+            {
+                return;
+            }
+
+            if (rows.Any(r => r.IsTextKeyDirty))
+            {
+                foreach (var row in rows)
+                {
+                    if (!row.IsTextKeyDirty)
+                    {
+                        continue;
+                    }
+
+                    var so = new SerializedObject(row.component);
+                    so.FindProperty("textKey").stringValue = row.textKey;
+                    so.ApplyModifiedProperties();
+                }
+
+                if (selectedEntry.isScene)
+                {
+                    EditorSceneManager.SaveScene(SceneManager.GetActiveScene());
+                }
+                else
+                {
+                    AssetDatabase.SaveAssets();
+                }
+            }
+
+            var folder = ToAbsolutePath(settings.TextTableFolderPath);
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+            foreach (var lang in languages)
+            {
+                var filePath = Path.Combine(folder, $"{selectedEntry.tsvBaseName}.{lang}.tsv");
+
+                var existing = new Dictionary<string, string>();
+                if (File.Exists(filePath))
+                {
+                    foreach (var line in File.ReadAllLines(filePath).Skip(1))
+                    {
+                        var trimmed = line.TrimEnd('\r');
+                        if (string.IsNullOrEmpty(trimmed))
+                        {
+                            continue;
+                        }
+
+                        var tab = trimmed.IndexOf('\t');
+                        if (tab < 0)
+                        {
+                            continue;
+                        }
+
+                        existing[trimmed.Substring(0, tab)] = trimmed.Substring(tab + 1);
+                    }
+                }
+
+                foreach (var deleted in deletedTsvKeys)
+                {
+                    existing.Remove(deleted);
+                }
+
+                var writtenKeys = new HashSet<string>();
+                foreach (var row in rows)
+                {
+                    var key = row.textKey;
+                    if (string.IsNullOrEmpty(key) || !writtenKeys.Add(key))
+                    {
+                        continue;
+                    }
+
+                    if (keySourceMap.TryGetValue(key, out var sm) &&
+                        sm.TryGetValue(lang, out var src) &&
+                        src != selectedEntry.tsvBaseName &&
+                        src != "Global")
+                    {
+                        continue;
+                    }
+
+                    if (row.langData.TryGetValue(lang, out var text))
+                    {
+                        existing[key] = text;
+                    }
+                }
+
+                var sb = new StringBuilder("key\ttext\n");
+                foreach (var (key, text) in existing)
+                {
+                    sb.Append($"{key}\t{SanitizeTsvValue(text)}\n");
+                }
+
+                File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
+            }
+
+            if (globalTsvDirty)
+            {
+                SaveGlobalTsv(folder);
+                deletedGlobalTsvKeys.Clear();
+                globalTsvDirty = false;
+            }
+
+            foreach (var (baseName, keysToDelete) in deletedOtherTsvKeys)
+            {
+                foreach (var lang in languages)
+                {
+                    var otherFilePath = Path.Combine(folder, $"{baseName}.{lang}.tsv");
+                    if (!File.Exists(otherFilePath))
+                    {
+                        continue;
+                    }
+
+                    var existing = new Dictionary<string, string>();
+                    foreach (var line in File.ReadAllLines(otherFilePath).Skip(1))
+                    {
+                        var trimmed = line.TrimEnd('\r');
+                        if (string.IsNullOrEmpty(trimmed))
+                        {
+                            continue;
+                        }
+
+                        var tab = trimmed.IndexOf('\t');
+                        if (tab < 0)
+                        {
+                            continue;
+                        }
+
+                        existing[trimmed.Substring(0, tab)] = trimmed.Substring(tab + 1);
+                    }
+
+                    foreach (var k in keysToDelete)
+                    {
+                        existing.Remove(k);
+                    }
+
+                    var otherSb = new StringBuilder("key\ttext\n");
+                    foreach (var (k, v) in existing)
+                    {
+                        otherSb.Append($"{k}\t{SanitizeTsvValue(v)}\n");
+                    }
+
+                    File.WriteAllText(otherFilePath, otherSb.ToString(), Encoding.UTF8);
+                }
+            }
+
+            deletedOtherTsvKeys.Clear();
+
+            AssetDatabase.Refresh();
+
+            foreach (var row in rows)
+            {
+                row.MarkSaved();
+            }
+
+            isDirty = false;
+        }
+
+        void SaveGlobalTsv(string folder)
+        {
+            foreach (var lang in languages)
+            {
+                var filePath = Path.Combine(folder, $"Global.{lang}.tsv");
+                var sb = new StringBuilder("key\ttext\n");
+                var writtenKeys = new HashSet<string>();
+
+                foreach (var (key, langSources) in keySourceMap)
+                {
+                    if (deletedGlobalTsvKeys.Contains(key))
+                    {
+                        continue;
+                    }
+
+                    if (!langSources.TryGetValue(lang, out var src) || src != "Global")
+                    {
+                        continue;
+                    }
+
+                    if (!writtenKeys.Add(key))
+                    {
+                        continue;
+                    }
+
+                    var text = string.Empty;
+                    var refRow = rows.FirstOrDefault(r => r.textKey == key);
+                    if (refRow != null && refRow.langData.TryGetValue(lang, out var rowText))
+                    {
+                        text = rowText;
+                    }
+                    else if (allTsvData.TryGetValue(key, out var langMap) && langMap.TryGetValue(lang, out var tsvText))
+                    {
+                        text = tsvText;
+                    }
+
+                    sb.Append($"{key}\t{SanitizeTsvValue(text)}\n");
+                }
+
+                File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────────
         // Helpers
         // ─────────────────────────────────────────────────────────────────
 
@@ -1794,20 +1659,17 @@ namespace LighthouseExtends.TextTable.Editor
                 return null;
             }
 
-            // 1. User's UI language
             var userLang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
             if (langMap.TryGetValue(userLang, out var userText) && !string.IsNullOrEmpty(userText))
             {
                 return $"({userLang}: {userText})";
             }
 
-            // 2. English fallback
             if (langMap.TryGetValue("en", out var enText) && !string.IsNullOrEmpty(enText))
             {
                 return $"(en: {enText})";
             }
 
-            // 3. First available language
             foreach (var (lang, text) in langMap)
             {
                 if (!string.IsNullOrEmpty(text))
@@ -1855,15 +1717,15 @@ namespace LighthouseExtends.TextTable.Editor
                 .Replace('\\', '/');
         }
 
+        // ─────────────────────────────────────────────────────────────────
+        // Types
+        // ─────────────────────────────────────────────────────────────────
+
         enum TableViewTab
         {
             LHTextMeshPro,
             TextKey
         }
-
-        // ─────────────────────────────────────────────────────────────────
-        // Helper scope
-        // ─────────────────────────────────────────────────────────────────
 
         struct BackgroundColorScope : IDisposable
         {
@@ -1878,54 +1740,6 @@ namespace LighthouseExtends.TextTable.Editor
             public void Dispose()
             {
                 GUI.backgroundColor = previous;
-            }
-        }
-
-        // ─────────────────────────────────────────────────────────────────
-        // Data types
-        // ─────────────────────────────────────────────────────────────────
-
-        class AssetEntry
-        {
-            public readonly string assetPath;
-            public readonly string displayName;
-            public readonly bool isScene;
-            public readonly string tsvBaseName;
-
-            public AssetEntry(string assetPath, string displayName, string tsvBaseName, bool isScene)
-            {
-                this.assetPath = assetPath;
-                this.displayName = displayName;
-                this.tsvBaseName = tsvBaseName;
-                this.isScene = isScene;
-            }
-        }
-
-        class ComponentRow
-        {
-            public readonly LHTextMeshPro component;
-            public readonly string hierarchyPath;
-            public readonly Dictionary<string, string> langData;
-            public readonly string placeholderText;
-            string savedTextKey;
-            public string textKey;
-
-            public ComponentRow(string hierarchyPath, string textKey, string placeholderText,
-                LHTextMeshPro component, Dictionary<string, string> langData)
-            {
-                this.hierarchyPath = hierarchyPath;
-                this.textKey = textKey;
-                savedTextKey = textKey;
-                this.placeholderText = placeholderText;
-                this.component = component;
-                this.langData = langData;
-            }
-
-            public bool IsTextKeyDirty => textKey != savedTextKey;
-
-            public void MarkSaved()
-            {
-                savedTextKey = textKey;
             }
         }
     }
