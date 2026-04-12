@@ -1,0 +1,43 @@
+using Cysharp.Threading.Tasks;
+using LighthouseExtends.ScreenStack;
+using VContainer;
+
+namespace SampleProduct.ButtonElement
+{
+    public sealed class ButtonElementPresenter : IScreenStackPresenter
+    {
+        IScreenStackModule screenStackModule;
+
+        ButtonElementView dialogView;
+        ButtonElementData screenStackData;
+
+        [Inject]
+        public void Construct(IScreenStackModule screenStackModule)
+        {
+            this.screenStackModule = screenStackModule;
+        }
+
+        public void Bind(ButtonElementView dialogView, ButtonElementData screenStackData)
+        {
+            this.dialogView = dialogView;
+            this.screenStackData = screenStackData;
+
+            dialogView.SubscribeCloseButtonClick(OnClickCloseButton);
+        }
+
+        UniTask IScreenStackPresenter.OnEnter(bool isResume)
+        {
+            return UniTask.CompletedTask;
+        }
+
+        UniTask IScreenStackPresenter.OnLeave()
+        {
+            return UniTask.CompletedTask;
+        }
+
+        void OnClickCloseButton()
+        {
+            screenStackModule.Close().Forget();
+        }
+    }
+}
