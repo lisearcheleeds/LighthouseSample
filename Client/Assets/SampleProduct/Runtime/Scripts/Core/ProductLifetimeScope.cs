@@ -8,6 +8,7 @@ using LighthouseExtends.UIComponent.CanvasSceneObject;
 using LighthouseExtends.UIComponent.ExclusiveInput;
 using LighthouseExtends.UIComponent.InputBlocker;
 using SampleProduct.Infrastructure.AssetLoader;
+using SampleProduct.Infrastructure.Language;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using SampleProduct.View.Scene.ModuleScene.Overlay;
@@ -20,6 +21,7 @@ namespace SampleProduct.Core
     public class ProductLifetimeScope : LifetimeScope
     {
         [SerializeField] ProductLifetimeScopeSettings productLifetimeScopeSettings;
+        [SerializeField] SupportedLanguageSettings supportedLanguageSettings;
         [SerializeField] LanguageFontSettings languageFontSettings;
         [SerializeField] LHCanvasSceneObject canvasSceneObjectPrefab;
         [SerializeField] LHInputBlocker inputBlockerPrefab;
@@ -47,6 +49,8 @@ namespace SampleProduct.Core
                 builder.Register<ExclusiveInputService>(Lifetime.Singleton).AsImplementedInterfaces();
 
                 builder.Register<LanguageService>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.RegisterInstance(supportedLanguageSettings);
+                builder.Register<SupportedLanguageService>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<TextTableService>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.RegisterInstance(languageFontSettings);
                 builder.Register<FontService>(Lifetime.Singleton).AsImplementedInterfaces();

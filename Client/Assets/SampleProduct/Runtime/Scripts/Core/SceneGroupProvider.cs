@@ -21,6 +21,7 @@ namespace SampleProduct.Core
                 { SampleProductMainSceneId.Splash, null },
                 { SampleProductMainSceneId.Title, null },
                 { SampleProductMainSceneId.Home, new[] { SampleProductModuleSceneId.Background } },
+                { SampleProductMainSceneId.Purpose, new[] { SampleProductModuleSceneId.Background } },
                 { SampleProductMainSceneId.SampleTop, new[] { SampleProductModuleSceneId.Background } },
                 {
                     SampleProductMainSceneId.SceneSample1,
@@ -40,7 +41,7 @@ namespace SampleProduct.Core
         static readonly MainSceneId[][] MainSceneGroupList =
         {
             new[] { SampleProductMainSceneId.Splash, SampleProductMainSceneId.Title },
-            new[] { SampleProductMainSceneId.Home, SampleProductMainSceneId.Edit },
+            new[] { SampleProductMainSceneId.Home, SampleProductMainSceneId.Edit, SampleProductMainSceneId.Purpose },
             new[]
             {
                 SampleProductMainSceneId.SampleTop,

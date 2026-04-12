@@ -16,6 +16,7 @@ namespace SampleProduct.Core
         readonly IMainSceneManager mainSceneManager;
         readonly IModuleSceneManager moduleSceneManager;
         readonly ILanguageService languageService;
+        readonly ISupportedLanguageService supportedLanguageService;
 
         [Inject]
         public ProductEntryPoint(
@@ -24,7 +25,8 @@ namespace SampleProduct.Core
             ILauncher launcher,
             IMainSceneManager mainSceneManager,
             IModuleSceneManager moduleSceneManager,
-            ILanguageService languageService)
+            ILanguageService languageService,
+            ISupportedLanguageService supportedLanguageService)
         {
             this.productLifetimeScope = productLifetimeScope;
             this.productLifetimeScopeSettings = productLifetimeScopeSettings;
@@ -32,6 +34,7 @@ namespace SampleProduct.Core
             this.mainSceneManager = mainSceneManager;
             this.moduleSceneManager = moduleSceneManager;
             this.languageService = languageService;
+            this.supportedLanguageService = supportedLanguageService;
         }
 
         public async UniTask StartAsync(CancellationToken cancellation)
@@ -39,17 +42,29 @@ namespace SampleProduct.Core
             mainSceneManager.SetEnqueueParentLifetimeScope(() => LifetimeScope.EnqueueParent(productLifetimeScope));
             moduleSceneManager.SetEnqueueParentLifetimeScope(() => LifetimeScope.EnqueueParent(productLifetimeScope));
 
-            await languageService.SetLanguage(ToLanguageCode(Application.systemLanguage), cancellation);
+            await languageService.SetLanguage(ResolveInitialLanguage(Application.systemLanguage), cancellation);
             await launcher.Launch();
         }
 
-        static string ToLanguageCode(SystemLanguage language)
+        string ResolveInitialLanguage(SystemLanguage systemLanguage)
         {
-            return language switch
+            var code = systemLanguage switch
             {
                 SystemLanguage.Japanese => "ja",
+                SystemLanguage.ChineseSimplified => "zh",
+                SystemLanguage.ChineseTraditional => "zh",
+                SystemLanguage.Korean => "ko",
                 _ => "en",
             };
+
+            var supported = supportedLanguageService.SupportedLanguages;
+            for (var i = 0; i < supported.Count; i++)
+            {
+                if (supported[i] == code) { return code; }
+            }
+
+            return supportedLanguageService.DefaultLanguage;
         }
     }
 }
+
