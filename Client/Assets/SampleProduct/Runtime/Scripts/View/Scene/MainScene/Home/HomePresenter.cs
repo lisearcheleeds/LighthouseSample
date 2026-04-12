@@ -5,6 +5,7 @@ using Lighthouse.Scene;
 using LighthouseExtends.Language;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog;
+using SampleProduct.View.Scene.MainScene.Purpose;
 using SampleProduct.View.Scene.MainScene.SampleTop;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using UnityEngine;
@@ -71,6 +72,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         void OnClickPhilosophyButton()
         {
+            sceneManager.TransitionScene(new PurposeScene.PurposeTransitionData(), TransitionType.Cross);
         }
 
         void OnClickSampleButton()
