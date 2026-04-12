@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using VContainer;
 
 namespace Lighthouse.Scene
@@ -129,6 +130,11 @@ namespace Lighthouse.Scene
                     transitionDirectionType,
                     transitionType,
                     cancelToken);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SceneManager] Exception during scene transition to '{nextTransitionData.MainSceneId}'.\n{e}");
+                throw;
             }
             finally
             {

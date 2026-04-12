@@ -170,6 +170,8 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  purposeScene: {fileID: 145662068}
+  purposeView: {fileID: 552849987}
 --- !u!114 &145662070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,6 +653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23040cfecccc32f40818f190a0230d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SampleProduct.Runtime::SampleProduct.View.Scene.MainScene.Purpose.PurposeView
+  backSceneButton: {fileID: 396013363}
 --- !u!1 &566068839
 GameObject:
   m_ObjectHideFlags: 0
@@ -2517,7 +2520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00040735424, y: 0.0024406211}
+  m_AnchoredPosition: {x: 0.0013856344, y: 0.0024406211}
   m_SizeDelta: {x: -0.002067978, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1881552306

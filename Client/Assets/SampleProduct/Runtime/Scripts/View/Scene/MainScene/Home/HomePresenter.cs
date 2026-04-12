@@ -1,3 +1,5 @@
+using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using LighthouseExtends.Language;
@@ -17,6 +19,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
         IBackgroundModule backgroundModule;
         IScreenStackModule screenStackModule;
         ILanguageService languageService;
+        ISupportedLanguageService supportedLanguageService;
 
         [Inject]
         public void Construct(
@@ -24,13 +27,15 @@ namespace SampleProduct.View.Scene.MainScene.Home
             ISceneManager sceneManager,
             IBackgroundModule backgroundModule,
             IScreenStackModule screenStackModule,
-            ILanguageService languageService)
+            ILanguageService languageService,
+            ISupportedLanguageService supportedLanguageService)
         {
             this.homeView = homeView;
             this.sceneManager = sceneManager;
             this.backgroundModule = backgroundModule;
             this.screenStackModule = screenStackModule;
             this.languageService = languageService;
+            this.supportedLanguageService = supportedLanguageService;
         }
 
         void IHomePresenter.Setup()
@@ -81,7 +86,18 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         void OnClickRequireLanguageSwitchButton()
         {
-            // languageService.CurrentLanguage
+            var currentLanguageIndex = 0;
+            for (var i = 0; i < supportedLanguageService.SupportedLanguages.Count; i++)
+            {
+                if (supportedLanguageService.SupportedLanguages[i] == languageService.CurrentLanguage.CurrentValue)
+                {
+                    currentLanguageIndex = i;
+                    break;
+                }
+            }
+
+            var nextLanguageIndex = (currentLanguageIndex + supportedLanguageService.SupportedLanguages.Count + 1) % supportedLanguageService.SupportedLanguages.Count;
+            languageService.SetLanguage(supportedLanguageService.SupportedLanguages[nextLanguageIndex], CancellationToken.None);
         }
     }
 }
