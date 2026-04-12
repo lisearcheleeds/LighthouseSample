@@ -186,8 +186,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: BackScene
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
+  m_sharedMaterial: {fileID: -1193951781738188272, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleProduct.View.Scene.MainScene.SceneSample3.SceneSample3View
   backSceneButton: {fileID: 638346885}
-  choiceDataText: {fileID: 0}
+  choiceDataText: {fileID: 320124691}
 --- !u!1 &320124689
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,8 +404,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Choice place holder
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
+  m_sharedMaterial: {fileID: -1193951781738188272, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

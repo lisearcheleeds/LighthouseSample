@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using LighthouseExtends.TextTable;
 using LighthouseExtends.UIComponent.Button;
 using LighthouseExtends.UIComponent.TextMeshPro;
@@ -16,7 +17,8 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample3
 
         void ISceneSample3View.ApplyChoiceData(int choiceData)
         {
-            choiceDataText.SetTextData(TextData.CreateTextData("SceneSample3", "ChoiceData", $"Choice: {choiceData}"));
+            var param = new Dictionary<string, object>() { { "choiceData", choiceData } };
+            choiceDataText.SetTextData(new TextData("SceneSample3ChoiceData", param));
         }
     }
 }

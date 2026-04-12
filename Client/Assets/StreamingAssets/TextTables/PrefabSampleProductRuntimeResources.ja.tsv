@@ -10,7 +10,7 @@ DialogSample2Dialog1	更にダイアログを表示（排他的）
 DialogSample2Dialog2	更にダイアログを表示
 DialogSample2Dialog3	確認してからとじる
 This popup will close at the same time as the popup below.	このポップアップは、下のポップアップと同時に閉じます。
-OverlayElementOverlay1	オーバーレイはオーバーレイという機能があるわけではなく、ScreenStack機能を利用した表現の1つです。\n\n\n\nもし複雑な依存関係を実装する場合は、このオーバーレイに独自のLifetimeScopeを定義できます。
+OverlayElementOverlay1	オーバーレイはオーバーレイという機能があるわけではなく、ScreenStack機能を利用した表現の1つです。\n\nもし複雑な依存関係を実装する場合は、このオーバーレイに独自のLifetimeScopeを定義できます。
 PopupElementPopup1	ポップアップはポップアップという機能があるわけではなく、ScreenStack機能を利用した表現の1つです。\nベースとなる画面の特定の位置をフォーカスしたり小さなウィンドウを出すのに便利です。
 RequireToolsDialog	クレジット
 RequireToolsDialog1	クレジット

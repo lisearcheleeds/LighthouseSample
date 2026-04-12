@@ -15,8 +15,8 @@ MonoBehaviour:
   entries:
   - languageCode: ja
     fontAsset: {fileID: 11400000, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
-  - languageCode: kr
+  - languageCode: ko
     fontAsset: {fileID: 11400000, guid: 2e0bca689d430b947bceec2dd5a51c4d, type: 2}
-  - languageCode: zh-CN
+  - languageCode: zh
     fontAsset: {fileID: 11400000, guid: 5c7c9065ae342034b9418dc89d293573, type: 2}
   defaultFont: {fileID: 11400000, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
