@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using LighthouseExtends.TextTable;
 using UnityEngine;
+using UnityEngine.Networking;
 using VContainer;
 using VContainer.Unity;
 
@@ -33,6 +34,61 @@ namespace SampleProduct.Infrastructure.AssetLoader
             return gameObject.GetComponents<MonoBehaviour>().OfType<TScreenStack>().First();
         }
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+        async UniTask<IReadOnlyDictionary<string, string>> ITextTableLoader.LoadAsync(string languageCode, CancellationToken cancellationToken)
+        {
+            var result = new Dictionary<string, string>();
+            var folderUrl = $"{Application.streamingAssetsPath}/{TsvSubFolder}";
+
+            // Load domain list to enumerate TSV files (Directory.GetFiles is unavailable on WebGL)
+            var manifestUrl = $"{folderUrl}/TextTableDomains.txt";
+            string manifestContent;
+            using (var request = UnityWebRequest.Get(manifestUrl))
+            {
+                await request.SendWebRequest().ToUniTask(cancellationToken: cancellationToken);
+                if (request.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError($"[TextTable] Failed to load manifest: '{manifestUrl}'\n{request.error}");
+                    return result;
+                }
+                manifestContent = request.downloadHandler.text;
+            }
+
+            var domains = manifestContent.Split('\n')
+                .Select(line => line.Trim())
+                .Where(line => !string.IsNullOrEmpty(line));
+
+            foreach (var domain in domains)
+            {
+                var fileName = $"{domain}.{languageCode}.tsv";
+                var fileUrl = $"{folderUrl}/{fileName}";
+                using (var request = UnityWebRequest.Get(fileUrl))
+                {
+                    await request.SendWebRequest().ToUniTask(cancellationToken: cancellationToken);
+                    if (request.result != UnityWebRequest.Result.Success)
+                    {
+                        // File may not exist for this language
+                        continue;
+                    }
+                    try
+                    {
+                        ParseTsv(request.downloadHandler.text, fileName, languageCode, result);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError($"[TextTable] Failed to parse TSV file: '{fileUrl}'\n{e}");
+                    }
+                }
+            }
+
+            if (result.Count == 0)
+            {
+                Debug.LogWarning($"[TextTable] No entries loaded for language '{languageCode}'. Folder: '{folderUrl}'");
+            }
+
+            return result;
+        }
+#else
         UniTask<IReadOnlyDictionary<string, string>> ITextTableLoader.LoadAsync(string languageCode, CancellationToken cancellationToken)
         {
             var result = new Dictionary<string, string>();
@@ -78,6 +134,7 @@ namespace SampleProduct.Infrastructure.AssetLoader
 
             return UniTask.FromResult<IReadOnlyDictionary<string, string>>(result);
         }
+#endif
 
         static void ParseTsv(string content, string assetName, string languageCode, Dictionary<string, string> table)
         {
