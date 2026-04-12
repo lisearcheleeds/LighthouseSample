@@ -350,7 +350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2407447602643163043}
   - component: {fileID: 5476469642552628878}
-  - component: {fileID: 3839224541444024101}
+  - component: {fileID: 899254752727842055}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -385,7 +385,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4234105727637539594}
   m_CullTransparentMesh: 1
---- !u!114 &3839224541444024101
+--- !u!114 &899254752727842055
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -394,9 +394,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4234105727637539594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 71e43dc8f75e2c54b87d5c50515d0529, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_EditorClassIdentifier: LighthouseExtends.TextMeshPro.Runtime::LighthouseExtends.UIComponent.TextMeshPro.LHTextMeshPro
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -407,8 +407,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Tap to Close
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
+  m_sharedMaterial: {fileID: -1193951781738188272, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -438,7 +438,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -477,6 +477,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  textKey: TapToClose1
 --- !u!1 &5284854551272821068
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,7 +705,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7723363605169923594}
   - component: {fileID: 4042658704868706148}
-  - component: {fileID: 5753295230824912193}
+  - component: {fileID: 3144438804486495551}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -739,7 +740,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6347744112599561877}
   m_CullTransparentMesh: 1
---- !u!114 &5753295230824912193
+--- !u!114 &3144438804486495551
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -748,9 +749,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6347744112599561877}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 71e43dc8f75e2c54b87d5c50515d0529, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_EditorClassIdentifier: LighthouseExtends.TextMeshPro.Runtime::LighthouseExtends.UIComponent.TextMeshPro.LHTextMeshPro
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -771,8 +772,8 @@ MonoBehaviour:
     Clearly separating the work of junior and senior
     engineers allows for both improved project quality and increased efficiency.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
+  m_sharedMaterial: {fileID: -1193951781738188272, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -796,10 +797,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 31.05
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -841,6 +842,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  textKey: TransitionAnimationElementOverlay1
 --- !u!1 &7330105547923548468
 GameObject:
   m_ObjectHideFlags: 0

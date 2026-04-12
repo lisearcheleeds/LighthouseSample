@@ -314,8 +314,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4077599156256378116}
   - component: {fileID: 2701557988918384050}
-  - component: {fileID: 7049737601019343852}
   - component: {fileID: 1839498408759548773}
+  - component: {fileID: 7565293978709190108}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -350,7 +350,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3846539747730172305}
   m_CullTransparentMesh: 1
---- !u!114 &7049737601019343852
+--- !u!114 &1839498408759548773
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -359,9 +359,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 3846539747730172305}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: 700
+  m_MinHeight: 200
+  m_PreferredWidth: 700
+  m_PreferredHeight: 200
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!114 &7565293978709190108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846539747730172305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e43dc8f75e2c54b87d5c50515d0529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LighthouseExtends.TextMeshPro.Runtime::LighthouseExtends.UIComponent.TextMeshPro.LHTextMeshPro
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -372,8 +392,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: This popup will close at the same time as the popup below.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
+  m_sharedMaterial: {fileID: -1193951781738188272, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -442,26 +462,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &1839498408759548773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3846539747730172305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
-  m_IgnoreLayout: 0
-  m_MinWidth: 700
-  m_MinHeight: 200
-  m_PreferredWidth: 700
-  m_PreferredHeight: 200
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
+  textKey: This popup will close at the same time as the popup below.
 --- !u!1 &4791863250250026025
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,7 +864,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5904759951222377541}
   - component: {fileID: 4396838905341514955}
-  - component: {fileID: 76554644132543563}
+  - component: {fileID: 9117671979094412989}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -898,7 +899,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8676934986926002036}
   m_CullTransparentMesh: 1
---- !u!114 &76554644132543563
+--- !u!114 &9117671979094412989
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -907,9 +908,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8676934986926002036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 71e43dc8f75e2c54b87d5c50515d0529, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_EditorClassIdentifier: LighthouseExtends.TextMeshPro.Runtime::LighthouseExtends.UIComponent.TextMeshPro.LHTextMeshPro
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -920,8 +921,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Close
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
+  m_sharedMaterial: {fileID: -1193951781738188272, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -951,7 +952,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -990,3 +991,4 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  textKey: Close
