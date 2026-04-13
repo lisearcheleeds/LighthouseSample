@@ -24,14 +24,24 @@ namespace LighthouseExtends.UIComponent.TextMeshPro
                 return;
             }
 
-            var textTableService = TextTableService.Instance;
-            if (textTableService == null)
+            ApplyText();
+            ApplyFont(FontService.Instance?.CurrentFont.CurrentValue);
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
+            if (!Application.isPlaying)
             {
-                ApplyText();
                 return;
             }
 
-            textSubscription = textTableService.CurrentLanguage.Subscribe(_ => ApplyText());
+            var textTableService = TextTableService.Instance;
+            if (textTableService != null)
+            {
+                textSubscription = textTableService.CurrentLanguage.Subscribe(_ => ApplyText());
+            }
 
             var fontService = FontService.Instance;
             if (fontService != null)
@@ -40,9 +50,9 @@ namespace LighthouseExtends.UIComponent.TextMeshPro
             }
         }
 
-        protected override void OnDisable()
+        protected override void OnDestroy()
         {
-            base.OnDisable();
+            base.OnDestroy();
 
             textSubscription?.Dispose();
             textSubscription = null;
@@ -69,15 +79,23 @@ namespace LighthouseExtends.UIComponent.TextMeshPro
             }
 
             var service = TextTableService.Instance;
-            text = service != null ? service.GetText(data) : data.TextKey;
+            var newText = service != null ? service.GetText(data) : data.TextKey;
+            if (text == newText)
+            {
+                return;
+            }
+
+            text = newText;
         }
 
         void ApplyFont(TMP_FontAsset fontAsset)
         {
-            if (fontAsset != null)
+            if (fontAsset == null || font == fontAsset)
             {
-                font = fontAsset;
+                return;
             }
+
+            font = fontAsset;
         }
     }
 }
