@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using LighthouseExtends.Font;
 using LighthouseExtends.ScreenStack;
 using LighthouseExtends.TextTable;
 using UnityEngine;
@@ -18,11 +19,13 @@ namespace SampleProduct.Infrastructure.AssetLoader
         const string TsvSubFolder = "TextTables";
 
         readonly IObjectResolver objectResolver;
+        readonly IFontService fontService;
 
         [Inject]
-        public SampleAssetLoader(IObjectResolver objectResolver)
+        public SampleAssetLoader(IObjectResolver objectResolver, IFontService fontService)
         {
             this.objectResolver = objectResolver;
+            this.fontService = fontService;
         }
 
         async UniTask<TScreenStack> IScreenStackInstanceFactory.CreateScreenStackInstance<TScreenStack>(string screenStackAddress, CancellationToken ct)
@@ -56,28 +59,27 @@ namespace SampleProduct.Infrastructure.AssetLoader
 
             var domains = manifestContent.Split('\n')
                 .Select(line => line.Trim())
-                .Where(line => !string.IsNullOrEmpty(line));
+                .Where(line => !string.IsNullOrEmpty(line))
+                .ToArray();
 
-            foreach (var domain in domains)
+            var tasks = domains.Select(domain => FetchTsvAsync($"{folderUrl}/{domain}.{languageCode}.tsv", cancellationToken));
+            var contents = await UniTask.WhenAll(tasks);
+
+            for (var i = 0; i < domains.Length; i++)
             {
-                var fileName = $"{domain}.{languageCode}.tsv";
-                var fileUrl = $"{folderUrl}/{fileName}";
-                using (var request = UnityWebRequest.Get(fileUrl))
+                if (contents[i] == null)
                 {
-                    await request.SendWebRequest().ToUniTask(cancellationToken: cancellationToken);
-                    if (request.result != UnityWebRequest.Result.Success)
-                    {
-                        // File may not exist for this language
-                        continue;
-                    }
-                    try
-                    {
-                        ParseTsv(request.downloadHandler.text, fileName, languageCode, result);
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogError($"[TextTable] Failed to parse TSV file: '{fileUrl}'\n{e}");
-                    }
+                    continue;
+                }
+
+                var fileName = $"{domains[i]}.{languageCode}.tsv";
+                try
+                {
+                    ParseTsv(contents[i], fileName, languageCode, result);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"[TextTable] Failed to parse TSV file: '{fileName}'\n{e}");
                 }
             }
 
@@ -86,6 +88,7 @@ namespace SampleProduct.Infrastructure.AssetLoader
                 Debug.LogWarning($"[TextTable] No entries loaded for language '{languageCode}'. Folder: '{folderUrl}'");
             }
 
+            PrewarmFontAtlas(languageCode, result);
             return result;
         }
 #else
@@ -132,7 +135,41 @@ namespace SampleProduct.Infrastructure.AssetLoader
                 Debug.LogWarning($"[TextTable] No entries loaded for language '{languageCode}'. Folder: '{folderPath}'");
             }
 
+            PrewarmFontAtlas(languageCode, result);
             return UniTask.FromResult<IReadOnlyDictionary<string, string>>(result);
+        }
+#endif
+
+        void PrewarmFontAtlas(string languageCode, IReadOnlyDictionary<string, string> table)
+        {
+            var fontAsset = fontService.GetFont(languageCode);
+            if (fontAsset == null)
+            {
+                return;
+            }
+
+            var uniqueChars = new System.Text.StringBuilder();
+            var seen = new HashSet<char>();
+            foreach (var value in table.Values)
+            {
+                foreach (var c in value)
+                {
+                    if (seen.Add(c))
+                    {
+                        uniqueChars.Append(c);
+                    }
+                }
+            }
+
+            fontAsset.TryAddCharacters(uniqueChars.ToString());
+        }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        static async UniTask<string> FetchTsvAsync(string url, CancellationToken cancellationToken)
+        {
+            using var request = UnityWebRequest.Get(url);
+            await request.SendWebRequest().ToUniTask(cancellationToken: cancellationToken);
+            return request.result == UnityWebRequest.Result.Success ? request.downloadHandler.text : null;
         }
 #endif
 

@@ -31,6 +31,11 @@ namespace LighthouseExtends.Font
             Instance = null;
         }
 
+        public TMP_FontAsset GetFont(string languageCode)
+        {
+            return settings.GetFont(languageCode);
+        }
+
         UniTask OnLanguageChange(string languageCode, CancellationToken cancellationToken)
         {
             currentFont.Value = settings.GetFont(languageCode);
