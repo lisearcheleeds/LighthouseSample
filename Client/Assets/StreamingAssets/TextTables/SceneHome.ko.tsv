@@ -1,6 +1,6 @@
-key	text
+﻿key	text
 HomeTitle	Lighthouse is
-HomeDescription	Unity용 아키텍처 프레임워크.\n\n중규모부터 대규모 상용 프로젝트까지, 확장성이 높고 개발 효율이 좋은 기능을 제공합니다.
+HomeDescription	Unity용 아키텍처 프레임워크입니다.\n\n인디 게임부터 대규모 상업 프로젝트까지,\n확장성과 생산성을 양립한 다양한 기능을 제공합니다.
 HomeGuide	Guide
 HomeGitHub	GitHub
 HomeTwitter	X(Twitter)

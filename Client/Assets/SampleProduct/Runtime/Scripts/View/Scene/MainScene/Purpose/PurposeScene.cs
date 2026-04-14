@@ -1,19 +1,19 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
-using Lighthouse.Scene.SceneBase;
 using SampleProduct.LighthouseGenerated;
+using SampleProduct.View.Base;
 using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Purpose
 {
-    public class PurposeScene : CanvasMainSceneBase<PurposeScene.PurposeTransitionData>
+    public class PurposeScene : ProductCanvasMainSceneBase<PurposeScene.PurposeTransitionData>
     {
         IPurposePresenter purposePresenter;
 
         public override MainSceneId MainSceneId => SampleProductMainSceneId.Purpose;
 
-        public class PurposeTransitionData : TransitionDataBase
+        public class PurposeTransitionData : ProductTransitionDataBase
         {
             public override MainSceneId MainSceneId => SampleProductMainSceneId.Purpose;
         }

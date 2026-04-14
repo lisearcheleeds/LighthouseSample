@@ -1,6 +1,6 @@
-key	text
+﻿key	text
 HomeTitle	Lighthouse is
-HomeDescription	面向Unity的架构框架。\n\n为中型到大型商业项目提供高扩展性且开发效率良好的功能。
+HomeDescription	这是一个用于 Unity 的架构框架。\n\n它提供了一系列功能，兼顾了可扩展性和生产力，\n适用于从独立游戏到大型商业项目的各种应用场景。
 HomeGuide	Guide
 HomeGitHub	GitHub
 HomeTwitter	X(Twitter)

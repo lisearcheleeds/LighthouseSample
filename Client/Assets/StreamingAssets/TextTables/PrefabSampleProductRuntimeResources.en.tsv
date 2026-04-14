@@ -18,6 +18,8 @@ RequireToolsDialog2	## Lighthouse Architecture Framework\nDeveloped by Lise (htt
 SceneTransitionDialog1	If you use TransitionScene while a Dialog is open, the Dialog will automatically resume when you BackScene into that scene.\nOf course, you can control the state of that Dialog.
 SceneTransitionDialog2	Transition Scene
 SceneTransitionDialog3	Transition scene with close
-TransitionAnimationElementOverlay1	LHTransitionAnimator is a component that extends LHAnimationClipPlayer for scene transitions.\n\nBy integrating it with the base classes Scene and ScreenStack, it allows for complete separation of editing areas between developers and designers, enabling efficient work.\n\nOf course, as a senior engineer, you can extend these components.
+TransitionAnimationElementOverlay1	LHTransitionAnimator is a component that extends LHAnimationClipPlayer for scene transitions.\n\nBy integrating it with the base classes Scene and ScreenStack, it allows for complete separation of editing areas between developers and designers, enabling efficient work.\n\nOf course, these are designed to be extensible on the product side.
 ButtonElementOverlay1	LHButton is a feature that inherits from Unity.UI.Button.\nCurrently, it only has mutually exclusive input functionality.
 TextViewElementOverlay1	LHTextMeshPro is a Text component with localization and dictionary functionality.\nThis completely separates localization and development work, significantly improving development efficiency.\nFurthermore, an EditorTool is provided, allowing non-developers to work on the project.
+TapToClose1	Tap to Close
+Close	Close

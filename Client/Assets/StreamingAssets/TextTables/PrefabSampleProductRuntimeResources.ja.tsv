@@ -2,7 +2,7 @@
 AnimationElementOverlay1	LHAnimationClipPlayerは、AnimationClipを単体で再生するための機能です。\n\nAnimationClipとAnimatorのみのシンプルで最小の構成で、余計なアセットやコンポーネントは不要です。\nまた、開始値と終了値の状態を直接反映する処理をAwakeの前に実行出来るため、\nUIのイン/アウトアニメーションに最適です。
 AnimationElementOverlay2	public interface ILHAnimationClipPlayer\n{\n    public void PlayAnimation(bool isRestart, bool isEndEvaluate, Action onComplete);\n    public UniTask PlayAnimationAsync(bool isRestart, bool isEndEvaluate);\n    public void ResetAnimation();\n    public void Stop();\n    public void Skip();\n}
 DialogElementDialog1	ダイアログはダイアログという機能があるわけではなく、ScreenStack機能を利用した表現の1つです。\n\nもし複雑な依存関係を実装する場合は、このダイアログに独自のLifetimeScopeを定義できます。
-DialogSample1Dialog1	更にダイアログを表示（排他的）
+DialogSample1Dialog1	更にダイアログを表示\n（排他的）
 DialogSample1Dialog2	更にダイアログを表示
 DialogSample1Dialog3	とじる
 DialogSample1Dialog4	確認してからとじる
@@ -18,6 +18,8 @@ RequireToolsDialog2	## Lighthouse Architecture Framework\nDeveloped by Lise (htt
 SceneTransitionDialog1	ダイアログが開いている状態で TransitionScene を使用すると、BackScene でそのシーンに戻った時にダイアログが自動的にリジュームされます。\nもちろん、あなたがダイアログの状態を制御することもできます。
 SceneTransitionDialog2	Transition Scene
 SceneTransitionDialog3	閉じてからTransition Scene
-TransitionAnimationElementOverlay1	LHTransitionAnimatorは、シーン遷移のためにLHAnimationClipPlayerを拡張したコンポーネントです。\n\n\n\nSceneとScreenStackの基本クラスに統合することで、開発者とデザイナーの編集箇所を完全に切り分けて効率的に作業することが出来ます。\n\nもちろん、ベテランエンジニアがこれらを拡張する事が出来るようになっています。
+TransitionAnimationElementOverlay1	LHTransitionAnimatorは、シーン遷移のためにLHAnimationClipPlayerを拡張したコンポーネントです。\n\n\n\nSceneとScreenStackの基本クラスに統合することで、開発者とデザイナーの編集箇所を完全に切り分けて効率的に作業することが出来ます。\n\n\n\nもちろん、これらはプロダクト側で拡張出来るように作られています。
 ButtonElementOverlay1	LHButtonはUnity.UI.Buttonを継承した機能です。\n\n現在は排他入力機能のみを持っています。
 TextViewElementOverlay1	LHTextMeshProはローカライズ・辞書機能を備えたTextコンポーネントです。\nこれによってローカライズ作業と開発作業を完全に切り離し開発効率を上げることが出来ます。\nまた、EditorToolを用意しているため開発者以外にも作業が出来るようになっています。
+TapToClose1	Tap to Close
+Close	とじる

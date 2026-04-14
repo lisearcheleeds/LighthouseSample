@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: SampleProduct.Runtime::SampleProduct.View.Scene.MainScene.Purpose.PurposeScene
   canvasGroup: {fileID: 145662071}
   canvasInitializer: {fileID: 145662070}
+  sceneTransitionAnimatorManager: {fileID: 145662072}
 --- !u!114 &145662069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lighthouse.Core.Scene.SceneTransitionAnimator
   sceneTransitionAnimatorList:
+  - {fileID: 552849988}
   - {fileID: 566068841}
 --- !u!4 &145662073
 Transform:
@@ -612,6 +614,9 @@ GameObject:
   m_Component:
   - component: {fileID: 552849986}
   - component: {fileID: 552849987}
+  - component: {fileID: 552849989}
+  - component: {fileID: 552849988}
+  - component: {fileID: 552849990}
   m_Layer: 5
   m_Name: PurposeView
   m_TagString: Untagged
@@ -654,6 +659,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: SampleProduct.Runtime::SampleProduct.View.Scene.MainScene.Purpose.PurposeView
   backSceneButton: {fileID: 396013363}
+--- !u!114 &552849988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552849985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0d9e27caf940689e939ddb028c8ca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LighthouseExtends.Animation.Runtime::LighthouseExtends.Animation.Runtime.LHSceneTransitionAnimator
+  animator: {fileID: 552849989}
+  inAnimationClips:
+  - {fileID: 7400000, guid: 733e6693db13b5f47801af4827a3b07e, type: 2}
+  inDelayMilliSec: 500
+  outAnimationClips:
+  - {fileID: 7400000, guid: fe982ae1c3b69694ba6c14700c045b7d, type: 2}
+  outDelayMilliSec: 0
+  invokeResetInAnimation: 1
+  invokeInAnimation: 1
+  invokeOutAnimation: 1
+--- !u!95 &552849989
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552849985}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!225 &552849990
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552849985}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &566068839
 GameObject:
   m_ObjectHideFlags: 0
