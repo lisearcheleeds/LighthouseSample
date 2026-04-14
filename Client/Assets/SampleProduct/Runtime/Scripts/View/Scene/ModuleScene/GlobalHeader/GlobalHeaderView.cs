@@ -1,15 +1,16 @@
+using LighthouseExtends.TextTable;
+using LighthouseExtends.UIComponent.TextMeshPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
 {
     public class GlobalHeaderView : MonoBehaviour
     {
-        [SerializeField] Text text;
+        [SerializeField] LHTextMeshPro text;
 
-        public void SetText(string textValue)
+        public void SetText(ITextData textValue)
         {
-            text.text = textValue;
+            text.SetTextData(textValue);
         }
     }
 }

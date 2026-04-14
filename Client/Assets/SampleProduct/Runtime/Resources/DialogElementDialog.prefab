@@ -207,7 +207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2731769103830741956}
   - component: {fileID: 7230182226478678070}
-  - component: {fileID: 7679680125134689063}
+  - component: {fileID: 1269401817929692123}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -242,7 +242,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1749595709526089463}
   m_CullTransparentMesh: 1
---- !u!114 &7679680125134689063
+--- !u!114 &1269401817929692123
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,9 +251,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1749595709526089463}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 71e43dc8f75e2c54b87d5c50515d0529, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_EditorClassIdentifier: LighthouseExtends.TextMeshPro.Runtime::LighthouseExtends.UIComponent.TextMeshPro.LHTextMeshPro
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -264,8 +264,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Close
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
+  m_sharedMaterial: {fileID: -1193951781738188272, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -334,6 +334,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  textKey: Close
 --- !u!1 &4343853754109712202
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,7 +471,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6866040793324007013}
   - component: {fileID: 1621449273398732087}
-  - component: {fileID: 7925267799851546318}
+  - component: {fileID: 8630628484487792400}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -505,7 +506,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4801650422973405085}
   m_CullTransparentMesh: 1
---- !u!114 &7925267799851546318
+--- !u!114 &8630628484487792400
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -514,9 +515,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4801650422973405085}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 71e43dc8f75e2c54b87d5c50515d0529, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_EditorClassIdentifier: LighthouseExtends.TextMeshPro.Runtime::LighthouseExtends.UIComponent.TextMeshPro.LHTextMeshPro
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -531,15 +532,15 @@ MonoBehaviour:
     If you need to implement
     complex behavior, you can define a custom LifetimeScope for this Dialog.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
+  m_sharedMaterial: {fileID: -1193951781738188272, guid: 47d19175fae931641a776c994c1e67dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283124555
-  m_fontColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
+    rgba: 4280098077
+  m_fontColor: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -601,6 +602,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  textKey: DialogElementDialog1
 --- !u!1 &6188703546397247132
 GameObject:
   m_ObjectHideFlags: 0

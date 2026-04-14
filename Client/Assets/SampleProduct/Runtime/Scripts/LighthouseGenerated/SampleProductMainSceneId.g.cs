@@ -14,11 +14,12 @@ namespace SampleProduct.LighthouseGenerated
         public static readonly MainSceneId Splash = new MainSceneId(2, "Splash");
         public static readonly MainSceneId Title = new MainSceneId(3, "Title");
         public static readonly MainSceneId Home = new MainSceneId(4, "Home");
-        public static readonly MainSceneId Edit = new MainSceneId(5, "Edit");
-        public static readonly MainSceneId SceneSample1 = new MainSceneId(6, "SceneSample1");
-        public static readonly MainSceneId SceneSample2 = new MainSceneId(7, "SceneSample2");
-        public static readonly MainSceneId SceneSample3 = new MainSceneId(8, "SceneSample3");
-        public static readonly MainSceneId SampleTop = new MainSceneId(9, "SampleTop");
+        public static readonly MainSceneId Purpose = new MainSceneId(5, "Purpose");
+        public static readonly MainSceneId Edit = new MainSceneId(6, "Edit");
+        public static readonly MainSceneId SceneSample1 = new MainSceneId(7, "SceneSample1");
+        public static readonly MainSceneId SceneSample2 = new MainSceneId(8, "SceneSample2");
+        public static readonly MainSceneId SceneSample3 = new MainSceneId(9, "SceneSample3");
+        public static readonly MainSceneId SampleTop = new MainSceneId(10, "SampleTop");
 
         public static ReadOnlySpan<MainSceneId> All
         {
@@ -30,6 +31,7 @@ namespace SampleProduct.LighthouseGenerated
                     Splash,
                     Title,
                     Home,
+                    Purpose,
                     Edit,
                     SceneSample1,
                     SceneSample2,

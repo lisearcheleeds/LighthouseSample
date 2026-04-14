@@ -1,9 +1,13 @@
 using Lighthouse.Scene;
 using Lighthouse.Scene.SceneCamera;
+using LighthouseExtends.Font;
+using LighthouseExtends.Language;
 using LighthouseExtends.ScreenStack;
+using LighthouseExtends.TextTable;
 using LighthouseExtends.UIComponent.CanvasSceneObject;
 using LighthouseExtends.UIComponent.ExclusiveInput;
 using LighthouseExtends.UIComponent.InputBlocker;
+using SampleProduct.Infrastructure.AssetLoader;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using SampleProduct.View.Scene.ModuleScene.Overlay;
@@ -16,6 +20,8 @@ namespace SampleProduct.Core
     public class ProductLifetimeScope : LifetimeScope
     {
         [SerializeField] ProductLifetimeScopeSettings productLifetimeScopeSettings;
+        [SerializeField] SupportedLanguageSettings supportedLanguageSettings;
+        [SerializeField] LanguageFontSettings languageFontSettings;
         [SerializeField] LHCanvasSceneObject canvasSceneObjectPrefab;
         [SerializeField] LHInputBlocker inputBlockerPrefab;
 
@@ -41,6 +47,18 @@ namespace SampleProduct.Core
                 // LightHouse.Extends
                 builder.Register<ExclusiveInputService>(Lifetime.Singleton).AsImplementedInterfaces();
 
+                builder.Register<LanguageService>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.RegisterInstance(supportedLanguageSettings);
+                builder.Register<SupportedLanguageService>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<TextTableService>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.RegisterInstance(languageFontSettings);
+                builder.Register<FontService>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.RegisterBuildCallback(container =>
+                {
+                    container.Resolve<ITextTableService>();
+                    container.Resolve<IFontService>();
+                });
+
                 // Modules
                 builder.Register<ScreenStackModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
             }
@@ -55,11 +73,14 @@ namespace SampleProduct.Core
                     builder.RegisterComponentInNewPrefab(inputBlockerPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
                 }
 
+                builder.Register<SampleAssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();
+
                 // Module
                 builder.Register<OverlayModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<GlobalHeaderModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<BackgroundModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();
             }
         }
+
     }
 }

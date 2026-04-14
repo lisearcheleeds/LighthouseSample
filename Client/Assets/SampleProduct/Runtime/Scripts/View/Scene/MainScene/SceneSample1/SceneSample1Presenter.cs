@@ -1,6 +1,7 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using LighthouseExtends.ScreenStack;
+using LighthouseExtends.TextTable;
 using SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionDialog;
 using SampleProduct.View.Scene.MainScene.SceneSample2;
 using SampleProduct.View.Scene.ModuleScene.Background;
@@ -41,7 +42,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
 
         void ISceneSample1Presenter.OnEnter()
         {
-            globalHeaderModule.SetHeaderText("Home > SampleScene1");
+            globalHeaderModule.SetHeaderText(new TextData("SceneSample1GlobalHeader"));
             backgroundModule.SetBackgroundLayout(BackgroundLayout.Sample1Layout);
         }
 

@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
+using LighthouseExtends.TextTable;
 using SampleProduct.View.Base;
 using UnityEngine;
 using SampleProduct.LighthouseGenerated;
@@ -12,9 +13,9 @@ namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
 
         public override ModuleSceneId ModuleSceneId => SampleProductModuleSceneId.GlobalHeader;
 
-        public void SetHeaderText(string text)
+        public void SetHeaderText(ITextData textValue)
         {
-            globalHeaderView.SetText(text);
+            globalHeaderView.SetText(textValue);
         }
 
         public override void ResetInAnimation(SceneTransitionContext context)

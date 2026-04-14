@@ -1,3 +1,4 @@
+using LighthouseExtends.TextTable;
 using VContainer;
 
 namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
@@ -12,9 +13,9 @@ namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
             this.globalHeaderModuleScene = globalHeaderModuleScene;
         }
 
-        public void SetHeaderText(string headerText)
+        public void SetHeaderText(ITextData textValue)
         {
-            globalHeaderModuleScene.SetHeaderText(headerText);
+            globalHeaderModuleScene.SetHeaderText(textValue);
         }
     }
 }

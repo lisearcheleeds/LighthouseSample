@@ -1,0 +1,6 @@
+key	text
+SceneSample1Description1	씬 전환은 Stack으로 관리됩니다. BackScene에서 전환할 씬을 지정할 필요가 없습니다.
+SceneSample1Description2	팝업에서도 씬을 전환할 수 있습니다.
+SceneSample1TransitionHeader	Scene 샘플
+SceneSample1TransitionButton1	다음 화면으로
+SceneSample1TransitionButton2	Dialog를 사용하여 다음 화면으로

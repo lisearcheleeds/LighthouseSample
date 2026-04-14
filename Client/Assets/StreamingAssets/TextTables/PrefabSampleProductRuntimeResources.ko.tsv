@@ -1,0 +1,25 @@
+﻿key	text
+AnimationElementOverlay1	LHAnimationClipPlayer는 AnimationClip을 단독으로 재생하기 위한 기능입니다.\n\nAnimationClip과 Animator만의 심플하고 최소한의 구성으로, 불필요한 에셋이나 컴포넌트가 필요 없습니다.\n또한, 시작값과 종료값 상태를 Awake 전에 직접 반영하는 처리를 실행할 수 있어\nUI 인/아웃 애니메이션에 최적입니다.
+AnimationElementOverlay2	public interface ILHAnimationClipPlayer\n{\n    public void PlayAnimation(bool isRestart, bool isEndEvaluate, Action onComplete);\n    public UniTask PlayAnimationAsync(bool isRestart, bool isEndEvaluate);\n    public void ResetAnimation();\n    public void Stop();\n    public void Skip();\n}
+DialogElementDialog1	다이얼로그는 다이얼로그라는 기능이 있는 것이 아니라 ScreenStack 기능을 활용한 표현 중 하나입니다.\n\n복잡한 의존 관계를 구현할 경우, 이 다이얼로그에 독자적인 LifetimeScope를 정의할 수 있습니다.
+DialogSample1Dialog1	추가 다이얼로그 표시\n（배타적）
+DialogSample1Dialog2	추가 다이얼로그 표시
+DialogSample1Dialog3	닫기
+DialogSample1Dialog4	확인 후 닫기
+DialogSample2Dialog1	추가 다이얼로그 표시（배타적）
+DialogSample2Dialog2	추가 다이얼로그 표시
+DialogSample2Dialog3	확인 후 닫기
+This popup will close at the same time as the popup below.	이 팝업은 아래 팝업과 동시에 닫힙니다.
+OverlayElementOverlay1	오버레이는 오버레이라는 기능이 있는 것이 아니라 ScreenStack 기능을 활용한 표현 중 하나입니다.\n\n복잡한 의존 관계를 구현할 경우, 이 오버레이에 독자적인 LifetimeScope를 정의할 수 있습니다.
+PopupElementPopup1	팝업은 팝업이라는 기능이 있는 것이 아니라 ScreenStack 기능을 활용한 표현 중 하나입니다.\n기본 화면의 특정 위치를 포커스하거나 작은 창을 띄우는 데 편리합니다.
+RequireToolsDialog	크레딧
+RequireToolsDialog1	크레딧
+RequireToolsDialog2	## Lighthouse Architecture Framework\nDeveloped by Lise (https://twitter.com/archeleeds)\n\nCopyright (c) 2026 Lise\nhttps://github.com/lisearcheleeds/LighthouseFramework\nMIT License\n\n\n## Third-Party Licenses\n### VContainer\nCopyright (c) 2020 hadashiA\nhttps://github.com/hadashiA/VContainer\nMIT License\n\n### R3\nCopyright (c) 2024 Cysharp, Inc.\nhttps://github.com/Cysharp/R3\nMIT License\n\n### UniRx\nCopyright (c) 2018 Yoshifumi Kawai / neuecc\nhttps://github.com/neuecc/UniRx\nMIT License
+SceneTransitionDialog1	다이얼로그가 열린 상태에서 TransitionScene을 사용하면, BackScene으로 해당 씬으로 돌아갔을 때 다이얼로그가 자동으로 재개됩니다.\n물론, 당신이 다이얼로그의 상태를 직접 제어할 수도 있습니다.
+SceneTransitionDialog2	Transition Scene
+SceneTransitionDialog3	닫고 Transition Scene
+TransitionAnimationElementOverlay1	LHTransitionAnimator는 장면 전환을 위해 LHAnimationClipPlayer를 확장한 구성 요소입니다.\n\nScene과 ScreenStack의 기본 클래스에 통합함으로써 개발자와 디자이너의 편집 부분을 완전히 분리하고 효율적으로 작업할 수 있습니다.\n\n물론, 이들은 제품 측에서 확장할 수 있도록 만들어져 있습니다.
+ButtonElementOverlay1	LHButton은 Unity.UI.Button을 상속한 기능입니다.\n\n현재는 배타 입력 기능만을 갖추고 있습니다.
+TextViewElementOverlay1	LHTextMeshPro는 로컬라이즈·사전 기능을 갖춘 Text 컴포넌트입니다.\n이를 통해 로컬라이즈 작업과 개발 작업을 완전히 분리하여 개발 효율을 높일 수 있습니다.\n또한, EditorTool을 준비하고 있어 개발자 이외의 사람도 작업할 수 있게 되었습니다.
+TapToClose1	Tap to Close
+Close	닫기

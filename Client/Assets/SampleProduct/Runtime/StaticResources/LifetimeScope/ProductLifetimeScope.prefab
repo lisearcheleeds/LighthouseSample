@@ -49,5 +49,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   productLifetimeScopeSettings: {fileID: 11400000, guid: c7d878432ceae684a888ea8f5f37538c, type: 2}
+  supportedLanguageSettings: {fileID: 11400000, guid: c163c78956fd8ae4aa9f3f7e730b65eb, type: 2}
+  languageFontSettings: {fileID: 11400000, guid: 55882bf099c8bd04ca12f502a327c6c4, type: 2}
   canvasSceneObjectPrefab: {fileID: 5381610481928089858, guid: 29a592fb8503bc54d9d7e9dbc50479fe, type: 3}
   inputBlockerPrefab: {fileID: 8513117433606315473, guid: b6654eeae2a436b40bcb9c4a94cb2693, type: 3}

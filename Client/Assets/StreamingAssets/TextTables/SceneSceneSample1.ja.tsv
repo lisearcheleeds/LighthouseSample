@@ -1,0 +1,6 @@
+﻿key	text
+SceneSample1Description1	シーン遷移はStackで管理されます。BackSceneで遷移先のシーンを指定する必要はありません。
+SceneSample1Description2	ポップアップからもシーンの切り替えを行うことができます。
+SceneSample1TransitionHeader	Sceneサンプル
+SceneSample1TransitionButton1	次の画面へ
+SceneSample1TransitionButton2	Dialogを利用して次の画面へ

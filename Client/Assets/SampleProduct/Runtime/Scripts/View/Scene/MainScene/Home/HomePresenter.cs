@@ -1,7 +1,11 @@
+using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
+using LighthouseExtends.Language;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog;
+using SampleProduct.View.Scene.MainScene.Purpose;
 using SampleProduct.View.Scene.MainScene.SampleTop;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using UnityEngine;
@@ -15,18 +19,24 @@ namespace SampleProduct.View.Scene.MainScene.Home
         ISceneManager sceneManager;
         IBackgroundModule backgroundModule;
         IScreenStackModule screenStackModule;
+        ILanguageService languageService;
+        ISupportedLanguageService supportedLanguageService;
 
         [Inject]
         public void Construct(
             IHomeView homeView,
             ISceneManager sceneManager,
             IBackgroundModule backgroundModule,
-            IScreenStackModule screenStackModule)
+            IScreenStackModule screenStackModule,
+            ILanguageService languageService,
+            ISupportedLanguageService supportedLanguageService)
         {
             this.homeView = homeView;
             this.sceneManager = sceneManager;
             this.backgroundModule = backgroundModule;
             this.screenStackModule = screenStackModule;
+            this.languageService = languageService;
+            this.supportedLanguageService = supportedLanguageService;
         }
 
         void IHomePresenter.Setup()
@@ -37,6 +47,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
             homeView.SubscribePhilosophyButtonClick(OnClickPhilosophyButton);
             homeView.SubscribeSampleButtonClick(OnClickSampleButton);
             homeView.SubscribeRequireToolsButtonClick(OnClickRequireToolsButton);
+            homeView.SubscribeRequireLanguageSwitchButtonClick(OnClickRequireLanguageSwitchButton);
         }
 
         void IHomePresenter.OnEnter()
@@ -61,6 +72,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         void OnClickPhilosophyButton()
         {
+            sceneManager.TransitionScene(new PurposeScene.PurposeTransitionData(), TransitionType.Cross);
         }
 
         void OnClickSampleButton()
@@ -72,6 +84,22 @@ namespace SampleProduct.View.Scene.MainScene.Home
         void OnClickRequireToolsButton()
         {
             screenStackModule.Open(new RequireToolsData()).Forget();
+        }
+
+        void OnClickRequireLanguageSwitchButton()
+        {
+            var currentLanguageIndex = 0;
+            for (var i = 0; i < supportedLanguageService.SupportedLanguages.Count; i++)
+            {
+                if (supportedLanguageService.SupportedLanguages[i] == languageService.CurrentLanguage.CurrentValue)
+                {
+                    currentLanguageIndex = i;
+                    break;
+                }
+            }
+
+            var nextLanguageIndex = (currentLanguageIndex + supportedLanguageService.SupportedLanguages.Count + 1) % supportedLanguageService.SupportedLanguages.Count;
+            languageService.SetLanguage(supportedLanguageService.SupportedLanguages[nextLanguageIndex], CancellationToken.None);
         }
     }
 }

@@ -2,9 +2,11 @@ using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.AnimationElement;
+using SampleProduct.ButtonElement;
 using SampleProduct.DialogElement;
 using SampleProduct.OverlayElement;
 using SampleProduct.PopupElement;
+using SampleProduct.TextView;
 using SampleProduct.TransitionAnimationElement;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog;
@@ -222,12 +224,12 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
 
         void OnClickButton()
         {
-            Debug.Log("OnClickButton");
+            screenStackModule.Open(new ButtonElementData()).Forget();
         }
 
         void OnClickText()
         {
-            Debug.Log("OnClickText");
+            screenStackModule.Open(new TextViewElementData()).Forget();
         }
 
         void OnClickGame1Button()

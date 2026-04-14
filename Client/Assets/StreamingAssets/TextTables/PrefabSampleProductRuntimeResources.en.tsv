@@ -1,0 +1,25 @@
+﻿key	text
+AnimationElementOverlay1	LHAnimationClipPlayer is a feature for playing AnimationClips independently.\n\nIt has a simple and minimal configuration, consisting only of AnimationClip and Animator, requiring no unnecessary assets or components.\nFurthermore, because it can directly reflect the start and end states before Awake,\nit is ideal for UI in/out animations.
+AnimationElementOverlay2	public interface ILHAnimationClipPlayer\n{\n    public void PlayAnimation(bool isRestart, bool isEndEvaluate, Action onComplete);\n    public UniTask PlayAnimationAsync(bool isRestart, bool isEndEvaluate);\n    public void ResetAnimation();\n    public void Stop();\n    public void Skip();\n}
+DialogElementDialog1	Dialogs aren't a separate feature; they're simply one way of displaying content using the ScreenStack functionality.\n\nIf you need to implement complex dependencies, you can define your own LifetimeScope for this dialog.
+DialogSample1Dialog1	Open exclusive dialog
+DialogSample1Dialog2	Open overlay dialog
+DialogSample1Dialog3	Close
+DialogSample1Dialog4	Close with confirm
+DialogSample2Dialog1	Open exclusive dialog
+DialogSample2Dialog2	Open overlay dialog
+DialogSample2Dialog3	Close with confirm
+This popup will close at the same time as the popup below.	This popup will close at the same time as the popup below.
+OverlayElementOverlay1	Overlays aren't a separate feature; they're simply one way of expressing things using the ScreenStack functionality.\n\nIf you need to implement complex dependencies, you can define your own LifetimeScope for this overlay.
+PopupElementPopup1	Pop-ups aren't a separate feature; they're a way to display content using the ScreenStack functionality.\nThey're useful for focusing on a specific location on the base screen or displaying small windows.
+RequireToolsDialog	Credit
+RequireToolsDialog1	Credit
+RequireToolsDialog2	## Lighthouse Architecture Framework\nDeveloped by Lise (https://twitter.com/archeleeds)\n\nCopyright (c) 2026 Lise\nhttps://github.com/lisearcheleeds/LighthouseFramework\nMIT License\n\n\n## Third-Party Licenses\n### VContainer\nCopyright (c) 2020 hadashiA\nhttps://github.com/hadashiA/VContainer\nMIT License\n\n### R3\nCopyright (c) 2024 Cysharp, Inc.\nhttps://github.com/Cysharp/R3\nMIT License\n\n### UniRx\nCopyright (c) 2018 Yoshifumi Kawai / neuecc\nhttps://github.com/neuecc/UniRx\nMIT License
+SceneTransitionDialog1	If you use TransitionScene while a Dialog is open, the Dialog will automatically resume when you BackScene into that scene.\nOf course, you can control the state of that Dialog.
+SceneTransitionDialog2	Transition Scene
+SceneTransitionDialog3	Transition scene with close
+TransitionAnimationElementOverlay1	LHTransitionAnimator is a component that extends LHAnimationClipPlayer for scene transitions.\n\nBy integrating it with the base classes Scene and ScreenStack, it allows for complete separation of editing areas between developers and designers, enabling efficient work.\n\nOf course, these are designed to be extensible on the product side.
+ButtonElementOverlay1	LHButton is a feature that inherits from Unity.UI.Button.\nCurrently, it only has mutually exclusive input functionality.
+TextViewElementOverlay1	LHTextMeshPro is a Text component with localization and dictionary functionality.\nThis completely separates localization and development work, significantly improving development efficiency.\nFurthermore, an EditorTool is provided, allowing non-developers to work on the project.
+TapToClose1	Tap to Close
+Close	Close

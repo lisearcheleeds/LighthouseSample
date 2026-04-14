@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/SampleProduct/Runtime/Scene/MainScene/Home.unity
     guid: e0f30e91f52c2f2419a3904b86d1019b
   - enabled: 1
+    path: Assets/SampleProduct/Runtime/Scene/MainScene/Purpose.unity
+    guid: 193ebd56253ff714d8379f711b4027c8
+  - enabled: 1
     path: Assets/SampleProduct/Runtime/Scene/MainScene/Edit.unity
     guid: e7a6057572eb16048b759b6051afb236
   - enabled: 1
