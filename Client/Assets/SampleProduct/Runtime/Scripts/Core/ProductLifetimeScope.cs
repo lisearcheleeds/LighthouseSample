@@ -1,6 +1,7 @@
 using Lighthouse.Scene;
 using Lighthouse.Scene.SceneCamera;
 using LighthouseExtends.Font;
+using LighthouseExtends.InputLayer;
 using LighthouseExtends.Language;
 using LighthouseExtends.ScreenStack;
 using LighthouseExtends.TextTable;
@@ -24,6 +25,7 @@ namespace SampleProduct.Core
         [SerializeField] LanguageFontSettings languageFontSettings;
         [SerializeField] LHCanvasSceneObject canvasSceneObjectPrefab;
         [SerializeField] LHInputBlocker inputBlockerPrefab;
+        [SerializeField] InputLayerController inputLayerControllerPrefab;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -71,6 +73,7 @@ namespace SampleProduct.Core
                     // LightHouse Require
                     builder.RegisterComponentInNewPrefab(canvasSceneObjectPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
                     builder.RegisterComponentInNewPrefab(inputBlockerPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
+                    builder.RegisterComponentInNewPrefab(inputLayerControllerPrefab, Lifetime.Singleton).DontDestroyOnLoad().As<IInputLayerController>();
                 }
 
                 builder.Register<SampleAssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();

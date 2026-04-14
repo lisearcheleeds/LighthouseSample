@@ -3,6 +3,7 @@
     "rootNamespace": "",
     "references": [
         "Lighthouse.Runtime",
+        "LighthouseExtends.InputLayer.Runtime",
         "LighthouseExtends.Font.Runtime",
         "LighthouseExtends.Language.Runtime",
         "LighthouseExtends.Animation.Runtime",

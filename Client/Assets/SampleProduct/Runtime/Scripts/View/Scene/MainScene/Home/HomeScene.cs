@@ -1,9 +1,11 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
+using LighthouseExtends.InputLayer;
+using SampleProduct.Input;
+using SampleProduct.LighthouseGenerated;
 using SampleProduct.View.Base;
 using VContainer;
-using SampleProduct.LighthouseGenerated;
 
 namespace SampleProduct.View.Scene.MainScene.Home
 {
@@ -23,6 +25,8 @@ namespace SampleProduct.View.Scene.MainScene.Home
         {
             this.homePresenter = homePresenter;
         }
+
+        protected override InputLayer CreateInputLayer() => new HomeSceneInputLayer();
 
         protected override UniTask OnSetup()
         {
