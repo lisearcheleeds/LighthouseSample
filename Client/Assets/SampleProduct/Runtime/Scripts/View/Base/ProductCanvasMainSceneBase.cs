@@ -15,7 +15,7 @@ namespace SampleProduct.View.Base
         [SerializeField] LHSceneTransitionAnimatorManager sceneTransitionAnimatorManager;
 
         IInputLayerController inputLayerController;
-        InputLayer currentInputLayer;
+        IInputLayer currentInputLayer;
 
         [Inject]
         public void ConstructInputLayer(IInputLayerController inputLayerController)
@@ -23,18 +23,18 @@ namespace SampleProduct.View.Base
             this.inputLayerController = inputLayerController;
         }
 
-        /// <summary>
-        /// このSceneで使用するInputLayerを返す。
-        /// null を返した場合はInputLayerの操作を行わない。
-        /// </summary>
-        protected virtual InputLayer CreateInputLayer() => null;
+        protected virtual IInputLayer CreateInputLayer() => null;
+
+        protected virtual string GetInputLayerActionMapName() => null;
 
         protected override async UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            currentInputLayer = CreateInputLayer();
-            if (currentInputLayer != null)
+            var layer = CreateInputLayer();
+            var mapName = GetInputLayerActionMapName();
+            if (layer != null && mapName != null)
             {
-                inputLayerController.PushLayer(currentInputLayer);
+                currentInputLayer = layer;
+                inputLayerController.PushLayer(currentInputLayer, mapName);
             }
             await base.OnEnter(context, cancelToken);
         }

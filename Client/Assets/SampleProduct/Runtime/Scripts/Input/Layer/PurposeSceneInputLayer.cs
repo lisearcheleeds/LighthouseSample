@@ -1,14 +1,8 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 namespace SampleProduct.Input
 {
-    /// <summary>
-    /// PurposeScene用InputLayer。
-    /// Back でひとつ前のSceneに戻る。
-    /// return false で下位レイヤーにも処理を渡す。
-    /// </summary>
     public class PurposeSceneInputLayer : SceneInputLayerBase
     {
         readonly Action onBack;
@@ -18,13 +12,12 @@ namespace SampleProduct.Input
             this.onBack = onBack;
         }
 
-        public override bool UpdateInput(HashSet<InputControl> consumedControls)
+        public override void OnActionStarted(InputAction action)
         {
-            if (WasPressedThisFrame(InputActionNames.Back, consumedControls))
+            if (action.name == InputActionNames.Back)
             {
                 onBack?.Invoke();
             }
-            return false;
         }
     }
 }

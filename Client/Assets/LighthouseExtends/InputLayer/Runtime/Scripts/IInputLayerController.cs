@@ -1,12 +1,10 @@
-using UnityEngine.InputSystem;
-
 namespace LighthouseExtends.InputLayer
 {
     public interface IInputLayerController
     {
-        void PushLayer(InputLayer layer);
+        void SetGlobalLayer(IInputLayer layer, string actionMapName);
+        void PushLayer(IInputLayer layer, string actionMapName);
         void PopLayer();
-        void PopLayer(InputLayer target);
-        InputAction GetAction(string actionName);
+        void PopLayer(IInputLayer target);
     }
 }

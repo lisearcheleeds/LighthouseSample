@@ -1,14 +1,8 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 namespace SampleProduct.Input
 {
-    /// <summary>
-    /// RequireToolsDialog用InputLayer。
-    /// Back/Cancel でダイアログを閉じる。
-    /// return true で下位レイヤー（Scene等）への伝播を止める。
-    /// </summary>
     public class RequireToolsInputLayer : ScreenStackInputLayerBase
     {
         readonly Action onClose;
@@ -18,14 +12,12 @@ namespace SampleProduct.Input
             this.onClose = onClose;
         }
 
-        public override bool UpdateInput(HashSet<InputControl> consumedControls)
+        public override void OnActionStarted(InputAction action)
         {
-            if (WasPressedThisFrame(InputActionNames.Back, consumedControls)
-                || WasPressedThisFrame(InputActionNames.Cancel, consumedControls))
+            if (action.name == InputActionNames.Back || action.name == InputActionNames.Cancel)
             {
                 onClose?.Invoke();
             }
-            return true;
         }
     }
 }

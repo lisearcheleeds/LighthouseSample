@@ -13,7 +13,7 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
 
         RequireToolsView dialogView;
         RequireToolsData screenStackData;
-        InputLayer inputLayer;
+        IInputLayer inputLayer;
 
         [Inject]
         public void Construct(
@@ -37,15 +37,18 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
             if (!isResume)
             {
                 inputLayer = new RequireToolsInputLayer(OnClickCloseButton);
-                inputLayerController.PushLayer(inputLayer);
+                inputLayerController.PushLayer(inputLayer, InputActionNames.Maps.Dialog);
             }
             return UniTask.CompletedTask;
         }
 
         UniTask IScreenStackPresenter.OnLeave()
         {
-            inputLayerController.PopLayer(inputLayer);
-            inputLayer = null;
+            if (inputLayer != null)
+            {
+                inputLayerController.PopLayer(inputLayer);
+                inputLayer = null;
+            }
             return UniTask.CompletedTask;
         }
 

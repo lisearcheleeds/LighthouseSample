@@ -1,22 +1,16 @@
-using System.Collections.Generic;
 using LighthouseExtends.InputLayer;
-using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace SampleProduct.Input
 {
-    /// <summary>
-    /// Scene用InputLayer基底。
-    /// Back/Cancel をデフォルトで消費する。
-    /// return false で下位レイヤーにも処理を渡す想定。
-    /// </summary>
-    public abstract class SceneInputLayerBase : InputLayer
+    public abstract class SceneInputLayerBase : IInputLayer
     {
-        public override CursorLockMode CursorLockMode => CursorLockMode.None;
-
-        protected override IReadOnlyList<string> ConsumedActions => new[]
+        public virtual void OnActionStarted(InputAction action)
         {
-            InputActionNames.Back,
-            InputActionNames.Cancel,
-        };
+        }
+
+        public virtual void OnActionCanceled(InputAction action)
+        {
+        }
     }
 }

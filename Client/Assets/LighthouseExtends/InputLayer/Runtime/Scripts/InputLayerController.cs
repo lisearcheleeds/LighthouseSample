@@ -8,69 +8,102 @@ namespace LighthouseExtends.InputLayer
 {
     public class InputLayerController : MonoBehaviour, IInputLayerController
     {
-        // ── Serialized Fields ─────────────────────────────────────────
-
-        /// <summary>
-        /// Unity Editor で作成した InputActionAsset をアタッチする。
-        /// Construct 時に Enable される。
-        /// </summary>
         [SerializeField] InputActionAsset inputActionAsset;
 
-        // ── Private Fields ────────────────────────────────────────────
+        string globalActionMapName;
+        IInputLayer globalLayer;
 
-        readonly List<LayerEntry> reversedStack = new(); // index 0 = 最上位レイヤー
-
-        // ── Inner Types ──────────────────────────────────────────────
+        readonly List<LayerEntry> reversedStack = new();
 
         class LayerEntry
         {
-            public InputLayer Layer { get; }
+            public IInputLayer Layer { get; }
+            public string ActionMapName { get; }
 
-            /// <summary>上位レイヤーが消費済みのコントロールセット（このレイヤーには届かない）</summary>
-            public HashSet<InputControl> BlockedControls { get; set; } = new();
-
-            public LayerEntry(InputLayer layer) => Layer = layer;
+            public LayerEntry(IInputLayer layer, string actionMapName)
+            {
+                Layer = layer;
+                ActionMapName = actionMapName;
+            }
         }
-
-        // ── Lifecycle ────────────────────────────────────────────────
 
         [Inject]
         public void Construct()
         {
-            inputActionAsset.Enable();
-        }
-
-        void OnDestroy()
-        {
-            inputActionAsset.Disable();
-        }
-
-        void Update()
-        {
-            for (var i = 0; i < reversedStack.Count; i++)
+            foreach (var map in inputActionAsset.actionMaps)
             {
-                var entry = reversedStack[i];
-                var stop = entry.Layer.UpdateInput(entry.BlockedControls);
-                if (stop)
+                foreach (var action in map.actions)
                 {
-                    break;
+                    action.started += OnActionStarted;
+                    action.canceled += OnActionCanceled;
                 }
             }
         }
 
-        // ── Public API ───────────────────────────────────────────────
-
-        /// <summary>レイヤーをスタックに積む。</summary>
-        public void PushLayer(InputLayer layer)
+        void OnDestroy()
         {
-            layer.SetController(this);
-            reversedStack.Insert(0, new LayerEntry(layer));
-            Cursor.lockState = layer.CursorLockMode;
-            RecalculateBlockedControls();
+            foreach (var map in inputActionAsset.actionMaps)
+            {
+                foreach (var action in map.actions)
+                {
+                    action.started -= OnActionStarted;
+                    action.canceled -= OnActionCanceled;
+                }
+            }
+        }
+
+        void OnActionStarted(InputAction.CallbackContext ctx)
+        {
+            if (ctx.action.actionMap.name == globalActionMapName)
+            {
+                globalLayer?.OnActionStarted(ctx.action);
+            }
+            else if (reversedStack.Count > 0)
+            {
+                reversedStack[0].Layer.OnActionStarted(ctx.action);
+            }
+        }
+
+        void OnActionCanceled(InputAction.CallbackContext ctx)
+        {
+            if (ctx.action.actionMap.name == globalActionMapName)
+            {
+                globalLayer?.OnActionCanceled(ctx.action);
+            }
+            else if (reversedStack.Count > 0)
+            {
+                reversedStack[0].Layer.OnActionCanceled(ctx.action);
+            }
+        }
+
+        public void SetGlobalLayer(IInputLayer layer, string actionMapName)
+        {
+            globalActionMapName = actionMapName;
+            globalLayer = layer;
+
+            var map = inputActionAsset.FindActionMap(actionMapName);
+            map?.Enable();
+
+            Debug.Log($"[InputLayer] SetGlobal: {layer.GetType().Name} ({actionMapName})");
+        }
+
+        public void PushLayer(IInputLayer layer, string actionMapName)
+        {
+            if (reversedStack.Count > 0)
+            {
+                inputActionAsset.FindActionMap(reversedStack[0].ActionMapName)?.Disable();
+            }
+
+            reversedStack.Insert(0, new LayerEntry(layer, actionMapName));
+            inputActionAsset.FindActionMap(actionMapName)?.Enable();
+
+#if UNITY_EDITOR
+            ValidateNoOverlapWithGlobal(actionMapName);
+#endif
+
             Debug.Log($"[InputLayer] Push: {StackToString()}");
         }
 
-        /// <summary>最上位レイヤーを取り除く。</summary>
         public void PopLayer()
         {
             if (reversedStack.Count == 0)
@@ -78,68 +111,85 @@ namespace LighthouseExtends.InputLayer
                 return;
             }
 
+            inputActionAsset.FindActionMap(reversedStack[0].ActionMapName)?.Disable();
             reversedStack.RemoveAt(0);
-            Cursor.lockState = reversedStack.Count > 0
-                ? reversedStack[0].Layer.CursorLockMode
-                : CursorLockMode.None;
-            RecalculateBlockedControls();
+
+            if (reversedStack.Count > 0)
+            {
+                inputActionAsset.FindActionMap(reversedStack[0].ActionMapName)?.Enable();
+            }
+
             Debug.Log($"[InputLayer] Pop: {StackToString()}");
         }
 
-        /// <summary>
-        /// 指定レイヤーをスタック内のどの位置からでも取り除く。
-        /// それより上位のレイヤーはそのまま維持される。
-        /// </summary>
-        public void PopLayer(InputLayer target)
+        public void PopLayer(IInputLayer target)
         {
-            var removed = reversedStack.RemoveAll(e => e.Layer == target);
-            if (removed == 0)
+            var index = reversedStack.FindIndex(e => e.Layer == target);
+            if (index < 0)
             {
                 return;
             }
 
-            Cursor.lockState = reversedStack.Count > 0
-                ? reversedStack[0].Layer.CursorLockMode
-                : CursorLockMode.None;
-            RecalculateBlockedControls();
+            var wasTop = index == 0;
+            var removedMapName = reversedStack[index].ActionMapName;
+            reversedStack.RemoveAt(index);
+
+            if (wasTop)
+            {
+                inputActionAsset.FindActionMap(removedMapName)?.Disable();
+                if (reversedStack.Count > 0)
+                {
+                    inputActionAsset.FindActionMap(reversedStack[0].ActionMapName)?.Enable();
+                }
+            }
+
             Debug.Log($"[InputLayer] PopTarget({target.GetType().Name}): {StackToString()}");
         }
 
-        /// <summary>
-        /// アクション名で InputAction を検索して返す。
-        /// 見つからない場合は null を返す（警告ログあり）。
-        /// アクション名が複数のマップに存在する場合は最初に見つかったものを返す。
-        /// 区別が必要な場合は "MapName/ActionName" 形式で指定する。
-        /// </summary>
-        public InputAction GetAction(string actionName)
+#if UNITY_EDITOR
+        void ValidateNoOverlapWithGlobal(string actionMapName)
         {
-            var action = inputActionAsset.FindAction(actionName, throwIfNotFound: false);
-            if (action == null)
+            if (string.IsNullOrEmpty(globalActionMapName))
             {
-                Debug.LogWarning($"[InputLayer] Action not found: {actionName}");
+                return;
             }
-            return action;
-        }
 
-        // ── Private ──────────────────────────────────────────────────
-
-        /// <summary>
-        /// 各レイヤーの BlockedControls を再計算する。
-        /// スタックへの Push/Pop 時に呼ぶ。
-        /// </summary>
-        void RecalculateBlockedControls()
-        {
-            var accumulated = new HashSet<InputControl>();
-
-            for (var i = 0; i < reversedStack.Count; i++)
+            var globalMap = inputActionAsset.FindActionMap(globalActionMapName);
+            if (globalMap == null)
             {
-                // このレイヤーへの入力は、上位レイヤーの消費分がブロックされる
-                reversedStack[i].BlockedControls = new HashSet<InputControl>(accumulated);
+                return;
+            }
 
-                // このレイヤーが消費するコントロールを次以降に積み上げる
-                accumulated.UnionWith(reversedStack[i].Layer.GetConsumedControls());
+            var stackMap = inputActionAsset.FindActionMap(actionMapName);
+            if (stackMap == null)
+            {
+                return;
+            }
+
+            var globalBindingPaths = new HashSet<string>();
+            foreach (var action in globalMap.actions)
+            {
+                foreach (var binding in action.bindings)
+                {
+                    if (!string.IsNullOrEmpty(binding.effectivePath))
+                    {
+                        globalBindingPaths.Add(binding.effectivePath);
+                    }
+                }
+            }
+
+            foreach (var action in stackMap.actions)
+            {
+                foreach (var binding in action.bindings)
+                {
+                    if (!string.IsNullOrEmpty(binding.effectivePath) && globalBindingPaths.Contains(binding.effectivePath))
+                    {
+                        Debug.LogError($"[InputLayer] Binding overlap: Global '{globalActionMapName}' and '{actionMapName}' both bind '{binding.effectivePath}' (action: {action.name})");
+                    }
+                }
             }
         }
+#endif
 
         string StackToString() =>
             string.Join(" > ", reversedStack.Select(e => e.Layer.GetType().Name));

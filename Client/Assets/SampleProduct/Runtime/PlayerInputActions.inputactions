@@ -1,122 +1,40 @@
 {
+    "version": 1,
     "name": "PlayerInputActions",
     "maps": [
         {
-            "name": "UI",
-            "id": "00000000-0000-0000-0000-000000000001",
+            "name": "Global",
+            "id": "00000000-0000-0000-0001-000000000001",
+            "actions": [],
+            "bindings": []
+        },
+        {
+            "name": "Scene",
+            "id": "00000000-0000-0000-0001-000000000002",
             "actions": [
                 {
-                    "name": "Confirm",
+                    "name": "Back",
                     "type": "Button",
-                    "id": "00000000-0000-0000-0000-000000000002",
+                    "id": "00000000-0000-0000-0002-000000000001",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "singletonActionBindings": []
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Cancel",
                     "type": "Button",
-                    "id": "00000000-0000-0000-0000-000000000003",
-                    "expectedControlType": "Button",
+                    "id": "00000000-0000-0000-0002-000000000002",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "singletonActionBindings": []
-                },
-                {
-                    "name": "Back",
-                    "type": "Button",
-                    "id": "00000000-0000-0000-0000-000000000004",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "singletonActionBindings": []
-                },
-                {
-                    "name": "NavigateUp",
-                    "type": "Button",
-                    "id": "00000000-0000-0000-0000-000000000005",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "singletonActionBindings": []
-                },
-                {
-                    "name": "NavigateDown",
-                    "type": "Button",
-                    "id": "00000000-0000-0000-0000-000000000006",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "singletonActionBindings": []
-                },
-                {
-                    "name": "NavigateLeft",
-                    "type": "Button",
-                    "id": "00000000-0000-0000-0000-000000000007",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "singletonActionBindings": []
-                },
-                {
-                    "name": "NavigateRight",
-                    "type": "Button",
-                    "id": "00000000-0000-0000-0000-000000000008",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "singletonActionBindings": []
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-000000000001",
-                    "path": "<Keyboard>/enter",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Confirm",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "00000000-0000-0000-0001-000000000002",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Confirm",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "00000000-0000-0000-0001-000000000003",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Confirm",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "00000000-0000-0000-0001-000000000004",
-                    "path": "<Keyboard>/backspace",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Cancel",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "00000000-0000-0000-0001-000000000005",
+                    "id": "00000000-0000-0000-0002-000000000101",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
@@ -127,7 +45,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-000000000006",
+                    "id": "00000000-0000-0000-0002-000000000102",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
@@ -138,7 +56,155 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-000000000007",
+                    "id": "00000000-0000-0000-0002-000000000103",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dialog",
+            "id": "00000000-0000-0000-0001-000000000003",
+            "actions": [
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "00000000-0000-0000-0003-000000000001",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "00000000-0000-0000-0003-000000000002",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Confirm",
+                    "type": "Button",
+                    "id": "00000000-0000-0000-0003-000000000003",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NavigateUp",
+                    "type": "Button",
+                    "id": "00000000-0000-0000-0003-000000000004",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NavigateDown",
+                    "type": "Button",
+                    "id": "00000000-0000-0000-0003-000000000005",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NavigateLeft",
+                    "type": "Button",
+                    "id": "00000000-0000-0000-0003-000000000006",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NavigateRight",
+                    "type": "Button",
+                    "id": "00000000-0000-0000-0003-000000000007",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "00000000-0000-0000-0003-000000000101",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00000000-0000-0000-0003-000000000102",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00000000-0000-0000-0003-000000000103",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00000000-0000-0000-0003-000000000104",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Confirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00000000-0000-0000-0003-000000000105",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Confirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00000000-0000-0000-0003-000000000106",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Confirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00000000-0000-0000-0003-000000000107",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
@@ -149,7 +215,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-000000000008",
+                    "id": "00000000-0000-0000-0003-000000000108",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -160,7 +226,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-000000000009",
+                    "id": "00000000-0000-0000-0003-000000000109",
                     "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
@@ -171,7 +237,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-00000000000a",
+                    "id": "00000000-0000-0000-0003-00000000010a",
                     "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
@@ -182,7 +248,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-00000000000b",
+                    "id": "00000000-0000-0000-0003-00000000010b",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
@@ -193,7 +259,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-00000000000c",
+                    "id": "00000000-0000-0000-0003-00000000010c",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -204,7 +270,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-00000000000d",
+                    "id": "00000000-0000-0000-0003-00000000010d",
                     "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
@@ -215,7 +281,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-00000000000e",
+                    "id": "00000000-0000-0000-0003-00000000010e",
                     "path": "<Gamepad>/dpad/down",
                     "interactions": "",
                     "processors": "",
@@ -226,7 +292,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-00000000000f",
+                    "id": "00000000-0000-0000-0003-00000000010f",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
@@ -237,7 +303,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-000000000010",
+                    "id": "00000000-0000-0000-0003-000000000110",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -248,7 +314,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-000000000011",
+                    "id": "00000000-0000-0000-0003-000000000111",
                     "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
@@ -259,7 +325,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-000000000012",
+                    "id": "00000000-0000-0000-0003-000000000112",
                     "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
@@ -270,7 +336,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-000000000013",
+                    "id": "00000000-0000-0000-0003-000000000113",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
@@ -281,7 +347,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-000000000014",
+                    "id": "00000000-0000-0000-0003-000000000114",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -292,7 +358,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-000000000015",
+                    "id": "00000000-0000-0000-0003-000000000115",
                     "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
@@ -303,7 +369,7 @@
                 },
                 {
                     "name": "",
-                    "id": "00000000-0000-0000-0001-000000000016",
+                    "id": "00000000-0000-0000-0003-000000000116",
                     "path": "<Gamepad>/dpad/right",
                     "interactions": "",
                     "processors": "",
