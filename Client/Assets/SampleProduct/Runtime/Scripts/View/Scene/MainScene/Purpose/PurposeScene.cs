@@ -29,7 +29,9 @@ namespace SampleProduct.View.Scene.MainScene.Purpose
         }
 
         protected override InputLayer CreateInputLayer()
-            => new PurposeSceneInputLayer(sceneManager.BackScene);
+        {
+            return new PurposeSceneInputLayer(() => sceneManager.BackScene());
+        }
 
         protected override UniTask OnSetup()
         {
