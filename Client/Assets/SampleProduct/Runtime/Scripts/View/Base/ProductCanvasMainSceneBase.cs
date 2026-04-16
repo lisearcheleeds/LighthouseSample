@@ -5,6 +5,7 @@ using Lighthouse.Scene.SceneBase;
 using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.InputLayer;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using VContainer;
 
 namespace SampleProduct.View.Base
@@ -17,24 +18,27 @@ namespace SampleProduct.View.Base
         IInputLayerController inputLayerController;
         IInputLayer currentInputLayer;
 
+        protected PlayerInputActions playerInputActions;
+
         [Inject]
-        public void ConstructInputLayer(IInputLayerController inputLayerController)
+        public void ConstructInputLayer(IInputLayerController inputLayerController, PlayerInputActions playerInputActions)
         {
             this.inputLayerController = inputLayerController;
+            this.playerInputActions = playerInputActions;
         }
 
         protected virtual IInputLayer CreateInputLayer() => null;
 
-        protected virtual string GetInputLayerActionMapName() => null;
+        protected virtual InputActionMap GetInputLayerActionMap() => null;
 
         protected override async UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
         {
             var layer = CreateInputLayer();
-            var mapName = GetInputLayerActionMapName();
-            if (layer != null && mapName != null)
+            var actionMap = GetInputLayerActionMap();
+            if (layer != null && actionMap != null)
             {
                 currentInputLayer = layer;
-                inputLayerController.PushLayer(currentInputLayer, mapName);
+                inputLayerController.PushLayer(currentInputLayer, actionMap);
             }
             await base.OnEnter(context, cancelToken);
         }

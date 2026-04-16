@@ -8,9 +8,9 @@ namespace LighthouseExtends.InputLayer
 {
     public class InputLayerController : MonoBehaviour, IInputLayerController
     {
-        [SerializeField] InputActionAsset inputActionAsset;
+        InputActionAsset inputActionAsset;
 
-        string globalActionMapName;
+        InputActionMap globalActionMap;
         IInputLayer globalLayer;
 
         readonly List<LayerEntry> reversedStack = new();
@@ -18,18 +18,20 @@ namespace LighthouseExtends.InputLayer
         class LayerEntry
         {
             public IInputLayer Layer { get; }
-            public string ActionMapName { get; }
+            public InputActionMap ActionMap { get; }
 
-            public LayerEntry(IInputLayer layer, string actionMapName)
+            public LayerEntry(IInputLayer layer, InputActionMap actionMap)
             {
                 Layer = layer;
-                ActionMapName = actionMapName;
+                ActionMap = actionMap;
             }
         }
 
         [Inject]
-        public void Construct()
+        public void Construct(InputActionAsset inputActionAsset)
         {
+            this.inputActionAsset = inputActionAsset;
+
             foreach (var map in inputActionAsset.actionMaps)
             {
                 foreach (var action in map.actions)
@@ -54,7 +56,7 @@ namespace LighthouseExtends.InputLayer
 
         void OnActionStarted(InputAction.CallbackContext ctx)
         {
-            if (ctx.action.actionMap.name == globalActionMapName)
+            if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
             {
                 globalLayer?.OnActionStarted(ctx.action);
             }
@@ -66,7 +68,7 @@ namespace LighthouseExtends.InputLayer
 
         void OnActionCanceled(InputAction.CallbackContext ctx)
         {
-            if (ctx.action.actionMap.name == globalActionMapName)
+            if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
             {
                 globalLayer?.OnActionCanceled(ctx.action);
             }
@@ -76,29 +78,27 @@ namespace LighthouseExtends.InputLayer
             }
         }
 
-        public void SetGlobalLayer(IInputLayer layer, string actionMapName)
+        public void SetGlobalLayer(IInputLayer layer, InputActionMap actionMap)
         {
-            globalActionMapName = actionMapName;
+            globalActionMap = actionMap;
             globalLayer = layer;
+            actionMap.Enable();
 
-            var map = inputActionAsset.FindActionMap(actionMapName);
-            map?.Enable();
-
-            Debug.Log($"[InputLayer] SetGlobal: {layer.GetType().Name} ({actionMapName})");
+            Debug.Log($"[InputLayer] SetGlobal: {layer.GetType().Name} ({actionMap.name})");
         }
 
-        public void PushLayer(IInputLayer layer, string actionMapName)
+        public void PushLayer(IInputLayer layer, InputActionMap actionMap)
         {
             if (reversedStack.Count > 0)
             {
-                inputActionAsset.FindActionMap(reversedStack[0].ActionMapName)?.Disable();
+                reversedStack[0].ActionMap.Disable();
             }
 
-            reversedStack.Insert(0, new LayerEntry(layer, actionMapName));
-            inputActionAsset.FindActionMap(actionMapName)?.Enable();
+            reversedStack.Insert(0, new LayerEntry(layer, actionMap));
+            actionMap.Enable();
 
 #if UNITY_EDITOR
-            ValidateNoOverlapWithGlobal(actionMapName);
+            ValidateNoOverlapWithGlobal(actionMap);
 #endif
 
             Debug.Log($"[InputLayer] Push: {StackToString()}");
@@ -111,12 +111,12 @@ namespace LighthouseExtends.InputLayer
                 return;
             }
 
-            inputActionAsset.FindActionMap(reversedStack[0].ActionMapName)?.Disable();
+            reversedStack[0].ActionMap.Disable();
             reversedStack.RemoveAt(0);
 
             if (reversedStack.Count > 0)
             {
-                inputActionAsset.FindActionMap(reversedStack[0].ActionMapName)?.Enable();
+                reversedStack[0].ActionMap.Enable();
             }
 
             Debug.Log($"[InputLayer] Pop: {StackToString()}");
@@ -131,15 +131,15 @@ namespace LighthouseExtends.InputLayer
             }
 
             var wasTop = index == 0;
-            var removedMapName = reversedStack[index].ActionMapName;
+            var removedMap = reversedStack[index].ActionMap;
             reversedStack.RemoveAt(index);
 
             if (wasTop)
             {
-                inputActionAsset.FindActionMap(removedMapName)?.Disable();
+                removedMap.Disable();
                 if (reversedStack.Count > 0)
                 {
-                    inputActionAsset.FindActionMap(reversedStack[0].ActionMapName)?.Enable();
+                    reversedStack[0].ActionMap.Enable();
                 }
             }
 
@@ -147,27 +147,15 @@ namespace LighthouseExtends.InputLayer
         }
 
 #if UNITY_EDITOR
-        void ValidateNoOverlapWithGlobal(string actionMapName)
+        void ValidateNoOverlapWithGlobal(InputActionMap actionMap)
         {
-            if (string.IsNullOrEmpty(globalActionMapName))
-            {
-                return;
-            }
-
-            var globalMap = inputActionAsset.FindActionMap(globalActionMapName);
-            if (globalMap == null)
-            {
-                return;
-            }
-
-            var stackMap = inputActionAsset.FindActionMap(actionMapName);
-            if (stackMap == null)
+            if (globalActionMap == null)
             {
                 return;
             }
 
             var globalBindingPaths = new HashSet<string>();
-            foreach (var action in globalMap.actions)
+            foreach (var action in globalActionMap.actions)
             {
                 foreach (var binding in action.bindings)
                 {
@@ -178,13 +166,13 @@ namespace LighthouseExtends.InputLayer
                 }
             }
 
-            foreach (var action in stackMap.actions)
+            foreach (var action in actionMap.actions)
             {
                 foreach (var binding in action.bindings)
                 {
                     if (!string.IsNullOrEmpty(binding.effectivePath) && globalBindingPaths.Contains(binding.effectivePath))
                     {
-                        Debug.LogError($"[InputLayer] Binding overlap: Global '{globalActionMapName}' and '{actionMapName}' both bind '{binding.effectivePath}' (action: {action.name})");
+                        Debug.LogError($"[InputLayer] Binding overlap: Global '{globalActionMap.name}' and '{actionMap.name}' both bind '{binding.effectivePath}' (action: {action.name})");
                     }
                 }
             }

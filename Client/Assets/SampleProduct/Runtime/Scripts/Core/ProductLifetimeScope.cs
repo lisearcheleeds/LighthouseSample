@@ -13,6 +13,7 @@ using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using SampleProduct.View.Scene.ModuleScene.Overlay;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using VContainer;
 using VContainer.Unity;
 
@@ -73,6 +74,10 @@ namespace SampleProduct.Core
                     // LightHouse Require
                     builder.RegisterComponentInNewPrefab(canvasSceneObjectPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
                     builder.RegisterComponentInNewPrefab(inputBlockerPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
+
+                    var playerInputActions = new PlayerInputActions();
+                    builder.RegisterInstance(playerInputActions);
+                    builder.RegisterInstance(playerInputActions.asset).As<InputActionAsset>();
                     builder.RegisterComponentInNewPrefab(inputLayerControllerPrefab, Lifetime.Singleton).DontDestroyOnLoad().As<IInputLayerController>();
                 }
 

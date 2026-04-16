@@ -5,6 +5,7 @@ using LighthouseExtends.InputLayer;
 using SampleProduct.Input;
 using SampleProduct.LighthouseGenerated;
 using SampleProduct.View.Base;
+using UnityEngine.InputSystem;
 using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Purpose
@@ -28,9 +29,9 @@ namespace SampleProduct.View.Scene.MainScene.Purpose
             this.sceneManager = sceneManager;
         }
 
-        protected override IInputLayer CreateInputLayer() => new PurposeSceneInputLayer(() => sceneManager.BackScene());
+        protected override IInputLayer CreateInputLayer() => new PurposeSceneInputLayer(playerInputActions, () => sceneManager.BackScene());
 
-        protected override string GetInputLayerActionMapName() => InputActionNames.Maps.Scene;
+        protected override InputActionMap GetInputLayerActionMap() => playerInputActions.Scene;
 
         protected override UniTask OnSetup()
         {

@@ -10,6 +10,7 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
     {
         IScreenStackModule screenStackModule;
         IInputLayerController inputLayerController;
+        PlayerInputActions playerInputActions;
 
         RequireToolsView dialogView;
         RequireToolsData screenStackData;
@@ -18,10 +19,12 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
         [Inject]
         public void Construct(
             IScreenStackModule screenStackModule,
-            IInputLayerController inputLayerController)
+            IInputLayerController inputLayerController,
+            PlayerInputActions playerInputActions)
         {
             this.screenStackModule = screenStackModule;
             this.inputLayerController = inputLayerController;
+            this.playerInputActions = playerInputActions;
         }
 
         public void Bind(RequireToolsView dialogView, RequireToolsData screenStackData)
@@ -36,8 +39,8 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
         {
             if (!isResume)
             {
-                inputLayer = new RequireToolsInputLayer(OnClickCloseButton);
-                inputLayerController.PushLayer(inputLayer, InputActionNames.Maps.Dialog);
+                inputLayer = new RequireToolsInputLayer(playerInputActions, OnClickCloseButton);
+                inputLayerController.PushLayer(inputLayer, playerInputActions.Dialog);
             }
             return UniTask.CompletedTask;
         }
