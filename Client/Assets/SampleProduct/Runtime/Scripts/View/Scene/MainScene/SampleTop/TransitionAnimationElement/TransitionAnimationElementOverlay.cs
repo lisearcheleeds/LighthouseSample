@@ -3,7 +3,7 @@ using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.ScreenStack;
 using UnityEngine;
 
-namespace SampleProduct.TransitionAnimationElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.TransitionAnimationElement
 {
     public sealed class TransitionAnimationElementOverlay : ScreenStackBase, IScreenStackSetup<TransitionAnimationElementPresenter, TransitionAnimationElementData>
     {

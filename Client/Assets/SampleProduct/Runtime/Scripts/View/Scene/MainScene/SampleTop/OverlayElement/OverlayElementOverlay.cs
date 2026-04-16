@@ -3,7 +3,7 @@ using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.ScreenStack;
 using UnityEngine;
 
-namespace SampleProduct.OverlayElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.OverlayElement
 {
     public sealed class OverlayElementOverlay : ScreenStackBase, IScreenStackSetup<OverlayElementPresenter, OverlayElementData>
     {

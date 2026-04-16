@@ -8,17 +8,17 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using VContainer;
-using SampleProduct.AnimationElement;
-using SampleProduct.ButtonElement;
-using SampleProduct.DialogElement;
-using SampleProduct.OverlayElement;
-using SampleProduct.PopupElement;
-using SampleProduct.TextView;
-using SampleProduct.TransitionAnimationElement;
 using SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog;
+using SampleProduct.View.Scene.MainScene.SampleTop.AnimationElement;
+using SampleProduct.View.Scene.MainScene.SampleTop.ButtonElement;
+using SampleProduct.View.Scene.MainScene.SampleTop.DialogElementDialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSampleConfirmDialog;
+using SampleProduct.View.Scene.MainScene.SampleTop.OverlayElement;
+using SampleProduct.View.Scene.MainScene.SampleTop.PopupElement;
+using SampleProduct.View.Scene.MainScene.SampleTop.TextViewElement;
+using SampleProduct.View.Scene.MainScene.SampleTop.TransitionAnimationElement;
 using SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionDialog;
 
 namespace SampleProduct
@@ -38,17 +38,17 @@ namespace SampleProduct
         {
             return data switch
             {
+                SceneTransitionData d => CreateScreenStackEntityAsync<SceneTransitionDialog, SceneTransitionPresenter, SceneTransitionData>("SceneTransitionDialog", d, ct),
                 TransitionAnimationElementData d => CreateScreenStackEntityAsync<TransitionAnimationElementOverlay, TransitionAnimationElementPresenter, TransitionAnimationElementData>("TransitionAnimationElementOverlay", d, ct),
                 TextViewElementData d => CreateScreenStackEntityAsync<TextViewElementOverlay, TextViewElementPresenter, TextViewElementData>("TextViewElementOverlay", d, ct),
                 PopupElementData d => CreateScreenStackEntityAsync<PopupElementPopup, PopupElementPresenter, PopupElementData>("PopupElementPopup", d, ct),
                 OverlayElementData d => CreateScreenStackEntityAsync<OverlayElementOverlay, OverlayElementPresenter, OverlayElementData>("OverlayElementOverlay", d, ct),
-                DialogElementData d => CreateScreenStackEntityAsync<DialogElementDialog, DialogElementPresenter, DialogElementData>("DialogElementDialog", d, ct),
-                ButtonElementData d => CreateScreenStackEntityAsync<ButtonElementOverlay, ButtonElementPresenter, ButtonElementData>("ButtonElementOverlay", d, ct),
-                AnimationElementData d => CreateScreenStackEntityAsync<AnimationElementOverlay, AnimationElementPresenter, AnimationElementData>("AnimationElementOverlay", d, ct),
-                SceneTransitionData d => CreateScreenStackEntityAsync<SceneTransitionDialog, SceneTransitionPresenter, SceneTransitionData>("SceneTransitionDialog", d, ct),
                 DialogSampleConfirmData d => CreateScreenStackEntityAsync<DialogSampleConfirmDialog, DialogSampleConfirmPresenter, DialogSampleConfirmData>("DialogSampleConfirmDialog", d, ct),
                 DialogSample2Data d => CreateScreenStackEntityAsync<DialogSample2Dialog, DialogSample2Presenter, DialogSample2Data>("DialogSample2Dialog", d, ct),
                 DialogSample1Data d => CreateScreenStackEntityAsync<DialogSample1Dialog, DialogSample1Presenter, DialogSample1Data>("DialogSample1Dialog", d, ct),
+                DialogElementData d => CreateScreenStackEntityAsync<DialogElementDialog, DialogElementPresenter, DialogElementData>("DialogElementDialog", d, ct),
+                ButtonElementData d => CreateScreenStackEntityAsync<ButtonElementOverlay, ButtonElementPresenter, ButtonElementData>("ButtonElementOverlay", d, ct),
+                AnimationElementData d => CreateScreenStackEntityAsync<AnimationElementOverlay, AnimationElementPresenter, AnimationElementData>("AnimationElementOverlay", d, ct),
                 RequireToolsData d => CreateScreenStackEntityAsync<RequireToolsDialog, RequireToolsPresenter, RequireToolsData>("RequireToolsDialog", d, ct),
                 _ => throw new ArgumentOutOfRangeException(nameof(data), data.GetType().FullName, "Unknown screenStack data type")
             };

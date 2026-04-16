@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using LighthouseExtends.InputLayer;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.Input;
+using SampleProduct.Input.Layer;
 using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
@@ -10,7 +11,7 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
     {
         IScreenStackModule screenStackModule;
         IInputLayerController inputLayerController;
-        PlayerInputActions playerInputActions;
+        InputActions inputActions;
 
         RequireToolsView dialogView;
         RequireToolsData screenStackData;
@@ -20,11 +21,11 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
         public void Construct(
             IScreenStackModule screenStackModule,
             IInputLayerController inputLayerController,
-            PlayerInputActions playerInputActions)
+            InputActions inputActions)
         {
             this.screenStackModule = screenStackModule;
             this.inputLayerController = inputLayerController;
-            this.playerInputActions = playerInputActions;
+            this.inputActions = inputActions;
         }
 
         public void Bind(RequireToolsView dialogView, RequireToolsData screenStackData)
@@ -39,8 +40,8 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
         {
             if (!isResume)
             {
-                inputLayer = new RequireToolsInputLayer(playerInputActions, OnClickCloseButton);
-                inputLayerController.PushLayer(inputLayer, playerInputActions.Dialog);
+                inputLayer = new RequireToolsInputLayer(inputActions, OnClickCloseButton);
+                inputLayerController.PushLayer(inputLayer, inputActions.Dialog);
             }
             return UniTask.CompletedTask;
         }

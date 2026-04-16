@@ -1,14 +1,14 @@
 using System;
 using UnityEngine.InputSystem;
 
-namespace SampleProduct.Input
+namespace SampleProduct.Input.Layer
 {
     public class PurposeSceneInputLayer : SceneInputLayerBase
     {
-        readonly PlayerInputActions.SceneActions sceneActions;
+        readonly InputActions.SceneActions sceneActions;
         readonly Action onBack;
 
-        public PurposeSceneInputLayer(PlayerInputActions actions, Action onBack)
+        public PurposeSceneInputLayer(InputActions actions, Action onBack)
         {
             sceneActions = actions.Scene;
             this.onBack = onBack;

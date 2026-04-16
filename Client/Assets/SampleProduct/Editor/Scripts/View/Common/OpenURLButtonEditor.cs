@@ -2,7 +2,7 @@ using LighthouseExtends.UIComponent.Editor.Button;
 using SampleProduct.View.Common;
 using UnityEditor;
 
-namespace SampleProduct.Editor.View.Common
+namespace SampleProduct.Editor.Scripts.View.Common
 {
     [CustomEditor(typeof(OpenURLButton))]
     [CanEditMultipleObjects]

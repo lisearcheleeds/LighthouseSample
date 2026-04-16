@@ -1,14 +1,14 @@
 using System;
 using UnityEngine.InputSystem;
 
-namespace SampleProduct.Input
+namespace SampleProduct.Input.Layer
 {
     public class RequireToolsInputLayer : ScreenStackInputLayerBase
     {
-        readonly PlayerInputActions.DialogActions dialogActions;
+        readonly InputActions.DialogActions dialogActions;
         readonly Action onClose;
 
-        public RequireToolsInputLayer(PlayerInputActions actions, Action onClose)
+        public RequireToolsInputLayer(InputActions actions, Action onClose)
         {
             dialogActions = actions.Dialog;
             this.onClose = onClose;

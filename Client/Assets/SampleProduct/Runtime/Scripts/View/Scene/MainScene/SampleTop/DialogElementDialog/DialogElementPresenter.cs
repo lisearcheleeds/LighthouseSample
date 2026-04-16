@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using VContainer;
 
-namespace SampleProduct.DialogElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogElementDialog
 {
     public sealed class DialogElementPresenter : IScreenStackPresenter
     {

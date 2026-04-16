@@ -3,7 +3,7 @@ using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.ScreenStack;
 using UnityEngine;
 
-namespace SampleProduct.PopupElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.PopupElement
 {
     public sealed class PopupElementPopup : ScreenStackBase, IScreenStackSetup<PopupElementPresenter, PopupElementData>
     {

@@ -3,7 +3,7 @@ using LighthouseExtends.UIComponent.Button;
 using SampleProduct.Extensions;
 using UnityEngine;
 
-namespace SampleProduct.TransitionAnimationElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.TransitionAnimationElement
 {
     public class TransitionAnimationElementView : MonoBehaviour
     {

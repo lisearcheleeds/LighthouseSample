@@ -4,6 +4,7 @@ using Lighthouse.Scene;
 using Lighthouse.Scene.SceneBase;
 using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.InputLayer;
+using SampleProduct.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
@@ -18,13 +19,13 @@ namespace SampleProduct.View.Base
         IInputLayerController inputLayerController;
         IInputLayer currentInputLayer;
 
-        protected PlayerInputActions playerInputActions;
+        protected InputActions inputActions;
 
         [Inject]
-        public void ConstructInputLayer(IInputLayerController inputLayerController, PlayerInputActions playerInputActions)
+        public void ConstructInputLayer(IInputLayerController inputLayerController, InputActions playerInputActions)
         {
             this.inputLayerController = inputLayerController;
-            this.playerInputActions = playerInputActions;
+            this.inputActions = playerInputActions;
         }
 
         protected virtual IInputLayer CreateInputLayer() => null;

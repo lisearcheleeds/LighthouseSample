@@ -5,6 +5,7 @@ namespace LighthouseExtends.InputLayer
     public interface IInputLayer
     {
         void OnActionStarted(InputAction action);
+        void OnActionPerformed(InputAction action);
         void OnActionCanceled(InputAction action);
     }
 }

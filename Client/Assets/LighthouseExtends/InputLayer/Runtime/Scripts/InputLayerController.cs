@@ -37,6 +37,7 @@ namespace LighthouseExtends.InputLayer
                 foreach (var action in map.actions)
                 {
                     action.started += OnActionStarted;
+                    action.performed += OnActionPerformed;
                     action.canceled += OnActionCanceled;
                 }
             }
@@ -49,6 +50,7 @@ namespace LighthouseExtends.InputLayer
                 foreach (var action in map.actions)
                 {
                     action.started -= OnActionStarted;
+                    action.performed -= OnActionPerformed;
                     action.canceled -= OnActionCanceled;
                 }
             }
@@ -60,9 +62,21 @@ namespace LighthouseExtends.InputLayer
             {
                 globalLayer?.OnActionStarted(ctx.action);
             }
-            else if (reversedStack.Count > 0)
+            else if (0 < reversedStack.Count)
             {
                 reversedStack[0].Layer.OnActionStarted(ctx.action);
+            }
+        }
+
+        void OnActionPerformed(InputAction.CallbackContext ctx)
+        {
+            if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
+            {
+                globalLayer?.OnActionPerformed(ctx.action);
+            }
+            else if (0 < reversedStack.Count)
+            {
+                reversedStack[0].Layer.OnActionPerformed(ctx.action);
             }
         }
 
@@ -72,7 +86,7 @@ namespace LighthouseExtends.InputLayer
             {
                 globalLayer?.OnActionCanceled(ctx.action);
             }
-            else if (reversedStack.Count > 0)
+            else if (0 < reversedStack.Count)
             {
                 reversedStack[0].Layer.OnActionCanceled(ctx.action);
             }
@@ -137,7 +151,7 @@ namespace LighthouseExtends.InputLayer
             if (wasTop)
             {
                 removedMap.Disable();
-                if (reversedStack.Count > 0)
+                if (0 < reversedStack.Count)
                 {
                     reversedStack[0].ActionMap.Enable();
                 }
@@ -179,7 +193,9 @@ namespace LighthouseExtends.InputLayer
         }
 #endif
 
-        string StackToString() =>
-            string.Join(" > ", reversedStack.Select(e => e.Layer.GetType().Name));
+        string StackToString()
+        {
+            return string.Join(" > ", reversedStack.Select(e => e.Layer.GetType().Name));
+        }
     }
 }

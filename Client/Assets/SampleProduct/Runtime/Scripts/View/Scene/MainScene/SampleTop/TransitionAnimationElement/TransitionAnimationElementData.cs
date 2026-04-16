@@ -1,6 +1,6 @@
 using LighthouseExtends.ScreenStack;
 
-namespace SampleProduct.TransitionAnimationElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.TransitionAnimationElement
 {
     public sealed class TransitionAnimationElementData : IScreenStackData
     {

@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using VContainer;
 
-namespace SampleProduct.TransitionAnimationElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.TransitionAnimationElement
 {
     public sealed class TransitionAnimationElementPresenter : IScreenStackPresenter
     {

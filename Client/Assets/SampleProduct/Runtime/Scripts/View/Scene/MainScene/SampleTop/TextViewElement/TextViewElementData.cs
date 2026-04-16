@@ -1,6 +1,6 @@
 using LighthouseExtends.ScreenStack;
 
-namespace SampleProduct.TextView
+namespace SampleProduct.View.Scene.MainScene.SampleTop.TextViewElement
 {
     public sealed class TextViewElementData : IScreenStackData
     {

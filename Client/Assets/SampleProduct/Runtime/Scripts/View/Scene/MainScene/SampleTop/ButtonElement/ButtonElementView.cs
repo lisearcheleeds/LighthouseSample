@@ -3,7 +3,7 @@ using LighthouseExtends.UIComponent.Button;
 using SampleProduct.Extensions;
 using UnityEngine;
 
-namespace SampleProduct.ButtonElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.ButtonElement
 {
     public class ButtonElementView : MonoBehaviour
     {

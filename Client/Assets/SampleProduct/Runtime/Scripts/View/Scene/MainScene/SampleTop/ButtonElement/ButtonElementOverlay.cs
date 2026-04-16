@@ -3,7 +3,7 @@ using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.ScreenStack;
 using UnityEngine;
 
-namespace SampleProduct.ButtonElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.ButtonElement
 {
     public sealed class ButtonElementOverlay : ScreenStackBase, IScreenStackSetup<ButtonElementPresenter, ButtonElementData>
     {

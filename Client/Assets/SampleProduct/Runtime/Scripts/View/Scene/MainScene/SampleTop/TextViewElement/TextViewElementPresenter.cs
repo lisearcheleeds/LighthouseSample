@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using VContainer;
 
-namespace SampleProduct.TextView
+namespace SampleProduct.View.Scene.MainScene.SampleTop.TextViewElement
 {
     public sealed class TextViewElementPresenter : IScreenStackPresenter
     {

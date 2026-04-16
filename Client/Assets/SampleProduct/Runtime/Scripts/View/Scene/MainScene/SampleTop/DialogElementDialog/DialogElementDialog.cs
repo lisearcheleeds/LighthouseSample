@@ -2,7 +2,7 @@ using LighthouseExtends.ScreenStack;
 using SampleProduct.View.Base;
 using UnityEngine;
 
-namespace SampleProduct.DialogElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogElementDialog
 {
     public sealed class DialogElementDialog : StandardDialogBase, IScreenStackSetup<DialogElementPresenter, DialogElementData>
     {

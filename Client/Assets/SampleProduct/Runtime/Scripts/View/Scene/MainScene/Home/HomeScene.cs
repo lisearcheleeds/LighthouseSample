@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using LighthouseExtends.InputLayer;
 using SampleProduct.Input;
+using SampleProduct.Input.Layer;
 using SampleProduct.LighthouseGenerated;
 using SampleProduct.View.Base;
 using UnityEngine.InputSystem;
@@ -29,7 +30,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         protected override IInputLayer CreateInputLayer() => new HomeSceneInputLayer();
 
-        protected override InputActionMap GetInputLayerActionMap() => playerInputActions.Scene;
+        protected override InputActionMap GetInputLayerActionMap() => inputActions.Scene;
 
         protected override UniTask OnSetup()
         {

@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using VContainer;
 
-namespace SampleProduct.OverlayElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.OverlayElement
 {
     public sealed class OverlayElementPresenter : IScreenStackPresenter
     {

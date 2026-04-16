@@ -1,6 +1,6 @@
 using LighthouseExtends.ScreenStack;
 
-namespace SampleProduct.AnimationElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.AnimationElement
 {
     public sealed class AnimationElementData : IScreenStackData
     {

@@ -3,7 +3,7 @@ using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.ScreenStack;
 using UnityEngine;
 
-namespace SampleProduct.TextView
+namespace SampleProduct.View.Scene.MainScene.SampleTop.TextViewElement
 {
     public sealed class TextViewElementOverlay : ScreenStackBase, IScreenStackSetup<TextViewElementPresenter, TextViewElementData>
     {
