@@ -62,8 +62,6 @@ namespace LighthouseExtends.InputLayer
             globalActionMap = actionMap;
             globalLayer = layer;
             actionMap.Enable();
-
-            Debug.Log($"[InputLayer] SetGlobal: {layer.GetType().Name} ({actionMap.name})");
         }
 
         public void PushLayer(IInputLayer layer, InputActionMap actionMap)
@@ -85,8 +83,13 @@ namespace LighthouseExtends.InputLayer
                 return;
             }
 
-            reversedStack[0].ActionMap.Disable();
+            var removedMap = reversedStack[0].ActionMap;
             reversedStack.RemoveAt(0);
+
+            if (reversedStack.All(e => e.ActionMap != removedMap))
+            {
+                removedMap.Disable();
+            }
 
             Debug.Log($"[InputLayer] Pop: {StackToString()}");
         }
@@ -99,14 +102,20 @@ namespace LighthouseExtends.InputLayer
                 return;
             }
 
-            reversedStack[index].ActionMap.Disable();
+            var removedMap = reversedStack[index].ActionMap;
             reversedStack.RemoveAt(index);
+
+            if (reversedStack.All(e => e.ActionMap != removedMap))
+            {
+                removedMap.Disable();
+            }
 
             Debug.Log($"[InputLayer] PopTarget({target.GetType().Name}): {StackToString()}");
         }
 
         void OnActionStarted(InputAction.CallbackContext ctx)
         {
+            Debug.Log($"[InputLayer] OnActionStarted");
             if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
             {
                 globalLayer?.OnActionStarted(ctx.action);
@@ -194,7 +203,7 @@ namespace LighthouseExtends.InputLayer
 
         string StackToString()
         {
-            return string.Join(" > ", reversedStack.Select(e => e.Layer.GetType().Name));
+            return $"Count:{reversedStack.Count}: " + string.Join("/", reversedStack.Select(e => e.Layer.GetType().Name));
         }
     }
 }

@@ -24,9 +24,10 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog
             presenter.Bind(dialogSample1View, screenStackData);
         }
 
-        public override UniTask OnEnter(bool isResume)
+        public override async UniTask OnEnter(bool isResume)
         {
-            return presenter.OnEnter(isResume);
+            await base.OnEnter(isResume);
+            await presenter.OnEnter(isResume);
         }
     }
 }

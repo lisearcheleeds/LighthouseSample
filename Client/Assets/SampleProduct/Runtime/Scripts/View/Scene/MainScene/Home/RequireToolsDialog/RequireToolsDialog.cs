@@ -23,15 +23,5 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
         {
             presenter.Bind(dialogView, screenStackData);
         }
-
-        public override UniTask OnEnter(bool isResume)
-        {
-            return presenter.OnEnter(isResume);
-        }
-
-        public override UniTask OnLeave()
-        {
-            return presenter.OnLeave();
-        }
     }
 }
