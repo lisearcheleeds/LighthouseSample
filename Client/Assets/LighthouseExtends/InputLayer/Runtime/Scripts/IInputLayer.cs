@@ -6,10 +6,10 @@ namespace LighthouseExtends.InputLayer
     {
         bool BlocksAllInput { get; }
 
-        bool OnActionStarted(InputAction action);
+        bool OnActionStarted(InputAction.CallbackContext callbackContext);
 
-        bool OnActionPerformed(InputAction action);
+        bool OnActionPerformed(InputAction.CallbackContext callbackContext);
 
-        bool OnActionCanceled(InputAction action);
+        bool OnActionCanceled(InputAction.CallbackContext callbackContext);
     }
 }

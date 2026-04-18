@@ -78,7 +78,7 @@ namespace SampleProduct.Core
                     var inputActions = new InputActions();
                     builder.RegisterInstance(inputActions);
                     builder.RegisterInstance(inputActions.asset).As<InputActionAsset>();
-                    builder.Register<InputLayerController>(Lifetime.Singleton).As<IInputLayerController>();
+                    builder.Register<InputLayerController>(Lifetime.Singleton).AsImplementedInterfaces();
                 }
 
                 builder.Register<SampleAssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();

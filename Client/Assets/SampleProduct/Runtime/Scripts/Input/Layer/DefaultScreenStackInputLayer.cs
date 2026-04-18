@@ -17,9 +17,14 @@ namespace SampleProduct.Input.Layer
 
         public virtual bool BlocksAllInput => true;
 
-        public virtual bool OnActionStarted(InputAction action)
+        public virtual bool OnActionStarted(InputAction.CallbackContext callbackContext)
         {
-            if (action.id == screenStackActions.Back.id && onBack != null)
+            return false;
+        }
+
+        public virtual bool OnActionPerformed(InputAction.CallbackContext callbackContext)
+        {
+            if (callbackContext.action.id == screenStackActions.Back.id && onBack != null)
             {
                 onBack();
                 return true;
@@ -28,12 +33,7 @@ namespace SampleProduct.Input.Layer
             return false;
         }
 
-        public virtual bool OnActionPerformed(InputAction action)
-        {
-            return false;
-        }
-
-        public virtual bool OnActionCanceled(InputAction action)
+        public virtual bool OnActionCanceled(InputAction.CallbackContext callbackContext)
         {
             return false;
         }

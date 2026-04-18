@@ -11,10 +11,7 @@ namespace LighthouseExtends.InputLayer
     {
         readonly InputActionAsset inputActionAsset;
 
-        InputActionMap globalActionMap;
-        IInputLayer globalLayer;
-
-        readonly List<LayerEntry> reversedStack = new();
+        readonly List<LayerEntry> layerStack = new();
 
         class LayerEntry
         {
@@ -44,7 +41,51 @@ namespace LighthouseExtends.InputLayer
             }
         }
 
-        public void Dispose()
+        void IInputLayerController.PushLayer(IInputLayer layer, InputActionMap actionMap)
+        {
+            if (layer == null || actionMap == null)
+            {
+                return;
+            }
+
+            layerStack.Insert(0, new LayerEntry(layer, actionMap));
+            actionMap.Enable();
+        }
+
+        void IInputLayerController.PopLayer()
+        {
+            if (layerStack.Count == 0)
+            {
+                return;
+            }
+
+            var removedMap = layerStack[0].ActionMap;
+            layerStack.RemoveAt(0);
+
+            if (layerStack.All(e => e.ActionMap != removedMap))
+            {
+                removedMap.Disable();
+            }
+        }
+
+        void IInputLayerController.PopLayer(IInputLayer target)
+        {
+            var index = layerStack.FindIndex(e => e.Layer == target);
+            if (index < 0)
+            {
+                return;
+            }
+
+            var removedMap = layerStack[index].ActionMap;
+            layerStack.RemoveAt(index);
+
+            if (layerStack.All(e => e.ActionMap != removedMap))
+            {
+                removedMap.Disable();
+            }
+        }
+
+        void IDisposable.Dispose()
         {
             foreach (var map in inputActionAsset.actionMaps)
             {
@@ -57,152 +98,40 @@ namespace LighthouseExtends.InputLayer
             }
         }
 
-        public void SetGlobalLayer(IInputLayer layer, InputActionMap actionMap)
-        {
-            globalActionMap = actionMap;
-            globalLayer = layer;
-            actionMap.Enable();
-        }
-
-        public void PushLayer(IInputLayer layer, InputActionMap actionMap)
-        {
-            reversedStack.Insert(0, new LayerEntry(layer, actionMap));
-            actionMap.Enable();
-
-#if UNITY_EDITOR
-            ValidateNoOverlapWithGlobal(actionMap);
-#endif
-
-            Debug.Log($"[InputLayer] Push: {StackToString()}");
-        }
-
-        public void PopLayer()
-        {
-            if (reversedStack.Count == 0)
-            {
-                return;
-            }
-
-            var removedMap = reversedStack[0].ActionMap;
-            reversedStack.RemoveAt(0);
-
-            if (reversedStack.All(e => e.ActionMap != removedMap))
-            {
-                removedMap.Disable();
-            }
-
-            Debug.Log($"[InputLayer] Pop: {StackToString()}");
-        }
-
-        public void PopLayer(IInputLayer target)
-        {
-            var index = reversedStack.FindIndex(e => e.Layer == target);
-            if (index < 0)
-            {
-                return;
-            }
-
-            var removedMap = reversedStack[index].ActionMap;
-            reversedStack.RemoveAt(index);
-
-            if (reversedStack.All(e => e.ActionMap != removedMap))
-            {
-                removedMap.Disable();
-            }
-
-            Debug.Log($"[InputLayer] PopTarget({target.GetType().Name}): {StackToString()}");
-        }
-
         void OnActionStarted(InputAction.CallbackContext ctx)
         {
-            if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
-            {
-                globalLayer?.OnActionStarted(ctx.action);
-                return;
-            }
-
-            foreach (var entry in reversedStack)
-            {
-                var consumed = entry.Layer.OnActionStarted(ctx.action);
-                if (consumed || entry.Layer.BlocksAllInput)
-                {
-                    break;
-                }
-            }
+            DispatchAction(ctx, (layer, c) => layer.OnActionStarted(c));
         }
 
         void OnActionPerformed(InputAction.CallbackContext ctx)
         {
-            if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
-            {
-                globalLayer?.OnActionPerformed(ctx.action);
-                return;
-            }
-
-            foreach (var entry in reversedStack)
-            {
-                var consumed = entry.Layer.OnActionPerformed(ctx.action);
-                if (consumed || entry.Layer.BlocksAllInput)
-                {
-                    break;
-                }
-            }
+            DispatchAction(ctx, (layer, c) => layer.OnActionPerformed(c));
         }
 
         void OnActionCanceled(InputAction.CallbackContext ctx)
         {
-            if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
-            {
-                globalLayer?.OnActionCanceled(ctx.action);
-                return;
-            }
+            DispatchAction(ctx, (layer, c) => layer.OnActionCanceled(c));
+        }
 
-            foreach (var entry in reversedStack)
+        void DispatchAction(InputAction.CallbackContext ctx, Func<IInputLayer, InputAction.CallbackContext, bool> handler)
+        {
+            foreach (var entry in layerStack)
             {
-                var consumed = entry.Layer.OnActionCanceled(ctx.action);
+                bool consumed;
+                try
+                {
+                    consumed = handler(entry.Layer, ctx);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e); consumed = false;
+                }
+
                 if (consumed || entry.Layer.BlocksAllInput)
                 {
                     break;
                 }
             }
-        }
-
-#if UNITY_EDITOR
-        void ValidateNoOverlapWithGlobal(InputActionMap actionMap)
-        {
-            if (globalActionMap == null)
-            {
-                return;
-            }
-
-            var globalBindingPaths = new HashSet<string>();
-            foreach (var action in globalActionMap.actions)
-            {
-                foreach (var binding in action.bindings)
-                {
-                    if (!string.IsNullOrEmpty(binding.effectivePath))
-                    {
-                        globalBindingPaths.Add(binding.effectivePath);
-                    }
-                }
-            }
-
-            foreach (var action in actionMap.actions)
-            {
-                foreach (var binding in action.bindings)
-                {
-                    if (!string.IsNullOrEmpty(binding.effectivePath) && globalBindingPaths.Contains(binding.effectivePath))
-                    {
-                        Debug.LogError($"[InputLayer] Binding overlap: Global '{globalActionMap.name}' and '{actionMap.name}' both bind '{binding.effectivePath}' (action: {action.name})");
-                    }
-                }
-            }
-        }
-#endif
-
-        string StackToString()
-        {
-            return $"Count:{reversedStack.Count}: " + string.Join("/", reversedStack.Select(e => e.Layer.GetType().Name));
         }
     }
 }
