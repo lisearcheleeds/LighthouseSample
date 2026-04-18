@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace LighthouseExtends.UIComponent.Button
 {
-    public class LHButton : UnityEngine.UI.Button, IPointerCancelHandler
+    public class LHButton : UnityEngine.UI.Button
     {
         bool isUsing;
         int currentPointerId;
@@ -49,15 +49,6 @@ namespace LighthouseExtends.UIComponent.Button
             if (isUsing)
             {
                 Release();
-            }
-        }
-
-        public void OnPointerCancel(PointerEventData eventData)
-        {
-            if (isUsing)
-            {
-                Release();
-                InstantClearState();
             }
         }
 
