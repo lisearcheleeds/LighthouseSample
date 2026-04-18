@@ -41,8 +41,9 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
             if (!isResume)
             {
                 inputLayer = new DefaultScreenStackInputLayer(inputActions, OnClickCloseButton);
-                inputLayerController.PushLayer(inputLayer, inputActions.Dialog);
+                inputLayerController.PushLayer(inputLayer, inputActions.ScreenStack);
             }
+
             return UniTask.CompletedTask;
         }
 
@@ -53,6 +54,7 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
                 inputLayerController.PopLayer(inputLayer);
                 inputLayer = null;
             }
+            
             return UniTask.CompletedTask;
         }
 

@@ -15,20 +15,27 @@ namespace SampleProduct.Input.Layer
             this.onBack = onBack;
         }
 
-        public virtual void OnActionStarted(InputAction action)
+        public virtual bool BlocksAllInput => false;
+
+        public virtual bool OnActionStarted(InputAction action)
         {
-            if (action.id == sceneActions.Back.id)
+            if (action.id == sceneActions.Back.id && onBack != null)
             {
-                onBack?.Invoke();
+                onBack();
+                return true;
             }
+
+            return false;
         }
 
-        public virtual void OnActionPerformed(InputAction action)
+        public virtual bool OnActionPerformed(InputAction action)
         {
+            return false;
         }
 
-        public virtual void OnActionCanceled(InputAction action)
+        public virtual bool OnActionCanceled(InputAction action)
         {
+            return false;
         }
     }
 }

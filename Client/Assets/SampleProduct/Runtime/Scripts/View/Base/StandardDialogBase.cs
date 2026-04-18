@@ -1,11 +1,10 @@
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Animation.Runtime;
-using LighthouseExtends.ScreenStack;
 using UnityEngine;
 
 namespace SampleProduct.View.Base
 {
-    public abstract class StandardDialogBase : ScreenStackBase
+    public abstract class StandardDialogBase : ProductScreenStackBase
     {
         [SerializeField] LHTransitionAnimator transitionAnimator;
 

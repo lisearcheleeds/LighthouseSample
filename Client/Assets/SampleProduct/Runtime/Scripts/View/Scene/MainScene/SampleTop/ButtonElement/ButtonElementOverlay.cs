@@ -1,11 +1,12 @@
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.View.Base;
 using UnityEngine;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop.ButtonElement
 {
-    public sealed class ButtonElementOverlay : ScreenStackBase, IScreenStackSetup<ButtonElementPresenter, ButtonElementData>
+    public sealed class ButtonElementOverlay : ProductScreenStackBase, IScreenStackSetup<ButtonElementPresenter, ButtonElementData>
     {
         [SerializeField] ButtonElementView buttonElementView;
         [SerializeField] LHTransitionAnimator transitionAnimator;

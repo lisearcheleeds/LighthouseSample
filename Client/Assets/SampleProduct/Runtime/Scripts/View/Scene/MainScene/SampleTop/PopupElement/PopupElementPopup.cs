@@ -1,11 +1,12 @@
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.View.Base;
 using UnityEngine;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop.PopupElement
 {
-    public sealed class PopupElementPopup : ScreenStackBase, IScreenStackSetup<PopupElementPresenter, PopupElementData>
+    public sealed class PopupElementPopup : ProductScreenStackBase, IScreenStackSetup<PopupElementPresenter, PopupElementData>
     {
         [SerializeField] PopupElementView popupElementView;
         [SerializeField] LHTransitionAnimator transitionAnimator;

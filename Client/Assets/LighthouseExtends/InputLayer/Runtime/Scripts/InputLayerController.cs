@@ -68,11 +68,6 @@ namespace LighthouseExtends.InputLayer
 
         public void PushLayer(IInputLayer layer, InputActionMap actionMap)
         {
-            if (reversedStack.Count > 0)
-            {
-                reversedStack[0].ActionMap.Disable();
-            }
-
             reversedStack.Insert(0, new LayerEntry(layer, actionMap));
             actionMap.Enable();
 
@@ -93,11 +88,6 @@ namespace LighthouseExtends.InputLayer
             reversedStack[0].ActionMap.Disable();
             reversedStack.RemoveAt(0);
 
-            if (reversedStack.Count > 0)
-            {
-                reversedStack[0].ActionMap.Enable();
-            }
-
             Debug.Log($"[InputLayer] Pop: {StackToString()}");
         }
 
@@ -109,18 +99,8 @@ namespace LighthouseExtends.InputLayer
                 return;
             }
 
-            var wasTop = index == 0;
-            var removedMap = reversedStack[index].ActionMap;
+            reversedStack[index].ActionMap.Disable();
             reversedStack.RemoveAt(index);
-
-            if (wasTop)
-            {
-                removedMap.Disable();
-                if (0 < reversedStack.Count)
-                {
-                    reversedStack[0].ActionMap.Enable();
-                }
-            }
 
             Debug.Log($"[InputLayer] PopTarget({target.GetType().Name}): {StackToString()}");
         }
@@ -130,10 +110,16 @@ namespace LighthouseExtends.InputLayer
             if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
             {
                 globalLayer?.OnActionStarted(ctx.action);
+                return;
             }
-            else if (0 < reversedStack.Count)
+
+            foreach (var entry in reversedStack)
             {
-                reversedStack[0].Layer.OnActionStarted(ctx.action);
+                var consumed = entry.Layer.OnActionStarted(ctx.action);
+                if (consumed || entry.Layer.BlocksAllInput)
+                {
+                    break;
+                }
             }
         }
 
@@ -142,10 +128,16 @@ namespace LighthouseExtends.InputLayer
             if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
             {
                 globalLayer?.OnActionPerformed(ctx.action);
+                return;
             }
-            else if (0 < reversedStack.Count)
+
+            foreach (var entry in reversedStack)
             {
-                reversedStack[0].Layer.OnActionPerformed(ctx.action);
+                var consumed = entry.Layer.OnActionPerformed(ctx.action);
+                if (consumed || entry.Layer.BlocksAllInput)
+                {
+                    break;
+                }
             }
         }
 
@@ -154,10 +146,16 @@ namespace LighthouseExtends.InputLayer
             if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
             {
                 globalLayer?.OnActionCanceled(ctx.action);
+                return;
             }
-            else if (0 < reversedStack.Count)
+
+            foreach (var entry in reversedStack)
             {
-                reversedStack[0].Layer.OnActionCanceled(ctx.action);
+                var consumed = entry.Layer.OnActionCanceled(ctx.action);
+                if (consumed || entry.Layer.BlocksAllInput)
+                {
+                    break;
+                }
             }
         }
 

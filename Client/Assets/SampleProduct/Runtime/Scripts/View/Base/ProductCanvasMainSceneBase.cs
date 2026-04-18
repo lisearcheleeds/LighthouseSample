@@ -5,6 +5,7 @@ using Lighthouse.Scene.SceneBase;
 using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.InputLayer;
 using SampleProduct.Input;
+using SampleProduct.Input.Layer;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
@@ -16,21 +17,32 @@ namespace SampleProduct.View.Base
     {
         [SerializeField] LHSceneTransitionAnimatorManager sceneTransitionAnimatorManager;
 
+        ISceneManager sceneManager;
         IInputLayerController inputLayerController;
         IInputLayer currentInputLayer;
 
         InputActions inputActions;
 
         [Inject]
-        public void ConstructInputLayer(IInputLayerController inputLayerController, InputActions playerInputActions)
+        public void ConstructInputLayer(
+            ISceneManager sceneManager,
+            IInputLayerController inputLayerController,
+            InputActions inputActions)
         {
+            this.sceneManager = sceneManager;
             this.inputLayerController = inputLayerController;
-            this.inputActions = playerInputActions;
+            this.inputActions = inputActions;
         }
 
-        protected virtual IInputLayer CreateInputLayer(InputActions inputActions) => null;
+        protected virtual IInputLayer CreateInputLayer(InputActions inputActions)
+        {
+            return new DefaultSceneInputLayer(inputActions, () => sceneManager.BackScene());
+        }
 
-        protected virtual InputActionMap GetInputLayerActionMap(InputActions inputActions) => null;
+        protected virtual InputActionMap GetInputLayerActionMap(InputActions inputActions)
+        {
+            return inputActions.Scene;
+        }
 
         protected override async UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
         {

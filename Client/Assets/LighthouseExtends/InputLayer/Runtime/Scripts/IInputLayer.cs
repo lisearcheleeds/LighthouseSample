@@ -4,8 +4,12 @@ namespace LighthouseExtends.InputLayer
 {
     public interface IInputLayer
     {
-        void OnActionStarted(InputAction action);
-        void OnActionPerformed(InputAction action);
-        void OnActionCanceled(InputAction action);
+        bool BlocksAllInput { get; }
+
+        bool OnActionStarted(InputAction action);
+
+        bool OnActionPerformed(InputAction action);
+
+        bool OnActionCanceled(InputAction action);
     }
 }
