@@ -5,6 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Input;
 using Lighthouse.Scene;
+using UnityEngine;
 using VContainer;
 
 namespace LighthouseExtends.ScreenStack
@@ -16,7 +17,7 @@ namespace LighthouseExtends.ScreenStack
         readonly IScreenStackBackgroundInputBlocker screenStackBackgroundInputBlocker;
         readonly IInputBlocker inputBlocker;
 
-        readonly List<(MainSceneId, List<IScreenStackData>)> screenStackDataSceneList = new();
+        readonly List<(MainSceneId SceneId, List<IScreenStackData> DataList)> screenStackDataSceneList = new();
         readonly List<ScreenStackEntity> screenStackEntityList = new();
 
         readonly Queue<Func<UniTask>> commandQueue = new();
@@ -450,8 +451,9 @@ namespace LighthouseExtends.ScreenStack
 
         void ResumeScreenStackFromSceneIdCore(MainSceneId mainSceneId)
         {
-            if (!screenStackDataSceneList.Any())
+            if (screenStackDataSceneList.All(x => x.SceneId != mainSceneId))
             {
+                Debug.LogWarning($"[ScreenStackManager] ResumeFromSceneId: SceneId '{mainSceneId}' not found in suspended stack.");
                 return;
             }
 
@@ -460,12 +462,6 @@ namespace LighthouseExtends.ScreenStack
             while (lastMainSceneId != mainSceneId)
             {
                 screenStackDataSceneList.RemoveAt(screenStackDataSceneList.Count - 1);
-
-                if (!screenStackDataSceneList.Any())
-                {
-                    return;
-                }
-
                 (lastMainSceneId, lastScreenStackDataList) = screenStackDataSceneList[^1];
             }
 

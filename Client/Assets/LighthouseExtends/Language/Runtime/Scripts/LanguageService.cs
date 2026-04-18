@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using R3;
@@ -29,11 +30,7 @@ namespace LighthouseExtends.Language
 
         public async UniTask SetLanguage(string languageCode, CancellationToken cancellationToken)
         {
-            foreach (var handler in changeHandlers)
-            {
-                await handler(languageCode, cancellationToken);
-            }
-
+            await UniTask.WhenAll(changeHandlers.Select(h => h(languageCode, cancellationToken)));
             currentLanguage.Value = languageCode;
         }
 

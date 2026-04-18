@@ -5,6 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene.SceneBase;
 using Lighthouse.Scene.SceneCamera;
+using R3;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

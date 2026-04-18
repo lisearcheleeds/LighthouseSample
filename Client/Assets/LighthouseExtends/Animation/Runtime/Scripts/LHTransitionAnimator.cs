@@ -142,8 +142,15 @@ namespace LighthouseExtends.Animation.Runtime
 
         void IAnimationClipSource.GetAnimationClips(List<AnimationClip> results)
         {
-            results.AddRange(inAnimationClips);
-            results.AddRange(outAnimationClips);
+            if (inAnimationClips != null)
+            {
+                results.AddRange(inAnimationClips);
+            }
+
+            if (outAnimationClips != null)
+            {
+                results.AddRange(outAnimationClips);
+            }
         }
 
         void OnDestroy()

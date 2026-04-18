@@ -132,7 +132,10 @@ namespace LighthouseExtends.Animation.Runtime
 
         void IAnimationClipSource.GetAnimationClips(List<AnimationClip> results)
         {
-            results.AddRange(animationClips);
+            if (animationClips != null)
+            {
+                results.AddRange(animationClips);
+            }
         }
 
         void CancelCurrentPlay()

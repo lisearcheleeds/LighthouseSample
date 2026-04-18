@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Lighthouse.Input;
 using Lighthouse.Scene.SceneCamera;
+using R3;
 using UnityEngine;
 using VContainer;
 
@@ -53,7 +54,7 @@ namespace LighthouseExtends.UIComponent.InputBlocker
 
             UpdateBlock();
 
-            return null;
+            return Disposable.Create(() => ((IInputBlocker)this).UnBlock<T>(isSystemLayer));
         }
 
         void IInputBlocker.UnBlock<T>(bool isSystemLayer)

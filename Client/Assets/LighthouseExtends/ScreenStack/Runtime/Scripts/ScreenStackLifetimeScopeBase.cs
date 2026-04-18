@@ -4,11 +4,6 @@ using VContainer.Unity;
 
 namespace LighthouseExtends.ScreenStack
 {
-    /// <summary>
-    /// You need to register the following on this LifetimeScope:
-    /// IPopupPresenterFactory
-    /// IPopupFactory
-    /// </summary>
     public abstract class ScreenStackLifetimeScopeBase : LifetimeScope
     {
         [SerializeField] ScreenStackModuleSceneBase screenStackModuleSceneBase;

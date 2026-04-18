@@ -52,6 +52,17 @@ namespace LighthouseExtends.UIComponent.Button
             }
         }
 
+        public override void OnPointerCancel(PointerEventData eventData)
+        {
+            base.OnPointerCancel(eventData);
+
+            if (isUsing)
+            {
+                Release();
+                InstantClearState();
+            }
+        }
+
         void OnApplicationPause(bool pause)
         {
             if (!pause || !isUsing)
