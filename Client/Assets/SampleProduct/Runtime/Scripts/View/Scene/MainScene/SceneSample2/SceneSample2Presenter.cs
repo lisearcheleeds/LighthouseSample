@@ -1,4 +1,5 @@
-﻿using Lighthouse.Scene;
+﻿using Cysharp.Threading.Tasks;
+using Lighthouse.Scene;
 using LighthouseExtends.TextTable;
 using SampleProduct.View.Scene.MainScene.SceneSample3;
 using SampleProduct.View.Scene.ModuleScene.Background;
@@ -44,24 +45,24 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample2
 
         void OnClickChoice1()
         {
-            sceneManager.TransitionScene(new SceneSample3Scene.SceneSample3TransitionData(1));
+            sceneManager.TransitionScene(new SceneSample3Scene.SceneSample3TransitionData(1)).Forget();
         }
 
         void OnClickChoice2()
         {
-            sceneManager.TransitionScene(new SceneSample3Scene.SceneSample3TransitionData(2));
+            sceneManager.TransitionScene(new SceneSample3Scene.SceneSample3TransitionData(2)).Forget();
         }
 
         void OnClickChoice3()
         {
-            sceneManager.TransitionScene(new SceneSample3Scene.SceneSample3TransitionData(3));
+            sceneManager.TransitionScene(new SceneSample3Scene.SceneSample3TransitionData(3)).Forget();
         }
 
         bool ISceneSample2Presenter.TryClickBackButton() => sceneSample2View.TryClickBackButton();
 
         void OnClickBackScene()
         {
-            sceneManager.BackScene();
+            sceneManager.BackScene().Forget();
         }
     }
 }

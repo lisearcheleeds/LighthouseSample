@@ -95,7 +95,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
 
         void OnClickBackScene()
         {
-            sceneManager.BackScene();
+            sceneManager.BackScene().Forget();
         }
 
         void OnClickOverviewTab()
@@ -188,7 +188,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
 
         void OnClickSceneSample1()
         {
-            sceneManager.TransitionScene(new SceneSample1Scene.SceneSample1TransitionData());
+            sceneManager.TransitionScene(new SceneSample1Scene.SceneSample1TransitionData()).Forget();
         }
 
         void OnClickDialogSample1()

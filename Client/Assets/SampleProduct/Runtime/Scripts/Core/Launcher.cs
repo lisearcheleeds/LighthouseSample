@@ -10,7 +10,7 @@ namespace SampleProduct.Core
     {
         static readonly string LauncherSceneName = "Launcher";
 
-        ISceneManager sceneManager;
+        readonly ISceneManager sceneManager;
 
         [Inject]
         public Launcher(ISceneManager sceneManager)

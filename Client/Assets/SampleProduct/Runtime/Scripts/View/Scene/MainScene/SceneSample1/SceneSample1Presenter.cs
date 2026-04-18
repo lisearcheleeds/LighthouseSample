@@ -48,7 +48,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
 
         void OnClickTransitionScene1()
         {
-            sceneManager.TransitionScene(new SceneSample2Scene.SceneSample2TransitionData());
+            sceneManager.TransitionScene(new SceneSample2Scene.SceneSample2TransitionData()).Forget();
         }
 
         void OnClickTransitionScene2()
@@ -60,7 +60,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
 
         void OnClickBackScene()
         {
-            sceneManager.BackScene();
+            sceneManager.BackScene().Forget();
         }
     }
 }

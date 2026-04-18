@@ -57,6 +57,9 @@ namespace SampleProduct.Core
                 builder.Register<TextTableService>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.RegisterInstance(languageFontSettings);
                 builder.Register<FontService>(Lifetime.Singleton).AsImplementedInterfaces();
+
+                // Force eager resolution so these services register their handlers
+                // to LanguageService before SetLanguage is called in ProductEntryPoint.
                 builder.RegisterBuildCallback(container =>
                 {
                     container.Resolve<ITextTableService>();

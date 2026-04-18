@@ -72,13 +72,13 @@ namespace SampleProduct.View.Scene.MainScene.Home
 
         void OnClickPhilosophyButton()
         {
-            sceneManager.TransitionScene(new PurposeScene.PurposeTransitionData(), TransitionType.Cross);
+            sceneManager.TransitionScene(new PurposeScene.PurposeTransitionData(), TransitionType.Cross).Forget();
         }
 
         void OnClickSampleButton()
         {
             // Cross fading is possible even if the scene groups are different, as long as the loading order is different. However, be mindful of performance.
-            sceneManager.TransitionScene(new SampleTopScene.SampleTopTransitionData(), TransitionType.Cross);
+            sceneManager.TransitionScene(new SampleTopScene.SampleTopTransitionData(), TransitionType.Cross).Forget();
         }
 
         void OnClickRequireToolsButton()
@@ -99,7 +99,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
             }
 
             var nextLanguageIndex = (currentLanguageIndex + supportedLanguageService.SupportedLanguages.Count + 1) % supportedLanguageService.SupportedLanguages.Count;
-            languageService.SetLanguage(supportedLanguageService.SupportedLanguages[nextLanguageIndex], CancellationToken.None);
+            languageService.SetLanguage(supportedLanguageService.SupportedLanguages[nextLanguageIndex], CancellationToken.None).Forget();
         }
     }
 }

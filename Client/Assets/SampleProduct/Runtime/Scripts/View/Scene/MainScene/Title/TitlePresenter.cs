@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using SampleProduct.View.Scene.MainScene.Home;
 using VContainer;
@@ -7,23 +8,23 @@ namespace SampleProduct.View.Scene.MainScene.Title
     public class TitlePresenter : ITitlePresenter
     {
         ISceneManager sceneManager;
-        ITitleView homeView;
+        ITitleView titleView;
 
         [Inject]
-        public void Construct(ISceneManager sceneManager, ITitleView homeView)
+        public void Construct(ISceneManager sceneManager, ITitleView titleView)
         {
             this.sceneManager = sceneManager;
-            this.homeView = homeView;
+            this.titleView = titleView;
         }
 
         void ITitlePresenter.Setup()
         {
-            homeView.SubscribeScreenButtonClick(OnClickScreenButton);
+            titleView.SubscribeScreenButtonClick(OnClickScreenButton);
         }
 
         void OnClickScreenButton()
         {
-            sceneManager.TransitionScene(new HomeScene.HomeTransitionData());
+            sceneManager.TransitionScene(new HomeScene.HomeTransitionData()).Forget();
         }
     }
 }

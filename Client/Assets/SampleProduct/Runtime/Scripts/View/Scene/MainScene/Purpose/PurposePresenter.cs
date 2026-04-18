@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using VContainer;
 
@@ -30,7 +31,7 @@ namespace SampleProduct.View.Scene.MainScene.Purpose
 
         void OnClickBackScene()
         {
-            sceneManager.BackScene();
+            sceneManager.BackScene().Forget();
         }
     }
 }

@@ -35,7 +35,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionDialog
 
         void OnTransitionSceneButtonClick()
         {
-            sceneManager.TransitionScene(new SceneSample2Scene.SceneSample2TransitionData());
+            sceneManager.TransitionScene(new SceneSample2Scene.SceneSample2TransitionData()).Forget();
         }
 
         void OnTransitionSceneWithCloseButtonClick()

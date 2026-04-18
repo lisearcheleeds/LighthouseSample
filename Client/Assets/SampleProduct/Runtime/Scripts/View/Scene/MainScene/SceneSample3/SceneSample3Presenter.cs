@@ -1,4 +1,5 @@
-﻿using Lighthouse.Scene;
+﻿using Cysharp.Threading.Tasks;
+using Lighthouse.Scene;
 using LighthouseExtends.TextTable;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
@@ -46,7 +47,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample3
 
         void OnClickBackScene()
         {
-            sceneManager.BackScene();
+            sceneManager.BackScene().Forget();
         }
     }
 }
