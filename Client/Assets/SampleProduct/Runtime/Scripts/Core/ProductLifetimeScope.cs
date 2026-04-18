@@ -27,7 +27,6 @@ namespace SampleProduct.Core
         [SerializeField] LanguageFontSettings languageFontSettings;
         [SerializeField] LHCanvasSceneObject canvasSceneObjectPrefab;
         [SerializeField] LHInputBlocker inputBlockerPrefab;
-        [SerializeField] InputLayerController inputLayerControllerPrefab;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -79,7 +78,7 @@ namespace SampleProduct.Core
                     var inputActions = new InputActions();
                     builder.RegisterInstance(inputActions);
                     builder.RegisterInstance(inputActions.asset).As<InputActionAsset>();
-                    builder.RegisterComponentInNewPrefab(inputLayerControllerPrefab, Lifetime.Singleton).DontDestroyOnLoad().As<IInputLayerController>();
+                    builder.Register<InputLayerController>(Lifetime.Singleton).As<IInputLayerController>();
                 }
 
                 builder.Register<SampleAssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,9 +7,9 @@ using VContainer;
 
 namespace LighthouseExtends.InputLayer
 {
-    public class InputLayerController : MonoBehaviour, IInputLayerController
+    public class InputLayerController : IInputLayerController, IDisposable
     {
-        InputActionAsset inputActionAsset;
+        readonly InputActionAsset inputActionAsset;
 
         InputActionMap globalActionMap;
         IInputLayer globalLayer;
@@ -28,7 +29,7 @@ namespace LighthouseExtends.InputLayer
         }
 
         [Inject]
-        public void Construct(InputActionAsset inputActionAsset)
+        public InputLayerController(InputActionAsset inputActionAsset)
         {
             this.inputActionAsset = inputActionAsset;
 
@@ -43,7 +44,7 @@ namespace LighthouseExtends.InputLayer
             }
         }
 
-        void OnDestroy()
+        public void Dispose()
         {
             foreach (var map in inputActionAsset.actionMaps)
             {
@@ -53,42 +54,6 @@ namespace LighthouseExtends.InputLayer
                     action.performed -= OnActionPerformed;
                     action.canceled -= OnActionCanceled;
                 }
-            }
-        }
-
-        void OnActionStarted(InputAction.CallbackContext ctx)
-        {
-            if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
-            {
-                globalLayer?.OnActionStarted(ctx.action);
-            }
-            else if (0 < reversedStack.Count)
-            {
-                reversedStack[0].Layer.OnActionStarted(ctx.action);
-            }
-        }
-
-        void OnActionPerformed(InputAction.CallbackContext ctx)
-        {
-            if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
-            {
-                globalLayer?.OnActionPerformed(ctx.action);
-            }
-            else if (0 < reversedStack.Count)
-            {
-                reversedStack[0].Layer.OnActionPerformed(ctx.action);
-            }
-        }
-
-        void OnActionCanceled(InputAction.CallbackContext ctx)
-        {
-            if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
-            {
-                globalLayer?.OnActionCanceled(ctx.action);
-            }
-            else if (0 < reversedStack.Count)
-            {
-                reversedStack[0].Layer.OnActionCanceled(ctx.action);
             }
         }
 
@@ -158,6 +123,42 @@ namespace LighthouseExtends.InputLayer
             }
 
             Debug.Log($"[InputLayer] PopTarget({target.GetType().Name}): {StackToString()}");
+        }
+
+        void OnActionStarted(InputAction.CallbackContext ctx)
+        {
+            if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
+            {
+                globalLayer?.OnActionStarted(ctx.action);
+            }
+            else if (0 < reversedStack.Count)
+            {
+                reversedStack[0].Layer.OnActionStarted(ctx.action);
+            }
+        }
+
+        void OnActionPerformed(InputAction.CallbackContext ctx)
+        {
+            if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
+            {
+                globalLayer?.OnActionPerformed(ctx.action);
+            }
+            else if (0 < reversedStack.Count)
+            {
+                reversedStack[0].Layer.OnActionPerformed(ctx.action);
+            }
+        }
+
+        void OnActionCanceled(InputAction.CallbackContext ctx)
+        {
+            if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
+            {
+                globalLayer?.OnActionCanceled(ctx.action);
+            }
+            else if (0 < reversedStack.Count)
+            {
+                reversedStack[0].Layer.OnActionCanceled(ctx.action);
+            }
         }
 
 #if UNITY_EDITOR
