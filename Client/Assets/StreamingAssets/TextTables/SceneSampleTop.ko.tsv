@@ -1,4 +1,4 @@
-key	text
+﻿key	text
 SampleTopTabOverview	개요
 SampleTopTabScene	씬 샘플
 SampleTopTabDialog	다이얼로그 샘플
@@ -31,3 +31,6 @@ SampleTopTabOtherButton	LHButton
 SampleTopTabOtherText	LHTextView
 SampleTopTabIngame1	InGame1
 SampleTopTabIngame2	InGame2
+SampleTopTabOtherAddressable	LHAddressableAssetManager
+SampleTopTabOtherInputLayer	LHInputLayer
+BackButton1	BackScene

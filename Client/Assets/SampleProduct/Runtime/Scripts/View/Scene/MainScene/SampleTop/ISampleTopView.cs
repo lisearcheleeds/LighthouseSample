@@ -29,6 +29,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         public IDisposable SubscribeTransitionAnimationButtonClick(Action action);
         public IDisposable SubscribeButtonButtonClick(Action action);
         public IDisposable SubscribeTextButtonClick(Action action);
+        public IDisposable SubscribeInputLayerButtonClick(Action action);
 
         public IDisposable SubscribeGame1ButtonClick(Action action);
         public IDisposable SubscribeGame2ButtonClick(Action action);

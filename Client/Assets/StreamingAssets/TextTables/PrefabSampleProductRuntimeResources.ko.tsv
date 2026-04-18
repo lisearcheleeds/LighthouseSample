@@ -9,7 +9,6 @@ DialogSample1Dialog4	확인 후 닫기
 DialogSample2Dialog1	추가 다이얼로그 표시（배타적）
 DialogSample2Dialog2	추가 다이얼로그 표시
 DialogSample2Dialog3	확인 후 닫기
-This popup will close at the same time as the popup below.	이 팝업은 아래 팝업과 동시에 닫힙니다.
 OverlayElementOverlay1	오버레이는 오버레이라는 기능이 있는 것이 아니라 ScreenStack 기능을 활용한 표현 중 하나입니다.\n\n복잡한 의존 관계를 구현할 경우, 이 오버레이에 독자적인 LifetimeScope를 정의할 수 있습니다.
 PopupElementPopup1	팝업은 팝업이라는 기능이 있는 것이 아니라 ScreenStack 기능을 활용한 표현 중 하나입니다.\n기본 화면의 특정 위치를 포커스하거나 작은 창을 띄우는 데 편리합니다.
 RequireToolsDialog	크레딧
@@ -23,3 +22,14 @@ ButtonElementOverlay1	LHButton은 Unity.UI.Button을 상속한 기능입니다.\
 TextViewElementOverlay1	LHTextMeshPro는 로컬라이즈·사전 기능을 갖춘 Text 컴포넌트입니다.\n이를 통해 로컬라이즈 작업과 개발 작업을 완전히 분리하여 개발 효율을 높일 수 있습니다.\n또한, EditorTool을 준비하고 있어 개발자 이외의 사람도 작업할 수 있게 되었습니다.
 TapToClose1	Tap to Close
 Close	닫기
+InputLayerElementOverlay1	InputLayer는 키 입력을 레이어별로 관리하는 기능입니다.\n장면이나 스크린 스택 등을 열 때마다 해당 UI의 키 입력에 대한 액션 맵이 중첩되어 필요한 키 입력만 받을 수 있습니다.\n예를 들어 아날로그 스틱으로 캐릭터를 조작하면서 인벤토리를 여는 등의 조작에 활용할 수 있습니다.
+InputLayerElementOverlay2	[EscapeKey] to Close
+InputLayerElementOverlay3	Character\nLayer
+InputLayerElementOverlay4	WASD
+InputLayerElementOverlay5	Interact\n[E]
+InputLayerElementOverlay6	Inventory\nLayer
+InputLayerElementOverlay7	Close\nInventory\n[Esc]
+InputLayerElementOverlay8	Equip\n[E]
+InputLayerElementOverlay9	ToolTip\nLayer
+InputLayerElementOverlay10	Item\nDescription\n[E]
+DialogSampleConfirmDialog1	이 팝업은 아래 팝업과 동시에 닫힙니다.

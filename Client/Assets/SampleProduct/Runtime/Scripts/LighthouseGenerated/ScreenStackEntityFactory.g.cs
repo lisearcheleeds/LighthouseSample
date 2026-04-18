@@ -8,6 +8,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using VContainer;
+using SampleProduct.InputLayerElement;
 using SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.AnimationElement;
 using SampleProduct.View.Scene.MainScene.SampleTop.ButtonElement;
@@ -38,6 +39,7 @@ namespace SampleProduct
         {
             return data switch
             {
+                InputLayerElementData d => CreateScreenStackEntityAsync<InputLayerElementOverlay, InputLayerElementData>("InputLayerElementOverlay", d, ct),
                 SceneTransitionData d => CreateScreenStackEntityAsync<SceneTransitionDialog, SceneTransitionData>("SceneTransitionDialog", d, ct),
                 TransitionAnimationElementData d => CreateScreenStackEntityAsync<TransitionAnimationElementOverlay, TransitionAnimationElementData>("TransitionAnimationElementOverlay", d, ct),
                 TextViewElementData d => CreateScreenStackEntityAsync<TextViewElementOverlay, TextViewElementData>("TextViewElementOverlay", d, ct),

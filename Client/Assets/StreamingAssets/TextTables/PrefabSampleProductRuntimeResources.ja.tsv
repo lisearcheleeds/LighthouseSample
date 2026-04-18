@@ -9,7 +9,6 @@ DialogSample1Dialog4	確認してからとじる
 DialogSample2Dialog1	更にダイアログを表示（排他的）
 DialogSample2Dialog2	更にダイアログを表示
 DialogSample2Dialog3	確認してからとじる
-This popup will close at the same time as the popup below.	このポップアップは、下のポップアップと同時に閉じます。
 OverlayElementOverlay1	オーバーレイはオーバーレイという機能があるわけではなく、ScreenStack機能を利用した表現の1つです。\n\nもし複雑な依存関係を実装する場合は、このオーバーレイに独自のLifetimeScopeを定義できます。
 PopupElementPopup1	ポップアップはポップアップという機能があるわけではなく、ScreenStack機能を利用した表現の1つです。\nベースとなる画面の特定の位置をフォーカスしたり小さなウィンドウを出すのに便利です。
 RequireToolsDialog	クレジット
@@ -21,5 +20,14 @@ SceneTransitionDialog3	閉じてからTransition Scene
 TransitionAnimationElementOverlay1	LHTransitionAnimatorは、シーン遷移のためにLHAnimationClipPlayerを拡張したコンポーネントです。\n\nSceneとScreenStackの基本クラスに統合することで、開発者とデザイナーの編集箇所を完全に切り分けて効率的に作業することが出来ます。\n\nもちろん、これらはプロダクト側で拡張出来るように作られています。
 ButtonElementOverlay1	LHButtonはUnity.UI.Buttonを継承した機能です。\n\n現在は排他入力機能のみを持っています。
 TextViewElementOverlay1	LHTextMeshProはローカライズ・辞書機能を備えたTextコンポーネントです。\nこれによってローカライズ作業と開発作業を完全に切り離し開発効率を上げることが出来ます。\nまた、EditorToolを用意しているため開発者以外にも作業が出来るようになっています。
-TapToClose1	Tap to Close
-Close	とじる
+InputLayerElementOverlay1	InputLayerは、キー入力をレイヤーごとに管理する機能です。\nシーンやスクリーンスタックなどを開くたびに、そのUIのキー入力のアクションマップが重ねられ、必要なキー入力のみを受け取ることができます。\n例えばアナログスティックでキャラクターを操作しながらインベントリを開くといった操作に活用出来ます。
+InputLayerElementOverlay2	[EscapeKey] to Close
+InputLayerElementOverlay3	Character\nLayer
+InputLayerElementOverlay4	WASD
+InputLayerElementOverlay5	Interact\n[E]
+InputLayerElementOverlay6	Inventory\nLayer
+InputLayerElementOverlay7	Close\nInventory\n[Esc]
+InputLayerElementOverlay8	Equip\n[E]
+InputLayerElementOverlay9	ToolTip\nLayer
+InputLayerElementOverlay10	Item\nDescription\n[E]
+DialogSampleConfirmDialog1	このポップアップは下のポップアップと同時に閉じます。

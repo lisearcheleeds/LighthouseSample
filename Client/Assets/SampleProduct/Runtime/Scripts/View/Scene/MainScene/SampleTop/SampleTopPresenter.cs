@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.InputLayerElement;
 using SampleProduct.View.Scene.MainScene.SampleTop.AnimationElement;
 using SampleProduct.View.Scene.MainScene.SampleTop.ButtonElement;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogElementDialog;
@@ -69,6 +70,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
             sampleTopView.SubscribeTransitionAnimationButtonClick(OnClickTransitionAnimation);
             sampleTopView.SubscribeButtonButtonClick(OnClickButton);
             sampleTopView.SubscribeTextButtonClick(OnClickText);
+            sampleTopView.SubscribeInputLayerButtonClick(OnClickInputLayer);
 
             sampleTopView.SubscribeGame1ButtonClick(OnClickGame1Button);
             sampleTopView.SubscribeGame2ButtonClick(OnClickGame2Button);
@@ -232,6 +234,11 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         void OnClickText()
         {
             screenStackModule.Open(new TextViewElementData()).Forget();
+        }
+
+        void OnClickInputLayer()
+        {
+            screenStackModule.Open(new InputLayerElementData()).Forget();
         }
 
         void OnClickGame1Button()
