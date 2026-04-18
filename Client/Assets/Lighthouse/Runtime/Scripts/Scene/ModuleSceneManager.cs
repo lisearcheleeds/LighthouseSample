@@ -190,7 +190,7 @@ namespace Lighthouse.Scene
                     .Select(x => x.GetComponent<ModuleSceneBase>())
                     .First(x => x != null);
             }
-            catch
+            catch (InvalidOperationException)
             {
                 Debug.LogError($"[ModuleSceneManager] SceneModule NotFound {moduleSceneId}");
                 throw;
