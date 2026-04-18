@@ -4,13 +4,13 @@ namespace Lighthouse.Scene
 {
     public interface ISceneTransitionContext
     {
-        public TransitionDataBase TransitionData { get; }
-        public TransitionDirectionType TransitionDirectionType { get; }
-        public TransitionType TransitionType { get; }
-        public SceneTransitionDiff SceneTransitionDiff { get; }
+        TransitionDataBase TransitionData { get; }
+        TransitionDirectionType TransitionDirectionType { get; }
+        TransitionType TransitionType { get; }
+        SceneTransitionDiff SceneTransitionDiff { get; }
 
-        public IMainSceneManager MainSceneManager { get; }
-        public IModuleSceneManager ModuleSceneManager { get; }
-        public ISceneCameraManager SceneCameraManager { get; }
+        IMainSceneManager MainSceneManager { get; }
+        IModuleSceneManager ModuleSceneManager { get; }
+        ISceneCameraManager SceneCameraManager { get; }
     }
 }

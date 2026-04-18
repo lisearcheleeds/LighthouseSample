@@ -38,6 +38,7 @@ namespace SampleProduct.Core
                 // LightHouse
                 builder.Register<SceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<SceneTransitionController>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<DefaultSceneTransitionContextFactory>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<SceneGroupProvider>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<MainSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<ModuleSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();

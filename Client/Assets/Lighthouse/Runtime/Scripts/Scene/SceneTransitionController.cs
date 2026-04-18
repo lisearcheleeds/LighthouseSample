@@ -16,6 +16,7 @@ namespace Lighthouse.Scene
         readonly IModuleSceneManager moduleSceneManager;
         readonly ISceneCameraManager sceneCameraManager;
         readonly ISceneTransitionSequenceProvider sceneTransitionSequenceProvider;
+        readonly ISceneTransitionContextFactory contextFactory;
         readonly IInputBlocker inputBlocker;
 
         public ISceneTransitionPhase CurrentTransitionPhase { get; private set; }
@@ -26,12 +27,14 @@ namespace Lighthouse.Scene
             IModuleSceneManager moduleSceneManager,
             ISceneCameraManager sceneCameraManager,
             ISceneTransitionSequenceProvider sceneTransitionSequenceProvider,
+            ISceneTransitionContextFactory contextFactory,
             IInputBlocker inputBlocker)
         {
             this.mainSceneManager = mainSceneManager;
             this.moduleSceneManager = moduleSceneManager;
             this.sceneCameraManager = sceneCameraManager;
             this.sceneTransitionSequenceProvider = sceneTransitionSequenceProvider;
+            this.contextFactory = contextFactory;
             this.inputBlocker = inputBlocker;
         }
 
@@ -70,7 +73,7 @@ namespace Lighthouse.Scene
                 _ => sceneTransitionSequenceProvider.ExclusiveSequence,
             };
 
-            var context = new SceneTransitionContext(transitionData, transitionDirectionType, transitionType, sceneTransitionDiff, mainSceneManager, moduleSceneManager, sceneCameraManager);
+            var context = contextFactory.Create(transitionData, transitionDirectionType, transitionType, sceneTransitionDiff, mainSceneManager, moduleSceneManager, sceneCameraManager);
 
             inputBlocker.Block<SceneTransitionController>();
 
