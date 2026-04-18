@@ -1,13 +1,9 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
-using LighthouseExtends.InputLayer;
-using SampleProduct.Input;
-using SampleProduct.Input.Layer;
+using SampleProduct.LighthouseGenerated;
 using SampleProduct.View.Base;
 using VContainer;
-using SampleProduct.LighthouseGenerated;
-using UnityEngine.InputSystem;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop
 {

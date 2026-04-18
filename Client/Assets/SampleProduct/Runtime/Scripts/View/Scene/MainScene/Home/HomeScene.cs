@@ -6,7 +6,6 @@ using SampleProduct.Input;
 using SampleProduct.Input.Layer;
 using SampleProduct.LighthouseGenerated;
 using SampleProduct.View.Base;
-using UnityEngine.InputSystem;
 using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Home
@@ -29,8 +28,6 @@ namespace SampleProduct.View.Scene.MainScene.Home
         }
 
         protected override IInputLayer CreateInputLayer(InputActions inputActions) => new DefaultSceneInputLayer(inputActions, null);
-
-        protected override InputActionMap GetInputLayerActionMap(InputActions inputActions) => inputActions.Scene;
 
         protected override UniTask OnSetup()
         {
