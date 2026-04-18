@@ -156,7 +156,7 @@ namespace SampleProduct.Input
             ]
         },
         {
-            ""name"": ""Dialog"",
+            ""name"": ""ScreenStack"",
             ""id"": ""00000000-0000-0000-0001-000000000003"",
             ""actions"": [
                 {
@@ -182,42 +182,6 @@ namespace SampleProduct.Input
                     ""type"": ""Button"",
                     ""id"": ""00000000-0000-0000-0003-000000000003"",
                     ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""NavigateUp"",
-                    ""type"": ""Button"",
-                    ""id"": ""00000000-0000-0000-0003-000000000004"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""NavigateDown"",
-                    ""type"": ""Button"",
-                    ""id"": ""00000000-0000-0000-0003-000000000005"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""NavigateLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""00000000-0000-0000-0003-000000000006"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""NavigateRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""00000000-0000-0000-0003-000000000007"",
-                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -289,182 +253,6 @@ namespace SampleProduct.Input
                     ""action"": ""Confirm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-000000000107"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateUp"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-000000000108"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateUp"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-000000000109"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateUp"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-00000000010a"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateUp"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-00000000010b"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateDown"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-00000000010c"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateDown"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-00000000010d"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateDown"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-00000000010e"",
-                    ""path"": ""<Gamepad>/dpad/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateDown"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-00000000010f"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-000000000110"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-000000000111"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-000000000112"",
-                    ""path"": ""<Gamepad>/dpad/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-000000000113"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-000000000114"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-000000000115"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00000000-0000-0000-0003-000000000116"",
-                    ""path"": ""<Gamepad>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NavigateRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -477,22 +265,18 @@ namespace SampleProduct.Input
             m_Scene = asset.FindActionMap("Scene", throwIfNotFound: true);
             m_Scene_Back = m_Scene.FindAction("Back", throwIfNotFound: true);
             m_Scene_Cancel = m_Scene.FindAction("Cancel", throwIfNotFound: true);
-            // Dialog
-            m_Dialog = asset.FindActionMap("Dialog", throwIfNotFound: true);
-            m_Dialog_Back = m_Dialog.FindAction("Back", throwIfNotFound: true);
-            m_Dialog_Cancel = m_Dialog.FindAction("Cancel", throwIfNotFound: true);
-            m_Dialog_Confirm = m_Dialog.FindAction("Confirm", throwIfNotFound: true);
-            m_Dialog_NavigateUp = m_Dialog.FindAction("NavigateUp", throwIfNotFound: true);
-            m_Dialog_NavigateDown = m_Dialog.FindAction("NavigateDown", throwIfNotFound: true);
-            m_Dialog_NavigateLeft = m_Dialog.FindAction("NavigateLeft", throwIfNotFound: true);
-            m_Dialog_NavigateRight = m_Dialog.FindAction("NavigateRight", throwIfNotFound: true);
+            // ScreenStack
+            m_ScreenStack = asset.FindActionMap("ScreenStack", throwIfNotFound: true);
+            m_ScreenStack_Back = m_ScreenStack.FindAction("Back", throwIfNotFound: true);
+            m_ScreenStack_Cancel = m_ScreenStack.FindAction("Cancel", throwIfNotFound: true);
+            m_ScreenStack_Confirm = m_ScreenStack.FindAction("Confirm", throwIfNotFound: true);
         }
 
         ~@InputActions()
         {
             UnityEngine.Debug.Assert(!m_Global.enabled, "This will cause a leak and performance issues, InputActions.Global.Disable() has not been called.");
             UnityEngine.Debug.Assert(!m_Scene.enabled, "This will cause a leak and performance issues, InputActions.Scene.Disable() has not been called.");
-            UnityEngine.Debug.Assert(!m_Dialog.enabled, "This will cause a leak and performance issues, InputActions.Dialog.Disable() has not been called.");
+            UnityEngine.Debug.Assert(!m_ScreenStack.enabled, "This will cause a leak and performance issues, InputActions.ScreenStack.Disable() has not been called.");
         }
 
         /// <summary>
@@ -757,59 +541,39 @@ namespace SampleProduct.Input
         /// </summary>
         public SceneActions @Scene => new SceneActions(this);
 
-        // Dialog
-        private readonly InputActionMap m_Dialog;
-        private List<IDialogActions> m_DialogActionsCallbackInterfaces = new List<IDialogActions>();
-        private readonly InputAction m_Dialog_Back;
-        private readonly InputAction m_Dialog_Cancel;
-        private readonly InputAction m_Dialog_Confirm;
-        private readonly InputAction m_Dialog_NavigateUp;
-        private readonly InputAction m_Dialog_NavigateDown;
-        private readonly InputAction m_Dialog_NavigateLeft;
-        private readonly InputAction m_Dialog_NavigateRight;
+        // ScreenStack
+        private readonly InputActionMap m_ScreenStack;
+        private List<IScreenStackActions> m_ScreenStackActionsCallbackInterfaces = new List<IScreenStackActions>();
+        private readonly InputAction m_ScreenStack_Back;
+        private readonly InputAction m_ScreenStack_Cancel;
+        private readonly InputAction m_ScreenStack_Confirm;
         /// <summary>
-        /// Provides access to input actions defined in input action map "Dialog".
+        /// Provides access to input actions defined in input action map "ScreenStack".
         /// </summary>
-        public struct DialogActions
+        public struct ScreenStackActions
         {
             private @InputActions m_Wrapper;
 
             /// <summary>
             /// Construct a new instance of the input action map wrapper class.
             /// </summary>
-            public DialogActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+            public ScreenStackActions(@InputActions wrapper) { m_Wrapper = wrapper; }
             /// <summary>
-            /// Provides access to the underlying input action "Dialog/Back".
+            /// Provides access to the underlying input action "ScreenStack/Back".
             /// </summary>
-            public InputAction @Back => m_Wrapper.m_Dialog_Back;
+            public InputAction @Back => m_Wrapper.m_ScreenStack_Back;
             /// <summary>
-            /// Provides access to the underlying input action "Dialog/Cancel".
+            /// Provides access to the underlying input action "ScreenStack/Cancel".
             /// </summary>
-            public InputAction @Cancel => m_Wrapper.m_Dialog_Cancel;
+            public InputAction @Cancel => m_Wrapper.m_ScreenStack_Cancel;
             /// <summary>
-            /// Provides access to the underlying input action "Dialog/Confirm".
+            /// Provides access to the underlying input action "ScreenStack/Confirm".
             /// </summary>
-            public InputAction @Confirm => m_Wrapper.m_Dialog_Confirm;
-            /// <summary>
-            /// Provides access to the underlying input action "Dialog/NavigateUp".
-            /// </summary>
-            public InputAction @NavigateUp => m_Wrapper.m_Dialog_NavigateUp;
-            /// <summary>
-            /// Provides access to the underlying input action "Dialog/NavigateDown".
-            /// </summary>
-            public InputAction @NavigateDown => m_Wrapper.m_Dialog_NavigateDown;
-            /// <summary>
-            /// Provides access to the underlying input action "Dialog/NavigateLeft".
-            /// </summary>
-            public InputAction @NavigateLeft => m_Wrapper.m_Dialog_NavigateLeft;
-            /// <summary>
-            /// Provides access to the underlying input action "Dialog/NavigateRight".
-            /// </summary>
-            public InputAction @NavigateRight => m_Wrapper.m_Dialog_NavigateRight;
+            public InputAction @Confirm => m_Wrapper.m_ScreenStack_Confirm;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
-            public InputActionMap Get() { return m_Wrapper.m_Dialog; }
+            public InputActionMap Get() { return m_Wrapper.m_ScreenStack; }
             /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
             public void Enable() { Get().Enable(); }
             /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -817,9 +581,9 @@ namespace SampleProduct.Input
             /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
             public bool enabled => Get().enabled;
             /// <summary>
-            /// Implicitly converts an <see ref="DialogActions" /> to an <see ref="InputActionMap" /> instance.
+            /// Implicitly converts an <see ref="ScreenStackActions" /> to an <see ref="InputActionMap" /> instance.
             /// </summary>
-            public static implicit operator InputActionMap(DialogActions set) { return set.Get(); }
+            public static implicit operator InputActionMap(ScreenStackActions set) { return set.Get(); }
             /// <summary>
             /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
             /// </summary>
@@ -827,11 +591,11 @@ namespace SampleProduct.Input
             /// <remarks>
             /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
             /// </remarks>
-            /// <seealso cref="DialogActions" />
-            public void AddCallbacks(IDialogActions instance)
+            /// <seealso cref="ScreenStackActions" />
+            public void AddCallbacks(IScreenStackActions instance)
             {
-                if (instance == null || m_Wrapper.m_DialogActionsCallbackInterfaces.Contains(instance)) return;
-                m_Wrapper.m_DialogActionsCallbackInterfaces.Add(instance);
+                if (instance == null || m_Wrapper.m_ScreenStackActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_ScreenStackActionsCallbackInterfaces.Add(instance);
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
@@ -841,18 +605,6 @@ namespace SampleProduct.Input
                 @Confirm.started += instance.OnConfirm;
                 @Confirm.performed += instance.OnConfirm;
                 @Confirm.canceled += instance.OnConfirm;
-                @NavigateUp.started += instance.OnNavigateUp;
-                @NavigateUp.performed += instance.OnNavigateUp;
-                @NavigateUp.canceled += instance.OnNavigateUp;
-                @NavigateDown.started += instance.OnNavigateDown;
-                @NavigateDown.performed += instance.OnNavigateDown;
-                @NavigateDown.canceled += instance.OnNavigateDown;
-                @NavigateLeft.started += instance.OnNavigateLeft;
-                @NavigateLeft.performed += instance.OnNavigateLeft;
-                @NavigateLeft.canceled += instance.OnNavigateLeft;
-                @NavigateRight.started += instance.OnNavigateRight;
-                @NavigateRight.performed += instance.OnNavigateRight;
-                @NavigateRight.canceled += instance.OnNavigateRight;
             }
 
             /// <summary>
@@ -861,8 +613,8 @@ namespace SampleProduct.Input
             /// <remarks>
             /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
             /// </remarks>
-            /// <seealso cref="DialogActions" />
-            private void UnregisterCallbacks(IDialogActions instance)
+            /// <seealso cref="ScreenStackActions" />
+            private void UnregisterCallbacks(IScreenStackActions instance)
             {
                 @Back.started -= instance.OnBack;
                 @Back.performed -= instance.OnBack;
@@ -873,27 +625,15 @@ namespace SampleProduct.Input
                 @Confirm.started -= instance.OnConfirm;
                 @Confirm.performed -= instance.OnConfirm;
                 @Confirm.canceled -= instance.OnConfirm;
-                @NavigateUp.started -= instance.OnNavigateUp;
-                @NavigateUp.performed -= instance.OnNavigateUp;
-                @NavigateUp.canceled -= instance.OnNavigateUp;
-                @NavigateDown.started -= instance.OnNavigateDown;
-                @NavigateDown.performed -= instance.OnNavigateDown;
-                @NavigateDown.canceled -= instance.OnNavigateDown;
-                @NavigateLeft.started -= instance.OnNavigateLeft;
-                @NavigateLeft.performed -= instance.OnNavigateLeft;
-                @NavigateLeft.canceled -= instance.OnNavigateLeft;
-                @NavigateRight.started -= instance.OnNavigateRight;
-                @NavigateRight.performed -= instance.OnNavigateRight;
-                @NavigateRight.canceled -= instance.OnNavigateRight;
             }
 
             /// <summary>
-            /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="DialogActions.UnregisterCallbacks(IDialogActions)" />.
+            /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="ScreenStackActions.UnregisterCallbacks(IScreenStackActions)" />.
             /// </summary>
-            /// <seealso cref="DialogActions.UnregisterCallbacks(IDialogActions)" />
-            public void RemoveCallbacks(IDialogActions instance)
+            /// <seealso cref="ScreenStackActions.UnregisterCallbacks(IScreenStackActions)" />
+            public void RemoveCallbacks(IScreenStackActions instance)
             {
-                if (m_Wrapper.m_DialogActionsCallbackInterfaces.Remove(instance))
+                if (m_Wrapper.m_ScreenStackActionsCallbackInterfaces.Remove(instance))
                     UnregisterCallbacks(instance);
             }
 
@@ -903,21 +643,21 @@ namespace SampleProduct.Input
             /// <remarks>
             /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
             /// </remarks>
-            /// <seealso cref="DialogActions.AddCallbacks(IDialogActions)" />
-            /// <seealso cref="DialogActions.RemoveCallbacks(IDialogActions)" />
-            /// <seealso cref="DialogActions.UnregisterCallbacks(IDialogActions)" />
-            public void SetCallbacks(IDialogActions instance)
+            /// <seealso cref="ScreenStackActions.AddCallbacks(IScreenStackActions)" />
+            /// <seealso cref="ScreenStackActions.RemoveCallbacks(IScreenStackActions)" />
+            /// <seealso cref="ScreenStackActions.UnregisterCallbacks(IScreenStackActions)" />
+            public void SetCallbacks(IScreenStackActions instance)
             {
-                foreach (var item in m_Wrapper.m_DialogActionsCallbackInterfaces)
+                foreach (var item in m_Wrapper.m_ScreenStackActionsCallbackInterfaces)
                     UnregisterCallbacks(item);
-                m_Wrapper.m_DialogActionsCallbackInterfaces.Clear();
+                m_Wrapper.m_ScreenStackActionsCallbackInterfaces.Clear();
                 AddCallbacks(instance);
             }
         }
         /// <summary>
-        /// Provides a new <see cref="DialogActions" /> instance referencing this action map.
+        /// Provides a new <see cref="ScreenStackActions" /> instance referencing this action map.
         /// </summary>
-        public DialogActions @Dialog => new DialogActions(this);
+        public ScreenStackActions @ScreenStack => new ScreenStackActions(this);
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Global" which allows adding and removing callbacks.
         /// </summary>
@@ -949,11 +689,11 @@ namespace SampleProduct.Input
             void OnCancel(InputAction.CallbackContext context);
         }
         /// <summary>
-        /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Dialog" which allows adding and removing callbacks.
+        /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "ScreenStack" which allows adding and removing callbacks.
         /// </summary>
-        /// <seealso cref="DialogActions.AddCallbacks(IDialogActions)" />
-        /// <seealso cref="DialogActions.RemoveCallbacks(IDialogActions)" />
-        public interface IDialogActions
+        /// <seealso cref="ScreenStackActions.AddCallbacks(IScreenStackActions)" />
+        /// <seealso cref="ScreenStackActions.RemoveCallbacks(IScreenStackActions)" />
+        public interface IScreenStackActions
         {
             /// <summary>
             /// Method invoked when associated input action "Back" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
@@ -976,34 +716,6 @@ namespace SampleProduct.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnConfirm(InputAction.CallbackContext context);
-            /// <summary>
-            /// Method invoked when associated input action "NavigateUp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnNavigateUp(InputAction.CallbackContext context);
-            /// <summary>
-            /// Method invoked when associated input action "NavigateDown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnNavigateDown(InputAction.CallbackContext context);
-            /// <summary>
-            /// Method invoked when associated input action "NavigateLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnNavigateLeft(InputAction.CallbackContext context);
-            /// <summary>
-            /// Method invoked when associated input action "NavigateRight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnNavigateRight(InputAction.CallbackContext context);
         }
     }
 }

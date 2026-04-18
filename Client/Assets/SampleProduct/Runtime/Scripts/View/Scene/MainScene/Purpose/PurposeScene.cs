@@ -30,9 +30,9 @@ namespace SampleProduct.View.Scene.MainScene.Purpose
             this.sceneManager = sceneManager;
         }
 
-        protected override IInputLayer CreateInputLayer() => new PurposeSceneInputLayer(inputActions, () => sceneManager.BackScene());
+        protected override IInputLayer CreateInputLayer(InputActions inputActions) => new DefaultSceneInputLayer(inputActions, () => sceneManager.BackScene());
 
-        protected override InputActionMap GetInputLayerActionMap() => inputActions.Scene;
+        protected override InputActionMap GetInputLayerActionMap(InputActions inputActions) => inputActions.Scene;
 
         protected override UniTask OnSetup()
         {

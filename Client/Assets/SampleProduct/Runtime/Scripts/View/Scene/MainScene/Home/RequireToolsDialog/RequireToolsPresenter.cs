@@ -40,7 +40,7 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
         {
             if (!isResume)
             {
-                inputLayer = new RequireToolsInputLayer(inputActions, OnClickCloseButton);
+                inputLayer = new DefaultScreenStackInputLayer(inputActions, OnClickCloseButton);
                 inputLayerController.PushLayer(inputLayer, inputActions.Dialog);
             }
             return UniTask.CompletedTask;

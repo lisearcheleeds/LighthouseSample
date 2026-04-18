@@ -28,9 +28,9 @@ namespace SampleProduct.View.Scene.MainScene.Home
             this.homePresenter = homePresenter;
         }
 
-        protected override IInputLayer CreateInputLayer() => new HomeSceneInputLayer();
+        protected override IInputLayer CreateInputLayer(InputActions inputActions) => new DefaultSceneInputLayer(inputActions, null);
 
-        protected override InputActionMap GetInputLayerActionMap() => inputActions.Scene;
+        protected override InputActionMap GetInputLayerActionMap(InputActions inputActions) => inputActions.Scene;
 
         protected override UniTask OnSetup()
         {

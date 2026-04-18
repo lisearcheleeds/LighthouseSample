@@ -19,7 +19,7 @@ namespace SampleProduct.View.Base
         IInputLayerController inputLayerController;
         IInputLayer currentInputLayer;
 
-        protected InputActions inputActions;
+        InputActions inputActions;
 
         [Inject]
         public void ConstructInputLayer(IInputLayerController inputLayerController, InputActions playerInputActions)
@@ -28,14 +28,14 @@ namespace SampleProduct.View.Base
             this.inputActions = playerInputActions;
         }
 
-        protected virtual IInputLayer CreateInputLayer() => null;
+        protected virtual IInputLayer CreateInputLayer(InputActions inputActions) => null;
 
-        protected virtual InputActionMap GetInputLayerActionMap() => null;
+        protected virtual InputActionMap GetInputLayerActionMap(InputActions inputActions) => null;
 
         protected override async UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
         {
-            var layer = CreateInputLayer();
-            var actionMap = GetInputLayerActionMap();
+            var layer = CreateInputLayer(inputActions);
+            var actionMap = GetInputLayerActionMap(inputActions);
             if (layer != null && actionMap != null)
             {
                 currentInputLayer = layer;
