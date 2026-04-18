@@ -1,48 +1,36 @@
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Animation.Runtime;
+using LighthouseExtends.InputLayer;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.Input;
+using SampleProduct.Input.Layer;
+using SampleProduct.View.Base;
 using UnityEngine;
+using VContainer;
 
-namespace SampleProduct.OverlayElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.OverlayElement
 {
-    public sealed class OverlayElementOverlay : ScreenStackBase, IScreenStackSetup<OverlayElementPresenter, OverlayElementData>
+    public sealed class OverlayElementOverlay : ProductScreenStackBase, IScreenStackSetup<OverlayElementData>
     {
         [SerializeField] OverlayElementView overlayElementView;
-        [SerializeField] LHTransitionAnimator transitionAnimator;
 
-        public void Setup(OverlayElementPresenter presenter, OverlayElementData screenStackData)
+        OverlayElementPresenter presenter;
+
+        [Inject]
+        public void Construct(IObjectResolver objectResolver)
+        {
+            presenter = new OverlayElementPresenter();
+            objectResolver.Inject(presenter);
+        }
+
+        protected override IInputLayer CreateInputLayer(InputActions inputActions)
+        {
+            return new DefaultScreenStackInputLayer(inputActions, () => overlayElementView.TryClickCloseButton());
+        }
+
+        public void Setup(OverlayElementData screenStackData)
         {
             presenter.Bind(overlayElementView, screenStackData);
-        }
-
-        public override void ResetInAnimation()
-        {
-            transitionAnimator.ResetInAnimation();
-        }
-
-        public override async UniTask PlayInAnimation()
-        {
-            await transitionAnimator.InAnimation();
-        }
-
-        public override void EndInAnimation()
-        {
-            transitionAnimator.EndInAnimation();
-        }
-
-        public override void ResetOutAnimation()
-        {
-            transitionAnimator.ResetOutAnimation();
-        }
-
-        public override async UniTask PlayOutAnimation()
-        {
-            await transitionAnimator.OutAnimation();
-        }
-
-        public override void EndOutAnimation()
-        {
-            transitionAnimator.EndOutAnimation();
         }
     }
 }

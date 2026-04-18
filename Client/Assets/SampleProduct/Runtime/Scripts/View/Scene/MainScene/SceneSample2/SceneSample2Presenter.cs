@@ -57,6 +57,8 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample2
             sceneManager.TransitionScene(new SceneSample3Scene.SceneSample3TransitionData(3));
         }
 
+        bool ISceneSample2Presenter.TryClickBackButton() => sceneSample2View.TryClickBackButton();
+
         void OnClickBackScene()
         {
             sceneManager.BackScene();

@@ -1,15 +1,16 @@
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using LighthouseExtends.ScreenStack;
-using SampleProduct.AnimationElement;
-using SampleProduct.ButtonElement;
-using SampleProduct.DialogElement;
-using SampleProduct.OverlayElement;
-using SampleProduct.PopupElement;
-using SampleProduct.TextView;
-using SampleProduct.TransitionAnimationElement;
+using SampleProduct.InputLayerElement;
+using SampleProduct.View.Scene.MainScene.SampleTop.AnimationElement;
+using SampleProduct.View.Scene.MainScene.SampleTop.ButtonElement;
+using SampleProduct.View.Scene.MainScene.SampleTop.DialogElementDialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog;
+using SampleProduct.View.Scene.MainScene.SampleTop.OverlayElement;
+using SampleProduct.View.Scene.MainScene.SampleTop.PopupElement;
+using SampleProduct.View.Scene.MainScene.SampleTop.TextViewElement;
+using SampleProduct.View.Scene.MainScene.SampleTop.TransitionAnimationElement;
 using SampleProduct.View.Scene.MainScene.SceneSample1;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using UnityEngine;
@@ -69,6 +70,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
             sampleTopView.SubscribeTransitionAnimationButtonClick(OnClickTransitionAnimation);
             sampleTopView.SubscribeButtonButtonClick(OnClickButton);
             sampleTopView.SubscribeTextButtonClick(OnClickText);
+            sampleTopView.SubscribeInputLayerButtonClick(OnClickInputLayer);
 
             sampleTopView.SubscribeGame1ButtonClick(OnClickGame1Button);
             sampleTopView.SubscribeGame2ButtonClick(OnClickGame2Button);
@@ -88,6 +90,8 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
             sampleTopView.SwitchTab(TabType.None, CurrentTabType);
             sampleTopView.SetOverviewIndex(overviewIndex, overviewIndex);
         }
+
+        bool ISampleTopPresenter.TryClickBackButton() => sampleTopView.TryClickBackButton();
 
         void OnClickBackScene()
         {
@@ -230,6 +234,11 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         void OnClickText()
         {
             screenStackModule.Open(new TextViewElementData()).Forget();
+        }
+
+        void OnClickInputLayer()
+        {
+            screenStackModule.Open(new InputLayerElementData()).Forget();
         }
 
         void OnClickGame1Button()

@@ -1,6 +1,6 @@
 using LighthouseExtends.ScreenStack;
 
-namespace SampleProduct.OverlayElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.OverlayElement
 {
     public sealed class OverlayElementData : IScreenStackData
     {

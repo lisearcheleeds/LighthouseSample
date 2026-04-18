@@ -1,6 +1,7 @@
 using Lighthouse.Scene;
 using Lighthouse.Scene.SceneCamera;
 using LighthouseExtends.Font;
+using LighthouseExtends.InputLayer;
 using LighthouseExtends.Language;
 using LighthouseExtends.ScreenStack;
 using LighthouseExtends.TextTable;
@@ -8,10 +9,12 @@ using LighthouseExtends.UIComponent.CanvasSceneObject;
 using LighthouseExtends.UIComponent.ExclusiveInput;
 using LighthouseExtends.UIComponent.InputBlocker;
 using SampleProduct.Infrastructure.AssetLoader;
+using SampleProduct.Input;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using SampleProduct.View.Scene.ModuleScene.Overlay;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using VContainer;
 using VContainer.Unity;
 
@@ -71,6 +74,11 @@ namespace SampleProduct.Core
                     // LightHouse Require
                     builder.RegisterComponentInNewPrefab(canvasSceneObjectPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
                     builder.RegisterComponentInNewPrefab(inputBlockerPrefab, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
+
+                    var inputActions = new InputActions();
+                    builder.RegisterInstance(inputActions);
+                    builder.RegisterInstance(inputActions.asset).As<InputActionAsset>();
+                    builder.Register<InputLayerController>(Lifetime.Singleton).AsImplementedInterfaces();
                 }
 
                 builder.Register<SampleAssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();

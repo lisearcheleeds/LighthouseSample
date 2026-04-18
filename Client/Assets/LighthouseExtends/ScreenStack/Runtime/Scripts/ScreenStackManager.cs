@@ -199,10 +199,10 @@ namespace LighthouseExtends.ScreenStack
                             prevScreenStackEntity.ScreenStack.EndOutAnimation();
                         }
 
-                        await prevScreenStackEntity.ScreenStackPresenter.OnLeave();
+                        await prevScreenStackEntity.ScreenStack.OnLeave();
                     }
 
-                    await screenStackEntity.ScreenStackPresenter.OnEnter(false);
+                    await screenStackEntity.ScreenStack.OnEnter(false);
 
                     if (shouldPlayAnimation)
                     {
@@ -258,10 +258,10 @@ namespace LighthouseExtends.ScreenStack
                         await prevScreenStackEntity.ScreenStack.PlayOutAnimation();
                     }
 
-                    await prevScreenStackEntity.ScreenStackPresenter.OnLeave();
+                    await prevScreenStackEntity.ScreenStack.OnLeave();
                 }
 
-                await screenStackEntity.ScreenStackPresenter.OnEnter(false);
+                await screenStackEntity.ScreenStack.OnEnter(false);
 
                 if (isPlayInAnimation)
                 {
@@ -316,7 +316,7 @@ namespace LighthouseExtends.ScreenStack
             try
             {
                 await target.ScreenStack.PlayOutAnimation();
-                await target.ScreenStackPresenter.OnLeave();
+                await target.ScreenStack.OnLeave();
             }
             finally
             {
@@ -339,7 +339,7 @@ namespace LighthouseExtends.ScreenStack
 
             try
             {
-                await prevScreenStack.ScreenStackPresenter.OnEnter(true);
+                await prevScreenStack.ScreenStack.OnEnter(true);
 
                 if (!screenStackData.IsOverlayOpen)
                 {
@@ -376,7 +376,7 @@ namespace LighthouseExtends.ScreenStack
             try
             {
                 await currentScreenStack.ScreenStack.PlayOutAnimation();
-                await currentScreenStack.ScreenStackPresenter.OnLeave();
+                await currentScreenStack.ScreenStack.OnLeave();
             }
             finally
             {
@@ -394,7 +394,7 @@ namespace LighthouseExtends.ScreenStack
 
             try
             {
-                await prevScreenStack.ScreenStackPresenter.OnEnter(true);
+                await prevScreenStack.ScreenStack.OnEnter(true);
 
                 if (!lastScreenStackData.IsOverlayOpen)
                 {
@@ -436,7 +436,7 @@ namespace LighthouseExtends.ScreenStack
                         await target.ScreenStack.PlayOutAnimation();
                     }
 
-                    await target.ScreenStackPresenter.OnLeave();
+                    await target.ScreenStack.OnLeave();
                 }
                 finally
                 {

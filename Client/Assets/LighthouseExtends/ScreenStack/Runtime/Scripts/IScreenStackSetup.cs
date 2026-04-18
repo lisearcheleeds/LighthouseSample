@@ -1,7 +1,7 @@
 namespace LighthouseExtends.ScreenStack
 {
-    public interface IScreenStackSetup<in TScreenStackPresenter, in TScreenStackData>
+    public interface IScreenStackSetup<in TScreenStackData>
     {
-        void Setup(TScreenStackPresenter screenStackPresenter, TScreenStackData screenStackData);
+        void Setup(TScreenStackData screenStackData);
     }
 }

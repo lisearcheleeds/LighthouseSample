@@ -56,6 +56,8 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
             screenStackModule.Open(new SceneTransitionData()).Forget();
         }
 
+        bool ISceneSample1Presenter.TryClickBackButton() => sceneSample1View.TryClickBackButton();
+
         void OnClickBackScene()
         {
             sceneManager.BackScene();

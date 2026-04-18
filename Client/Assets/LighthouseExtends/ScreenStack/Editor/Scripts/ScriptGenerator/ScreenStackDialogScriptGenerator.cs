@@ -101,8 +101,7 @@ namespace LighthouseExtends.ScreenStack.Editor.ScriptGenerator
             {
                 ($"{outputAssetDir}/{dialogName}Dialog.cs", LoadTemplate(settings.ScreenStackDialogDialogTemplate)),
                 ($"{outputAssetDir}/{dialogName}Data.cs", LoadTemplate(settings.ScreenStackDialogDataTemplate)),
-                ($"{outputAssetDir}/{dialogName}Presenter.cs",
-                    LoadTemplate(settings.ScreenStackDialogPresenterTemplate)),
+                ($"{outputAssetDir}/{dialogName}Presenter.cs", LoadTemplate(settings.ScreenStackDialogPresenterTemplate)),
                 ($"{outputAssetDir}/{dialogName}View.cs", LoadTemplate(settings.ScreenStackDialogViewTemplate))
             };
 

@@ -2,14 +2,11 @@ using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using VContainer;
 
-namespace SampleProduct.AnimationElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.AnimationElement
 {
-    public sealed class AnimationElementPresenter : IScreenStackPresenter
+    public sealed class AnimationElementPresenter
     {
         IScreenStackModule screenStackModule;
-
-        AnimationElementView dialogView;
-        AnimationElementData screenStackData;
 
         [Inject]
         public void Construct(IScreenStackModule screenStackModule)
@@ -17,22 +14,9 @@ namespace SampleProduct.AnimationElement
             this.screenStackModule = screenStackModule;
         }
 
-        public void Bind(AnimationElementView dialogView, AnimationElementData screenStackData)
+        public void Bind(AnimationElementView view, AnimationElementData data)
         {
-            this.dialogView = dialogView;
-            this.screenStackData = screenStackData;
-
-            dialogView.SubscribeCloseButtonClick(OnClickCloseButton);
-        }
-
-        UniTask IScreenStackPresenter.OnEnter(bool isResume)
-        {
-            return UniTask.CompletedTask;
-        }
-
-        UniTask IScreenStackPresenter.OnLeave()
-        {
-            return UniTask.CompletedTask;
+            view.SubscribeCloseButtonClick(OnClickCloseButton);
         }
 
         void OnClickCloseButton()

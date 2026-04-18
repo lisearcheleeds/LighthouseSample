@@ -14,5 +14,6 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
         IDisposable ISceneSample1View.SubscribeTransitionScene1ButtonClick(Action action) => transitionScene1Button.SubscribeOnClick(action);
         IDisposable ISceneSample1View.SubscribeTransitionScene2ButtonClick(Action action) => transitionScene2Button.SubscribeOnClick(action);
         IDisposable ISceneSample1View.SubscribeBackSceneButtonClick(Action action) => backSceneButton.SubscribeOnClick(action);
+        bool ISceneSample1View.TryClickBackButton() => LHButtonHitChecker.TryClick(backSceneButton);
     }
 }

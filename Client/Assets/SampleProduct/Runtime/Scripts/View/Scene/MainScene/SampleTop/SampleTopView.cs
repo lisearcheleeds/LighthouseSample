@@ -33,6 +33,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         [SerializeField] LHButton transitionAnimationButton;
         [SerializeField] LHButton buttonButton;
         [SerializeField] LHButton textButton;
+        [SerializeField] LHButton inputLayerButton;
 
         [SerializeField] LHButton game1Button;
         [SerializeField] LHButton game2Button;
@@ -52,6 +53,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         [SerializeField] LHTransitionAnimator[] overViewTabContentPageAnimators;
 
         IDisposable ISampleTopView.SubscribeBackSceneButtonClick(Action action) => backSceneButton.SubscribeOnClick(action);
+        bool ISampleTopView.TryClickBackButton() => LHButtonHitChecker.TryClick(backSceneButton);
 
         IDisposable ISampleTopView.SubscribeOverviewTabButtonClick(Action action) => overviewTabButton.SubscribeOnClick(action);
         IDisposable ISampleTopView.SubscribeSceneSampleTabButtonClick(Action action) => sceneSampleTabButton.SubscribeOnClick(action);
@@ -76,6 +78,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         IDisposable ISampleTopView.SubscribeTransitionAnimationButtonClick(Action action) => transitionAnimationButton.SubscribeOnClick(action);
         IDisposable ISampleTopView.SubscribeButtonButtonClick(Action action) => buttonButton.SubscribeOnClick(action);
         IDisposable ISampleTopView.SubscribeTextButtonClick(Action action) => textButton.SubscribeOnClick(action);
+        IDisposable ISampleTopView.SubscribeInputLayerButtonClick(Action action) => inputLayerButton.SubscribeOnClick(action);
 
         IDisposable ISampleTopView.SubscribeGame1ButtonClick(Action action) => game1Button.SubscribeOnClick(action);
         IDisposable ISampleTopView.SubscribeGame2ButtonClick(Action action) => game2Button.SubscribeOnClick(action);

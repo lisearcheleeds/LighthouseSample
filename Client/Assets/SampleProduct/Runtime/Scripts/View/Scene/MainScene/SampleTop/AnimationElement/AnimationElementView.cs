@@ -3,12 +3,13 @@ using LighthouseExtends.UIComponent.Button;
 using SampleProduct.Extensions;
 using UnityEngine;
 
-namespace SampleProduct.AnimationElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.AnimationElement
 {
     public class AnimationElementView : MonoBehaviour
     {
         [SerializeField] LHButton closeButton;
 
         public IDisposable SubscribeCloseButtonClick(Action action) => closeButton.SubscribeOnClick(action);
+        public bool TryClickCloseButton() => LHButtonHitChecker.TryClick(closeButton);
     }
 }

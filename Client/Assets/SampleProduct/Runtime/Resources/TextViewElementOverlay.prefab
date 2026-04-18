@@ -137,7 +137,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
-  textKey: 
+  textKey: TapToClose1
 --- !u!1 &1769621667414834609
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,8 +747,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4cefb464876c7c4a87b0abf3b17ed27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SampleProduct.Runtime::SampleProduct.TextView.TextViewElementOverlay
-  textViewElementView: {fileID: 4050242958692351336}
   transitionAnimator: {fileID: 4967863543025153778}
+  textViewElementView: {fileID: 4050242958692351336}
 --- !u!1 &6881668253740608352
 GameObject:
   m_ObjectHideFlags: 0

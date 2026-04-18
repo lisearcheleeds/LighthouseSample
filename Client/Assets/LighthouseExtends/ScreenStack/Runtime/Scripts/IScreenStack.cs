@@ -9,6 +9,8 @@ namespace LighthouseExtends.ScreenStack
         void SetParent(Transform parentTransform);
 
         UniTask OnInitialize();
+        UniTask OnEnter(bool isResume);
+        UniTask OnLeave();
 
         void ResetInAnimation();
         UniTask PlayInAnimation();

@@ -31,19 +31,17 @@ namespace {{NAMESPACE}}
             };
         }
 
-        async UniTask<ScreenStackEntity> CreateScreenStackEntityAsync<TScreenStack, TScreenStackPresenter, TScreenStackData>(
+        async UniTask<ScreenStackEntity> CreateScreenStackEntityAsync<TScreenStack, TScreenStackData>(
             string screenStackAddress,
             TScreenStackData data,
             CancellationToken ct)
-            where TScreenStack : IScreenStack, IScreenStackSetup<TScreenStackPresenter, TScreenStackData>
-            where TScreenStackPresenter : IScreenStackPresenter, new()
+            where TScreenStack : IScreenStack, IScreenStackSetup<TScreenStackData>
             where TScreenStackData : IScreenStackData
         {
             var screenStackInstance = await screenStackInstanceFactory.CreateScreenStackInstance<TScreenStack>(screenStackAddress, ct);
-            var screenStackPresenter = new TScreenStackPresenter();
-            objectResolver.Inject(screenStackPresenter);
-            screenStackInstance.Setup(screenStackPresenter, data);
-            return new ScreenStackEntity(screenStackInstance, screenStackPresenter, data);
+            objectResolver.Inject(screenStackInstance);
+            screenStackInstance.Setup(data);
+            return new ScreenStackEntity(screenStackInstance, data);
         }
     }
 }

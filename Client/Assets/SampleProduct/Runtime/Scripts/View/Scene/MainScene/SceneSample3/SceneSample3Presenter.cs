@@ -42,6 +42,8 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample3
             sceneSample3View.ApplyChoiceData(choiceData);
         }
 
+        bool ISceneSample3Presenter.TryClickBackButton() => sceneSample3View.TryClickBackButton();
+
         void OnClickBackScene()
         {
             sceneManager.BackScene();

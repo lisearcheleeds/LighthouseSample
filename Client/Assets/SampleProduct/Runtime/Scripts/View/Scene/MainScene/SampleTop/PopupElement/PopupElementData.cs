@@ -1,6 +1,6 @@
 using LighthouseExtends.ScreenStack;
 
-namespace SampleProduct.PopupElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.PopupElement
 {
     public sealed class PopupElementData : IScreenStackData
     {

@@ -1602,7 +1602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: SampleProduct.Runtime::SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog.RequireToolsDialog
   transitionAnimator: {fileID: 4444461692227310419}
-  dialogSample1View: {fileID: 6804214780455957209}
+  dialogView: {fileID: 6804214780455957209}
 --- !u!114 &6804214780455957209
 MonoBehaviour:
   m_ObjectHideFlags: 0

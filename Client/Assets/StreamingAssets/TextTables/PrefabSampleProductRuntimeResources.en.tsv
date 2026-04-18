@@ -9,7 +9,6 @@ DialogSample1Dialog4	Close with confirm
 DialogSample2Dialog1	Open exclusive dialog
 DialogSample2Dialog2	Open overlay dialog
 DialogSample2Dialog3	Close with confirm
-This popup will close at the same time as the popup below.	This popup will close at the same time as the popup below.
 OverlayElementOverlay1	Overlays aren't a separate feature; they're simply one way of expressing things using the ScreenStack functionality.\n\nIf you need to implement complex dependencies, you can define your own LifetimeScope for this overlay.
 PopupElementPopup1	Pop-ups aren't a separate feature; they're a way to display content using the ScreenStack functionality.\nThey're useful for focusing on a specific location on the base screen or displaying small windows.
 RequireToolsDialog	Credit
@@ -23,3 +22,14 @@ ButtonElementOverlay1	LHButton is a feature that inherits from Unity.UI.Button.\
 TextViewElementOverlay1	LHTextMeshPro is a Text component with localization and dictionary functionality.\nThis completely separates localization and development work, significantly improving development efficiency.\nFurthermore, an EditorTool is provided, allowing non-developers to work on the project.
 TapToClose1	Tap to Close
 Close	Close
+InputLayerElementOverlay1	InputLayer is a feature that manages key inputs on a layer-by-layer basis.\nEvery time you open a scene or screen stack, the action map of the key inputs for that UI is overlaid, allowing you to receive only the necessary key inputs.\nFor example, it can be used for operations such as opening an inventory while controlling a character with an analog stick.
+InputLayerElementOverlay2	[EscapeKey] to Close
+InputLayerElementOverlay3	Character\nLayer
+InputLayerElementOverlay4	WASD
+InputLayerElementOverlay5	Interact\n[E]
+InputLayerElementOverlay6	Inventory\nLayer
+InputLayerElementOverlay7	Close\nInventory\n[Esc]
+InputLayerElementOverlay8	Equip\n[E]
+InputLayerElementOverlay9	ToolTip\nLayer
+InputLayerElementOverlay10	Item\nDescription\n[E]
+DialogSampleConfirmDialog1	This pop-up will close at the same time as the pop-up below it.

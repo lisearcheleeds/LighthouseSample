@@ -14,6 +14,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample3
         [SerializeField] LHTextMeshPro choiceDataText;
 
         IDisposable ISceneSample3View.SubscribeBackSceneButtonClick(Action action) => backSceneButton.SubscribeOnClick(action);
+        bool ISceneSample3View.TryClickBackButton() => LHButtonHitChecker.TryClick(backSceneButton);
 
         void ISceneSample3View.ApplyChoiceData(int choiceData)
         {

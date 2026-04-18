@@ -31,3 +31,6 @@ SampleTopTabOtherButton	LHButton
 SampleTopTabOtherText	LHTextView
 SampleTopTabIngame1	InGame1
 SampleTopTabIngame2	InGame2
+SampleTopTabOtherAddressable	LHAddressableAssetManager
+SampleTopTabOtherInputLayer	LHInputLayer
+BackButton1	BackScene

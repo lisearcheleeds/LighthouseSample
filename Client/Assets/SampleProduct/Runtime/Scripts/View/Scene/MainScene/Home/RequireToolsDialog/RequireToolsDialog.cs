@@ -1,16 +1,35 @@
+using Cysharp.Threading.Tasks;
+using LighthouseExtends.InputLayer;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.Input;
+using SampleProduct.Input.Layer;
 using SampleProduct.View.Base;
 using UnityEngine;
+using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
 {
-    public sealed class RequireToolsDialog : StandardDialogBase, IScreenStackSetup<RequireToolsPresenter, RequireToolsData>
+    public sealed class RequireToolsDialog : StandardDialogBase, IScreenStackSetup<RequireToolsData>
     {
-        [SerializeField] RequireToolsView dialogSample1View;
+        [SerializeField] RequireToolsView dialogView;
 
-        public void Setup(RequireToolsPresenter dialogPresenter, RequireToolsData screenStackData)
+        RequireToolsPresenter presenter;
+
+        [Inject]
+        public void Construct(IObjectResolver objectResolver)
         {
-            dialogPresenter.Bind(dialogSample1View, screenStackData);
+            presenter = new RequireToolsPresenter();
+            objectResolver.Inject(presenter);
+        }
+
+        protected override IInputLayer CreateInputLayer(InputActions inputActions)
+        {
+            return new DefaultScreenStackInputLayer(inputActions, () => dialogView.TryClickCloseButton());
+        }
+
+        public void Setup(RequireToolsData screenStackData)
+        {
+            presenter.Bind(dialogView, screenStackData);
         }
     }
 }

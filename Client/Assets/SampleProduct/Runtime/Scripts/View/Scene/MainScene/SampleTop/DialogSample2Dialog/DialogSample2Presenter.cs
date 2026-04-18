@@ -2,17 +2,16 @@ using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSampleConfirmDialog;
-using UnityEngine;
 using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog
 {
-    public sealed class DialogSample2Presenter : IScreenStackPresenter
+    public sealed class DialogSample2Presenter
     {
         IScreenStackModule screenStackModule;
 
-        DialogSample2View dialogView;
-        DialogSample2Data screenStackData;
+        DialogSample2View view;
+        DialogSample2Data data;
 
         [Inject]
         public void Construct(IScreenStackModule screenStackModule)
@@ -20,26 +19,19 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog
             this.screenStackModule = screenStackModule;
         }
 
-        public void Bind(DialogSample2View dialogView, DialogSample2Data screenStackData)
+        public void Bind(DialogSample2View view, DialogSample2Data data)
         {
-            dialogView.SubscribeCloseButtonClick(OnClickCloseButton);
-            dialogView.SubscribeOpenDialog1ButtonClick(OnClickOpenDialog1Button);
-            dialogView.SubscribeOpenDialog2ButtonClick(OnClickOpenDialog2Button);
-            dialogView.SubscribeConfirmOpenDialogButtonClick(OnClickOpenConfirmDialogButton);
-
-            this.dialogView = dialogView;
-            this.screenStackData = screenStackData;
+            this.view = view;
+            this.data = data;
+            view.SubscribeCloseButtonClick(OnClickCloseButton);
+            view.SubscribeOpenDialog1ButtonClick(OnClickOpenDialog1Button);
+            view.SubscribeOpenDialog2ButtonClick(OnClickOpenDialog2Button);
+            view.SubscribeConfirmOpenDialogButtonClick(OnClickOpenConfirmDialogButton);
         }
 
-        UniTask IScreenStackPresenter.OnEnter(bool isResume)
+        public UniTask OnEnter(bool isResume)
         {
-            dialogView.SetText($"Stack count {screenStackData.StackCount}");
-
-            return UniTask.CompletedTask;
-        }
-
-        UniTask IScreenStackPresenter.OnLeave()
-        {
+            view.SetText($"Stack count {data.StackCount}");
             return UniTask.CompletedTask;
         }
 
@@ -50,12 +42,12 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog
 
         void OnClickOpenDialog1Button()
         {
-            screenStackModule.Open(new DialogSample1Data(screenStackData.StackCount + 1)).Forget();
+            screenStackModule.Open(new DialogSample1Data(data.StackCount + 1)).Forget();
         }
 
         void OnClickOpenDialog2Button()
         {
-            screenStackModule.Open(new DialogSample2Data(screenStackData.StackCount + 1)).Forget();
+            screenStackModule.Open(new DialogSample2Data(data.StackCount + 1)).Forget();
         }
 
         void OnClickOpenConfirmDialogButton()

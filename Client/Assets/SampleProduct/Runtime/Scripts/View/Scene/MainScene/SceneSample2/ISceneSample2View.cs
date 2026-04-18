@@ -9,5 +9,6 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample2
         IDisposable SubscribeChoice3ButtonClick(Action action);
 
         IDisposable SubscribeBackSceneButtonClick(Action action);
+        bool TryClickBackButton();
     }
 }

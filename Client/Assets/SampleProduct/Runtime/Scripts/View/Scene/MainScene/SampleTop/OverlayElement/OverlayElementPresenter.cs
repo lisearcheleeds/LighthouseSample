@@ -2,14 +2,11 @@ using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using VContainer;
 
-namespace SampleProduct.OverlayElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.OverlayElement
 {
-    public sealed class OverlayElementPresenter : IScreenStackPresenter
+    public sealed class OverlayElementPresenter
     {
         IScreenStackModule screenStackModule;
-
-        OverlayElementView dialogView;
-        OverlayElementData screenStackData;
 
         [Inject]
         public void Construct(IScreenStackModule screenStackModule)
@@ -17,22 +14,9 @@ namespace SampleProduct.OverlayElement
             this.screenStackModule = screenStackModule;
         }
 
-        public void Bind(OverlayElementView dialogView, OverlayElementData screenStackData)
+        public void Bind(OverlayElementView view, OverlayElementData data)
         {
-            this.dialogView = dialogView;
-            this.screenStackData = screenStackData;
-
-            dialogView.SubscribeCloseButtonClick(OnClickCloseButton);
-        }
-
-        UniTask IScreenStackPresenter.OnEnter(bool isResume)
-        {
-            return UniTask.CompletedTask;
-        }
-
-        UniTask IScreenStackPresenter.OnLeave()
-        {
-            return UniTask.CompletedTask;
+            view.SubscribeCloseButtonClick(OnClickCloseButton);
         }
 
         void OnClickCloseButton()

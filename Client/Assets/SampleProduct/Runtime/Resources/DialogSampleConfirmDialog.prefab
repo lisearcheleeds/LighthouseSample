@@ -462,7 +462,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
-  textKey: This popup will close at the same time as the popup below.
+  textKey: DialogSampleConfirmDialog1
 --- !u!1 &4791863250250026025
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,12 +4,10 @@ using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
 {
-    public sealed class RequireToolsPresenter : IScreenStackPresenter
+    public sealed class RequireToolsPresenter
     {
         IScreenStackModule screenStackModule;
-
         RequireToolsView dialogView;
-        RequireToolsData screenStackData;
 
         [Inject]
         public void Construct(IScreenStackModule screenStackModule)
@@ -19,20 +17,8 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
 
         public void Bind(RequireToolsView dialogView, RequireToolsData screenStackData)
         {
-            dialogView.SubscribeCloseButtonClick(OnClickCloseButton);
-
             this.dialogView = dialogView;
-            this.screenStackData = screenStackData;
-        }
-
-        UniTask IScreenStackPresenter.OnEnter(bool isResume)
-        {
-            return UniTask.CompletedTask;
-        }
-
-        UniTask IScreenStackPresenter.OnLeave()
-        {
-            return UniTask.CompletedTask;
+            dialogView.SubscribeCloseButtonClick(OnClickCloseButton);
         }
 
         void OnClickCloseButton()

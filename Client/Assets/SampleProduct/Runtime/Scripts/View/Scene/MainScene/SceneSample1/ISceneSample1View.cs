@@ -7,5 +7,6 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
         IDisposable SubscribeTransitionScene1ButtonClick(Action action);
         IDisposable SubscribeTransitionScene2ButtonClick(Action action);
         IDisposable SubscribeBackSceneButtonClick(Action action);
+        bool TryClickBackButton();
     }
 }

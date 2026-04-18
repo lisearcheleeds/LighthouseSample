@@ -1,6 +1,6 @@
 using LighthouseExtends.ScreenStack;
 
-namespace SampleProduct.ButtonElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.ButtonElement
 {
     public sealed class ButtonElementData : IScreenStackData
     {

@@ -4,7 +4,7 @@ using VContainer;
 
 namespace {{NAMESPACE}}
 {
-    public sealed class {{DIALOG_NAME}}Presenter : IScreenStackPresenter
+    public sealed class {{DIALOG_NAME}}Presenter
     {
         IScreenStackModule screenStackModule;
 
@@ -21,16 +21,6 @@ namespace {{NAMESPACE}}
         {
             this.dialogView = dialogView;
             this.screenStackData = screenStackData;
-        }
-
-        UniTask IScreenStackPresenter.OnEnter(bool isResume)
-        {
-            return UniTask.CompletedTask;
-        }
-
-        UniTask IScreenStackPresenter.OnLeave()
-        {
-            return UniTask.CompletedTask;
         }
     }
 }
