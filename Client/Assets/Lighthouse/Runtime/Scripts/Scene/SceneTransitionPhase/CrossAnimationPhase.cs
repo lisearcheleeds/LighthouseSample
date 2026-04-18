@@ -6,7 +6,8 @@ namespace Lighthouse.Scene.SceneTransitionPhase
     {
         ISceneTransitionStep[] ISceneTransitionPhase.Steps { get; } =
         {
-            new InAnimationStep(), new OutAnimationStep(),
+            new InAnimationStep(),
+            new OutAnimationStep(),
         };
 
         bool ISceneTransitionPhase.CanTransitionIntercept => false;

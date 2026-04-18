@@ -17,7 +17,7 @@ namespace Lighthouse.Scene
 
         public bool IsTransition { get; private set; }
 
-        Stack<TransitionDataBase> transitionDataStack = new();
+        readonly Stack<TransitionDataBase> transitionDataStack = new();
 
         SceneGroup currentSceneGroup;
 
@@ -89,6 +89,7 @@ namespace Lighthouse.Scene
 
             if (!backTargetSceneTransitionData.CanTransition || !backTargetSceneTransitionData.CanBackTransition)
             {
+                // If this exception occurs at runtime, we recommend rebooting after performing the necessary processing.
                 throw new InvalidOperationException(
                     $"Back transition target '{backTargetSceneTransitionData.MainSceneId}' " +
                     "has CanTransition=false or CanBackTransition=false. " +
@@ -147,9 +148,17 @@ namespace Lighthouse.Scene
 
             if (backMainSceneId != null)
             {
-                while (transitionDataStack.Count > 0 && transitionDataStack.Peek().MainSceneId != backMainSceneId)
+                var found = transitionDataStack.Any(d => d.MainSceneId == backMainSceneId);
+                if (!found)
                 {
-                    transitionDataStack.Pop();
+                    Debug.LogWarning($"[SceneManager] backMainSceneId '{backMainSceneId}' not found in stack. Stack will not be trimmed.");
+                }
+                else
+                {
+                    while (0 < transitionDataStack.Count && transitionDataStack.Peek().MainSceneId != backMainSceneId)
+                    {
+                        transitionDataStack.Pop();
+                    }
                 }
             }
         }

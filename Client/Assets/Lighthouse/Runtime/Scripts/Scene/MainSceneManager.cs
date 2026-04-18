@@ -207,7 +207,7 @@ namespace Lighthouse.Scene
                     .Select(x => x.GetComponent<MainSceneBase>())
                     .First(x => x != null);
             }
-            catch (InvalidOperationException)
+            catch
             {
                 Debug.LogError($"[SceneGroup] MainSceneBase NotFound\n" +
                                $"To add a scene, you need to add the scene to UnityEditor and place a GameObject that inherits MainSceneBase at the root of the added scene.");

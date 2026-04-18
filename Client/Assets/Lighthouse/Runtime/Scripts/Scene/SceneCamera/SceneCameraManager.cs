@@ -1,4 +1,5 @@
 using System.Linq;
+using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using VContainer;
 
@@ -29,6 +30,12 @@ namespace Lighthouse.Scene.SceneCamera
                 .Distinct()
                 .OrderBy(x => (x.SceneCameraType, x.CameraDefaultDepth))
                 .ToArray();
+
+            if (!sceneCameras.Any())
+            {
+                Debug.LogError("[SceneCameraManager] No cameras found. At least UICamera must exist.");
+                return;
+            }
 
             var baseCamera = sceneCameras.First();
             var overlayCameraList = sceneCameras.Skip(1).ToArray();
