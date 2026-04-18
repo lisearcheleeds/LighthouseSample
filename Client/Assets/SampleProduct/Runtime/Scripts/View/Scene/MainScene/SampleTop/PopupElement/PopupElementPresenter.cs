@@ -4,12 +4,9 @@ using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop.PopupElement
 {
-    public sealed class PopupElementPresenter : IScreenStackPresenter
+    public sealed class PopupElementPresenter
     {
         IScreenStackModule screenStackModule;
-
-        PopupElementView dialogView;
-        PopupElementData screenStackData;
 
         [Inject]
         public void Construct(IScreenStackModule screenStackModule)
@@ -17,22 +14,9 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.PopupElement
             this.screenStackModule = screenStackModule;
         }
 
-        public void Bind(PopupElementView dialogView, PopupElementData screenStackData)
+        public void Bind(PopupElementView view, PopupElementData data)
         {
-            this.dialogView = dialogView;
-            this.screenStackData = screenStackData;
-
-            dialogView.SubscribeCloseButtonClick(OnClickCloseButton);
-        }
-
-        UniTask IScreenStackPresenter.OnEnter(bool isResume)
-        {
-            return UniTask.CompletedTask;
-        }
-
-        UniTask IScreenStackPresenter.OnLeave()
-        {
-            return UniTask.CompletedTask;
+            view.SubscribeCloseButtonClick(OnClickCloseButton);
         }
 
         void OnClickCloseButton()

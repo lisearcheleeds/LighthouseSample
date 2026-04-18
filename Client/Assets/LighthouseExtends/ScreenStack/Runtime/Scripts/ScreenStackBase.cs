@@ -10,6 +10,16 @@ namespace LighthouseExtends.ScreenStack
             return UniTask.CompletedTask;
         }
 
+        public virtual UniTask OnEnter(bool isResume)
+        {
+            return UniTask.CompletedTask;
+        }
+
+        public virtual UniTask OnLeave()
+        {
+            return UniTask.CompletedTask;
+        }
+
         public void SetParent(Transform parentTransform)
         {
             transform.SetParent(parentTransform, false);

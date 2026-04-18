@@ -1,14 +1,24 @@
 using LighthouseExtends.ScreenStack;
 using SampleProduct.View.Base;
 using UnityEngine;
+using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogElementDialog
 {
-    public sealed class DialogElementDialog : StandardDialogBase, IScreenStackSetup<DialogElementPresenter, DialogElementData>
+    public sealed class DialogElementDialog : StandardDialogBase, IScreenStackSetup<DialogElementData>
     {
         [SerializeField] DialogElementView dialogElementView;
 
-        public void Setup(DialogElementPresenter presenter, DialogElementData screenStackData)
+        DialogElementPresenter presenter;
+
+        [Inject]
+        public void Construct(IObjectResolver objectResolver)
+        {
+            presenter = new DialogElementPresenter();
+            objectResolver.Inject(presenter);
+        }
+
+        public void Setup(DialogElementData screenStackData)
         {
             presenter.Bind(dialogElementView, screenStackData);
         }

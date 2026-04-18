@@ -7,14 +7,13 @@ using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
 {
-    public sealed class RequireToolsPresenter : IScreenStackPresenter
+    public sealed class RequireToolsPresenter
     {
         IScreenStackModule screenStackModule;
         IInputLayerController inputLayerController;
         InputActions inputActions;
 
         RequireToolsView dialogView;
-        RequireToolsData screenStackData;
         IInputLayer inputLayer;
 
         [Inject]
@@ -30,13 +29,11 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
 
         public void Bind(RequireToolsView dialogView, RequireToolsData screenStackData)
         {
-            dialogView.SubscribeCloseButtonClick(OnClickCloseButton);
-
             this.dialogView = dialogView;
-            this.screenStackData = screenStackData;
+            dialogView.SubscribeCloseButtonClick(OnClickCloseButton);
         }
 
-        UniTask IScreenStackPresenter.OnEnter(bool isResume)
+        public UniTask OnEnter(bool isResume)
         {
             if (!isResume)
             {
@@ -47,14 +44,14 @@ namespace SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog
             return UniTask.CompletedTask;
         }
 
-        UniTask IScreenStackPresenter.OnLeave()
+        public UniTask OnLeave()
         {
             if (inputLayer != null)
             {
                 inputLayerController.PopLayer(inputLayer);
                 inputLayer = null;
             }
-            
+
             return UniTask.CompletedTask;
         }
 

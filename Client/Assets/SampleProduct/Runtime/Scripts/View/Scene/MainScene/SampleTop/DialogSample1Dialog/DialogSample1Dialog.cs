@@ -1,16 +1,32 @@
+using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.View.Base;
 using UnityEngine;
+using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog
 {
-    public sealed class DialogSample1Dialog : StandardDialogBase, IScreenStackSetup<DialogSample1Presenter, DialogSample1Data>
+    public sealed class DialogSample1Dialog : StandardDialogBase, IScreenStackSetup<DialogSample1Data>
     {
         [SerializeField] DialogSample1View dialogSample1View;
 
-        public void Setup(DialogSample1Presenter dialogPresenter, DialogSample1Data screenStackData)
+        DialogSample1Presenter presenter;
+
+        [Inject]
+        public void Construct(IObjectResolver objectResolver)
         {
-            dialogPresenter.Bind(dialogSample1View, screenStackData);
+            presenter = new DialogSample1Presenter();
+            objectResolver.Inject(presenter);
+        }
+
+        public void Setup(DialogSample1Data screenStackData)
+        {
+            presenter.Bind(dialogSample1View, screenStackData);
+        }
+
+        public override UniTask OnEnter(bool isResume)
+        {
+            return presenter.OnEnter(isResume);
         }
     }
 }

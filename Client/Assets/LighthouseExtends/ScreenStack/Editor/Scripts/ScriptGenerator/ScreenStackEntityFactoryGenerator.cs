@@ -53,7 +53,7 @@ namespace LighthouseExtends.ScreenStack.Editor.ScriptGenerator
             }
 
             var screenStackDataInterface = typeof(IScreenStackData);
-            var screenStackSetupOpenType = typeof(IScreenStackSetup<,>);
+            var screenStackSetupOpenType = typeof(IScreenStackSetup<>);
 
             var allTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(SafeGetTypes)
@@ -68,7 +68,7 @@ namespace LighthouseExtends.ScreenStack.Editor.ScriptGenerator
                 return;
             }
 
-            var mappings = new List<(Type Data, Type ScreenStack, Type Presenter)>();
+            var mappings = new List<(Type Data, Type ScreenStack)>();
 
             foreach (var dataType in dataTypes)
             {
@@ -77,7 +77,7 @@ namespace LighthouseExtends.ScreenStack.Editor.ScriptGenerator
                     t.GetInterfaces().Any(i =>
                         i.IsGenericType &&
                         i.GetGenericTypeDefinition() == screenStackSetupOpenType &&
-                        i.GetGenericArguments()[1] == dataType));
+                        i.GetGenericArguments()[0] == dataType));
 
                 if (screenStackType == null)
                 {
@@ -86,13 +86,7 @@ namespace LighthouseExtends.ScreenStack.Editor.ScriptGenerator
                     continue;
                 }
 
-                var setupInterface = screenStackType.GetInterfaces().First(i =>
-                    i.IsGenericType &&
-                    i.GetGenericTypeDefinition() == screenStackSetupOpenType &&
-                    i.GetGenericArguments()[1] == dataType);
-
-                var presenterType = setupInterface.GetGenericArguments()[0];
-                mappings.Add((dataType, screenStackType, presenterType));
+                mappings.Add((dataType, screenStackType));
             }
 
             if (mappings.Count == 0)
@@ -106,10 +100,10 @@ namespace LighthouseExtends.ScreenStack.Editor.ScriptGenerator
         }
 
         static string BuildContent(string template, string className, string namespaceName,
-            List<(Type Data, Type ScreenStack, Type Presenter)> mappings)
+            List<(Type Data, Type ScreenStack)> mappings)
         {
             var extraNamespaces = mappings
-                .SelectMany(m => new[] { m.Data.Namespace, m.ScreenStack.Namespace, m.Presenter.Namespace })
+                .SelectMany(m => new[] { m.Data.Namespace, m.ScreenStack.Namespace })
                 .Where(ns => !string.IsNullOrEmpty(ns) && ns != namespaceName)
                 .Distinct()
                 .OrderBy(ns => ns)
@@ -120,7 +114,7 @@ namespace LighthouseExtends.ScreenStack.Editor.ScriptGenerator
                 : string.Empty;
 
             var switchCases = string.Join("\n", mappings.Select(m =>
-                $"                {m.Data.Name} d => CreateScreenStackEntityAsync<{m.ScreenStack.Name}, {m.Presenter.Name}, {m.Data.Name}>(\"{m.ScreenStack.Name}\", d, ct),"));
+                $"                {m.Data.Name} d => CreateScreenStackEntityAsync<{m.ScreenStack.Name}, {m.Data.Name}>(\"{m.ScreenStack.Name}\", d, ct),"));
 
             return template
                 .Replace("{{NAMESPACE}}", namespaceName)

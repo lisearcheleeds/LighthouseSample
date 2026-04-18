@@ -38,35 +38,33 @@ namespace SampleProduct
         {
             return data switch
             {
-                SceneTransitionData d => CreateScreenStackEntityAsync<SceneTransitionDialog, SceneTransitionPresenter, SceneTransitionData>("SceneTransitionDialog", d, ct),
-                TransitionAnimationElementData d => CreateScreenStackEntityAsync<TransitionAnimationElementOverlay, TransitionAnimationElementPresenter, TransitionAnimationElementData>("TransitionAnimationElementOverlay", d, ct),
-                TextViewElementData d => CreateScreenStackEntityAsync<TextViewElementOverlay, TextViewElementPresenter, TextViewElementData>("TextViewElementOverlay", d, ct),
-                PopupElementData d => CreateScreenStackEntityAsync<PopupElementPopup, PopupElementPresenter, PopupElementData>("PopupElementPopup", d, ct),
-                OverlayElementData d => CreateScreenStackEntityAsync<OverlayElementOverlay, OverlayElementPresenter, OverlayElementData>("OverlayElementOverlay", d, ct),
-                DialogSampleConfirmData d => CreateScreenStackEntityAsync<DialogSampleConfirmDialog, DialogSampleConfirmPresenter, DialogSampleConfirmData>("DialogSampleConfirmDialog", d, ct),
-                DialogSample2Data d => CreateScreenStackEntityAsync<DialogSample2Dialog, DialogSample2Presenter, DialogSample2Data>("DialogSample2Dialog", d, ct),
-                DialogSample1Data d => CreateScreenStackEntityAsync<DialogSample1Dialog, DialogSample1Presenter, DialogSample1Data>("DialogSample1Dialog", d, ct),
-                DialogElementData d => CreateScreenStackEntityAsync<DialogElementDialog, DialogElementPresenter, DialogElementData>("DialogElementDialog", d, ct),
-                ButtonElementData d => CreateScreenStackEntityAsync<ButtonElementOverlay, ButtonElementPresenter, ButtonElementData>("ButtonElementOverlay", d, ct),
-                AnimationElementData d => CreateScreenStackEntityAsync<AnimationElementOverlay, AnimationElementPresenter, AnimationElementData>("AnimationElementOverlay", d, ct),
-                RequireToolsData d => CreateScreenStackEntityAsync<RequireToolsDialog, RequireToolsPresenter, RequireToolsData>("RequireToolsDialog", d, ct),
+                SceneTransitionData d => CreateScreenStackEntityAsync<SceneTransitionDialog, SceneTransitionData>("SceneTransitionDialog", d, ct),
+                TransitionAnimationElementData d => CreateScreenStackEntityAsync<TransitionAnimationElementOverlay, TransitionAnimationElementData>("TransitionAnimationElementOverlay", d, ct),
+                TextViewElementData d => CreateScreenStackEntityAsync<TextViewElementOverlay, TextViewElementData>("TextViewElementOverlay", d, ct),
+                PopupElementData d => CreateScreenStackEntityAsync<PopupElementPopup, PopupElementData>("PopupElementPopup", d, ct),
+                OverlayElementData d => CreateScreenStackEntityAsync<OverlayElementOverlay, OverlayElementData>("OverlayElementOverlay", d, ct),
+                DialogSampleConfirmData d => CreateScreenStackEntityAsync<DialogSampleConfirmDialog, DialogSampleConfirmData>("DialogSampleConfirmDialog", d, ct),
+                DialogSample2Data d => CreateScreenStackEntityAsync<DialogSample2Dialog, DialogSample2Data>("DialogSample2Dialog", d, ct),
+                DialogSample1Data d => CreateScreenStackEntityAsync<DialogSample1Dialog, DialogSample1Data>("DialogSample1Dialog", d, ct),
+                DialogElementData d => CreateScreenStackEntityAsync<DialogElementDialog, DialogElementData>("DialogElementDialog", d, ct),
+                ButtonElementData d => CreateScreenStackEntityAsync<ButtonElementOverlay, ButtonElementData>("ButtonElementOverlay", d, ct),
+                AnimationElementData d => CreateScreenStackEntityAsync<AnimationElementOverlay, AnimationElementData>("AnimationElementOverlay", d, ct),
+                RequireToolsData d => CreateScreenStackEntityAsync<RequireToolsDialog, RequireToolsData>("RequireToolsDialog", d, ct),
                 _ => throw new ArgumentOutOfRangeException(nameof(data), data.GetType().FullName, "Unknown screenStack data type")
             };
         }
 
-        async UniTask<ScreenStackEntity> CreateScreenStackEntityAsync<TScreenStack, TScreenStackPresenter, TScreenStackData>(
+        async UniTask<ScreenStackEntity> CreateScreenStackEntityAsync<TScreenStack, TScreenStackData>(
             string screenStackAddress,
             TScreenStackData data,
             CancellationToken ct)
-            where TScreenStack : IScreenStack, IScreenStackSetup<TScreenStackPresenter, TScreenStackData>
-            where TScreenStackPresenter : IScreenStackPresenter, new()
+            where TScreenStack : IScreenStack, IScreenStackSetup<TScreenStackData>
             where TScreenStackData : IScreenStackData
         {
             var screenStackInstance = await screenStackInstanceFactory.CreateScreenStackInstance<TScreenStack>(screenStackAddress, ct);
-            var screenStackPresenter = new TScreenStackPresenter();
-            objectResolver.Inject(screenStackPresenter);
-            screenStackInstance.Setup(screenStackPresenter, data);
-            return new ScreenStackEntity(screenStackInstance, screenStackPresenter, data);
+            objectResolver.Inject(screenStackInstance);
+            screenStackInstance.Setup(data);
+            return new ScreenStackEntity(screenStackInstance, data);
         }
     }
 }

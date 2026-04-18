@@ -4,12 +4,9 @@ using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop.TextViewElement
 {
-    public sealed class TextViewElementPresenter : IScreenStackPresenter
+    public sealed class TextViewElementPresenter
     {
         IScreenStackModule screenStackModule;
-
-        TextViewElementView textViewElementView;
-        TextViewElementData screenStackElementData;
 
         [Inject]
         public void Construct(IScreenStackModule screenStackModule)
@@ -17,22 +14,9 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.TextViewElement
             this.screenStackModule = screenStackModule;
         }
 
-        public void Bind(TextViewElementView textViewElementView, TextViewElementData screenStackElementData)
+        public void Bind(TextViewElementView view, TextViewElementData data)
         {
-            this.textViewElementView = textViewElementView;
-            this.screenStackElementData = screenStackElementData;
-
-            textViewElementView.SubscribeCloseButtonClick(OnClickCloseButton);
-        }
-
-        UniTask IScreenStackPresenter.OnEnter(bool isResume)
-        {
-            return UniTask.CompletedTask;
-        }
-
-        UniTask IScreenStackPresenter.OnLeave()
-        {
-            return UniTask.CompletedTask;
+            view.SubscribeCloseButtonClick(OnClickCloseButton);
         }
 
         void OnClickCloseButton()

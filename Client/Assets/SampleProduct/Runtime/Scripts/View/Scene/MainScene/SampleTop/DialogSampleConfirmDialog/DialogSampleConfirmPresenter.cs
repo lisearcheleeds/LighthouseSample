@@ -4,10 +4,10 @@ using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSampleConfirmDialog
 {
-    public sealed class DialogSampleConfirmPresenter : IScreenStackPresenter
+    public sealed class DialogSampleConfirmPresenter
     {
         IScreenStackModule screenStackModule;
-        DialogSampleConfirmData dialogData;
+        DialogSampleConfirmData data;
 
         [Inject]
         public void Construct(IScreenStackModule screenStackModule)
@@ -15,26 +15,15 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSampleConfirmDialog
             this.screenStackModule = screenStackModule;
         }
 
-        public void Bind(DialogSampleConfirmView view, DialogSampleConfirmData dialogData)
+        public void Bind(DialogSampleConfirmView view, DialogSampleConfirmData data)
         {
-            this.dialogData = dialogData;
-
+            this.data = data;
             view.SubscribeCloseButtonClick(OnClickCloseButton);
-        }
-
-        UniTask IScreenStackPresenter.OnEnter(bool isResume)
-        {
-            return UniTask.CompletedTask;
-        }
-
-        UniTask IScreenStackPresenter.OnLeave()
-        {
-            return UniTask.CompletedTask;
         }
 
         void OnClickCloseButton()
         {
-            dialogData.OnCloseAction();
+            data.OnCloseAction();
             screenStackModule.Close().Forget();
         }
     }

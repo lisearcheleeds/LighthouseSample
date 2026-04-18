@@ -6,13 +6,12 @@ using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionDialog
 {
-    public sealed class SceneTransitionPresenter : IScreenStackPresenter
+    public sealed class SceneTransitionPresenter
     {
         IScreenStackModule screenStackModule;
         ISceneManager sceneManager;
 
         SceneTransitionView view;
-        SceneTransitionData data;
 
         [Inject]
         public void Construct(IScreenStackModule screenStackModule, ISceneManager sceneManager)
@@ -23,22 +22,10 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionDialog
 
         public void Bind(SceneTransitionView view, SceneTransitionData data)
         {
+            this.view = view;
             view.SubscribeCloseButtonClick(OnClickCloseButton);
             view.SubscribeTransitionSceneButtonClick(OnTransitionSceneButtonClick);
             view.SubscribeTransitionSceneWithCloseButtonClick(OnTransitionSceneWithCloseButtonClick);
-
-            this.view = view;
-            this.data = data;
-        }
-
-        UniTask IScreenStackPresenter.OnEnter(bool isResume)
-        {
-            return UniTask.CompletedTask;
-        }
-
-        UniTask IScreenStackPresenter.OnLeave()
-        {
-            return UniTask.CompletedTask;
         }
 
         void OnClickCloseButton()

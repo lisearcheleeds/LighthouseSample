@@ -1,49 +1,26 @@
-using Cysharp.Threading.Tasks;
-using LighthouseExtends.Animation.Runtime;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.View.Base;
 using UnityEngine;
+using VContainer;
 
 namespace SampleProduct.View.Scene.MainScene.SampleTop.TextViewElement
 {
-    public sealed class TextViewElementOverlay : ProductScreenStackBase, IScreenStackSetup<TextViewElementPresenter, TextViewElementData>
+    public sealed class TextViewElementOverlay : ProductScreenStackBase, IScreenStackSetup<TextViewElementData>
     {
         [SerializeField] TextViewElementView textViewElementView;
-        [SerializeField] LHTransitionAnimator transitionAnimator;
 
-        public void Setup(TextViewElementPresenter elementPresenter, TextViewElementData screenStackElementData)
+        TextViewElementPresenter presenter;
+
+        [Inject]
+        public void Construct(IObjectResolver objectResolver)
         {
-            elementPresenter.Bind(textViewElementView, screenStackElementData);
+            presenter = new TextViewElementPresenter();
+            objectResolver.Inject(presenter);
         }
 
-        public override void ResetInAnimation()
+        public void Setup(TextViewElementData screenStackElementData)
         {
-            transitionAnimator.ResetInAnimation();
-        }
-
-        public override async UniTask PlayInAnimation()
-        {
-            await transitionAnimator.InAnimation();
-        }
-
-        public override void EndInAnimation()
-        {
-            transitionAnimator.EndInAnimation();
-        }
-
-        public override void ResetOutAnimation()
-        {
-            transitionAnimator.ResetOutAnimation();
-        }
-
-        public override async UniTask PlayOutAnimation()
-        {
-            await transitionAnimator.OutAnimation();
-        }
-
-        public override void EndOutAnimation()
-        {
-            transitionAnimator.EndOutAnimation();
+            presenter.Bind(textViewElementView, screenStackElementData);
         }
     }
 }
