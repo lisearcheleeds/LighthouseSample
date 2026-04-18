@@ -38,7 +38,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
             return UniTask.CompletedTask;
         }
 
-        protected override UniTask OnEnter(SceneSample1TransitionData transitionData, SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnEnter(SceneSample1TransitionData transitionData, ISceneTransitionContext context, CancellationToken cancelToken)
         {
             sceneSample1Presenter.OnEnter();
             return UniTask.CompletedTask;

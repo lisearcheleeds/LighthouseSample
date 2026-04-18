@@ -29,7 +29,7 @@ namespace Lighthouse.Scene
                 .ToArray();
         }
 
-        void IModuleSceneManager.ResetAnimation(SceneTransitionContext context)
+        void IModuleSceneManager.ResetAnimation(ISceneTransitionContext context)
         {
             var targetAnimations = loadedSceneModules
                 .Where(x => context.SceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
@@ -41,7 +41,7 @@ namespace Lighthouse.Scene
             }
         }
 
-        async UniTask IModuleSceneManager.PlayInAnimation(SceneTransitionContext context)
+        async UniTask IModuleSceneManager.PlayInAnimation(ISceneTransitionContext context)
         {
             var target = loadedSceneModules
                 .Where(x => context.SceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
@@ -51,7 +51,7 @@ namespace Lighthouse.Scene
             await UniTask.WhenAll(target);
         }
 
-        async UniTask IModuleSceneManager.PlayOutAnimation(SceneTransitionContext context)
+        async UniTask IModuleSceneManager.PlayOutAnimation(ISceneTransitionContext context)
         {
             if (context.SceneTransitionDiff.CurrentSceneGroup == null)
             {
@@ -66,7 +66,7 @@ namespace Lighthouse.Scene
             await UniTask.WhenAll(target);
         }
 
-        async UniTask IModuleSceneManager.Load(SceneTransitionContext context)
+        async UniTask IModuleSceneManager.Load(ISceneTransitionContext context)
         {
             if (!context.SceneTransitionDiff.LoadSceneModuleIds.Any())
             {
@@ -109,7 +109,7 @@ namespace Lighthouse.Scene
             }
         }
 
-        async UniTask IModuleSceneManager.Unload(SceneTransitionContext context)
+        async UniTask IModuleSceneManager.Unload(ISceneTransitionContext context)
         {
             if (!context.SceneTransitionDiff.UnloadSceneModuleIds.Any())
             {
@@ -127,7 +127,7 @@ namespace Lighthouse.Scene
             }
         }
 
-        async UniTask IModuleSceneManager.Enter(SceneTransitionContext context, CancellationToken cancellationToken)
+        async UniTask IModuleSceneManager.Enter(ISceneTransitionContext context, CancellationToken cancellationToken)
         {
             var target = loadedSceneModules
                 .Where(x => context.SceneTransitionDiff.NextSceneGroup.SceneModuleIds.Contains(x.ModuleSceneId))
@@ -137,7 +137,7 @@ namespace Lighthouse.Scene
             await UniTask.WhenAll(target);
         }
 
-        async UniTask IModuleSceneManager.Leave(SceneTransitionContext context, CancellationToken cancellationToken)
+        async UniTask IModuleSceneManager.Leave(ISceneTransitionContext context, CancellationToken cancellationToken)
         {
             if (context.SceneTransitionDiff.CurrentSceneGroup == null)
             {
@@ -152,7 +152,7 @@ namespace Lighthouse.Scene
             await UniTask.WhenAll(target);
         }
 
-        void IModuleSceneManager.InitializeCanvas(SceneTransitionContext context)
+        void IModuleSceneManager.InitializeCanvas(ISceneTransitionContext context)
         {
             foreach (var sceneModule in loadedSceneModules)
             {
@@ -163,7 +163,7 @@ namespace Lighthouse.Scene
             }
         }
 
-        void IModuleSceneManager.OnSceneTransitionFinished(SceneTransitionContext context)
+        void IModuleSceneManager.OnSceneTransitionFinished(ISceneTransitionContext context)
         {
             foreach (var sceneModule in loadedSceneModules)
             {

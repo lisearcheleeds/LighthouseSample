@@ -19,7 +19,7 @@ namespace Lighthouse.Scene.SceneBase
             return base.OnLoad();
         }
 
-        protected override UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnEnter(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             if (context.SceneTransitionDiff.ActivateSceneModuleIds.Contains(ModuleSceneId))
             {
@@ -29,7 +29,7 @@ namespace Lighthouse.Scene.SceneBase
             return base.OnEnter(context, cancelToken);
         }
 
-        protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnLeave(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             if (context.SceneTransitionDiff.DeactivateSceneModuleIds.Contains(ModuleSceneId))
             {
@@ -44,7 +44,7 @@ namespace Lighthouse.Scene.SceneBase
             canvasInitializer.Initialize(canvasCamera);
         }
 
-        protected override void OnBeginInAnimation(SceneTransitionContext context)
+        protected override void OnBeginInAnimation(ISceneTransitionContext context)
         {
             base.OnBeginInAnimation(context);
 
@@ -52,7 +52,7 @@ namespace Lighthouse.Scene.SceneBase
             canvasGroup.alpha = isActivateScene ? 1.0f : canvasGroup.alpha;
         }
 
-        protected override void OnCompleteOutAnimation(SceneTransitionContext context)
+        protected override void OnCompleteOutAnimation(ISceneTransitionContext context)
         {
             base.OnCompleteOutAnimation(context);
 

@@ -18,13 +18,13 @@ namespace Lighthouse.Scene.SceneBase
             return base.OnLoad();
         }
 
-        protected override UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnEnter(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             canvasGroup.alpha = 1;
             return base.OnEnter(context, cancelToken);
         }
 
-        protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnLeave(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             canvasGroup.alpha = 0;
             return base.OnLeave(context, cancelToken);

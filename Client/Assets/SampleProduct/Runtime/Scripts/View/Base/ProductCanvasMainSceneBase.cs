@@ -44,7 +44,7 @@ namespace SampleProduct.View.Base
             return inputActions.Scene;
         }
 
-        protected override async UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override async UniTask OnEnter(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             var layer = CreateInputLayer(inputActions);
             var actionMap = GetInputLayerActionMap(inputActions);
@@ -56,7 +56,7 @@ namespace SampleProduct.View.Base
             await base.OnEnter(context, cancelToken);
         }
 
-        protected override async UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override async UniTask OnLeave(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             await base.OnLeave(context, cancelToken);
             if (currentInputLayer != null)
@@ -66,17 +66,17 @@ namespace SampleProduct.View.Base
             }
         }
 
-        public override void ResetInAnimation(SceneTransitionContext context)
+        public override void ResetInAnimation(ISceneTransitionContext context)
         {
             sceneTransitionAnimatorManager.ResetInAnimation();
         }
 
-        protected override async UniTask InAnimation(SceneTransitionContext context)
+        protected override async UniTask InAnimation(ISceneTransitionContext context)
         {
             await sceneTransitionAnimatorManager.InAnimation();
         }
 
-        protected override async UniTask OutAnimation(SceneTransitionContext context)
+        protected override async UniTask OutAnimation(ISceneTransitionContext context)
         {
             await sceneTransitionAnimatorManager.OutAnimation();
         }

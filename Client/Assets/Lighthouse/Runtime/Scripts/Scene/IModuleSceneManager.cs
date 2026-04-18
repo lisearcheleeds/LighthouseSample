@@ -9,20 +9,20 @@ namespace Lighthouse.Scene
     {
         void SetEnqueueParentLifetimeScope(Func<IDisposable> enqueueParentLifetimeScope);
 
-        public UniTask Load(SceneTransitionContext context);
-        public UniTask Unload(SceneTransitionContext context);
+        public UniTask Load(ISceneTransitionContext context);
+        public UniTask Unload(ISceneTransitionContext context);
 
-        public UniTask Enter(SceneTransitionContext context, CancellationToken cancellationToken);
-        public UniTask Leave(SceneTransitionContext context, CancellationToken cancellationToken);
+        public UniTask Enter(ISceneTransitionContext context, CancellationToken cancellationToken);
+        public UniTask Leave(ISceneTransitionContext context, CancellationToken cancellationToken);
 
-        public void ResetAnimation(SceneTransitionContext context);
-        public UniTask PlayInAnimation(SceneTransitionContext context);
-        public UniTask PlayOutAnimation(SceneTransitionContext context);
+        public void ResetAnimation(ISceneTransitionContext context);
+        public UniTask PlayInAnimation(ISceneTransitionContext context);
+        public UniTask PlayOutAnimation(ISceneTransitionContext context);
 
         public ISceneCamera[] GetSceneCameraList(ModuleSceneId[] requestSceneModuleIds);
-        public void InitializeCanvas(SceneTransitionContext context);
+        public void InitializeCanvas(ISceneTransitionContext context);
 
-        public void OnSceneTransitionFinished(SceneTransitionContext context);
+        public void OnSceneTransitionFinished(ISceneTransitionContext context);
 
         UniTask PreReboot();
     }

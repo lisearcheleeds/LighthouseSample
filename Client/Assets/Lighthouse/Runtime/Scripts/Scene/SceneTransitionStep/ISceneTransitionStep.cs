@@ -5,6 +5,6 @@ namespace Lighthouse.Scene.SceneTransitionStep
 {
     public interface ISceneTransitionStep
     {
-        UniTask Run(SceneTransitionContext context, CancellationToken cancelToken);
+        UniTask Run(ISceneTransitionContext context, CancellationToken cancelToken);
     }
 }

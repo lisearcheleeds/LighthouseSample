@@ -6,7 +6,7 @@ namespace Lighthouse.Scene.SceneTransitionStep
     public sealed class LeaveSceneStep : ISceneTransitionStep
     {
         async UniTask ISceneTransitionStep.Run(
-            SceneTransitionContext context,
+            ISceneTransitionContext context,
             CancellationToken cancelToken)
         {
             await context.MainSceneManager.Leave(context, cancelToken);

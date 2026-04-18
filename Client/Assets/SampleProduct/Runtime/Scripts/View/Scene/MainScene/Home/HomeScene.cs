@@ -35,7 +35,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
             return UniTask.CompletedTask;
         }
 
-        protected override UniTask OnEnter(HomeTransitionData transitionData, SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnEnter(HomeTransitionData transitionData, ISceneTransitionContext context, CancellationToken cancelToken)
         {
             homePresenter.OnEnter();
             return UniTask.CompletedTask;

@@ -26,7 +26,7 @@ namespace Lighthouse.Scene.SceneBase
             return UniTask.CompletedTask;
         }
 
-        public async UniTask Enter(SceneTransitionContext context, CancellationToken cancelToken)
+        public async UniTask Enter(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             if (!initialized)
             {
@@ -37,7 +37,7 @@ namespace Lighthouse.Scene.SceneBase
             await OnEnter(context, cancelToken);
         }
 
-        public async UniTask Leave(SceneTransitionContext context, CancellationToken cancelToken)
+        public async UniTask Leave(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             await OnLeave(context, cancelToken);
         }
@@ -47,11 +47,11 @@ namespace Lighthouse.Scene.SceneBase
             return UniTask.CompletedTask;
         }
 
-        public virtual void ResetInAnimation(SceneTransitionContext context)
+        public virtual void ResetInAnimation(ISceneTransitionContext context)
         {
         }
 
-        public async UniTask PlayInAnimation(SceneTransitionContext context)
+        public async UniTask PlayInAnimation(ISceneTransitionContext context)
         {
             // NOTE: InAnimation events are independent because they are expected to wait in WhenAll().
             OnBeginInAnimation(context);
@@ -59,7 +59,7 @@ namespace Lighthouse.Scene.SceneBase
             OnCompleteInAnimation(context);
         }
 
-        public async UniTask PlayOutAnimation(SceneTransitionContext context)
+        public async UniTask PlayOutAnimation(ISceneTransitionContext context)
         {
             // NOTE: OutAnimation events are independent because they are expected to wait in WhenAll().
             OnBeginOutAnimation(context);
@@ -77,39 +77,39 @@ namespace Lighthouse.Scene.SceneBase
             return UniTask.CompletedTask;
         }
 
-        protected virtual UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
+        protected virtual UniTask OnEnter(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             return UniTask.CompletedTask;
         }
 
-        protected virtual UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
+        protected virtual UniTask OnLeave(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             return UniTask.CompletedTask;
         }
 
-        protected virtual void OnBeginInAnimation(SceneTransitionContext context)
+        protected virtual void OnBeginInAnimation(ISceneTransitionContext context)
         {
         }
 
-        protected virtual UniTask InAnimation(SceneTransitionContext context)
-        {
-            return UniTask.CompletedTask;
-        }
-
-        protected virtual void OnCompleteInAnimation(SceneTransitionContext context)
-        {
-        }
-
-        protected virtual void OnBeginOutAnimation(SceneTransitionContext context)
-        {
-        }
-
-        protected virtual UniTask OutAnimation(SceneTransitionContext context)
+        protected virtual UniTask InAnimation(ISceneTransitionContext context)
         {
             return UniTask.CompletedTask;
         }
 
-        protected virtual void OnCompleteOutAnimation(SceneTransitionContext context)
+        protected virtual void OnCompleteInAnimation(ISceneTransitionContext context)
+        {
+        }
+
+        protected virtual void OnBeginOutAnimation(ISceneTransitionContext context)
+        {
+        }
+
+        protected virtual UniTask OutAnimation(ISceneTransitionContext context)
+        {
+            return UniTask.CompletedTask;
+        }
+
+        protected virtual void OnCompleteOutAnimation(ISceneTransitionContext context)
         {
         }
     }

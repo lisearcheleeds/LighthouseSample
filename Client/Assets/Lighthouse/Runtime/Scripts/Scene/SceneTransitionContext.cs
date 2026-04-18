@@ -2,12 +2,13 @@ using Lighthouse.Scene.SceneCamera;
 
 namespace Lighthouse.Scene
 {
-    public class SceneTransitionContext
+    public class SceneTransitionContext : ISceneTransitionContext
     {
         public TransitionDataBase TransitionData { get; }
         public TransitionDirectionType TransitionDirectionType { get; }
         public TransitionType TransitionType { get; }
         public SceneTransitionDiff SceneTransitionDiff { get; }
+
         public IMainSceneManager MainSceneManager { get; }
         public IModuleSceneManager ModuleSceneManager { get; }
         public ISceneCameraManager SceneCameraManager { get; }
@@ -25,6 +26,7 @@ namespace Lighthouse.Scene
             TransitionDirectionType = transitionDirectionType;
             TransitionType = transitionType;
             SceneTransitionDiff = sceneTransitionDiff;
+
             MainSceneManager = mainSceneManager;
             ModuleSceneManager = moduleSceneManager;
             SceneCameraManager = sceneCameraManager;

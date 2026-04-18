@@ -19,7 +19,7 @@ namespace SampleProduct.View.Scene.ModuleScene.Overlay
             await OutAnimation(null);
         }
 
-        public override void ResetInAnimation(SceneTransitionContext context)
+        public override void ResetInAnimation(ISceneTransitionContext context)
         {
             if (context != null && context.TransitionType == TransitionType.Cross)
             {
@@ -29,7 +29,7 @@ namespace SampleProduct.View.Scene.ModuleScene.Overlay
             base.ResetInAnimation(context);
         }
 
-        protected override async UniTask InAnimation(SceneTransitionContext context)
+        protected override async UniTask InAnimation(ISceneTransitionContext context)
         {
             if (context != null && context.TransitionType == TransitionType.Cross)
             {
@@ -39,7 +39,7 @@ namespace SampleProduct.View.Scene.ModuleScene.Overlay
             await base.InAnimation(context);
         }
 
-        protected override async UniTask OutAnimation(SceneTransitionContext context)
+        protected override async UniTask OutAnimation(ISceneTransitionContext context)
         {
             if (context != null && context.TransitionType == TransitionType.Cross)
             {

@@ -18,7 +18,7 @@ namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
             globalHeaderView.SetText(textValue);
         }
 
-        public override void ResetInAnimation(SceneTransitionContext context)
+        public override void ResetInAnimation(ISceneTransitionContext context)
         {
             if (context != null && context.TransitionType == TransitionType.Cross)
             {
@@ -28,7 +28,7 @@ namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
             base.ResetInAnimation(context);
         }
 
-        protected override async UniTask InAnimation(SceneTransitionContext context)
+        protected override async UniTask InAnimation(ISceneTransitionContext context)
         {
             if (context != null && context.TransitionType == TransitionType.Cross)
             {
@@ -38,7 +38,7 @@ namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
             await base.InAnimation(context);
         }
 
-        protected override async UniTask OutAnimation(SceneTransitionContext context)
+        protected override async UniTask OutAnimation(ISceneTransitionContext context)
         {
             if (context != null && context.TransitionType == TransitionType.Cross)
             {

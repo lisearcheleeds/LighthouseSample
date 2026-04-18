@@ -6,7 +6,7 @@ namespace Lighthouse.Scene.SceneTransitionStep
     public sealed class OutAnimationStep : ISceneTransitionStep
     {
         async UniTask ISceneTransitionStep.Run(
-            SceneTransitionContext context,
+            ISceneTransitionContext context,
             CancellationToken cancelToken)
         {
             await UniTask.WhenAll(

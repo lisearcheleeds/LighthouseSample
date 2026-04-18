@@ -6,7 +6,7 @@ namespace Lighthouse.Scene.SceneTransitionStep
     public sealed class EnterSceneStep : ISceneTransitionStep
     {
         async UniTask ISceneTransitionStep.Run(
-            SceneTransitionContext context,
+            ISceneTransitionContext context,
             CancellationToken cancelToken)
         {
             await context.MainSceneManager.Enter(context, cancelToken);

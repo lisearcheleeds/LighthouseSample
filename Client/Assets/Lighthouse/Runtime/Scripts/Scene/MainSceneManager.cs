@@ -31,7 +31,7 @@ namespace Lighthouse.Scene
             return Array.Empty<ISceneCamera>();
         }
 
-        void IMainSceneManager.InitializeCanvas(SceneTransitionContext context)
+        void IMainSceneManager.InitializeCanvas(ISceneTransitionContext context)
         {
             if (!loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
             {
@@ -44,7 +44,7 @@ namespace Lighthouse.Scene
             }
         }
 
-        async UniTask IMainSceneManager.Enter(SceneTransitionContext context, CancellationToken cancelToken)
+        async UniTask IMainSceneManager.Enter(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             if (!loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
             {
@@ -54,7 +54,7 @@ namespace Lighthouse.Scene
             await scene.Enter(context, cancelToken);
         }
 
-        async UniTask IMainSceneManager.Leave(SceneTransitionContext context, CancellationToken cancelToken)
+        async UniTask IMainSceneManager.Leave(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             if (context.SceneTransitionDiff.CurrentMainSceneId == null
                 || !loadedScenes.TryGetValue(context.SceneTransitionDiff.CurrentMainSceneId, out var scene))
@@ -65,7 +65,7 @@ namespace Lighthouse.Scene
             await scene.Leave(context, cancelToken);
         }
 
-        void IMainSceneManager.ResetInAnimation(SceneTransitionContext context)
+        void IMainSceneManager.ResetInAnimation(ISceneTransitionContext context)
         {
             if (!loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
             {
@@ -75,7 +75,7 @@ namespace Lighthouse.Scene
             scene.ResetInAnimation(context);
         }
 
-        async UniTask IMainSceneManager.PlayInAnimation(SceneTransitionContext context)
+        async UniTask IMainSceneManager.PlayInAnimation(ISceneTransitionContext context)
         {
             if (!loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
             {
@@ -85,7 +85,7 @@ namespace Lighthouse.Scene
             await scene.PlayInAnimation(context);
         }
 
-        async UniTask IMainSceneManager.PlayOutAnimation(SceneTransitionContext context)
+        async UniTask IMainSceneManager.PlayOutAnimation(ISceneTransitionContext context)
         {
             if (context.SceneTransitionDiff.CurrentMainSceneId == null
                 || !loadedScenes.TryGetValue(context.SceneTransitionDiff.CurrentMainSceneId, out var scene))
@@ -96,7 +96,7 @@ namespace Lighthouse.Scene
             await scene.PlayOutAnimation(context);
         }
 
-        async UniTask IMainSceneManager.SaveSceneState(SceneTransitionContext context, CancellationToken cancelToken)
+        async UniTask IMainSceneManager.SaveSceneState(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             if (context.SceneTransitionDiff.CurrentMainSceneId == null
                 || !loadedScenes.TryGetValue(context.SceneTransitionDiff.CurrentMainSceneId, out var scene))
@@ -107,7 +107,7 @@ namespace Lighthouse.Scene
             await scene.SaveSceneState(cancelToken);
         }
 
-        async UniTask IMainSceneManager.Load(SceneTransitionContext context)
+        async UniTask IMainSceneManager.Load(ISceneTransitionContext context)
         {
             if (context.SceneTransitionDiff.IsInnerGroupTransition)
             {
@@ -153,7 +153,7 @@ namespace Lighthouse.Scene
             }
         }
 
-        async UniTask IMainSceneManager.Unload(SceneTransitionContext context)
+        async UniTask IMainSceneManager.Unload(ISceneTransitionContext context)
         {
             if (context.SceneTransitionDiff.IsInnerGroupTransition)
             {
@@ -174,7 +174,7 @@ namespace Lighthouse.Scene
             }
         }
 
-        void IMainSceneManager.OnSceneTransitionFinished(SceneTransitionContext context)
+        void IMainSceneManager.OnSceneTransitionFinished(ISceneTransitionContext context)
         {
             if (!loadedScenes.TryGetValue(context.SceneTransitionDiff.NextMainSceneId, out var scene))
             {

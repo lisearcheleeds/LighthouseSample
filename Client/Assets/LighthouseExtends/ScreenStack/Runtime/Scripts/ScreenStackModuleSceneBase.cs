@@ -22,7 +22,7 @@ namespace LighthouseExtends.ScreenStack
             return UniTask.CompletedTask;
         }
 
-        protected override UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnEnter(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             if (context.TransitionDirectionType == TransitionDirectionType.Back && context.TransitionType == TransitionType.Exclusive)
             {
@@ -34,7 +34,7 @@ namespace LighthouseExtends.ScreenStack
             return base.OnEnter(context, cancelToken);
         }
 
-        protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnLeave(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             if (context.TransitionDirectionType == TransitionDirectionType.Forward && context.TransitionType == TransitionType.Exclusive)
             {
@@ -46,7 +46,7 @@ namespace LighthouseExtends.ScreenStack
             return base.OnLeave(context, cancelToken);
         }
 
-        protected override UniTask InAnimation(SceneTransitionContext context)
+        protected override UniTask InAnimation(ISceneTransitionContext context)
         {
             if (context.TransitionDirectionType == TransitionDirectionType.Back && context.TransitionType == TransitionType.Cross)
             {
@@ -56,7 +56,7 @@ namespace LighthouseExtends.ScreenStack
             return UniTask.CompletedTask;
         }
 
-        protected override UniTask OutAnimation(SceneTransitionContext context)
+        protected override UniTask OutAnimation(ISceneTransitionContext context)
         {
             if (context.TransitionDirectionType == TransitionDirectionType.Forward && context.TransitionType == TransitionType.Cross)
             {

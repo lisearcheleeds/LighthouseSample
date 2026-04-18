@@ -8,7 +8,7 @@ namespace Lighthouse.Scene.SceneBase
     {
         public abstract ModuleSceneId ModuleSceneId { get; }
 
-        protected override UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnEnter(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             if (context.SceneTransitionDiff.ActivateSceneModuleIds.Contains(ModuleSceneId))
             {
@@ -18,7 +18,7 @@ namespace Lighthouse.Scene.SceneBase
             return base.OnEnter(context, cancelToken);
         }
 
-        protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnLeave(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             if (context.SceneTransitionDiff.DeactivateSceneModuleIds.Contains(ModuleSceneId))
             {

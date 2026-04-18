@@ -12,7 +12,7 @@ namespace Lighthouse.Scene.SceneBase
     {
         protected TTransitionData TransitionData { get; private set; }
 
-        protected override UniTask OnEnter(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnEnter(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             // If necessary, you can override OnEnter to control the gameObject.
             gameObject.SetActive(true);
@@ -22,12 +22,12 @@ namespace Lighthouse.Scene.SceneBase
             return OnEnter(TransitionData, context, cancelToken);
         }
 
-        protected virtual UniTask OnEnter(TTransitionData transitionData,SceneTransitionContext context, CancellationToken cancelToken)
+        protected virtual UniTask OnEnter(TTransitionData transitionData, ISceneTransitionContext context, CancellationToken cancelToken)
         {
             return UniTask.CompletedTask;
         }
 
-        protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnLeave(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             gameObject.SetActive(false);
             return base.OnLeave(context, cancelToken);

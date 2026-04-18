@@ -6,7 +6,7 @@ namespace Lighthouse.Scene.SceneTransitionStep
     public sealed class ResolveCameraStep : ISceneTransitionStep
     {
         UniTask ISceneTransitionStep.Run(
-            SceneTransitionContext context,
+            ISceneTransitionContext context,
             CancellationToken cancelToken)
         {
             context.SceneCameraManager.UpdateCameraStack(context.MainSceneManager, context.SceneTransitionDiff);

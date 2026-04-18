@@ -54,18 +54,18 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
             return UniTask.CompletedTask;
         }
 
-        protected override UniTask OnEnter(SampleTopTransitionData transitionData, SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnEnter(SampleTopTransitionData transitionData, ISceneTransitionContext context, CancellationToken cancelToken)
         {
             sampleTopPresenter.OnEnter(transitionData.TargetTabType);
             return base.OnEnter(transitionData, context, cancelToken);
         }
 
-        protected override void OnCompleteInAnimation(SceneTransitionContext context)
+        protected override void OnCompleteInAnimation(ISceneTransitionContext context)
         {
             sampleTopPresenter.OnCompleteInAnimation();
         }
 
-        protected override UniTask OnLeave(SceneTransitionContext context, CancellationToken cancelToken)
+        protected override UniTask OnLeave(ISceneTransitionContext context, CancellationToken cancelToken)
         {
             TransitionData.SetTargetTabType(sampleTopPresenter.CurrentTabType);
             return base.OnLeave(context, cancelToken);

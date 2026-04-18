@@ -8,7 +8,7 @@ namespace Lighthouse.Scene.SceneTransitionStep
     public sealed class CleanupStep : ISceneTransitionStep
     {
         async UniTask ISceneTransitionStep.Run(
-            SceneTransitionContext context,
+            ISceneTransitionContext context,
             CancellationToken cancelToken)
         {
             // Before GC

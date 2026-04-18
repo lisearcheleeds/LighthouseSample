@@ -11,17 +11,17 @@ namespace SampleProduct.View.Base
     {
         [SerializeField] LHSceneTransitionAnimatorManager sceneTransitionAnimatorManager;
 
-        public override void ResetInAnimation(SceneTransitionContext context)
+        public override void ResetInAnimation(ISceneTransitionContext context)
         {
             sceneTransitionAnimatorManager.ResetInAnimation();
         }
 
-        protected override async UniTask InAnimation(SceneTransitionContext context)
+        protected override async UniTask InAnimation(ISceneTransitionContext context)
         {
             await sceneTransitionAnimatorManager.InAnimation();
         }
 
-        protected override async UniTask OutAnimation(SceneTransitionContext context)
+        protected override async UniTask OutAnimation(ISceneTransitionContext context)
         {
             await sceneTransitionAnimatorManager.OutAnimation();
         }
