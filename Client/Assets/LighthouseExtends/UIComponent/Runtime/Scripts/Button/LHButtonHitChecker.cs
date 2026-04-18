@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace LighthouseExtends.UIComponent.Button
 {
@@ -9,10 +8,6 @@ namespace LighthouseExtends.UIComponent.Button
     {
         static readonly List<RaycastResult> raycastResults = new();
 
-        /// <summary>
-        /// ボタン中央へ Raycast し、最前面にボタン自身（または子要素）が存在すれば true を返す。
-        /// インタラクタブルでない場合、他の UI に隠れている場合は false。
-        /// </summary>
         public static bool IsHittable(LHButton button)
         {
             if (!button.IsInteractable())
@@ -48,6 +43,17 @@ namespace LighthouseExtends.UIComponent.Button
             var topHit = raycastResults[0];
             return topHit.gameObject == button.gameObject
                 || topHit.gameObject.transform.IsChildOf(button.transform);
+        }
+
+        public static bool TryClick(LHButton button)
+        {
+            if (!IsHittable(button))
+            {
+                return false;
+            }
+
+            button.onClick.Invoke();
+            return true;
         }
     }
 }

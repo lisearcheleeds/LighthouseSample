@@ -1,9 +1,12 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
+using LighthouseExtends.InputLayer;
+using SampleProduct.Input;
+using SampleProduct.Input.Layer;
+using SampleProduct.LighthouseGenerated;
 using SampleProduct.View.Base;
 using VContainer;
-using SampleProduct.LighthouseGenerated;
 
 namespace SampleProduct.View.Scene.MainScene.SceneSample2
 {
@@ -22,6 +25,11 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample2
         public void Constructor(ISceneSample2Presenter sceneSample2Presenter)
         {
             this.sceneSample2Presenter = sceneSample2Presenter;
+        }
+
+        protected override IInputLayer CreateInputLayer(InputActions inputActions)
+        {
+            return new DefaultSceneInputLayer(inputActions, () => sceneSample2Presenter.TryClickBackButton());
         }
 
         protected override UniTask OnSetup()

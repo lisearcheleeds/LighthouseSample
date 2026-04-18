@@ -36,7 +36,7 @@ namespace SampleProduct.View.Base
 
         protected virtual IInputLayer CreateInputLayer(InputActions inputActions)
         {
-            return new DefaultSceneInputLayer(inputActions, () => sceneManager.BackScene());
+            return null;
         }
 
         protected virtual InputActionMap GetInputLayerActionMap(InputActions inputActions)

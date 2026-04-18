@@ -5,6 +5,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
     public interface ISampleTopView
     {
         public IDisposable SubscribeBackSceneButtonClick(Action action);
+        public bool TryClickBackButton();
 
         public IDisposable SubscribeOverviewTabButtonClick(Action action);
         public IDisposable SubscribeSceneSampleTabButtonClick(Action action);

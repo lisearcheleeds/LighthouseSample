@@ -1,4 +1,7 @@
+using LighthouseExtends.InputLayer;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.Input;
+using SampleProduct.Input.Layer;
 using SampleProduct.View.Base;
 using UnityEngine;
 using VContainer;
@@ -16,6 +19,11 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.TextViewElement
         {
             presenter = new TextViewElementPresenter();
             objectResolver.Inject(presenter);
+        }
+
+        protected override IInputLayer CreateInputLayer(InputActions inputActions)
+        {
+            return new DefaultScreenStackInputLayer(inputActions, () => textViewElementView.TryClickCloseButton());
         }
 
         public void Setup(TextViewElementData screenStackElementData)

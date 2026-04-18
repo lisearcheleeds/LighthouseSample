@@ -10,5 +10,6 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.AnimationElement
         [SerializeField] LHButton closeButton;
 
         public IDisposable SubscribeCloseButtonClick(Action action) => closeButton.SubscribeOnClick(action);
+        public bool TryClickCloseButton() => LHButtonHitChecker.TryClick(closeButton);
     }
 }

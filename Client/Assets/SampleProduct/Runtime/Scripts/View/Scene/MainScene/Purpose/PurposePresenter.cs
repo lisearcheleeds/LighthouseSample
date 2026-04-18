@@ -26,6 +26,8 @@ namespace SampleProduct.View.Scene.MainScene.Purpose
         {
         }
 
+        bool IPurposePresenter.TryClickBackButton() => purposeView.TryClickBackButton();
+
         void OnClickBackScene()
         {
             sceneManager.BackScene();

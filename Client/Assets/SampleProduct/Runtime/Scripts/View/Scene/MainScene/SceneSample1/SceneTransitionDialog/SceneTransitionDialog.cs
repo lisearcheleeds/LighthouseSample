@@ -1,5 +1,8 @@
 using Cysharp.Threading.Tasks;
+using LighthouseExtends.InputLayer;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.Input;
+using SampleProduct.Input.Layer;
 using SampleProduct.View.Base;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -18,6 +21,11 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionDialog
         {
             presenter = new SceneTransitionPresenter();
             objectResolver.Inject(presenter);
+        }
+
+        protected override IInputLayer CreateInputLayer(InputActions inputActions)
+        {
+            return new DefaultScreenStackInputLayer(inputActions, () => sceneTransitionView.TryClickCloseButton());
         }
 
         public void Setup(SceneTransitionData data)

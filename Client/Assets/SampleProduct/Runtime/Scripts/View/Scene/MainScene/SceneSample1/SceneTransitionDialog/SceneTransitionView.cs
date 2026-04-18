@@ -12,6 +12,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionDialog
         [SerializeField] LHButton transitionSceneWithCloseButton;
 
         public IDisposable SubscribeCloseButtonClick(Action action) => closeButton.SubscribeOnClick(action);
+        public bool TryClickCloseButton() => LHButtonHitChecker.TryClick(closeButton);
         public IDisposable SubscribeTransitionSceneButtonClick(Action action) => transitionSceneButton.SubscribeOnClick(action);
         public IDisposable SubscribeTransitionSceneWithCloseButtonClick(Action action) => transitionSceneWithCloseButton.SubscribeOnClick(action);
     }

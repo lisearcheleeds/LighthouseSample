@@ -10,5 +10,6 @@ namespace SampleProduct.View.Scene.MainScene.Purpose
         [SerializeField] LHButton backSceneButton;
 
         IDisposable IPurposeView.SubscribeBackSceneButtonClick(Action action) => backSceneButton.SubscribeOnClick(action);
+        bool IPurposeView.TryClickBackButton() => LHButtonHitChecker.TryClick(backSceneButton);
     }
 }

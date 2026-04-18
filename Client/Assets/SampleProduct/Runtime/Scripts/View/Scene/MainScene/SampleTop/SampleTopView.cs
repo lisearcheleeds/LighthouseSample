@@ -52,6 +52,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         [SerializeField] LHTransitionAnimator[] overViewTabContentPageAnimators;
 
         IDisposable ISampleTopView.SubscribeBackSceneButtonClick(Action action) => backSceneButton.SubscribeOnClick(action);
+        bool ISampleTopView.TryClickBackButton() => LHButtonHitChecker.TryClick(backSceneButton);
 
         IDisposable ISampleTopView.SubscribeOverviewTabButtonClick(Action action) => overviewTabButton.SubscribeOnClick(action);
         IDisposable ISampleTopView.SubscribeSceneSampleTabButtonClick(Action action) => sceneSampleTabButton.SubscribeOnClick(action);

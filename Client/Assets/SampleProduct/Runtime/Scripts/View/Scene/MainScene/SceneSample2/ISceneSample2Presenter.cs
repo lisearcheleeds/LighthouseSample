@@ -4,5 +4,6 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample2
     {
         void Setup();
         void OnEnter();
+        bool TryClickBackButton();
     }
 }

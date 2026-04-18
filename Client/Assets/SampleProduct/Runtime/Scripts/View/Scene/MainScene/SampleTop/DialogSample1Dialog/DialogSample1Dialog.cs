@@ -1,5 +1,8 @@
 using Cysharp.Threading.Tasks;
+using LighthouseExtends.InputLayer;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.Input;
+using SampleProduct.Input.Layer;
 using SampleProduct.View.Base;
 using UnityEngine;
 using VContainer;
@@ -17,6 +20,11 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog
         {
             presenter = new DialogSample1Presenter();
             objectResolver.Inject(presenter);
+        }
+
+        protected override IInputLayer CreateInputLayer(InputActions inputActions)
+        {
+            return new DefaultScreenStackInputLayer(inputActions, () => dialogSample1View.TryClickCloseButton());
         }
 
         public void Setup(DialogSample1Data screenStackData)

@@ -7,5 +7,6 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         void Setup();
         void OnEnter(TabType targetTabType);
         void OnCompleteInAnimation();
+        bool TryClickBackButton();
     }
 }

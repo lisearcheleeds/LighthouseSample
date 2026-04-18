@@ -32,7 +32,7 @@ namespace SampleProduct.View.Base
 
         protected virtual IInputLayer CreateInputLayer(InputActions inputActions)
         {
-            return new DefaultScreenStackInputLayer(inputActions, () => screenStackModule.Close());
+            return null;
         }
 
         protected virtual InputActionMap GetInputLayerActionMap(InputActions inputActions)

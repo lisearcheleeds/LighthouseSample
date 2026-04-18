@@ -89,6 +89,8 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
             sampleTopView.SetOverviewIndex(overviewIndex, overviewIndex);
         }
 
+        bool ISampleTopPresenter.TryClickBackButton() => sampleTopView.TryClickBackButton();
+
         void OnClickBackScene()
         {
             sceneManager.BackScene();

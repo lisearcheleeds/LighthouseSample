@@ -1,4 +1,7 @@
+using LighthouseExtends.InputLayer;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.Input;
+using SampleProduct.Input.Layer;
 using SampleProduct.View.Base;
 using UnityEngine;
 using VContainer;
@@ -16,6 +19,11 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSampleConfirmDialog
         {
             presenter = new DialogSampleConfirmPresenter();
             objectResolver.Inject(presenter);
+        }
+
+        protected override IInputLayer CreateInputLayer(InputActions inputActions)
+        {
+            return new DefaultScreenStackInputLayer(inputActions, () => dialogSampleConfirmView.TryClickCloseButton());
         }
 
         public void Setup(DialogSampleConfirmData screenStackData)

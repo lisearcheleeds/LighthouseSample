@@ -115,7 +115,6 @@ namespace LighthouseExtends.InputLayer
 
         void OnActionStarted(InputAction.CallbackContext ctx)
         {
-            Debug.Log($"[InputLayer] OnActionStarted");
             if (globalActionMap != null && ctx.action.actionMap == globalActionMap)
             {
                 globalLayer?.OnActionStarted(ctx.action);

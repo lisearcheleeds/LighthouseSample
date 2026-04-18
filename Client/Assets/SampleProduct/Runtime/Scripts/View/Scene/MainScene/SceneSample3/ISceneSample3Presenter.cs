@@ -5,5 +5,6 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample3
         void Setup();
         void OnEnter();
         void ApplyChoiceData(int choiceData);
+        bool TryClickBackButton();
     }
 }

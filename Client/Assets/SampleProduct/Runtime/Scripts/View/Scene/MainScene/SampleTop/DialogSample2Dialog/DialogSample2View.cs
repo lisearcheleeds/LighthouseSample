@@ -16,6 +16,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog
         [SerializeField] LHButton openConfirmDialogButton;
 
         public IDisposable SubscribeCloseButtonClick(Action action) => closeButton.SubscribeOnClick(action);
+        public bool TryClickCloseButton() => LHButtonHitChecker.TryClick(closeButton);
         public IDisposable SubscribeOpenDialog1ButtonClick(Action action) => openDialog1Button.SubscribeOnClick(action);
         public IDisposable SubscribeOpenDialog2ButtonClick(Action action) => openDialog2Button.SubscribeOnClick(action);
         public IDisposable SubscribeConfirmOpenDialogButtonClick(Action action) => openConfirmDialogButton.SubscribeOnClick(action);
