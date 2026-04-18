@@ -45,7 +45,7 @@ namespace LighthouseExtends.InputLayer
         {
             if (layer == null || actionMap == null)
             {
-                return;
+                throw new ArgumentException($"[InputLayer] layer or actionMap is null");
             }
 
             layerStack.Insert(0, new LayerEntry(layer, actionMap));
@@ -124,7 +124,8 @@ namespace LighthouseExtends.InputLayer
                 }
                 catch (Exception e)
                 {
-                    Debug.LogException(e); consumed = false;
+                    Debug.LogException(e);
+                    consumed = false;
                 }
 
                 if (consumed || entry.Layer.BlocksAllInput)
