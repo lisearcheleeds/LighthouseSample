@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: DefaultLocalGroup
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: DefaultLocalGroup
+  m_GUID: 9ecfaf118772f254d94276853b1474af
+  m_SerializeEntries:
+  - m_GUID: 0bedca59ebcf111408f56280b046abad
+    m_Address: InputLayerElementOverlay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d2fc9a5fec5d6f49a05ffc527d92081
+    m_Address: DialogSampleConfirmDialog
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20416435fd0d9e946a1f630bd82d9adb
+    m_Address: TextViewElementOverlay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48e882faa2ee3384f80c886ffb225fb1
+    m_Address: TransitionAnimationElementOverlay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a39d18752d42454f9cbea9af9acd4d0
+    m_Address: AnimationElementOverlay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b748df0274066b44b4413c821054bbf
+    m_Address: DialogElementDialog
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9d32f9fb2bc39ee4e884677fe306db61
+    m_Address: PopupElementPopup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6e7e6cea94c01e469d6ce42255b5ef6
+    m_Address: RequireToolsDialog
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a78e4a5b20a4f3540ae6399cb3e4e204
+    m_Address: DialogSample1Dialog
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b84b8e1193a744e40adf6d0047cd3e75
+    m_Address: DialogSample2Dialog
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb7f3c2c7472cc942bea1f5691f99fa8
+    m_Address: OverlayElementOverlay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f33121bdabd8bfd45bdd14c4ccbf87eb
+    m_Address: ButtonElementOverlay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f677d7fddabbaf64f8ef71187e9b74d2
+    m_Address: SceneTransitionDialog
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: a0fd5997e35332147912dfcbb9174bd9, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 4ab232001486259469630a7953cfb5ef, type: 2}
+    - {fileID: 11400000, guid: da8fc144a00ba534e8a5ee857a014155, type: 2}
