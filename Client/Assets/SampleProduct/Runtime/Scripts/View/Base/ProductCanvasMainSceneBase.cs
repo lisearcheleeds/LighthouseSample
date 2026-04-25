@@ -2,9 +2,10 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using Lighthouse.Scene.SceneBase;
-using SampleProduct.Core;
+using LighthouseExtends.Addressable;
 using LighthouseExtends.Animation;
 using LighthouseExtends.InputLayer;
+using SampleProduct.Core;
 using SampleProduct.Input;
 using SampleProduct.Input.Layer;
 using UnityEngine;
@@ -21,18 +22,36 @@ namespace SampleProduct.View.Base
         ISampleSceneManager sceneManager;
         IInputLayerController inputLayerController;
         IInputLayer currentInputLayer;
+        ILHAssetManager assetManager;
 
         InputActions inputActions;
 
+        protected ILHAssetScope AssetScope { get; private set; }
+
         [Inject]
-        public void ConstructInputLayer(
+        public void Construct(
             ISampleSceneManager sceneManager,
             IInputLayerController inputLayerController,
-            InputActions inputActions)
+            InputActions inputActions,
+            ILHAssetManager assetManager)
         {
             this.sceneManager = sceneManager;
             this.inputLayerController = inputLayerController;
             this.inputActions = inputActions;
+            this.assetManager = assetManager;
+        }
+
+        protected override UniTask OnSetup()
+        {
+            AssetScope = assetManager.CreateScope();
+            return base.OnSetup();
+        }
+
+        public override async UniTask OnUnload()
+        {
+            await base.OnUnload();
+            AssetScope?.Dispose();
+            AssetScope = null;
         }
 
         protected virtual IInputLayer CreateInputLayer(InputActions inputActions)

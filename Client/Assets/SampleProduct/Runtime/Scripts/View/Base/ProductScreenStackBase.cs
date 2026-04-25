@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using LighthouseExtends.Addressable;
 using LighthouseExtends.Animation;
 using LighthouseExtends.InputLayer;
 using LighthouseExtends.ScreenStack;
@@ -16,17 +17,22 @@ namespace SampleProduct.View.Base
 
         IScreenStackModule screenStackModule;
         IInputLayerController inputLayerController;
+        ILHAssetManager assetManager;
         InputActions inputActions;
         IInputLayer inputLayer;
+
+        protected ILHAssetScope AssetScope { get; private set; }
 
         [Inject]
         public void Construct(
             IScreenStackModule screenStackModule,
             IInputLayerController inputLayerController,
+            ILHAssetManager assetManager,
             InputActions inputActions)
         {
             this.screenStackModule = screenStackModule;
             this.inputLayerController = inputLayerController;
+            this.assetManager = assetManager;
             this.inputActions = inputActions;
         }
 
@@ -38,6 +44,19 @@ namespace SampleProduct.View.Base
         protected virtual InputActionMap GetInputLayerActionMap(InputActions inputActions)
         {
             return inputActions.ScreenStack;
+        }
+
+        public override UniTask OnInitialize()
+        {
+            AssetScope = assetManager.CreateScope();
+            return UniTask.CompletedTask;
+        }
+
+        public override void Dispose()
+        {
+            AssetScope?.Dispose();
+            AssetScope = null;
+            base.Dispose();
         }
 
         public override UniTask OnEnter(bool isResume)

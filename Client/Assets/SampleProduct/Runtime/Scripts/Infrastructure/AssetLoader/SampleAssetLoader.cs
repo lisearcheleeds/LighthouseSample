@@ -8,6 +8,7 @@ using LighthouseExtends.Font;
 using LighthouseExtends.ScreenStack;
 using LighthouseExtends.TextTable;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using VContainer;
 using VContainer.Unity;
@@ -30,10 +31,18 @@ namespace SampleProduct.Infrastructure.AssetLoader
 
         async UniTask<TScreenStack> IScreenStackInstanceFactory.CreateScreenStackInstance<TScreenStack>(string screenStackAddress, CancellationToken ct)
         {
-            var request = Resources.LoadAsync<GameObject>(screenStackAddress);
-            await request.ToUniTask(cancellationToken: ct);
-            var prefab = request.asset as GameObject;
-            var gameObject = objectResolver.Instantiate(prefab);
+            var handle = Addressables.LoadAssetAsync<GameObject>(screenStackAddress);
+            try
+            {
+                await handle.ToUniTask(cancellationToken: ct);
+            }
+            catch
+            {
+                Addressables.Release(handle);
+                throw;
+            }
+
+            var gameObject = objectResolver.Instantiate(handle.Result);
             return gameObject.GetComponents<MonoBehaviour>().OfType<TScreenStack>().First();
         }
 
