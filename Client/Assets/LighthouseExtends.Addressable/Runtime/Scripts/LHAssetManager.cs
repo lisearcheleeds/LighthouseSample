@@ -15,8 +15,8 @@ namespace LighthouseExtends.Addressable
     {
         class Entry
         {
-            public AsyncOperationHandle Handle;
-            public int RefCount;
+            public AsyncOperationHandle Handle { get; set; }
+            public int RefCount { get; set; }
         }
 
         readonly Dictionary<string, Entry> entries = new();
