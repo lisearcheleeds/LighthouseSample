@@ -1,4 +1,5 @@
 using LighthouseExtends.ScreenStack;
+using SampleProduct.Infrastructure.AssetLoader;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -17,6 +18,7 @@ namespace SampleProduct.View.Scene.ModuleScene.ScreenStack
 
             builder.Register<ScreenStackModule>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<ProductScreenStackManager>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<ProductScreenStackInstanceFactory>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.Register<ScreenStackEntityFactory>(Lifetime.Singleton).AsImplementedInterfaces();
 
