@@ -2,8 +2,13 @@ using System;
 
 namespace LighthouseExtends.Addressable
 {
-    public interface IAssetHandle<out T> : IDisposable
+    public interface IAssetHandle : IDisposable
     {
-        T Asset { get; }
+        UnityEngine.Object Asset { get; }
+    }
+
+    public interface IAssetHandle<out T> : IAssetHandle where T : UnityEngine.Object
+    {
+        new T Asset { get; }
     }
 }

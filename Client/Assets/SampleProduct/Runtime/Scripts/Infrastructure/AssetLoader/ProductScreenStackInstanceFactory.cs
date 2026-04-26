@@ -29,8 +29,8 @@ namespace SampleProduct.Infrastructure.AssetLoader
             var scope = assetManager.CreateScope();
             try
             {
-                var prefab = await scope.LoadAsync<GameObject>(screenStackAddress, ct);
-                var gameObject = objectResolver.Instantiate(prefab);
+                var prefabHandle = await scope.LoadAsync<GameObject>(screenStackAddress, ct);
+                var gameObject = objectResolver.Instantiate(prefabHandle.Asset);
                 var instance = gameObject.GetComponents<MonoBehaviour>().OfType<TScreenStack>().First();
 
                 // If the same IScreenStackData instance is opened twice without closing,

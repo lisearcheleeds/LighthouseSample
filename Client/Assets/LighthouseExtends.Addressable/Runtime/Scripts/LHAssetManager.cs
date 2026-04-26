@@ -62,6 +62,38 @@ namespace LighthouseExtends.Addressable
             }
         }
 
+        internal async UniTask<LHAssetListHandle<T>> LoadAssetsInternalAsync<T>(string label, CancellationToken ct)
+            where T : UnityEngine.Object
+        {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(nameof(LHAssetManager));
+            }
+
+            if (!entries.TryGetValue(label, out var entry))
+            {
+                entry = new Entry
+                {
+                    Handle = Addressables.LoadAssetsAsync<T>(label, null),
+                    RefCount = 0,
+                };
+                entries[label] = entry;
+            }
+
+            entry.RefCount++;
+
+            try
+            {
+                await entry.Handle.ToUniTask(cancellationToken: ct);
+                return new LHAssetListHandle<T>((IList<T>)entry.Handle.Result, () => Release(label));
+            }
+            catch
+            {
+                Release(label);
+                throw;
+            }
+        }
+
         void Release(string address)
         {
             if (!entries.TryGetValue(address, out var entry))

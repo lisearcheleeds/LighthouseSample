@@ -1,20 +1,20 @@
 using System;
+using System.Collections.Generic;
 
 namespace LighthouseExtends.Addressable
 {
-    public sealed class LHAssetHandle<T> : IAssetHandle<T> where T : UnityEngine.Object
+    internal sealed class LHAssetListHandle<T> : IDisposable where T : UnityEngine.Object
     {
         readonly Action onDispose;
 
         bool disposed;
 
-        public T Asset { get; }
+        public IReadOnlyList<T> Assets { get; }
 
-        UnityEngine.Object IAssetHandle.Asset => Asset;
-
-        public LHAssetHandle(T asset, Action onDispose)
+        // Addressables returns List<T> as IList<T>; List<T> implements IReadOnlyList<T>.
+        internal LHAssetListHandle(IList<T> assets, Action onDispose)
         {
-            Asset = asset;
+            Assets = (IReadOnlyList<T>)assets;
             this.onDispose = onDispose;
         }
 
