@@ -17,7 +17,8 @@ namespace LighthouseExtends.Addressable
             this.manager = manager;
         }
 
-        public async UniTask<T> LoadAsync<T>(string address, CancellationToken ct = default) where T : UnityEngine.Object
+        public async UniTask<T> LoadAsync<T>(string address, CancellationToken ct = default)
+            where T : UnityEngine.Object
         {
             if (disposed)
             {
@@ -37,7 +38,8 @@ namespace LighthouseExtends.Addressable
             return handle.Asset;
         }
 
-        public async UniTask<IAssetHandle<T>> LoadAssetAsync<T>(string address, CancellationToken ct = default) where T : UnityEngine.Object
+        public async UniTask<IAssetHandle<T>> LoadAssetAsync<T>(string address, CancellationToken ct = default)
+            where T : UnityEngine.Object
         {
             if (disposed)
             {

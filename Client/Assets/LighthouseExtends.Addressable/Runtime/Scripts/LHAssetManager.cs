@@ -23,7 +23,13 @@ namespace LighthouseExtends.Addressable
 
         bool disposed;
 
-        public async UniTask<LHAssetHandle<T>> LoadInternalAsync<T>(string address, CancellationToken ct) where T : UnityEngine.Object
+        public ILHAssetScope CreateScope()
+        {
+            return new LHAssetScope(this);
+        }
+
+        internal async UniTask<LHAssetHandle<T>> LoadInternalAsync<T>(string address, CancellationToken ct)
+            where T : UnityEngine.Object
         {
             if (disposed)
             {
@@ -56,6 +62,22 @@ namespace LighthouseExtends.Addressable
             }
         }
 
+        void Release(string address)
+        {
+            if (!entries.TryGetValue(address, out var entry))
+            {
+                return;
+            }
+
+            entry.RefCount--;
+
+            if (entry.RefCount <= 0)
+            {
+                Addressables.Release(entry.Handle);
+                entries.Remove(address);
+            }
+        }
+
         public void Dispose()
         {
             if (disposed)
@@ -71,27 +93,6 @@ namespace LighthouseExtends.Addressable
             }
 
             entries.Clear();
-        }
-
-        ILHAssetScope ILHAssetManager.CreateScope()
-        {
-            return new LHAssetScope(this);
-        }
-
-        void Release(string address)
-        {
-            if (!entries.TryGetValue(address, out var entry))
-            {
-                return;
-            }
-
-            entry.RefCount--;
-
-            if (entry.RefCount <= 0)
-            {
-                Addressables.Release(entry.Handle);
-                entries.Remove(address);
-            }
         }
     }
 }
