@@ -1,36 +1,26 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
-using LighthouseExtends.Addressable;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.Infrastructure.AssetLoader;
 using VContainer;
 
 namespace SampleProduct.View.Scene.ModuleScene.ScreenStack
 {
     public class ProductScreenStackManager : ScreenStackManager
     {
-        ILHAssetManager assetManager;
-        readonly Dictionary<IScreenStackData, ILHAssetScope> scopes = new();
+        ProductScreenStackInstanceFactory productFactory;
 
         [Inject]
-        public void Construct(ILHAssetManager assetManager)
+        public void Construct(ProductScreenStackInstanceFactory productFactory)
         {
-            this.assetManager = assetManager;
+            this.productFactory = productFactory;
         }
 
         protected override async UniTask OpenScreenStackCore(bool isPlayInAnimation)
         {
             var data = ScreenStackDataList?.LastOrDefault();
-            if (data != null)
-            {
-                if (scopes.ContainsKey(data))
-                {
-                    throw new InvalidOperationException($"[ScreenStackManager] ScreenStack is already open: {data.GetType().Name}");
-                }
-                scopes[data] = assetManager.CreateScope();
-            }
-
             try
             {
                 await base.OpenScreenStackCore(isPlayInAnimation);
@@ -39,30 +29,75 @@ namespace SampleProduct.View.Scene.ModuleScene.ScreenStack
             {
                 if (data != null)
                 {
-                    DisposeScope(data);
+                    productFactory.DisposeScope(data);
                 }
                 throw;
             }
         }
 
+        // SetPendingData must be called before each CreateAsync; cannot delegate to base.
         protected override async UniTask ResumeOpenScreenStacksCore(bool isPlayInAnimation)
         {
-            if (ScreenStackDataList != null)
+            try
             {
-                foreach (var data in ScreenStackDataList)
+                for (var i = 0; i < ScreenStackDataList.Count; i++)
                 {
-                    scopes[data] = assetManager.CreateScope();
+                    var screenStackData = ScreenStackDataList[i];
+                    var shouldPlayAnimation = isPlayInAnimation && i == ScreenStackDataList.Count - 1;
+
+                    var prevScreenStackEntity = ScreenStackEntityList.LastOrDefault();
+                    if (prevScreenStackEntity?.ScreenStackData == screenStackData)
+                    {
+                        throw new InvalidOperationException($"Duplicate open");
+                    }
+
+                    var screenStackEntity = await ScreenStackEntityFactory.CreateAsync(screenStackData, CancellationToken.None);
+
+                    if (shouldPlayAnimation)
+                    {
+                        screenStackEntity.ScreenStack.ResetInAnimation();
+                    }
+                    else
+                    {
+                        screenStackEntity.ScreenStack.EndInAnimation();
+                    }
+
+                    ScreenStackEntityList.Add(screenStackEntity);
+                    ScreenStackCanvasController.AddChild(screenStackEntity.ScreenStack, screenStackData.IsSystem);
+
+                    await screenStackEntity.ScreenStack.OnInitialize();
+
+                    if (prevScreenStackEntity != null)
+                    {
+                        if (!screenStackData.IsOverlayOpen)
+                        {
+                            prevScreenStackEntity.ScreenStack.EndOutAnimation();
+                        }
+
+                        await prevScreenStackEntity.ScreenStack.OnLeave();
+                    }
+
+                    await screenStackEntity.ScreenStack.OnEnter(false);
+
+                    if (shouldPlayAnimation)
+                    {
+                        await screenStackEntity.ScreenStack.PlayInAnimation();
+                    }
+
+                    ScreenStackBackgroundInputBlocker.BlockScreenStackBackground(screenStackData.IsSystem);
                 }
             }
-
-            // On failure, base calls ClearCurrentAllScreenStackCore which disposes scopes via our override.
-            await base.ResumeOpenScreenStacksCore(isPlayInAnimation);
+            catch (Exception)
+            {
+                await ClearCurrentAllScreenStackCore();
+                throw;
+            }
         }
 
         protected override async UniTask CloseScreenStackCore(IScreenStackData screenStackData)
         {
             await base.CloseScreenStackCore(screenStackData);
-            DisposeScope(screenStackData);
+            productFactory.DisposeScope(screenStackData);
         }
 
         protected override async UniTask CloseScreenStackCore()
@@ -71,38 +106,20 @@ namespace SampleProduct.View.Scene.ModuleScene.ScreenStack
             await base.CloseScreenStackCore();
             if (data != null)
             {
-                DisposeScope(data);
+                productFactory.DisposeScope(data);
             }
         }
 
         protected override async UniTask ClearCurrentAllScreenStackCore()
         {
             await base.ClearCurrentAllScreenStackCore();
-            DisposeAllScopes();
+            productFactory.DisposeAllScopes();
         }
 
         protected override void ForceDisposeAll()
         {
             base.ForceDisposeAll();
-            DisposeAllScopes();
-        }
-
-        void DisposeScope(IScreenStackData data)
-        {
-            if (scopes.TryGetValue(data, out var scope))
-            {
-                scope.Dispose();
-                scopes.Remove(data);
-            }
-        }
-
-        void DisposeAllScopes()
-        {
-            foreach (var scope in scopes.Values)
-            {
-                scope.Dispose();
-            }
-            scopes.Clear();
+            productFactory.DisposeAllScopes();
         }
     }
 }
