@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -10,7 +11,7 @@ using VContainer.Unity;
 
 namespace SampleProduct.Infrastructure.AssetLoader
 {
-    public sealed class ProductScreenStackInstanceFactory : IProductScreenStackInstanceFactory
+    public sealed class ProductScreenStackInstanceFactory : IProductScreenStackInstanceFactory, IDisposable
     {
         readonly IObjectResolver objectResolver;
         readonly ILHAssetManager assetManager;
@@ -31,6 +32,10 @@ namespace SampleProduct.Infrastructure.AssetLoader
                 var prefab = await scope.LoadAsync<GameObject>(screenStackAddress, ct);
                 var gameObject = objectResolver.Instantiate(prefab);
                 var instance = gameObject.GetComponents<MonoBehaviour>().OfType<TScreenStack>().First();
+
+                // If the same IScreenStackData instance is opened twice without closing,
+                // the previous scope is overwritten and leaked. This relies on the framework
+                // preventing duplicate opens for the same data instance.
                 scopes[screenStackData] = scope;
                 return instance;
             }
@@ -50,13 +55,18 @@ namespace SampleProduct.Infrastructure.AssetLoader
             }
         }
 
-        void IProductScreenStackInstanceFactory.DisposeAllScopes()
+        public void DisposeAllScopes()
         {
             foreach (var scope in scopes.Values)
             {
                 scope.Dispose();
             }
             scopes.Clear();
+        }
+
+        public void Dispose()
+        {
+            DisposeAllScopes();
         }
     }
 }
