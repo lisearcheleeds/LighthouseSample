@@ -10,10 +10,8 @@ namespace LighthouseExtends.Addressable
     /// </summary>
     public interface ILHAssetScope : IDisposable
     {
-        UniTask<T> LoadAsync<T>(string address, CancellationToken ct = default)
-            where T : UnityEngine.Object;
+        UniTask<T> LoadAsync<T>(string address, CancellationToken ct = default) where T : UnityEngine.Object;
 
-        UniTask<IAssetHandle<T>> LoadAssetAsync<T>(string address, CancellationToken ct = default)
-            where T : UnityEngine.Object;
+        UniTask<IAssetHandle<T>> LoadAssetAsync<T>(string address, CancellationToken ct = default) where T : UnityEngine.Object;
     }
 }

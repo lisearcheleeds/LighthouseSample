@@ -9,6 +9,7 @@ namespace LighthouseExtends.Addressable
     {
         readonly LHAssetManager manager;
         readonly List<IDisposable> handles = new();
+
         bool disposed;
 
         internal LHAssetScope(LHAssetManager manager)
@@ -16,10 +17,12 @@ namespace LighthouseExtends.Addressable
             this.manager = manager;
         }
 
-        public async UniTask<T> LoadAsync<T>(string address, CancellationToken ct = default)
-            where T : UnityEngine.Object
+        public async UniTask<T> LoadAsync<T>(string address, CancellationToken ct = default) where T : UnityEngine.Object
         {
-            if (disposed) throw new ObjectDisposedException(nameof(LHAssetScope));
+            if (disposed)
+            {
+                throw new ObjectDisposedException(nameof(LHAssetScope));
+            }
 
             var handle = await manager.LoadInternalAsync<T>(address, ct);
 
@@ -34,10 +37,12 @@ namespace LighthouseExtends.Addressable
             return handle.Asset;
         }
 
-        public async UniTask<IAssetHandle<T>> LoadAssetAsync<T>(string address, CancellationToken ct = default)
-            where T : UnityEngine.Object
+        public async UniTask<IAssetHandle<T>> LoadAssetAsync<T>(string address, CancellationToken ct = default) where T : UnityEngine.Object
         {
-            if (disposed) throw new ObjectDisposedException(nameof(LHAssetScope));
+            if (disposed)
+            {
+                throw new ObjectDisposedException(nameof(LHAssetScope));
+            }
 
             var handle = await manager.LoadInternalAsync<T>(address, ct);
 
@@ -53,11 +58,17 @@ namespace LighthouseExtends.Addressable
 
         public void Dispose()
         {
-            if (disposed) return;
+            if (disposed)
+            {
+                return;
+            }
+
             disposed = true;
 
             foreach (var handle in handles)
+            {
                 handle.Dispose();
+            }
 
             handles.Clear();
         }

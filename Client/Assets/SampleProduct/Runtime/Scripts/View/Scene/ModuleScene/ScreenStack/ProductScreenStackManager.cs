@@ -10,10 +10,10 @@ namespace SampleProduct.View.Scene.ModuleScene.ScreenStack
 {
     public class ProductScreenStackManager : ScreenStackManager
     {
-        ProductScreenStackInstanceFactory productFactory;
+        IProductScreenStackInstanceFactory productFactory;
 
         [Inject]
-        public void Construct(ProductScreenStackInstanceFactory productFactory)
+        public void Construct(IProductScreenStackInstanceFactory productFactory)
         {
             this.productFactory = productFactory;
         }

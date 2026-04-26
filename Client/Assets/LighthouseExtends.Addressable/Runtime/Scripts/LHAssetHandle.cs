@@ -2,15 +2,15 @@ using System;
 
 namespace LighthouseExtends.Addressable
 {
-    internal sealed class LHAssetHandle<T> : IAssetHandle<T>
-        where T : UnityEngine.Object
+    public sealed class LHAssetHandle<T> : IAssetHandle<T> where T : UnityEngine.Object
     {
         readonly Action onDispose;
+
         bool disposed;
 
         public T Asset { get; }
 
-        internal LHAssetHandle(T asset, Action onDispose)
+        public LHAssetHandle(T asset, Action onDispose)
         {
             Asset = asset;
             this.onDispose = onDispose;
@@ -18,7 +18,10 @@ namespace LighthouseExtends.Addressable
 
         public void Dispose()
         {
-            if (disposed) return;
+            if (disposed)
+            {
+                return;
+            }
             disposed = true;
             onDispose?.Invoke();
         }

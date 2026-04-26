@@ -20,17 +20,15 @@ namespace LighthouseExtends.Addressable
         }
 
         readonly Dictionary<string, Entry> entries = new();
+
         bool disposed;
 
-        public ILHAssetScope CreateScope()
+        public async UniTask<LHAssetHandle<T>> LoadInternalAsync<T>(string address, CancellationToken ct) where T : UnityEngine.Object
         {
-            return new LHAssetScope(this);
-        }
-
-        internal async UniTask<LHAssetHandle<T>> LoadInternalAsync<T>(string address, CancellationToken ct)
-            where T : UnityEngine.Object
-        {
-            if (disposed) throw new ObjectDisposedException(nameof(LHAssetManager));
+            if (disposed)
+            {
+                throw new ObjectDisposedException(nameof(LHAssetManager));
+            }
 
             if (!entries.TryGetValue(address, out var entry))
             {
@@ -58,9 +56,34 @@ namespace LighthouseExtends.Addressable
             }
         }
 
+        public void Dispose()
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            disposed = true;
+
+            foreach (var entry in entries.Values)
+            {
+                Addressables.Release(entry.Handle);
+            }
+
+            entries.Clear();
+        }
+
+        ILHAssetScope ILHAssetManager.CreateScope()
+        {
+            return new LHAssetScope(this);
+        }
+
         void Release(string address)
         {
-            if (!entries.TryGetValue(address, out var entry)) return;
+            if (!entries.TryGetValue(address, out var entry))
+            {
+                return;
+            }
 
             entry.RefCount--;
 
@@ -69,17 +92,6 @@ namespace LighthouseExtends.Addressable
                 Addressables.Release(entry.Handle);
                 entries.Remove(address);
             }
-        }
-
-        public void Dispose()
-        {
-            if (disposed) return;
-            disposed = true;
-
-            foreach (var entry in entries.Values)
-                Addressables.Release(entry.Handle);
-
-            entries.Clear();
         }
     }
 }

@@ -88,7 +88,7 @@ namespace SampleProduct.Core
                 }
 
                 builder.Register<LHAssetManager>(Lifetime.Singleton).AsImplementedInterfaces();
-                builder.Register<ProductScreenStackInstanceFactory>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+                builder.Register<ProductScreenStackInstanceFactory>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<SampleAssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();
 
                 // Module

@@ -10,7 +10,7 @@ using VContainer.Unity;
 
 namespace SampleProduct.Infrastructure.AssetLoader
 {
-    public sealed class ProductScreenStackInstanceFactory : IScreenStackInstanceFactory
+    public sealed class ProductScreenStackInstanceFactory : IProductScreenStackInstanceFactory
     {
         readonly IObjectResolver objectResolver;
         readonly ILHAssetManager assetManager;
@@ -41,7 +41,7 @@ namespace SampleProduct.Infrastructure.AssetLoader
             }
         }
 
-        public void DisposeScope(IScreenStackData data)
+        void IProductScreenStackInstanceFactory.DisposeScope(IScreenStackData data)
         {
             if (scopes.TryGetValue(data, out var scope))
             {
@@ -50,7 +50,7 @@ namespace SampleProduct.Infrastructure.AssetLoader
             }
         }
 
-        public void DisposeAllScopes()
+        void IProductScreenStackInstanceFactory.DisposeAllScopes()
         {
             foreach (var scope in scopes.Values)
             {
