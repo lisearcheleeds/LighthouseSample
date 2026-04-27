@@ -13,12 +13,12 @@ namespace SampleProduct.View.Base
     {
         [SerializeField] LHSceneTransitionAnimatorManager sceneTransitionAnimatorManager;
 
-        ILHAssetManager assetManager;
+        IAssetManager assetManager;
 
-        protected ILHAssetScope AssetScope { get; private set; }
+        protected IAssetScope AssetScope { get; private set; }
 
         [Inject]
-        public void Construct(ILHAssetManager assetManager)
+        public void Construct(IAssetManager assetManager)
         {
             this.assetManager = assetManager;
         }

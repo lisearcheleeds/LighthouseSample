@@ -14,11 +14,11 @@ namespace SampleProduct.Infrastructure.AssetLoader
     public sealed class ProductScreenStackInstanceFactory : IProductScreenStackInstanceFactory, IDisposable
     {
         readonly IObjectResolver objectResolver;
-        readonly ILHAssetManager assetManager;
-        readonly Dictionary<IScreenStackData, ILHAssetScope> scopes = new();
+        readonly IAssetManager assetManager;
+        readonly Dictionary<IScreenStackData, IAssetScope> scopes = new();
 
         [Inject]
-        public ProductScreenStackInstanceFactory(IObjectResolver objectResolver, ILHAssetManager assetManager)
+        public ProductScreenStackInstanceFactory(IObjectResolver objectResolver, IAssetManager assetManager)
         {
             this.objectResolver = objectResolver;
             this.assetManager = assetManager;

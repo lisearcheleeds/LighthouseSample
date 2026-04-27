@@ -22,18 +22,18 @@ namespace SampleProduct.View.Base
         ISampleSceneManager sceneManager;
         IInputLayerController inputLayerController;
         IInputLayer currentInputLayer;
-        ILHAssetManager assetManager;
+        IAssetManager assetManager;
 
         InputActions inputActions;
 
-        protected ILHAssetScope AssetScope { get; private set; }
+        protected IAssetScope AssetScope { get; private set; }
 
         [Inject]
         public void Construct(
             ISampleSceneManager sceneManager,
             IInputLayerController inputLayerController,
             InputActions inputActions,
-            ILHAssetManager assetManager)
+            IAssetManager assetManager)
         {
             this.sceneManager = sceneManager;
             this.inputLayerController = inputLayerController;

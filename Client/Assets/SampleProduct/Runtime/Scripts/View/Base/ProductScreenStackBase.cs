@@ -4,7 +4,6 @@ using LighthouseExtends.Animation;
 using LighthouseExtends.InputLayer;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.Input;
-using SampleProduct.Input.Layer;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
@@ -17,17 +16,17 @@ namespace SampleProduct.View.Base
 
         IScreenStackModule screenStackModule;
         IInputLayerController inputLayerController;
-        ILHAssetManager assetManager;
+        IAssetManager assetManager;
         InputActions inputActions;
         IInputLayer inputLayer;
 
-        protected ILHAssetScope AssetScope { get; private set; }
+        protected IAssetScope AssetScope { get; private set; }
 
         [Inject]
         public void Construct(
             IScreenStackModule screenStackModule,
             IInputLayerController inputLayerController,
-            ILHAssetManager assetManager,
+            IAssetManager assetManager,
             InputActions inputActions)
         {
             this.screenStackModule = screenStackModule;

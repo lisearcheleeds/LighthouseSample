@@ -87,7 +87,7 @@ namespace SampleProduct.Core
                     builder.Register<InputLayerController>(Lifetime.Singleton).AsImplementedInterfaces();
                 }
 
-                builder.Register<LHAssetManager>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<AssetManager>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<SampleAssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();
 
                 // Module
