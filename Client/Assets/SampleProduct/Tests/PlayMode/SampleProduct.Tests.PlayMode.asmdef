@@ -1,0 +1,23 @@
+{
+    "name": "SampleProduct.Tests.PlayMode",
+    "rootNamespace": "",
+    "references": [
+        "LighthouseExtends.Addressable.Runtime",
+        "Unity.Addressables",
+        "Unity.ResourceManager",
+        "UniTask",
+        "UnityEngine.TestRunner"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "testPlatforms": [
+        "PlayMode"
+    ]
+}
