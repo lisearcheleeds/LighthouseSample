@@ -22,8 +22,6 @@ namespace SampleProduct.Tests.PlayMode
         {
             await Addressables.InitializeAsync();
             manager = new AssetManager();
-
-
         });
 
         [TearDown]
@@ -116,7 +114,7 @@ namespace SampleProduct.Tests.PlayMode
         [UnityTest]
         public IEnumerator ScopeDispose_DisposesAllOwnedHandles() => UniTask.ToCoroutine(async () =>
         {
-            var scope = manager.CreateScope();
+            using var scope = manager.CreateScope();
 
             // LoadAsync で取得したハンドル
             var handleA = await scope.LoadAsync<GameObject>(AddressA);
@@ -165,7 +163,7 @@ namespace SampleProduct.Tests.PlayMode
         [UnityTest]
         public IEnumerator SameAddress_LoadedTwiceInScope_BothHandlesDisposedOnScopeDispose() => UniTask.ToCoroutine(async () =>
         {
-            var scope = manager.CreateScope();
+            using var scope = manager.CreateScope();
             var handle1 = await scope.LoadAsync<GameObject>(AddressA);
             var handle2 = await scope.LoadAsync<GameObject>(AddressA);
 
@@ -220,9 +218,16 @@ namespace SampleProduct.Tests.PlayMode
             var validReq = data.Add<GameObject>(AddressA);
             var invalidReq = data.Add<GameObject>(InvalidAddress);
 
+            ParallelLoadResult result;
             LogAssert.ignoreFailingMessages = true;
-            var result = await scope.TryLoadAsync(data);
-            LogAssert.ignoreFailingMessages = false;
+            try
+            {
+                result = await scope.TryLoadAsync(data);
+            }
+            finally
+            {
+                LogAssert.ignoreFailingMessages = false;
+            }
 
             Assert.That(result.IsSuccess(validReq), Is.True);
             Assert.That(result.IsSuccess(invalidReq), Is.False);
