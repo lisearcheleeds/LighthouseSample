@@ -38,7 +38,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         }
 
         [Inject]
-        public void Constructor(ISampleTopPresenter sampleTopPresenter)
+        public void Construct(ISampleTopPresenter sampleTopPresenter)
         {
             this.sampleTopPresenter = sampleTopPresenter;
         }

@@ -17,7 +17,7 @@ namespace SampleProduct.View.Scene.MainScene.Splash
         }
 
         [Inject]
-        public void Constructor(ISplashPresenter splashPresenter)
+        public void Construct(ISplashPresenter splashPresenter)
         {
             this.splashPresenter = splashPresenter;
         }

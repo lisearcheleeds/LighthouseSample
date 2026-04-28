@@ -18,7 +18,7 @@ namespace SampleProduct.View.Scene.MainScene.Title
         }
 
         [Inject]
-        public void Constructor(ITitlePresenter titlePresenter)
+        public void Construct(ITitlePresenter titlePresenter)
         {
             this.titlePresenter = titlePresenter;
         }
