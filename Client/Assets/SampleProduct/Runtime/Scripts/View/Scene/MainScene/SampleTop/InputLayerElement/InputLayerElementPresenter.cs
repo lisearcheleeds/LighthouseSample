@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using LighthouseExtends.ScreenStack;
 using VContainer;
 
-namespace SampleProduct.InputLayerElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.InputLayerElement
 {
     public sealed class InputLayerElementPresenter
     {

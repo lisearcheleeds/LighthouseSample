@@ -1,10 +1,9 @@
-using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
-using SampleProduct.Core;
 using LighthouseExtends.Language;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.Core;
 using SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog;
 using SampleProduct.View.Scene.MainScene.Purpose;
 using SampleProduct.View.Scene.MainScene.SampleTop;
@@ -17,7 +16,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
     public sealed class HomePresenter : IHomePresenter
     {
         IHomeView homeView;
-        ISampleSceneManager sceneManager;
+        IProductSceneManager sceneManager;
         IBackgroundModule backgroundModule;
         IScreenStackModule screenStackModule;
         ILanguageService languageService;
@@ -26,7 +25,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
         [Inject]
         public void Construct(
             IHomeView homeView,
-            ISampleSceneManager sceneManager,
+            IProductSceneManager sceneManager,
             IBackgroundModule backgroundModule,
             IScreenStackModule screenStackModule,
             ILanguageService languageService,

@@ -22,7 +22,7 @@ namespace SampleProduct.View.Scene.MainScene.Home
         }
 
         [Inject]
-        public void Constructor(IHomePresenter homePresenter)
+        public void Construct(IHomePresenter homePresenter)
         {
             this.homePresenter = homePresenter;
         }

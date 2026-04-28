@@ -6,7 +6,7 @@ using SampleProduct.View.Base;
 using UnityEngine;
 using VContainer;
 
-namespace SampleProduct.InputLayerElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.InputLayerElement
 {
     public sealed class InputLayerElementOverlay : ProductScreenStackBase, IScreenStackSetup<InputLayerElementData>
     {

@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace SampleProduct.Core
     /// When an unexpected exception occurs, it logs the error and reboots the application
     /// rather than attempting partial recovery, which could leave the app in an inconsistent state.
     /// </summary>
-    public sealed class SampleSceneManager : ISampleSceneManager
+    public sealed class ProductSceneManager : IProductSceneManager
     {
         readonly ISceneManager sceneManager;
         readonly ILauncher launcher;
@@ -20,13 +19,13 @@ namespace SampleProduct.Core
         public bool IsTransition => sceneManager.IsTransition;
 
         [Inject]
-        public SampleSceneManager(ISceneManager sceneManager, ILauncher launcher)
+        public ProductSceneManager(ISceneManager sceneManager, ILauncher launcher)
         {
             this.sceneManager = sceneManager;
             this.launcher = launcher;
         }
 
-        async UniTask ISampleSceneManager.TransitionScene(
+        async UniTask IProductSceneManager.TransitionScene(
             TransitionDataBase nextTransitionData,
             TransitionType transitionType,
             MainSceneId backMainSceneId)
@@ -41,7 +40,7 @@ namespace SampleProduct.Core
             }
             catch (Exception e)
             {
-                Debug.LogError($"[SampleSceneManager] Unhandled exception during transition. Rebooting.\n{e}");
+                Debug.LogError($"[ProductSceneManager] Unhandled exception during transition. Rebooting.\n{e}");
 
                 // NOTE: The sample does not reboot.
                 // In a real project, it is recommended to reboot after displaying a dialog box and reporting errors.
@@ -49,7 +48,7 @@ namespace SampleProduct.Core
             }
         }
 
-        async UniTask ISampleSceneManager.BackScene(TransitionType transitionType)
+        async UniTask IProductSceneManager.BackScene(TransitionType transitionType)
         {
             try
             {
@@ -61,11 +60,11 @@ namespace SampleProduct.Core
             }
             catch (Exception e)
             {
-                Debug.LogError($"[SampleSceneManager] Unhandled exception during back transition. Rebooting.\n{e}");
+                Debug.LogError($"[ProductSceneManager] Unhandled exception during back transition. Rebooting.\n{e}");
                 launcher.Reboot();
             }
         }
 
-        UniTask ISampleSceneManager.PreReboot() => sceneManager.PreReboot();
+        UniTask IProductSceneManager.PreReboot() => sceneManager.PreReboot();
     }
 }

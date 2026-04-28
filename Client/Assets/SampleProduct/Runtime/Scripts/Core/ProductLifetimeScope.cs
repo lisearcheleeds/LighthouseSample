@@ -38,7 +38,7 @@ namespace SampleProduct.Core
             {
                 // LightHouse
                 builder.Register<SceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
-                builder.Register<SampleSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<ProductSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<SceneTransitionController>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<DefaultSceneTransitionContextFactory>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<SceneGroupProvider>(Lifetime.Singleton).AsImplementedInterfaces();
@@ -88,7 +88,7 @@ namespace SampleProduct.Core
                 }
 
                 builder.Register<AssetManager>(Lifetime.Singleton).AsImplementedInterfaces();
-                builder.Register<SampleAssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();
+                builder.Register<ProductAssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();
 
                 // Module
                 builder.Register<OverlayModuleProxy>(Lifetime.Singleton).AsImplementedInterfaces();

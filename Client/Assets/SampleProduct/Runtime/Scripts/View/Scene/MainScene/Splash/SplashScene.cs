@@ -1,7 +1,7 @@
 using Lighthouse.Scene;
+using SampleProduct.LighthouseGenerated;
 using SampleProduct.View.Base;
 using VContainer;
-using SampleProduct.LighthouseGenerated;
 
 namespace SampleProduct.View.Scene.MainScene.Splash
 {
@@ -17,7 +17,7 @@ namespace SampleProduct.View.Scene.MainScene.Splash
         }
 
         [Inject]
-        public void Constructor(ISplashPresenter splashPresenter)
+        public void Construct(ISplashPresenter splashPresenter)
         {
             this.splashPresenter = splashPresenter;
         }

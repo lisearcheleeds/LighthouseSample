@@ -29,7 +29,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample3
         }
 
         [Inject]
-        public void Constructor(ISceneSample3Presenter sceneSample3Presenter)
+        public void Construct(ISceneSample3Presenter sceneSample3Presenter)
         {
             this.sceneSample3Presenter = sceneSample3Presenter;
         }

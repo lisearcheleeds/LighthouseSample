@@ -22,7 +22,7 @@ namespace SampleProduct.View.Scene.MainScene.Purpose
         }
 
         [Inject]
-        public void Constructor(IPurposePresenter purposePresenter)
+        public void Construct(IPurposePresenter purposePresenter)
         {
             this.purposePresenter = purposePresenter;
         }

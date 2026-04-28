@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
-using SampleProduct.View.Base;
 using SampleProduct.LighthouseGenerated;
+using SampleProduct.View.Base;
 
 namespace SampleProduct.View.Scene.ModuleScene.Overlay
 {

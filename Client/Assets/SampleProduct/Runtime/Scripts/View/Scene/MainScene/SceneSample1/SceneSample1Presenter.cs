@@ -1,8 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
-using Lighthouse.Scene;
-using SampleProduct.Core;
 using LighthouseExtends.ScreenStack;
 using LighthouseExtends.TextTable;
+using SampleProduct.Core;
 using SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionDialog;
 using SampleProduct.View.Scene.MainScene.SceneSample2;
 using SampleProduct.View.Scene.ModuleScene.Background;
@@ -15,7 +14,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
     {
         ISceneSample1View sceneSample1View;
         IScreenStackModule screenStackModule;
-        ISampleSceneManager sceneManager;
+        IProductSceneManager sceneManager;
         IGlobalHeaderModule globalHeaderModule;
         IBackgroundModule backgroundModule;
 
@@ -23,7 +22,7 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1
         public void Construct(
             ISceneSample1View sceneSample1View,
             IScreenStackModule screenStackModule,
-            ISampleSceneManager sceneManager,
+            IProductSceneManager sceneManager,
             IGlobalHeaderModule globalHeaderModule,
             IBackgroundModule backgroundModule)
         {

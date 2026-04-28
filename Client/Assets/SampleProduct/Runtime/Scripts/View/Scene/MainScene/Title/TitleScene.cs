@@ -1,8 +1,8 @@
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
+using SampleProduct.LighthouseGenerated;
 using SampleProduct.View.Base;
 using VContainer;
-using SampleProduct.LighthouseGenerated;
 
 namespace SampleProduct.View.Scene.MainScene.Title
 {
@@ -18,7 +18,7 @@ namespace SampleProduct.View.Scene.MainScene.Title
         }
 
         [Inject]
-        public void Constructor(ITitlePresenter titlePresenter)
+        public void Construct(ITitlePresenter titlePresenter)
         {
             this.titlePresenter = titlePresenter;
         }

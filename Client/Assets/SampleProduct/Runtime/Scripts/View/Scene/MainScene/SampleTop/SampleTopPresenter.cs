@@ -1,13 +1,12 @@
 using Cysharp.Threading.Tasks;
-using Lighthouse.Scene;
-using SampleProduct.Core;
 using LighthouseExtends.ScreenStack;
-using SampleProduct.InputLayerElement;
+using SampleProduct.Core;
 using SampleProduct.View.Scene.MainScene.SampleTop.AnimationElement;
 using SampleProduct.View.Scene.MainScene.SampleTop.ButtonElement;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogElementDialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog;
 using SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog;
+using SampleProduct.View.Scene.MainScene.SampleTop.InputLayerElement;
 using SampleProduct.View.Scene.MainScene.SampleTop.OverlayElement;
 using SampleProduct.View.Scene.MainScene.SampleTop.PopupElement;
 using SampleProduct.View.Scene.MainScene.SampleTop.TextViewElement;
@@ -25,7 +24,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
 
         ISampleTopView sampleTopView;
         IScreenStackModule screenStackModule;
-        ISampleSceneManager sceneManager;
+        IProductSceneManager sceneManager;
         IBackgroundModule backgroundModule;
 
         public TabType CurrentTabType { get; private set; }
@@ -36,7 +35,7 @@ namespace SampleProduct.View.Scene.MainScene.SampleTop
         public void Construct(
             ISampleTopView sampleTopView,
             IScreenStackModule screenStackModule,
-            ISampleSceneManager sceneManager,
+            IProductSceneManager sceneManager,
             IBackgroundModule backgroundModule)
         {
             this.sampleTopView = sampleTopView;

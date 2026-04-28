@@ -1,5 +1,5 @@
-using LighthouseExtends.TextTable;
 using LighthouseExtends.TextMeshPro;
+using LighthouseExtends.TextTable;
 using UnityEngine;
 
 namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
