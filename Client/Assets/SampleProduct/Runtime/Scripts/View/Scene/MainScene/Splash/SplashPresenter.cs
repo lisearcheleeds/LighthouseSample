@@ -8,10 +8,10 @@ namespace SampleProduct.View.Scene.MainScene.Splash
 {
     public class SplashPresenter : ISplashPresenter
     {
-        ISampleSceneManager sceneManager;
+        IProductSceneManager sceneManager;
 
         [Inject]
-        public void Construct(ISampleSceneManager sceneManager)
+        public void Construct(IProductSceneManager sceneManager)
         {
             this.sceneManager = sceneManager;
         }

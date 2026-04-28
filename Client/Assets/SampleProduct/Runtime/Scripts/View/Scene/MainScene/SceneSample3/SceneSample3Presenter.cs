@@ -1,7 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
-using Lighthouse.Scene;
-using SampleProduct.Core;
 using LighthouseExtends.TextTable;
+using SampleProduct.Core;
 using SampleProduct.View.Scene.ModuleScene.Background;
 using SampleProduct.View.Scene.ModuleScene.GlobalHeader;
 using VContainer;
@@ -11,14 +10,14 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample3
     public class SceneSample3Presenter : ISceneSample3Presenter
     {
         ISceneSample3View sceneSample3View;
-        ISampleSceneManager sceneManager;
+        IProductSceneManager sceneManager;
         IGlobalHeaderModule globalHeaderModule;
         IBackgroundModule backgroundModule;
 
         [Inject]
         public void Construct(
             ISceneSample3View sceneSample3View,
-            ISampleSceneManager sceneManager,
+            IProductSceneManager sceneManager,
             IGlobalHeaderModule globalHeaderModule,
             IBackgroundModule backgroundModule)
         {

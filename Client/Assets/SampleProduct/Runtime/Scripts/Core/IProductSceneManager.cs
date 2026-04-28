@@ -1,10 +1,9 @@
-using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 
 namespace SampleProduct.Core
 {
-    public interface ISampleSceneManager
+    public interface IProductSceneManager
     {
         bool IsTransition { get; }
 

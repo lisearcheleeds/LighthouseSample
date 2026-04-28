@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using Lighthouse.Scene;
 using SampleProduct.Core;
 using SampleProduct.View.Scene.MainScene.Home;
 using VContainer;
@@ -8,11 +7,11 @@ namespace SampleProduct.View.Scene.MainScene.Title
 {
     public class TitlePresenter : ITitlePresenter
     {
-        ISampleSceneManager sceneManager;
+        IProductSceneManager sceneManager;
         ITitleView titleView;
 
         [Inject]
-        public void Construct(ISampleSceneManager sceneManager, ITitleView titleView)
+        public void Construct(IProductSceneManager sceneManager, ITitleView titleView)
         {
             this.sceneManager = sceneManager;
             this.titleView = titleView;

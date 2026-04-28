@@ -1,5 +1,3 @@
-using Cysharp.Threading.Tasks;
-using LighthouseExtends.Animation;
 using LighthouseExtends.InputLayer;
 using LighthouseExtends.ScreenStack;
 using SampleProduct.Input;

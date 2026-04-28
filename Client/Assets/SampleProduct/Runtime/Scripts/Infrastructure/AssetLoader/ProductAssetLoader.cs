@@ -1,25 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Font;
 using LighthouseExtends.TextTable;
 using UnityEngine;
-using UnityEngine.Networking;
 using VContainer;
 
 namespace SampleProduct.Infrastructure.AssetLoader
 {
-    public sealed class SampleAssetLoader : ITextTableLoader
+    public sealed class ProductAssetLoader : ITextTableLoader
     {
         const string TsvSubFolder = "TextTables";
 
         readonly IFontService fontService;
 
         [Inject]
-        public SampleAssetLoader(IFontService fontService)
+        public ProductAssetLoader(IFontService fontService)
         {
             this.fontService = fontService;
         }

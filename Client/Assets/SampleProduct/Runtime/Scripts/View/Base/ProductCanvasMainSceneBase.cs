@@ -7,7 +7,6 @@ using LighthouseExtends.Animation;
 using LighthouseExtends.InputLayer;
 using SampleProduct.Core;
 using SampleProduct.Input;
-using SampleProduct.Input.Layer;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
@@ -19,7 +18,7 @@ namespace SampleProduct.View.Base
     {
         [SerializeField] LHSceneTransitionAnimatorManager sceneTransitionAnimatorManager;
 
-        ISampleSceneManager sceneManager;
+        IProductSceneManager sceneManager;
         IInputLayerController inputLayerController;
         IInputLayer currentInputLayer;
         IAssetManager assetManager;
@@ -30,7 +29,7 @@ namespace SampleProduct.View.Base
 
         [Inject]
         public void Construct(
-            ISampleSceneManager sceneManager,
+            IProductSceneManager sceneManager,
             IInputLayerController inputLayerController,
             InputActions inputActions,
             IAssetManager assetManager)

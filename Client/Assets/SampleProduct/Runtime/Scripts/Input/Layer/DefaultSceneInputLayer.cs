@@ -1,6 +1,5 @@
 using System;
 using LighthouseExtends.InputLayer;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace SampleProduct.Input.Layer

@@ -3,7 +3,7 @@ using LighthouseExtends.UIComponent.Button;
 using SampleProduct.Extensions;
 using UnityEngine;
 
-namespace SampleProduct.InputLayerElement
+namespace SampleProduct.View.Scene.MainScene.SampleTop.InputLayerElement
 {
     public class InputLayerElementView : MonoBehaviour
     {

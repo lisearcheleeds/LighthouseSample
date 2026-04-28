@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
-using Lighthouse.Scene;
-using SampleProduct.Core;
 using LighthouseExtends.ScreenStack;
+using SampleProduct.Core;
 using SampleProduct.View.Scene.MainScene.SceneSample2;
 using VContainer;
 
@@ -10,12 +9,12 @@ namespace SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionDialog
     public sealed class SceneTransitionPresenter
     {
         IScreenStackModule screenStackModule;
-        ISampleSceneManager sceneManager;
+        IProductSceneManager sceneManager;
 
         SceneTransitionView view;
 
         [Inject]
-        public void Construct(IScreenStackModule screenStackModule, ISampleSceneManager sceneManager)
+        public void Construct(IScreenStackModule screenStackModule, IProductSceneManager sceneManager)
         {
             this.screenStackModule = screenStackModule;
             this.sceneManager = sceneManager;

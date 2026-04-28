@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using Lighthouse.Scene;
 using SampleProduct.Core;
 using VContainer;
 
@@ -8,12 +7,12 @@ namespace SampleProduct.View.Scene.MainScene.Purpose
     public sealed class PurposePresenter : IPurposePresenter
     {
         IPurposeView purposeView;
-        ISampleSceneManager sceneManager;
+        IProductSceneManager sceneManager;
 
         [Inject]
         public void Constructor(
             IPurposeView purposeView,
-            ISampleSceneManager sceneManager)
+            IProductSceneManager sceneManager)
         {
             this.purposeView = purposeView;
             this.sceneManager = sceneManager;

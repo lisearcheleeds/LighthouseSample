@@ -1,9 +1,9 @@
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using LighthouseExtends.TextTable;
+using SampleProduct.LighthouseGenerated;
 using SampleProduct.View.Base;
 using UnityEngine;
-using SampleProduct.LighthouseGenerated;
 
 namespace SampleProduct.View.Scene.ModuleScene.GlobalHeader
 {
