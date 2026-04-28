@@ -1,6 +1,5 @@
 using LighthouseExtends.InputLayer;
 using LighthouseExtends.ScreenStack;
-using LighthouseExtends.ScreenStack;
 using SampleProduct.Input;
 using SampleProduct.Input.Layer;
 using SampleProduct.View.Base;

@@ -1,8 +1,10 @@
 using Cysharp.Threading.Tasks;
 using Lighthouse.Scene;
 using Lighthouse.Scene.SceneBase;
+using LighthouseExtends.Addressable;
 using LighthouseExtends.Animation;
 using UnityEngine;
+using VContainer;
 
 namespace SampleProduct.View.Base
 {
@@ -10,6 +12,29 @@ namespace SampleProduct.View.Base
     public abstract class ProductCanvasModuleSceneBase : CanvasModuleSceneBase
     {
         [SerializeField] LHSceneTransitionAnimatorManager sceneTransitionAnimatorManager;
+
+        IAssetManager assetManager;
+
+        protected IAssetScope AssetScope { get; private set; }
+
+        [Inject]
+        public void Construct(IAssetManager assetManager)
+        {
+            this.assetManager = assetManager;
+        }
+
+        public override UniTask OnLoad()
+        {
+            AssetScope = assetManager.CreateScope();
+            return base.OnLoad();
+        }
+
+        public override async UniTask OnUnload()
+        {
+            await base.OnUnload();
+            AssetScope?.Dispose();
+            AssetScope = null;
+        }
 
         public override void ResetInAnimation(ISceneTransitionContext context)
         {

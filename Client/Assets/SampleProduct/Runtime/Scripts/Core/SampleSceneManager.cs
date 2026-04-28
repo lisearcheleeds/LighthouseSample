@@ -42,7 +42,10 @@ namespace SampleProduct.Core
             catch (Exception e)
             {
                 Debug.LogError($"[SampleSceneManager] Unhandled exception during transition. Rebooting.\n{e}");
-                launcher.Reboot();
+
+                // NOTE: The sample does not reboot.
+                // In a real project, it is recommended to reboot after displaying a dialog box and reporting errors.
+                // launcher.Reboot();
             }
         }
 

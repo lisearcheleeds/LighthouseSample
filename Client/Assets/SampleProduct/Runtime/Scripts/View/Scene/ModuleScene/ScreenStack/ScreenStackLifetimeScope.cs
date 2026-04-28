@@ -1,4 +1,5 @@
 using LighthouseExtends.ScreenStack;
+using SampleProduct.Infrastructure.AssetLoader;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -11,7 +12,13 @@ namespace SampleProduct.View.Scene.ModuleScene.ScreenStack
 
         protected override void Configure(IContainerBuilder builder)
         {
-            base.Configure(builder);
+            builder.RegisterEntryPoint<ScreenStackEntryPoint>();
+            builder.RegisterComponent(this.ScreenStackModuleSceneBase);
+            builder.RegisterComponent(this.ScreenStackCanvasController).AsImplementedInterfaces();
+
+            builder.Register<ScreenStackModule>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<ProductScreenStackManager>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<ProductScreenStackInstanceFactory>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.Register<ScreenStackEntityFactory>(Lifetime.Singleton).AsImplementedInterfaces();
 

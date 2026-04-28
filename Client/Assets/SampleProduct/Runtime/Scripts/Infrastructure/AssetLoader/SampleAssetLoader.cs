@@ -5,36 +5,23 @@ using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using LighthouseExtends.Font;
-using LighthouseExtends.ScreenStack;
 using LighthouseExtends.TextTable;
 using UnityEngine;
 using UnityEngine.Networking;
 using VContainer;
-using VContainer.Unity;
 
 namespace SampleProduct.Infrastructure.AssetLoader
 {
-    public sealed class SampleAssetLoader : IScreenStackInstanceFactory, ITextTableLoader
+    public sealed class SampleAssetLoader : ITextTableLoader
     {
         const string TsvSubFolder = "TextTables";
 
-        readonly IObjectResolver objectResolver;
         readonly IFontService fontService;
 
         [Inject]
-        public SampleAssetLoader(IObjectResolver objectResolver, IFontService fontService)
+        public SampleAssetLoader(IFontService fontService)
         {
-            this.objectResolver = objectResolver;
             this.fontService = fontService;
-        }
-
-        async UniTask<TScreenStack> IScreenStackInstanceFactory.CreateScreenStackInstance<TScreenStack>(string screenStackAddress, CancellationToken ct)
-        {
-            var request = Resources.LoadAsync<GameObject>(screenStackAddress);
-            await request.ToUniTask(cancellationToken: ct);
-            var prefab = request.asset as GameObject;
-            var gameObject = objectResolver.Instantiate(prefab);
-            return gameObject.GetComponents<MonoBehaviour>().OfType<TScreenStack>().First();
         }
 
 #if UNITY_WEBGL && !UNITY_EDITOR

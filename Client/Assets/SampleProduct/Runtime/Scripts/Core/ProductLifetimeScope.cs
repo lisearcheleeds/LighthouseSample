@@ -1,5 +1,6 @@
 using Lighthouse.Scene;
 using Lighthouse.Scene.SceneCamera;
+using LighthouseExtends.Addressable;
 using LighthouseExtends.Font;
 using LighthouseExtends.InputLayer;
 using LighthouseExtends.Language;
@@ -37,7 +38,7 @@ namespace SampleProduct.Core
             {
                 // LightHouse
                 builder.Register<SceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
-                builder.Register<SampleSceneManager>(Lifetime.Singleton).As<ISampleSceneManager>();
+                builder.Register<SampleSceneManager>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<SceneTransitionController>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<DefaultSceneTransitionContextFactory>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<SceneGroupProvider>(Lifetime.Singleton).AsImplementedInterfaces();
@@ -86,6 +87,7 @@ namespace SampleProduct.Core
                     builder.Register<InputLayerController>(Lifetime.Singleton).AsImplementedInterfaces();
                 }
 
+                builder.Register<AssetManager>(Lifetime.Singleton).AsImplementedInterfaces();
                 builder.Register<SampleAssetLoader>(Lifetime.Singleton).AsImplementedInterfaces();
 
                 // Module

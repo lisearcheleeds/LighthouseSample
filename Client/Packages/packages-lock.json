@@ -17,7 +17,7 @@
       "url": "https://package.openupm.com"
     },
     "com.lisearcheleeds.lighthouse": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/Lighthouse",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/Lighthouse#feature/v1.0.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -25,19 +25,29 @@
         "jp.hadashikick.vcontainer": "1.17.0",
         "com.unity.render-pipelines.universal": "17.0.0"
       },
-      "hash": "096c82607fb87ed6609b28b953e564289ab6f0b1"
+      "hash": "68c1802dff9dc4b9689fa866a9305747df44c9f7"
+    },
+    "com.lisearcheleeds.lighthouse-extends.addressable": {
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Addressable#feature/v1.0.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.cysharp.unitask": "2.5.10",
+        "com.unity.addressables": "2.9.1"
+      },
+      "hash": "68c1802dff9dc4b9689fa866a9305747df44c9f7"
     },
     "com.lisearcheleeds.lighthouse-extends.animation": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Animation",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Animation#feature/v1.0.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.cysharp.unitask": "2.5.10"
       },
-      "hash": "096c82607fb87ed6609b28b953e564289ab6f0b1"
+      "hash": "68c1802dff9dc4b9689fa866a9305747df44c9f7"
     },
     "com.lisearcheleeds.lighthouse-extends.font": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Font",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Font#feature/v1.0.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -46,20 +56,20 @@
         "com.cysharp.unitask": "2.5.10",
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "096c82607fb87ed6609b28b953e564289ab6f0b1"
+      "hash": "68c1802dff9dc4b9689fa866a9305747df44c9f7"
     },
     "com.lisearcheleeds.lighthouse-extends.inputlayer": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/InputLayer",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/InputLayer#feature/v1.0.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.inputsystem": "1.17.0",
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "096c82607fb87ed6609b28b953e564289ab6f0b1"
+      "hash": "68c1802dff9dc4b9689fa866a9305747df44c9f7"
     },
     "com.lisearcheleeds.lighthouse-extends.language": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Language",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Language#feature/v1.0.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -67,10 +77,10 @@
         "com.cysharp.unitask": "2.5.10",
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "096c82607fb87ed6609b28b953e564289ab6f0b1"
+      "hash": "68c1802dff9dc4b9689fa866a9305747df44c9f7"
     },
     "com.lisearcheleeds.lighthouse-extends.screenstack": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/ScreenStack",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/ScreenStack#feature/v1.0.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -79,10 +89,10 @@
         "com.cysharp.unitask": "2.5.10",
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "096c82607fb87ed6609b28b953e564289ab6f0b1"
+      "hash": "68c1802dff9dc4b9689fa866a9305747df44c9f7"
     },
     "com.lisearcheleeds.lighthouse-extends.textmeshpro": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/TextMeshPro",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/TextMeshPro#feature/v1.0.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -90,10 +100,10 @@
         "com.lisearcheleeds.lighthouse-extends.texttable": "0.1.0",
         "com.cysharp.r3": "1.3.0"
       },
-      "hash": "096c82607fb87ed6609b28b953e564289ab6f0b1"
+      "hash": "68c1802dff9dc4b9689fa866a9305747df44c9f7"
     },
     "com.lisearcheleeds.lighthouse-extends.texttable": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/TextTable",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/TextTable#feature/v1.0.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -102,20 +112,36 @@
         "com.cysharp.unitask": "2.5.10",
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "096c82607fb87ed6609b28b953e564289ab6f0b1"
+      "hash": "68c1802dff9dc4b9689fa866a9305747df44c9f7"
     },
     "com.lisearcheleeds.lighthouse-extends.uicomponent": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/UIComponent",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/UIComponent#feature/v1.0.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.lisearcheleeds.lighthouse": "0.1.0",
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "096c82607fb87ed6609b28b953e564289ab6f0b1"
+      "hash": "68c1802dff9dc4b9689fa866a9305747df44c9f7"
+    },
+    "com.unity.addressables": {
+      "version": "2.9.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.profiling.core": "1.0.2",
+        "com.unity.test-framework": "1.4.5",
+        "com.unity.modules.assetbundle": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.scriptablebuildpipeline": "2.6.1",
+        "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.ai.navigation": {
-      "version": "2.0.9",
+      "version": "2.0.12",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -124,7 +150,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.8.26",
+      "version": "1.8.29",
       "depth": 2,
       "source": "registry",
       "dependencies": {
@@ -134,21 +160,21 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "2.10.2",
+      "version": "2.12.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.collections": {
-      "version": "2.6.2",
+      "version": "2.6.5",
       "depth": 2,
       "source": "registry",
       "dependencies": {
-        "com.unity.burst": "1.8.23",
+        "com.unity.burst": "1.8.27",
         "com.unity.mathematics": "1.3.2",
         "com.unity.test-framework": "1.4.6",
-        "com.unity.nuget.mono-cecil": "1.11.5",
+        "com.unity.nuget.mono-cecil": "1.11.6",
         "com.unity.test-framework.performance": "3.0.3"
       },
       "url": "https://packages.unity.com"
@@ -160,7 +186,7 @@
       "dependencies": {}
     },
     "com.unity.ide.rider": {
-      "version": "3.0.38",
+      "version": "3.0.39",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -169,16 +195,16 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.25",
+      "version": "2.0.26",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.test-framework": "1.1.31"
+        "com.unity.test-framework": "1.1.33"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
-      "version": "1.17.0",
+      "version": "1.19.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -204,6 +230,13 @@
     "com.unity.nuget.mono-cecil": {
       "version": "1.11.6",
       "depth": 3,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.profiling.core": {
+      "version": "1.0.3",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -240,6 +273,16 @@
         "com.unity.render-pipelines.core": "17.0.3"
       }
     },
+    "com.unity.scriptablebuildpipeline": {
+      "version": "2.6.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.4.5",
+        "com.unity.modules.assetbundle": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.searcher": {
       "version": "4.9.4",
       "depth": 2,
@@ -267,7 +310,7 @@
       }
     },
     "com.unity.test-framework.performance": {
-      "version": "3.2.0",
+      "version": "3.4.0",
       "depth": 3,
       "source": "registry",
       "dependencies": {
@@ -277,7 +320,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.8.9",
+      "version": "1.8.12",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -298,7 +341,7 @@
       }
     },
     "com.unity.visualscripting": {
-      "version": "1.9.9",
+      "version": "1.9.11",
       "depth": 0,
       "source": "registry",
       "dependencies": {

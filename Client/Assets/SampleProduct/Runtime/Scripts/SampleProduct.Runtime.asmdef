@@ -3,6 +3,9 @@
     "rootNamespace": "",
     "references": [
         "Lighthouse.Runtime",
+        "LighthouseExtends.Addressable.Runtime",
+        "Unity.Addressables",
+        "Unity.ResourceManager",
         "LighthouseExtends.InputLayer.Runtime",
         "Unity.InputSystem",
         "LighthouseExtends.Font.Runtime",

@@ -63,7 +63,7 @@ namespace SampleProduct
             where TScreenStack : IScreenStack, IScreenStackSetup<TScreenStackData>
             where TScreenStackData : IScreenStackData
         {
-            var screenStackInstance = await screenStackInstanceFactory.CreateScreenStackInstance<TScreenStack>(screenStackAddress, ct);
+            var screenStackInstance = await screenStackInstanceFactory.CreateScreenStackInstance<TScreenStack>(screenStackAddress, data, ct);
             objectResolver.Inject(screenStackInstance);
             screenStackInstance.Setup(data);
             return new ScreenStackEntity(screenStackInstance, data);

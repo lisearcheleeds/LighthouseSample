@@ -11,7 +11,7 @@ namespace SampleProduct.View.Scene.MainScene.Purpose
         ISampleSceneManager sceneManager;
 
         [Inject]
-        public void Construct(
+        public void Constructor(
             IPurposeView purposeView,
             ISampleSceneManager sceneManager)
         {
