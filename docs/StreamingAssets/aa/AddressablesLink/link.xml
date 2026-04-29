@@ -1,0 +1,107 @@
+<linker>
+  <assembly fullname="LighthouseExtends.Animation.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="LighthouseExtends.Animation.LHTransitionAnimator" preserve="all" />
+  </assembly>
+  <assembly fullname="LighthouseExtends.TextMeshPro.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="LighthouseExtends.TextMeshPro.LHTextMeshPro" preserve="all" />
+  </assembly>
+  <assembly fullname="LighthouseExtends.UIComponent.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="LighthouseExtends.UIComponent.Button.LHButton" preserve="all" />
+    <type fullname="LighthouseExtends.UIComponent.RaycastTargetObject.LHRaycastTargetObject" preserve="all" />
+  </assembly>
+  <assembly fullname="SampleProduct.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="SampleProduct.View.Common.OpenURLButton" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog.RequireToolsDialog" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.Home.RequireToolsDialog.RequireToolsView" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.AnimationElement.AnimationElementOverlay" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.AnimationElement.AnimationElementView" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.ButtonElement.ButtonElementOverlay" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.ButtonElement.ButtonElementView" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.DialogElementDialog.DialogElementDialog" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.DialogElementDialog.DialogElementView" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog.DialogSample1Dialog" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.DialogSample1Dialog.DialogSample1View" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog.DialogSample2Dialog" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.DialogSample2Dialog.DialogSample2View" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.DialogSampleConfirmDialog.DialogSampleConfirmDialog" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.DialogSampleConfirmDialog.DialogSampleConfirmView" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.InputLayerElement.InputLayerElementOverlay" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.InputLayerElement.InputLayerElementView" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.OverlayElement.OverlayElementOverlay" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.OverlayElement.OverlayElementView" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.PopupElement.PopupElementPopup" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.PopupElement.PopupElementView" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.TextViewElement.TextViewElementOverlay" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.TextViewElement.TextViewElementView" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.TransitionAnimationElement.TransitionAnimationElementOverlay" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SampleTop.TransitionAnimationElement.TransitionAnimationElementView" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionDialog.SceneTransitionDialog" preserve="all" />
+    <type fullname="SampleProduct.View.Scene.MainScene.SceneSample1.SceneTransitionDialog.SceneTransitionView" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.Addressables, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
+    <type fullname="UnityEngine.AddressableAssets.Addressables" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.InstanceProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.SceneProvider" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="TMPro.TextMeshProUGUI" preserve="all" />
+    <type fullname="TMPro.TMP_FontAsset" preserve="all" />
+    <type fullname="TMPro.FaceInfo_Legacy" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.FontAssetCreationSettings" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.KerningTable" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.LigatureSubstitutionRecord" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_FontFeatureTable" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_FontWeightPair" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.VertexGradient" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.AnimationClip" preserve="all" />
+    <type fullname="UnityEngine.Animator" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.GameObject" preserve="all" />
+    <type fullname="UnityEngine.Material" preserve="all" />
+    <type fullname="UnityEngine.Object" preserve="all" />
+    <type fullname="UnityEngine.RectTransform" preserve="all" />
+    <type fullname="UnityEngine.Shader" preserve="all" />
+    <type fullname="UnityEngine.Sprite" preserve="all" />
+    <type fullname="UnityEngine.Texture2D" preserve="all" />
+    <type fullname="UnityEngine.Events.PersistentCallGroup" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.RectOffset" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.Font" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.UI.ContentSizeFitter" preserve="all" />
+    <type fullname="UnityEngine.UI.Image" preserve="all" />
+    <type fullname="UnityEngine.UI.LayoutElement" preserve="all" />
+    <type fullname="UnityEngine.UI.Mask" preserve="all" />
+    <type fullname="UnityEngine.UI.Scrollbar" preserve="all" />
+    <type fullname="UnityEngine.UI.ScrollRect" preserve="all" />
+    <type fullname="UnityEngine.UI.VerticalLayoutGroup" preserve="all" />
+    <type fullname="UnityEngine.UI.AnimationTriggers" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.Button/ButtonClickedEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.ColorBlock" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.MaskableGraphic/CullStateChangedEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.Navigation" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.ScrollRect/ScrollRectEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.Scrollbar/ScrollEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.SpriteState" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.CanvasGroup" preserve="all" />
+    <type fullname="UnityEngine.CanvasRenderer" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.TextCoreFontEngineModule">
+    <type fullname="UnityEngine.TextCore.FaceInfo" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.TextCore.GlyphRect" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.TextCore.LowLevel.GlyphAdjustmentRecord" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.TextCore.LowLevel.GlyphPairAdjustmentRecord" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.TextCore.LowLevel.GlyphValueRecord" preserve="nothing" serialized="true" />
+  </assembly>
+</linker>
