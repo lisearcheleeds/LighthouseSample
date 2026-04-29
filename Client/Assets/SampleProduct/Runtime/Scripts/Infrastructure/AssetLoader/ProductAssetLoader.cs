@@ -8,6 +8,11 @@ using LighthouseExtends.TextTable;
 using UnityEngine;
 using VContainer;
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+using System.Linq;
+using UnityEngine.Networking;
+#endif
+
 namespace SampleProduct.Infrastructure.AssetLoader
 {
     public sealed class ProductAssetLoader : ITextTableLoader
