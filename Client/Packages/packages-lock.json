@@ -17,7 +17,7 @@
       "url": "https://package.openupm.com"
     },
     "com.lisearcheleeds.lighthouse": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/Lighthouse#feature/v1.0.0",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/Lighthouse",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -25,29 +25,29 @@
         "jp.hadashikick.vcontainer": "1.17.0",
         "com.unity.render-pipelines.universal": "17.0.0"
       },
-      "hash": "a82a643631d5f715d6b8b749c154ebaca5107a26"
+      "hash": "7f7670467b985437d7e3090f99e54876ff0cb572"
     },
     "com.lisearcheleeds.lighthouse-extends.addressable": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Addressable#feature/v1.0.0",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Addressable",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.cysharp.unitask": "2.5.10",
         "com.unity.addressables": "2.9.1"
       },
-      "hash": "a82a643631d5f715d6b8b749c154ebaca5107a26"
+      "hash": "7f7670467b985437d7e3090f99e54876ff0cb572"
     },
     "com.lisearcheleeds.lighthouse-extends.animation": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Animation#feature/v1.0.0",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Animation",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.cysharp.unitask": "2.5.10"
       },
-      "hash": "a82a643631d5f715d6b8b749c154ebaca5107a26"
+      "hash": "7f7670467b985437d7e3090f99e54876ff0cb572"
     },
     "com.lisearcheleeds.lighthouse-extends.font": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Font#feature/v1.0.0",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Font",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -56,20 +56,20 @@
         "com.cysharp.unitask": "2.5.10",
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "a82a643631d5f715d6b8b749c154ebaca5107a26"
+      "hash": "7f7670467b985437d7e3090f99e54876ff0cb572"
     },
     "com.lisearcheleeds.lighthouse-extends.inputlayer": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/InputLayer#feature/v1.0.0",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/InputLayer",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.inputsystem": "1.17.0",
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "a82a643631d5f715d6b8b749c154ebaca5107a26"
+      "hash": "7f7670467b985437d7e3090f99e54876ff0cb572"
     },
     "com.lisearcheleeds.lighthouse-extends.language": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Language#feature/v1.0.0",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/Language",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -77,10 +77,10 @@
         "com.cysharp.unitask": "2.5.10",
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "a82a643631d5f715d6b8b749c154ebaca5107a26"
+      "hash": "7f7670467b985437d7e3090f99e54876ff0cb572"
     },
     "com.lisearcheleeds.lighthouse-extends.screenstack": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/ScreenStack#feature/v1.0.0",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/ScreenStack",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -89,10 +89,10 @@
         "com.cysharp.unitask": "2.5.10",
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "a82a643631d5f715d6b8b749c154ebaca5107a26"
+      "hash": "7f7670467b985437d7e3090f99e54876ff0cb572"
     },
     "com.lisearcheleeds.lighthouse-extends.textmeshpro": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/TextMeshPro#feature/v1.0.0",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/TextMeshPro",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -100,10 +100,10 @@
         "com.lisearcheleeds.lighthouse-extends.texttable": "1.0.0",
         "com.cysharp.r3": "1.3.0"
       },
-      "hash": "a82a643631d5f715d6b8b749c154ebaca5107a26"
+      "hash": "7f7670467b985437d7e3090f99e54876ff0cb572"
     },
     "com.lisearcheleeds.lighthouse-extends.texttable": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/TextTable#feature/v1.0.0",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/TextTable",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -112,17 +112,17 @@
         "com.cysharp.unitask": "2.5.10",
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "a82a643631d5f715d6b8b749c154ebaca5107a26"
+      "hash": "7f7670467b985437d7e3090f99e54876ff0cb572"
     },
     "com.lisearcheleeds.lighthouse-extends.uicomponent": {
-      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/UIComponent#feature/v1.0.0",
+      "version": "https://github.com/lisearcheleeds/Lighthouse.git?path=Client/Assets/LighthouseExtends/UIComponent",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.lisearcheleeds.lighthouse": "1.0.0",
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "a82a643631d5f715d6b8b749c154ebaca5107a26"
+      "hash": "7f7670467b985437d7e3090f99e54876ff0cb572"
     },
     "com.unity.addressables": {
       "version": "2.9.1",
